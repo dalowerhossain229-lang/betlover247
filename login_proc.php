@@ -1,0 +1,35 @@
+<?php
+include 'db.php';
+session_start();
+header('Content-Type: application/json');
+
+$user = $_POST['username'] ?? '';
+$pass = $_POST['password'] ?? '';
+
+if (empty($user) || empty($pass)) {
+    echo json_encode(["status" => "error", "message" => "আইডি ও পাসওয়ার্ড দিন!"]);
+    exit;
+}
+
+// ডাটাবেস থেকে ইউজার চেক করা
+$res = $conn->query("SELECT * FROM users WHERE username = '$user'");
+if ($res->num_rows > 0) {
+    $row = $res->fetch_assoc();
+    
+    // পাসওয়ার্ড যাচাই করা
+    if (password_verify($pass, $row['password'])) {
+        // ইউজার কি ব্যান করা?
+        if ($row['status'] == 'banned') {
+            echo json_encode(["status" => "error", "message" => "দুঃখিত, আপনার একাউন্টটি নিষিদ্ধ (Banned) করা হয়েছে!"]);
+        } else {
+            // সেশনে ইউজার আইডি সেভ করা যাতে সব পেজে তাকে চেনা যায়
+            $_SESSION['user_id'] = $row['username'];
+            echo json_encode(["status" => "success", "message" => "লগইন সফল!"]);
+        }
+    } else {
+        echo json_encode(["status" => "error", "message" => "ভুল পাসওয়ার্ড!"]);
+    }
+} else {
+    echo json_encode(["status" => "error", "message" => "ইউজার আইডি পাওয়া যায়নি!"]);
+}
+?>
