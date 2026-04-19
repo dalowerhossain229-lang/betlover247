@@ -3,7 +3,7 @@ include 'db.php';
 session_start();
 header('Content-Type: application/json');
 
-$user = $_POST['username'] ?? '';
+$user = mysqli_real_escape_string($conn, $_POST['username'] ?? '');
 $pass = $_POST['password'] ?? '';
 
 if (empty($user) || empty($pass)) {
@@ -22,8 +22,11 @@ if ($res->num_rows > 0) {
         if ($row['status'] == 'banned') {
             echo json_encode(["status" => "error", "message" => "দুঃখিত, আপনার একাউন্টটি নিষিদ্ধ (Banned) করা হয়েছে!"]);
         } else {
-            // সেশনে ইউজার আইডি সেভ করা যাতে সব পেজে তাকে চেনা যায়
+            // সেশনে তথ্য সেভ করা (খুবই জরুরি)
             $_SESSION['user_id'] = $row['username'];
+            $_SESSION['full_name'] = $row['full_name'];
+            $_SESSION['balance'] = $row['balance']; // এটি মেইন সাইটে ব্যালেন্স দেখাবে
+            
             echo json_encode(["status" => "success", "message" => "লগইন সফল!"]);
         }
     } else {
