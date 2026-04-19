@@ -685,28 +685,44 @@ num.innerText = '<?php echo $ng_no; ?>';
         .catch(() => alert("রেজিস্ট্রেশন সার্ভার কানেকশন এরর!"));
     }
 
-    // লগইন লজিক
-    function handleLogin() {
-        const id = document.getElementById('loginID').value;
-        const pass = document.getElementById('loginPass').value;
-        if(!id || !pass) { alert("আইডি ও পাসওয়ার্ড দিন!"); return; }
-        
-        let fd = new FormData();
-        fd.append('username', id); 
-        fd.append('password', pass);
+function handleLogin() {
+    const idField = document.getElementById('loginID');
+    const passField = document.getElementById('loginPass');
 
-        fetch('login_proc.php', { method: 'POST', body: fd })
-        .then(res => res.json())
-        .then(data => {
-            if(data.status === 'success') {
-                isLoggedIn = true; 
-                localStorage.setItem('isLoggedIn', 'true');
-                updateAuthUI(); 
-                closeModal('loginModal'); 
-                location.reload();
-            } else { alert(data.message); }
-        }).catch(() => alert("লগইন সার্ভার কানেকশন এরর!"));
+    if (!idField || !passField) {
+        console.error("Input fields not found! Check IDs.");
+        return;
     }
+
+    const id = idField.value;
+    const pass = passField.value;
+
+    if(!id || !pass) { alert("আইডি ও পাসওয়ার্ড দিন!"); return; }
+    
+    let fd = new FormData();
+    fd.append('username', id); 
+    fd.append('password', pass);
+
+    // ফিক্স: আপনি গিটহাবে যে নাম রেখেছেন সেটিই দিন (login.php)
+    fetch('login.php', { method: 'POST', body: fd })
+    .then(res => {
+        if(!res.ok) throw new Error("HTTP error " + res.status);
+        return res.json();
+    })
+    .then(data => {
+        if(data.status === 'success') {
+            alert("লগইন সফল!");
+            location.reload(); // পেজ রিলোড হয়ে ব্যালেন্স দেখাবে
+        } else { 
+            alert(data.message); 
+        }
+    })
+    .catch((err) => {
+        console.error("Login Fetch Error:", err);
+        alert("লগইন সার্ভার কানেকশন এরর!");
+    });
+}
+
 
 function handleLogout() {
     // ১. ব্রাউজারের পুরনো মেমোরি ডিলিট করা
