@@ -315,6 +315,7 @@ if (isset($_SESSION['user_id'])) {
                 </button>
             </div>
         <?php else: ?>
+    </div>
             <div id="authSection" class="auth-buttons" style="display: flex; gap: 10px;">
                 <button class="auth-btn login-btn" onclick="openLogin()" style="background: #f1c40f; color: black; padding: 8px 15px; border-radius: 5px; font-weight: bold;">Login</button>
                 <button class="auth-btn reg-btn" onclick="openRegister()" style="background: #333; color: white; padding: 8px 15px; border-radius: 5px;">Register</button>
