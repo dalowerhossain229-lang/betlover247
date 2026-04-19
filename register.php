@@ -2,9 +2,9 @@
 include 'db.php';
 header('Content-Type: application/json');
 
-// ইনপুট ডাটা নেওয়া
-$name = $_POST['fullName'] ?? '';
-$user = $_POST['username'] ?? '';
+// ইনপুট ডাটা নেওয়া (সরাসরি $_POST থেকে না নিয়ে ফিল্টার করা নিরাপদ)
+$name = mysqli_real_escape_string($conn, $_POST['fullName'] ?? '');
+$user = mysqli_real_escape_string($conn, $_POST['username'] ?? '');
 $pass = $_POST['password'] ?? '';
 
 // ভ্যালিডেশন
@@ -21,12 +21,15 @@ $check = $conn->query("SELECT id FROM users WHERE username = '$user'");
 if ($check->num_rows > 0) {
     echo json_encode(["status" => "error", "message" => "এই ইউজার আইডিটি ইতিমধ্যে ব্যবহৃত হয়েছে!"]);
 } else {
-    // নতুন ইউজার ডাটাবেসে ইনসার্ট করা (সাথেই ৫০০ টাকা বোনাস ব্যালেন্স)
+    // নতুন ইউজার ইনসার্ট করা (ব্যালেন্স ৫০০ টাকা বোনাসসহ)
+    // নিশ্চিত করুন আপনার ডাটাবেসে full_name কলামটি আছে
     $sql = "INSERT INTO users (full_name, username, password, balance) VALUES ('$name', '$user', '$hashed_pass', 500.00)";
+    
     if ($conn->query($sql)) {
         echo json_encode(["status" => "success", "message" => "রেজিস্ট্রেশন সফল হয়েছে! লগইন করুন।"]);
     } else {
-        echo json_encode(["status" => "error", "message" => "সার্ভার এরর! ডাটাবেস টেবিল চেক করুন।"]);
+        // ডাটাবেস এরর মেসেজ দেখার জন্য (ডেভেলপমেন্টের জন্য)
+        echo json_encode(["status" => "error", "message" => "সার্ভার এরর! " . $conn->error]);
     }
 }
 ?>
