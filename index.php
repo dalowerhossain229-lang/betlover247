@@ -704,7 +704,7 @@ function handleLogin() {
     fd.append('password', pass);
 
     // ফিক্স: আপনি গিটহাবে যে নাম রেখেছেন সেটিই দিন (login.php)
-    fetch('login.php', { method: 'POST', body: fd })
+    fetch('login_proc.php', { method: 'POST', body: fd })
     .then(res => {
         if(!res.ok) throw new Error("HTTP error " + res.status);
         return res.json();
