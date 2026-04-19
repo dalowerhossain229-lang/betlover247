@@ -280,14 +280,25 @@ if (isset($_SESSION['user_id'])) {
         <div class="logo">BETLOVER24</div>
     <button class="offer-btn-top">OFFER</button>
     
-        <div id="authSection" class="auth-buttons">
-            <button class="auth-btn login-btn" onclick="openLogin()">Login</button>
-            <button class="auth-btn reg-btn" onclick="openRegister()">Register</button>
-        </div>
-        <div id="balanceSection" class="user-balance-area">
-            <div class="balance-chip" onclick="openWallet()">৳ <span id="topBalance">500.00</span></div>
-            <button class="auth-btn reg-btn" onclick="handleLogout()" style="padding: 6px 10px;"><i class="fa-solid fa-power-off"></i></button>
-        </div>
+              <!-- বাটন ও ব্যালেন্স সেকশন -->
+        <?php if(isset($_SESSION['user_id'])): ?>
+            <!-- লগইন থাকলে ব্যালেন্স দেখাবে -->
+            <div id="balanceSection" class="user-balance-area">
+                <div class="balance-chip" onclick="openWallet()">
+                    ৳ <span id="topBalance"><?php echo number_format($_SESSION['balance'], 2); ?></span>
+                </div>
+                <button class="auth-btn reg-btn" onclick="window.location.href='logout.php'" style="padding: 0px 10px;">
+                    <i class="fa-solid fa-power-off"></i>
+                </button>
+            </div>
+        <?php else: ?>
+            <!-- লগইন না থাকলে Login/Register বাটন দেখাবে -->
+            <div id="authSection" class="auth-buttons">
+                <button class="auth-btn login-btn" onclick="openLogin()">Login</button>
+                <button class="auth-btn reg-btn" onclick="openRegister()">Register</button>
+            </div>
+        <?php endif; ?>
+  
     </header>
 
     <div class="slider-container">
