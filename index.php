@@ -552,19 +552,7 @@ if (isset($_SESSION['user_id'])) {
 </div>
 
 
-<footer class="footer-nav">
-    <div class="nav-tab active" onclick="location.reload()"><span>Home</span></div>
-    
-    <!-- নতুন বাটন: Sports -->
-    <div class="nav-tab"><span>Sports</span></div>
-    
-    <div class="nav-tab" onclick="openPromo()"><span>Promo</span></div>
-    
-    <!-- নতুন বাটন: Casino -->
-    <div class="nav-tab"><span>Casino</span></div>
-    
-    <div class="nav-tab" onclick="openProfile()"><span>Account</span></div>
-</footer>
+
 
 <script>
  function openPromo() {
@@ -954,5 +942,18 @@ function closeModal(id) {
         setInterval(slideNext, 3000);
     })();
 </script>
+   <footer class="footer-nav">
+    <div class="nav-tab active" onclick="location.reload()"><span>Home</span></div>
+    
+    <!-- নতুন বাটন: Sports -->
+    <div class="nav-tab"><span>Sports</span></div>
+    
+    <div class="nav-tab" onclick="openPromo()"><span>Promo</span></div>
+    
+    <!-- নতুন বাটন: Casino -->
+    <div class="nav-tab"><span>Casino</span></div>
+    
+    <div class="nav-tab" onclick="openProfile()"><span>Account</span></div>
+</footer> 
 </body>
 </html>
