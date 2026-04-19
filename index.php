@@ -273,7 +273,31 @@ if (isset($_SESSION['user_id'])) {
     color: #fff;
     border: 1px solid #333;
 }
-    </style>
+
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #111;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-top: 1px solid #333;
+    z-index: 9999; /* এটি নিশ্চিত করবে বাটনগুলো সবার উপরে থাকবে */
+}
+.nav-tab {
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+}
+.nav-tab.active {
+    color: #f1c40f;
+}
+</style>
+        
+    
 </head>
 <body onclick="handleGlobalClick()">
     <header class="top-nav">
