@@ -274,27 +274,6 @@ if (isset($_SESSION['user_id'])) {
     border: 1px solid #333;
 }
 
-.footer-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #111;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    border-top: 1px solid #333;
-    z-index: 9999; /* এটি নিশ্চিত করবে বাটনগুলো সবার উপরে থাকবে */
-}
-.nav-tab {
-    color: #fff;
-    text-align: center;
-    font-size: 12px;
-    cursor: pointer;
-}
-.nav-tab.active {
-    color: #f1c40f;
-}
 </style>
         
     
@@ -315,7 +294,7 @@ if (isset($_SESSION['user_id'])) {
                 </button>
             </div>
         <?php else: ?>
-    </div>
+    
             <div id="authSection" class="auth-buttons" style="display: flex; gap: 10px;">
                 <button class="auth-btn login-btn" onclick="openLogin()" style="background: #f1c40f; color: black; padding: 8px 15px; border-radius: 5px; font-weight: bold;">Login</button>
                 <button class="auth-btn reg-btn" onclick="openRegister()" style="background: #333; color: white; padding: 8px 15px; border-radius: 5px;">Register</button>
