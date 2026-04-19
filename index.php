@@ -280,24 +280,23 @@ if (isset($_SESSION['user_id'])) {
         <div class="logo">BETLOVER24</div>
     <button class="offer-btn-top">OFFER</button>
     
-              <!-- বাটন ও ব্যালেন্স সেকশন -->
+               <!-- বাটন ও ব্যালেন্স সেকশন -->
         <?php if(isset($_SESSION['user_id'])): ?>
-            <!-- লগইন থাকলে ব্যালেন্স দেখাবে -->
-            <div id="balanceSection" class="user-balance-area">
-                <div class="balance-chip" onclick="openWallet()">
+            <div id="balanceSection" class="user-balance-area" style="display: flex; align-items: center; gap: 10px;">
+                <div class="balance-chip" onclick="openWallet()" style="background: #333; padding: 5px 10px; border-radius: 20px; color: #f1c40f; font-weight: bold; cursor: pointer;">
                     ৳ <span id="topBalance"><?php echo number_format($_SESSION['balance'], 2); ?></span>
                 </div>
-                <button class="auth-btn reg-btn" onclick="window.location.href='logout.php'" style="padding: 0px 10px;">
+                <button class="auth-btn logout-btn" onclick="window.location.href='logout.php'" style="background: #e74c3c; color: white; border: none; padding: 7px 12px; border-radius: 5px; cursor: pointer;">
                     <i class="fa-solid fa-power-off"></i>
                 </button>
             </div>
         <?php else: ?>
-            <!-- লগইন না থাকলে Login/Register বাটন দেখাবে -->
-            <div id="authSection" class="auth-buttons">
-                <button class="auth-btn login-btn" onclick="openLogin()">Login</button>
-                <button class="auth-btn reg-btn" onclick="openRegister()">Register</button>
+            <div id="authSection" class="auth-buttons" style="display: flex; gap: 10px;">
+                <button class="auth-btn login-btn" onclick="openLogin()" style="background: #f1c40f; color: black; padding: 8px 15px; border-radius: 5px; font-weight: bold;">Login</button>
+                <button class="auth-btn reg-btn" onclick="openRegister()" style="background: #333; color: white; padding: 8px 15px; border-radius: 5px;">Register</button>
             </div>
         <?php endif; ?>
+       
   
     </header>
 
