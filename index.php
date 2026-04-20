@@ -1,5 +1,5 @@
 <?php 
-include 'header.php'; // উপরের হেডার অংশ নিয়ে আসবে
+include 'header.php'; 
 ?>
 
 <!-- ১. উজ্জ্বল স্লাইডার সেকশন -->
@@ -16,94 +16,121 @@ include 'header.php'; // উপরের হেডার অংশ নিয়ে 
     </div>
 </div>
 
-<!-- ২. নোটিশ বোর্ড (উজ্জ্বল নিওন স্টাইল) -->
+<!-- ২. নোটিশ বোর্ড -->
 <div class="notice-board">
     <div class="notice-content">
         <i class="fa-solid fa-bullhorn"></i>
-        <marquee>স্বাগতম BETLOVER777-এ! আমাদের নতুন অফার পেতে এখনই ডিপোজিট করুন। যেকোনো সমস্যায় কাস্টমার সার্ভিসে যোগাযোগ করুন।</marquee>
+        <marquee scrollamount="5">স্বাগতম BETLOVER777-এ! আমাদের নতুন অফার পেতে এখনই ডিপোজিট করুন। যেকোনো সমস্যায় কাস্টমার সার্ভিসে যোগাযোগ করুন।</marquee>
     </div>
 </div>
 
-<!-- ৩. গেম গ্রিড (৪ কলাম ডিজাইন) -->
+<!-- ৩. গেম গ্রিড -->
 <div class="game-grid">
-    <!-- গেম ১: Super Ace -->
     <div class="game-card" onclick="location.href='superace/'">
         <img src="super-ace.png" alt="Super Ace">
         <p>SUPER ACE</p>
     </div>
-    
-    <!-- গেম ২: Chicken Road -->
     <div class="game-card" onclick="location.href='chickenroad/'">
         <img src="chicken-road.png" alt="Chicken Road">
         <p>CHICKEN ROAD</p>
     </div>
-
-    <!-- গেম ৩: Wheel -->
     <div class="game-card" onclick="location.href='wheel/'">
         <img src="wheel.png" alt="Wheel">
         <p>WHEEL</p>
     </div>
-
-    <!-- গেম ৪: Cricket -->
     <div class="game-card" onclick="location.href='cricket/'">
         <img src="cricket.png" alt="Cricket">
         <p>CRICKET</p>
     </div>
 </div>
 
-<style>
-/* ইনডেক্স পেজের জন্য বিশেষ উজ্জ্বল CSS */
-.slider-container { margin: 15px auto; width: 94%; height: 100px; border-radius: 12px; overflow: hidden; border: 1px solid var(--neon); }
-.slider { display: flex; height: 100%; transition: 0.5s; }
-.slide { min-width: 100%; display: flex; align-items: center; padding: 0 20px; position: relative; }
-.slide-text h3 { margin: 0; color: var(--gold); font-size: 18px; }
-.bg-icon { position: absolute; right: 20px; font-size: 40px; opacity: 0.3; }
-
-.notice-board { background: #000; border-top: 1px solid #14362a; border-bottom: 1px solid #14362a; padding: 8px 10px; margin-bottom: 15px; }
-.notice-content { display: flex; align-items: center; gap: 10px; color: var(--neon); font-size: 12px; font-weight: bold; }
-
-.game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 0 10px; }
-.game-card { background: #121212; border-radius: 8px; overflow: hidden; border: 1px solid #14362a; cursor: pointer; text-align: center; }
-.game-card img { width: 100%; height: 70px; object-fit: cover; }
-.game-card p { margin: 0; padding: 5px 0; font-size: 8px; font-weight: 900; color: var(--gold); background: rgba(0,0,0,0.8); }
-</style>
-<!-- লগইন মোডাল -->
-<div id="loginModal" class="modal-bg">
-    <div class="modal-box">
-        <h2 style="color:var(--neon)">LOGIN</h2>
-        <input type="text" id="loginUser" placeholder="ইউজার আইডি">
-        <input type="password" id="loginPass" placeholder="পাসওয়ার্ড">
-        <button class="btn-auth" onclick="processLogin()">প্রবেশ করুন</button>
-        <p onclick="closeAll()" style="font-size:12px; cursor:pointer; margin-top:10px;">বন্ধ করুন</p>
+<!-- ৪. লগইন পপ-আপ (Modal) -->
+<div id="loginModal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 style="color:var(--neon); margin-top:0; font-size:20px;">LOGIN</h2>
+        <input type="text" id="loginUser" class="modal-input" placeholder="ইউজার আইডি">
+        <input type="password" id="loginPass" class="modal-input" placeholder="পাসওয়ার্ড">
+        <button class="btn-auth-submit" onclick="processLogin()">প্রবেশ করুন</button>
+        <p onclick="closeAll()" style="color:#888; font-size:12px; cursor:pointer; margin-top:15px; text-decoration:underline;">বন্ধ করুন</p>
     </div>
 </div>
-<!-- রেজিস্ট্রেশন পপ-আপ ফর্ম -->
+
+<!-- ৫. রেজিস্ট্রেশন পপ-আপ (Modal) -->
 <div id="regModal" class="modal-overlay">
     <div class="modal-content">
-        <div class="modal-header">
-            <h2 style="color:var(--neon); margin:0;">REGISTER</h2>
-            <span class="close-btn" onclick="closeModal('regModal')">&times;</span>
-        </div>
-        <div class="modal-body">
-            <input type="text" id="regName" class="modal-input" placeholder="আপনার পুরো নাম">
-            <input type="text" id="regUser" class="modal-input" placeholder="ইউজার আইডি (যেমন: 017...)">
-            <input type="password" id="regPass" class="modal-input" placeholder="পাসওয়ার্ড">
-            <button class="btn-auth-submit" onclick="processRegister()">একাউন্ট খুলুন</button>
-        </div>
+        <h2 style="color:var(--neon); margin-top:0; font-size:20px;">REGISTER</h2>
+        <input type="text" id="regName" class="modal-input" placeholder="আপনার পুরো নাম">
+        <input type="text" id="regUser" class="modal-input" placeholder="ইউজার আইডি">
+        <input type="password" id="regPass" class="modal-input" placeholder="পাসওয়ার্ড">
+        <button class="btn-auth-submit" onclick="processRegister()">একাউন্ট খুলুন</button>
+        <p onclick="closeAll()" style="color:#888; font-size:12px; cursor:pointer; margin-top:15px; text-decoration:underline;">বন্ধ করুন</p>
     </div>
 </div>
 
 <style>
-/* ফর্মের উজ্জ্বল ডিজাইন */
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 9999; }
-.modal-content { background: #161b22; width: 90%; max-width: 350px; padding: 25px; border-radius: 15px; border: 1px solid var(--neon); box-shadow: 0 0 20px rgba(0,255,136,0.3); }
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.close-btn { color: white; font-size: 28px; cursor: pointer; }
-.modal-input { width: 100%; padding: 12px; margin-bottom: 15px; background: #000; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; outline: none; }
-.modal-input:focus { border-color: var(--neon); }
-.btn-auth-submit { width: 100%; padding: 12px; background: var(--gold); color: black; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; }
+/* ইনডেক্স পেজ স্টাইল */
+.slider-container { margin: 15px auto; width: 94%; height: 105px; border-radius: 12px; overflow: hidden; border: 1px solid var(--neon); box-shadow: 0 0 10px rgba(0,255,136,0.2); }
+.slider { display: flex; height: 100%; transition: 0.6s ease-in-out; }
+.slide { min-width: 100%; display: flex; align-items: center; padding: 0 20px; position: relative; box-sizing: border-box; }
+.slide-text h3 { margin: 0; color: var(--gold); font-size: 18px; text-transform: uppercase; }
+.slide-text p { margin: 5px 0 0; font-size: 11px; opacity: 0.9; }
+.bg-icon { position: absolute; right: 20px; font-size: 40px; opacity: 0.2; color: #fff; }
+
+.notice-board { background: #000; border-top: 1px solid #14362a; border-bottom: 1px solid #14362a; padding: 8px 0; margin-bottom: 15px; }
+.notice-content { display: flex; align-items: center; gap: 10px; color: var(--neon); font-size: 12px; font-weight: bold; padding: 0 10px; }
+
+.game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 0 10px; }
+.game-card { background: #121212; border-radius: 8px; overflow: hidden; border: 1px solid #14362a; cursor: pointer; text-align: center; transition: 0.3s; }
+.game-card:active { transform: scale(0.95); }
+.game-card img { width: 100%; height: 75px; object-fit: cover; display: block; }
+.game-card p { margin: 0; padding: 6px 0; font-size: 8px; font-weight: 900; color: var(--gold); background: rgba(0,0,0,0.85); letter-spacing: 0.5px; }
+
+/* মোডাল ফিক্স (পপ-আপ সবার ওপরে থাকার জন্য) */
+.modal-overlay { 
+    position: fixed !important; 
+    top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.85); 
+    display: none; /* জাভাস্ক্রিপ্ট দিয়ে সচল হবে */
+    justify-content: center; 
+    align-items: center; 
+    z-index: 999999 !important; 
+    backdrop-filter: blur(5px);
+}
+.modal-content { 
+    background: #161b22; width: 88%; max-width: 340px; 
+    padding: 30px 25px; border-radius: 15px; 
+    border: 1px solid var(--neon); 
+    text-align: center; 
+    box-shadow: 0 0 30px rgba(0,255,136,0.3); 
+    animation: modal-fade 0.3s ease-out;
+}
+@keyframes modal-fade { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.modal-input { 
+    width: 100%; padding: 14px; margin-bottom: 15px; 
+    background: #000; border: 1px solid #333; 
+    color: white; border-radius: 10px; box-sizing: border-box; 
+    outline: none; font-size: 14px;
+}
+.modal-input:focus { border-color: var(--neon); box-shadow: 0 0 5px var(--neon); }
+.btn-auth-submit { 
+    width: 100%; padding: 14px; background: var(--gold); 
+    color: black; border: none; border-radius: 10px; 
+    font-weight: 900; cursor: pointer; font-size: 14px; text-transform: uppercase;
+}
 </style>
 
+<!-- জাভাস্ক্রিপ্ট এবং ফুটার -->
 <script src="auth.js"></script>
+
+<script>
+// স্লাইডার অটোমেটিক চালানোর ছোট কোড
+let currentSlide = 0;
+setInterval(() => {
+    currentSlide = (currentSlide + 1) % 2; // ২ টি স্লাইড আছে তাই
+    const slider = document.getElementById('mainSlider');
+    if(slider) slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+}, 4000);
+</script>
 
 <?php include 'footer.php'; ?>
