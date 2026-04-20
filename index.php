@@ -277,18 +277,28 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body onclick="handleGlobalClick()">
     <header class="top-nav">
-        <div class="logo">BETLOVER24</div>
-    <button class="offer-btn-top">OFFER</button>
+    <div class="logo">BETLOVER24</div>
+    <button class="offer-btn-top" onclick="location.href='offer.php'">OFFER</button>
     
-        <div id="authSection" class="auth-buttons">
+    <?php if(isset($_SESSION['user_id'])): ?>
+        <!-- লগইন থাকলে শুধু এটি দেখাবে -->
+        <div id="balanceSection" class="user-balance-area" style="display: flex;">
+            <div class="balance-chip" onclick="openWallet()">
+                ৳ <span id="topBalance"><?php echo number_format($_SESSION['balance'], 2); ?></span>
+            </div>
+            <button class="auth-btn reg-btn" onclick="handleLogout()" style="padding: 6px 10px;">
+                <i class="fa-solid fa-power-off"></i>
+            </button>
+        </div>
+    <?php else: ?>
+        <!-- লগইন না থাকলে শুধু এটি দেখাবে -->
+        <div id="authSection" class="auth-buttons" style="display: flex;">
             <button class="auth-btn login-btn" onclick="openLogin()">Login</button>
             <button class="auth-btn reg-btn" onclick="openRegister()">Register</button>
         </div>
-        <div id="balanceSection" class="user-balance-area">
-            <div class="balance-chip" onclick="openWallet()">৳ <span id="topBalance">500.00</span></div>
-            <button class="auth-btn reg-btn" onclick="handleLogout()" style="padding: 6px 10px;"><i class="fa-solid fa-power-off"></i></button>
-        </div>
-    </header>
+    <?php endif; ?>
+</header>
+
 
     <div class="slider-container">
         <div class="slider" id="mainSlider">
@@ -929,32 +939,4 @@ function closeModal(id) {
     })();
 </script>
 </body>
-  <style>
-/* এই CSS টি বাটনকে কোনোভাবেই হাইড হতে দেবে না */
-.footer-nav, .footer-nav-new, #master-footer {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: fixed !important;
-    bottom: 0 !important;
-    z-index: 9999999 !important;
-}
-
-/* গেমের গ্রিড যাতে বাটনের ওপরে না ওঠে */
-body { padding-bottom: 90px !important; }
-</style>
-
-<script>
-// পেজ লোড হওয়ার পর বাটন যদি কেউ হাইড করে, এটি আবার শো করবে
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        var footer = document.querySelector('.footer-nav') || document.querySelector('.footer-nav-new') || document.getElementById('master-footer');
-        if (footer) {
-            footer.style.setProperty('display', 'flex', 'important');
-            footer.style.setProperty('visibility', 'visible', 'important');
-        }
-    }, 1000); // ১ সেকেন্ড পর এটি আবার চেক করবে
-});
-</script>
-  
 </html>
