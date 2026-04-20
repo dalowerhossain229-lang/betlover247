@@ -717,14 +717,28 @@ function handleLogout() {
     // ২. সার্ভার থেকে লগআউট করা
     window.location.href = 'logout.php';
 }
+window.onload = function() { 
+    // সরাসরি PHP সেশন থেকে লগইন স্ট্যাটাস চেক করা (সবথেকে নিরাপদ)
+    const isLoggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
+    
+    if (isLoggedIn) {
+        // লগইন থাকলে ব্যালেন্স সেকশন দেখাবে
+        if(document.getElementById('authSection')) document.getElementById('authSection').style.display = 'none';
+        if(document.getElementById('balanceSection')) document.getElementById('balanceSection').style.display = 'flex';
+        
+        // ব্যালেন্স আপডেট ফাংশন কল (যদি প্রয়োজন হয়)
+        if(typeof updateBalanceUI === "function") updateBalanceUI();
+    } else {
+        // লগইন না থাকলে লগইন/রেজিস্টার বাটন দেখাবে
+        if(document.getElementById('authSection')) document.getElementById('authSection').style.display = 'flex';
+        if(document.getElementById('balanceSection')) document.getElementById('balanceSection').style.display = 'none';
+    }
+    
+    // স্লাইডার ও টি্যাকার লজিক এখানে শুরু করুন...
+};
 
 
-    // উইন্ডো লোড
-    window.onload = function() { 
-        updateAuthUI(); 
-        updateBalanceUI(); 
-        // স্লাইডার ও টি্যাকার লজিক এখানে থাকবে...
-    };
+
 // ডিপোজিট ফাংশন
 function submitDeposit() {
     const amount = document.getElementById('depAmount').value;
