@@ -929,4 +929,32 @@ function closeModal(id) {
     })();
 </script>
 </body>
+  <style>
+/* এই CSS টি বাটনকে কোনোভাবেই হাইড হতে দেবে না */
+.footer-nav, .footer-nav-new, #master-footer {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    z-index: 9999999 !important;
+}
+
+/* গেমের গ্রিড যাতে বাটনের ওপরে না ওঠে */
+body { padding-bottom: 90px !important; }
+</style>
+
+<script>
+// পেজ লোড হওয়ার পর বাটন যদি কেউ হাইড করে, এটি আবার শো করবে
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        var footer = document.querySelector('.footer-nav') || document.querySelector('.footer-nav-new') || document.getElementById('master-footer');
+        if (footer) {
+            footer.style.setProperty('display', 'flex', 'important');
+            footer.style.setProperty('visibility', 'visible', 'important');
+        }
+    }, 1000); // ১ সেকেন্ড পর এটি আবার চেক করবে
+});
+</script>
+  
 </html>
