@@ -947,83 +947,95 @@ function closeModal(id) {
     })();
 </script>
 
-    <!-- ১. নিচের ৫টি বাটন ফিরিয়ে আনার জন্য সঠিক HTML -->
-<footer class="footer-nav">
-    <div class="nav-tab" onclick="location.href='index.php'">
+  <!-- ১. ৫টি বাটন আইকনসহ ফিরিয়ে আনার মাস্টার কোড -->
+<footer class="betlover-footer">
+    <div class="nav-item" onclick="location.href='index.php'">
         <i class="fa-solid fa-house"></i>
-        <span>Home</span>
+        <span>HOME</span>
     </div>
     
-    <div class="nav-tab" onclick="alert('Sports Coming Soon!')">
+    <div class="nav-item" onclick="alert('Sports Coming Soon!')">
         <i class="fa-solid fa-trophy"></i>
-        <span>Sports</span>
+        <span>SPORTS</span>
     </div>
     
-    <div class="nav-tab middle-tab" onclick="openPromo()">
-        <i class="fa-solid fa-gift"></i>
-        <span>Promo</span>
+    <div class="nav-item main-menu" onclick="openPromo()">
+        <i class="fa-solid fa-bars"></i>
+        <span>MENU</span>
     </div>
     
-    <div class="nav-tab" onclick="alert('Casino Coming Soon!')">
+    <div class="nav-item" onclick="alert('Casino Coming Soon!')">
         <i class="fa-solid fa-clover"></i>
-        <span>Casino</span>
+        <span>CASINO</span>
     </div>
     
-    <div class="nav-tab" onclick="openProfile()">
+    <div class="nav-item" onclick="openProfile()">
         <i class="fa-solid fa-user-circle"></i>
-        <span>Account</span>
+        <span>ACCOUNT</span>
     </div>
 </footer>
 
-<!-- ২. বাটনগুলো স্ক্রিনে ফিক্স করার জন্য CSS -->
+<!-- ২. বাটনগুলো স্ক্রিনে ফিক্স করার জন্য সুপার পাওয়ারফুল CSS -->
 <style>
-.footer-nav { 
-    position: fixed !important; 
-    bottom: 0 !important; 
-    left: 0;
-    width: 100%; 
-    background: #073128 !important; /* আপনার থিম কালার */
-    display: flex !important; 
-    justify-content: space-around; 
-    align-items: center; 
-    height: 70px !important; 
-    z-index: 9999 !important; 
-    border-top: 1px solid #14362a;
-    box-shadow: 0 -2px 15px rgba(0,0,0,0.6);
+.betlover-footer {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 70px !important;
+    background: #073128 !important; /* আপনার সাইটের মেট গ্রিন কালার */
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    z-index: 9999999 !important; /* যাতে সবার উপরে থাকে */
+    border-top: 1px solid #14362a !important;
+    box-shadow: 0 -2px 15px rgba(0,0,0,0.8);
 }
 
-.nav-tab {
+.nav-item {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: #fff;
-    gap: 4px;
     text-decoration: none;
+    color: #ffffff !important;
 }
 
-.nav-tab i {
-    font-size: 18px;
-    color: #fff;
+.nav-item i {
+    font-size: 20px !important;
+    margin-bottom: 5px;
+    color: #ffffff !important;
 }
 
-.nav-tab span {
-    color: #ffdf1b !important; /* আপনার হলুদ রঙ */
-    text-transform: uppercase !important;
-    font-size: 9px !important;
-    font-weight: 900;
+.nav-item span {
+    color: #ffdf1b !important; /* আপনার সাইটের গোল্ডেন কালার */
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
 }
 
-.middle-tab i {
-    font-size: 22px;
-    color: #ffdf1b;
+/* মাঝখানের মেনু বাটনের বিশেষ ডিজাইন */
+.main-menu {
+    background: #ffdf1b !important;
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+    margin-top: -30px !important;
+    border: 5px solid #0a0a0a !important;
 }
+
+.main-menu i, .main-menu span {
+    color: #000 !important;
+}
+
+/* গেম কার্ডগুলো যাতে বাটনের নিচে চাপা না পড়ে */
+body { padding-bottom: 90px !important; }
 </style>
 
-<!-- ৩. আইকন লাইব্রেরি (এটি ছাড়া ছবি আসবে না) -->
+<!-- ৩. আইকনগুলো দেখানোর জন্য এই লিঙ্কটি অবশ্যই হেডারের নিচে থাকতে হবে -->
 <link rel="stylesheet" href="https://cloudflare.com">
-
+  
 </body>
 </html>
