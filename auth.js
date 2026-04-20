@@ -1,5 +1,18 @@
-<script>
-    function openLogin() { alert("লগইন ফর্ম ওপেন হচ্ছে..."); /* এখানে ফর্মের কোড আসবে */ }
-    function openRegister() { alert("রেজিস্ট্রেশন ফর্ম ওপেন হচ্ছে..."); }
-    function openPromo() { alert("নতুন অফারগুলো শীঘ্রই আসছে!"); }
-</script>
+function openLogin() { document.getElementById('loginModal').style.display = 'flex'; }
+function closeAll() { document.getElementById('loginModal').style.display = 'none'; }
+
+function processLogin() {
+    const user = document.getElementById('loginUser').value;
+    const pass = document.getElementById('loginPass').value;
+    
+    let fd = new FormData();
+    fd.append('username', user);
+    fd.append('password', pass);
+
+    fetch('login_proc.php', { method: 'POST', body: fd })
+    .then(res => res.json())
+    .then(data => {
+        if(data.status === 'success') { location.reload(); }
+        else { alert(data.message); }
+    });
+}
