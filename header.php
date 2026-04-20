@@ -20,6 +20,8 @@ if ($isLoggedIn) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BETLOVER777 | Win Big</title>
     <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="stylesheet" href="https://cloudflare.com">
+
     <style>
         :root { --neon: #00ff88; --gold: #ffdf1b; --dark: #0a0f0d; }
         body { background: var(--dark); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 85px; }
