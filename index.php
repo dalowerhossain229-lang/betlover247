@@ -946,19 +946,7 @@ function closeModal(id) {
         setInterval(slideNext, 3000);
     })();
 </script>
-   <footer class="footer-nav">
-    <div class="nav-tab active" onclick="location.reload()"><span>Home</span></div>
-    
-    <!-- নতুন বাটন: Sports -->
-    <div class="nav-tab"><span>Sports</span></div>
-    
-    <div class="nav-tab" onclick="openPromo()"><span>Promo</span></div>
-    
-    <!-- নতুন বাটন: Casino -->
-    <div class="nav-tab"><span>Casino</span></div>
-    
-    <div class="nav-tab" onclick="openProfile()"><span>Account</span></div>
-</footer>
+
     <!-- ১. নিচের ৫টি বাটন ফিরিয়ে আনার জন্য সঠিক HTML -->
 <footer class="footer-nav">
     <div class="nav-tab" onclick="location.href='index.php'">
