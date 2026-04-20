@@ -36,8 +36,7 @@ function processLogin() {
     })
     .catch(() => alert("লগইন সার্ভার কানেকশন এরর!"));
 }
-
-// ৩. রেজিস্ট্রেশন প্রসেস
+// ৩. রেজিস্ট্রেশন প্রসেস (অটো-লগইন সহ)
 function processRegister() {
     const name = document.getElementById('regName').value;
     const user = document.getElementById('regUser').value;
@@ -53,14 +52,16 @@ function processRegister() {
     fetch('register.php', { method: 'POST', body: fd })
     .then(res => res.json())
     .then(data => {
-        alert(data.message);
         if(data.status === 'success') { 
-            closeAll(); 
-            openLogin(); 
+            alert(data.message);
+            location.reload(); // পেজ রিলোড হবে এবং ইউজারকে লগইন অবস্থায় দেখাবে
+        } else {
+            alert(data.message);
         }
     })
     .catch(() => alert("রেজিস্ট্রেশন সার্ভার কানেকশন এরর!"));
 }
+
 
 // ৪. অন্যান্য লিঙ্ক
 function openOffer() {
