@@ -35,3 +35,13 @@ function processRegister() {
         if(data.status === 'success') { closeAll(); openLogin(); }
     });
 }
+// রেজিস্ট্রেশন পপ-আপ ওপেন করা
+function openRegister() {
+    const regModal = document.getElementById('regModal');
+    if(regModal) regModal.style.display = 'flex';
+}
+
+// অফার পেজে নিয়ে যাওয়া
+function openOffer() {
+    window.location.href = 'offer.php';
+}
