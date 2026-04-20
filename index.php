@@ -312,45 +312,45 @@ if (isset($_SESSION['user_id'])) {
     <!-- সারি ১ -->
 <!-- ৩১৩ নম্বর লাইনে এই কোডটি বসান -->
 <div class="game-card" onclick="window.location.href='superace/'">
-    <img src="assets/super-ace.png">
+    <img src="super-ace.png">
     <p>Super Ace</p>
 </div>
 
-    <div class="game-card"><img src="assets/chicken-road.png"><p>Chicken road</p></div>
-    <div class="game-card"><img src="assets/lottery.png"><p>Lottery</p></div>
+    <div class="game-card"><img src="chicken-road.png"><p>Chicken road</p></div>
+    <div class="game-card"><img src="lottery.png"><p>Lottery</p></div>
     <div class="game-card search-card">
         <input type="text" placeholder="Search..." class="search-input">
     </div>
 
     <!-- সারি ২ -->
 <div class="game-card" onclick="window.location.href='games/wheel/wheel.php'">
-    <img src="assets/wheel.png">
+    <img src="wheel.png">
     <p>Wheel</p>
 </div>
 
-    <div class="game-card"><img src="assets/better-ace.png"><p>Better Ace</p></div>
-    <div class="game-card"><img src="assets/lucky-slot.png"><p>Lucky slot</p></div>
-    <div class="game-card"><img src="assets/cricket.png"><p>Cricket</p></div>
+    <div class="game-card"><img src="better-ace.png"><p>Better Ace</p></div>
+    <div class="game-card"><img src="lucky-slot.png"><p>Lucky slot</p></div>
+    <div class="game-card"><img src="cricket.png"><p>Cricket</p></div>
 
     <!-- সারি ৩ -->
-    <div class="game-card"><img src="assets/football.png"><p>Football</p></div>
-    <div class="game-card"><img src="assets/crazy-time.png"><p>Crazy time</p></div>
-    <div class="game-card"><img src="assets/super-wheel.png"><p>Super wheel</p></div>
-    <div class="game-card"><img src="assets/ludu.png"><p>Ludu</p></div>
+    <div class="game-card"><img src="football.png"><p>Football</p></div>
+    <div class="game-card"><img src="crazy-time.png"><p>Crazy time</p></div>
+    <div class="game-card"><img src="super-wheel.png"><p>Super wheel</p></div>
+    <div class="game-card"><img src="ludu.png"><p>Ludu</p></div>
 
     <!-- সারি ৪ -->
-    <div class="game-card"><img src="assets/aviator.png"><p>Aviator</p></div>
-    <div class="game-card"><img src="assets/mega-ace.png"><p>Mega Ace</p></div>
+    <div class="game-card"><img src="aviator.png"><p>Aviator</p></div>
+    <div class="game-card"><img src="mega-ace.png"><p>Mega Ace</p></div>
     <div class="game-card">
     <a href="https://onrender.com<?php echo isset($user['username']) ? $user['username'] : ''; ?>" style="display:block; text-decoration:none; color:inherit;">
-        <img src="assets/lucky-777.png">
+        <img src="lucky-777.png">
         <p>Lucky 777</p>
     </a>
 </div>
 
 
 
-    <div class="game-card"><img src="assets/super-ace-2.png"><p>Super Ace-2</p></div>
+    <div class="game-card"><img src="super-ace-2.png"><p>Super Ace-2</p></div>
 </div>
 
 
