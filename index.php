@@ -77,6 +77,17 @@ include 'header.php'; // উপরের হেডার অংশ নিয়ে 
         <p onclick="closeAll()" style="font-size:12px; cursor:pointer; margin-top:10px;">বন্ধ করুন</p>
     </div>
 </div>
+<!-- রেজিস্ট্রেশন মোডাল -->
+<div id="regModal" class="modal-bg">
+    <div class="modal-box">
+        <h2 style="color:var(--neon)">REGISTER</h2>
+        <input type="text" id="regName" placeholder="আপনার পুরো নাম">
+        <input type="text" id="regUser" placeholder="ইউজার আইডি">
+        <input type="password" id="regPass" placeholder="পাসওয়ার্ড">
+        <button class="btn-auth" onclick="processRegister()">একাউন্ট খুলুন</button>
+        <p onclick="closeAll()" style="font-size:12px; cursor:pointer; margin-top:10px;">বন্ধ করুন</p>
+    </div>
+</div>
 
 <style>
 .modal-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 9999; }
