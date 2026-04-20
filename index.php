@@ -632,10 +632,7 @@ function handleGameBet(amount, gameName) {
     });
 }
 
-    function updateAuthUI() { 
-        document.getElementById('authSection').style.display = isLoggedIn ? 'none' : 'flex'; 
-        document.getElementById('balanceSection').style.display = isLoggedIn ? 'flex' : 'none'; 
-    }
+    
 function updateDepNumber() {
     const method = document.getElementById('depMethod').value;
     const text = document.getElementById('depMethodText');
