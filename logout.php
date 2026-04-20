@@ -1,7 +1,10 @@
 <?php
-session_start();
-session_unset();
-session_destroy();
-header("Location: index.php"); // লগআউট হওয়ার পর হোম পেজে নিয়ে যাবে
+session_start(); // সেশন শুরু করা যাতে এটি বন্ধ করা যায়
+session_unset(); // সব সেশন ভেরিয়েবল মুছে ফেলা
+session_destroy(); // সেশনটি পুরোপুরি ধ্বংস করা
+
+// লগআউট হওয়ার পর ইউজারকে মেইন পেজে পাঠিয়ে দেওয়া
+header("Location: index.php");
 exit();
 ?>
+
