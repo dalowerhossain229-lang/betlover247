@@ -77,24 +77,33 @@ include 'header.php'; // উপরের হেডার অংশ নিয়ে 
         <p onclick="closeAll()" style="font-size:12px; cursor:pointer; margin-top:10px;">বন্ধ করুন</p>
     </div>
 </div>
-<!-- রেজিস্ট্রেশন মোডাল -->
-<div id="regModal" class="modal-bg">
-    <div class="modal-box">
-        <h2 style="color:var(--neon)">REGISTER</h2>
-        <input type="text" id="regName" placeholder="আপনার পুরো নাম">
-        <input type="text" id="regUser" placeholder="ইউজার আইডি">
-        <input type="password" id="regPass" placeholder="পাসওয়ার্ড">
-        <button class="btn-auth" onclick="processRegister()">একাউন্ট খুলুন</button>
-        <p onclick="closeAll()" style="font-size:12px; cursor:pointer; margin-top:10px;">বন্ধ করুন</p>
+<!-- রেজিস্ট্রেশন পপ-আপ ফর্ম -->
+<div id="regModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 style="color:var(--neon); margin:0;">REGISTER</h2>
+            <span class="close-btn" onclick="closeModal('regModal')">&times;</span>
+        </div>
+        <div class="modal-body">
+            <input type="text" id="regName" class="modal-input" placeholder="আপনার পুরো নাম">
+            <input type="text" id="regUser" class="modal-input" placeholder="ইউজার আইডি (যেমন: 017...)">
+            <input type="password" id="regPass" class="modal-input" placeholder="পাসওয়ার্ড">
+            <button class="btn-auth-submit" onclick="processRegister()">একাউন্ট খুলুন</button>
+        </div>
     </div>
 </div>
 
 <style>
-.modal-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 9999; }
-.modal-box { background: #161b22; padding: 30px; border-radius: 15px; border: 1px solid var(--neon); width: 85%; max-width: 350px; text-align: center; }
-.modal-box input { width: 100%; padding: 12px; margin-bottom: 15px; background: #000; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; outline: none; }
-.modal-box input:focus { border-color: var(--neon); }
+/* ফর্মের উজ্জ্বল ডিজাইন */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 9999; }
+.modal-content { background: #161b22; width: 90%; max-width: 350px; padding: 25px; border-radius: 15px; border: 1px solid var(--neon); box-shadow: 0 0 20px rgba(0,255,136,0.3); }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.close-btn { color: white; font-size: 28px; cursor: pointer; }
+.modal-input { width: 100%; padding: 12px; margin-bottom: 15px; background: #000; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; outline: none; }
+.modal-input:focus { border-color: var(--neon); }
+.btn-auth-submit { width: 100%; padding: 12px; background: var(--gold); color: black; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; }
 </style>
+
 <script src="auth.js"></script>
 
 <?php include 'footer.php'; ?>
