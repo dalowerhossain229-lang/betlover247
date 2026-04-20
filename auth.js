@@ -1,10 +1,26 @@
-function openLogin() { document.getElementById('loginModal').style.display = 'flex'; }
-function closeAll() { document.getElementById('loginModal').style.display = 'none'; }
+// ১. মোডাল কন্ট্রোল ফাংশন
+function openLogin() { 
+    closeAll();
+    document.getElementById('loginModal').style.display = 'flex'; 
+}
 
+function openRegister() { 
+    closeAll();
+    document.getElementById('regModal').style.display = 'flex'; 
+}
+
+function closeAll() { 
+    if(document.getElementById('loginModal')) document.getElementById('loginModal').style.display = 'none';
+    if(document.getElementById('regModal')) document.getElementById('regModal').style.display = 'none';
+}
+
+// ২. লগইন প্রসেস
 function processLogin() {
     const user = document.getElementById('loginUser').value;
     const pass = document.getElementById('loginPass').value;
     
+    if(!user || !pass) { alert("আইডি এবং পাসওয়ার্ড দিন!"); return; }
+
     let fd = new FormData();
     fd.append('username', user);
     fd.append('password', pass);
@@ -12,17 +28,23 @@ function processLogin() {
     fetch('login_proc.php', { method: 'POST', body: fd })
     .then(res => res.json())
     .then(data => {
-        if(data.status === 'success') { location.reload(); }
-        else { alert(data.message); }
-    });
+        if(data.status === 'success') { 
+            location.reload(); 
+        } else { 
+            alert(data.message); 
+        }
+    })
+    .catch(() => alert("লগইন সার্ভার কানেকশন এরর!"));
 }
-function openRegister() { document.getElementById('regModal').style.display = 'flex'; }
 
+// ৩. রেজিস্ট্রেশন প্রসেস
 function processRegister() {
     const name = document.getElementById('regName').value;
     const user = document.getElementById('regUser').value;
     const pass = document.getElementById('regPass').value;
     
+    if(!name || !user || !pass) { alert("সবগুলো তথ্য দিন!"); return; }
+
     let fd = new FormData();
     fd.append('fullName', name);
     fd.append('username', user);
@@ -32,16 +54,19 @@ function processRegister() {
     .then(res => res.json())
     .then(data => {
         alert(data.message);
-        if(data.status === 'success') { closeAll(); openLogin(); }
-    });
-}
-// রেজিস্ট্রেশন পপ-আপ ওপেন করা
-function openRegister() {
-    const regModal = document.getElementById('regModal');
-    if(regModal) regModal.style.display = 'flex';
+        if(data.status === 'success') { 
+            closeAll(); 
+            openLogin(); 
+        }
+    })
+    .catch(() => alert("রেজিস্ট্রেশন সার্ভার কানেকশন এরর!"));
 }
 
-// অফার পেজে নিয়ে যাওয়া
+// ৪. অন্যান্য লিঙ্ক
 function openOffer() {
     window.location.href = 'offer.php';
+}
+
+function openPromo() {
+    alert("নতুন প্রোমোশন অফার শীঘ্রই আসছে!");
 }
