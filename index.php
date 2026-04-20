@@ -84,5 +84,6 @@ include 'header.php'; // উপরের হেডার অংশ নিয়ে 
 .modal-box input { width: 100%; padding: 12px; margin-bottom: 15px; background: #000; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; outline: none; }
 .modal-box input:focus { border-color: var(--neon); }
 </style>
+<script src="auth.js"></script>
 
 <?php include 'footer.php'; ?>
