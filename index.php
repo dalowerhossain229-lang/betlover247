@@ -958,6 +958,84 @@ function closeModal(id) {
     <div class="nav-tab"><span>Casino</span></div>
     
     <div class="nav-tab" onclick="openProfile()"><span>Account</span></div>
-</footer> 
+</footer>
+    <!-- ১. নিচের ৫টি বাটন ফিরিয়ে আনার জন্য সঠিক HTML -->
+<footer class="footer-nav">
+    <div class="nav-tab" onclick="location.href='index.php'">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </div>
+    
+    <div class="nav-tab" onclick="alert('Sports Coming Soon!')">
+        <i class="fa-solid fa-trophy"></i>
+        <span>Sports</span>
+    </div>
+    
+    <div class="nav-tab middle-tab" onclick="openPromo()">
+        <i class="fa-solid fa-gift"></i>
+        <span>Promo</span>
+    </div>
+    
+    <div class="nav-tab" onclick="alert('Casino Coming Soon!')">
+        <i class="fa-solid fa-clover"></i>
+        <span>Casino</span>
+    </div>
+    
+    <div class="nav-tab" onclick="openProfile()">
+        <i class="fa-solid fa-user-circle"></i>
+        <span>Account</span>
+    </div>
+</footer>
+
+<!-- ২. বাটনগুলো স্ক্রিনে ফিক্স করার জন্য CSS -->
+<style>
+.footer-nav { 
+    position: fixed !important; 
+    bottom: 0 !important; 
+    left: 0;
+    width: 100%; 
+    background: #073128 !important; /* আপনার থিম কালার */
+    display: flex !important; 
+    justify-content: space-around; 
+    align-items: center; 
+    height: 70px !important; 
+    z-index: 9999 !important; 
+    border-top: 1px solid #14362a;
+    box-shadow: 0 -2px 15px rgba(0,0,0,0.6);
+}
+
+.nav-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+    gap: 4px;
+    text-decoration: none;
+}
+
+.nav-tab i {
+    font-size: 18px;
+    color: #fff;
+}
+
+.nav-tab span {
+    color: #ffdf1b !important; /* আপনার হলুদ রঙ */
+    text-transform: uppercase !important;
+    font-size: 9px !important;
+    font-weight: 900;
+}
+
+.middle-tab i {
+    font-size: 22px;
+    color: #ffdf1b;
+}
+</style>
+
+<!-- ৩. আইকন লাইব্রেরি (এটি ছাড়া ছবি আসবে না) -->
+<link rel="stylesheet" href="https://cloudflare.com">
+
 </body>
 </html>
