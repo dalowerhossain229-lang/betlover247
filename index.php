@@ -41,7 +41,8 @@ if (isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BETLOVER24 | Pro Master v6.1</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cloudflare.com">
+
     <style>
         :root { --primary-green:#073128 ; --bet-yellow: #ffdf1b; --dark-bg: #0a0a0a; --card-bg: #1a1a1a; --text-white: #ffffff; --error-color: #d32f2f; }
         body { background-color: var(--dark-bg); color: var(--text-white); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 90px; overflow-x: hidden; }
