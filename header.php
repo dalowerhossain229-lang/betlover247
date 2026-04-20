@@ -56,8 +56,19 @@ if ($isLoggedIn) {
             color: var(--gold); font-weight: bold; font-size: 11px;
             display: flex; align-items: center; cursor: pointer;
         }
+.logout-icon { 
+    background: #ff4d4d !important; 
+    color: white !important; 
+    width: 30px; 
+    height: 30px; 
+    border-radius: 4px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    border: none; 
+}
 
-        .logout-icon { background: #d32f2f; color: white; width: 30px; height: 30px; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; }
     </style>
 </head>
 <body>
