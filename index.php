@@ -947,7 +947,7 @@ function closeModal(id) {
     })();
 </script>
 
-  <!-- ১. ৫টি বাটন আইকনসহ ফিরিয়ে আনার মাস্টার কোড -->
+<!-- ১. ৫টি বাটন আইকনসহ ফিরিয়ে আনার ফাইনাল কোড -->
 <footer class="betlover-footer">
     <div class="nav-item" onclick="location.href='index.php'">
         <i class="fa-solid fa-house"></i>
@@ -959,9 +959,10 @@ function closeModal(id) {
         <span>SPORTS</span>
     </div>
     
-    <div class="nav-item main-menu" onclick="openPromo()">
-        <i class="fa-solid fa-bars"></i>
-        <span>MENU</span>
+    <!-- মাঝখানের PROMO বাটন -->
+    <div class="nav-item promo-center-btn" onclick="openPromo()">
+        <i class="fa-solid fa-gift"></i>
+        <span style="color:#000 !important;">PROMO</span>
     </div>
     
     <div class="nav-item" onclick="alert('Casino Coming Soon!')">
@@ -975,21 +976,21 @@ function closeModal(id) {
     </div>
 </footer>
 
-<!-- ২. বাটনগুলো স্ক্রিনে ফিক্স করার জন্য সুপার পাওয়ারফুল CSS -->
+<!-- ২. ডিজাইন এবং আইকন ঠিক করার CSS -->
 <style>
 .betlover-footer {
     position: fixed !important;
     bottom: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    height: 70px !important;
-    background: #073128 !important; /* আপনার সাইটের মেট গ্রিন কালার */
+    height: 75px !important;
+    background: #073128 !important; /* আপনার থিম গ্রিন */
     display: flex !important;
     justify-content: space-around !important;
     align-items: center !important;
-    z-index: 9999999 !important; /* যাতে সবার উপরে থাকে */
+    z-index: 999999 !important;
     border-top: 1px solid #14362a !important;
-    box-shadow: 0 -2px 15px rgba(0,0,0,0.8);
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
 }
 
 .nav-item {
@@ -1000,42 +1001,45 @@ function closeModal(id) {
     justify-content: center;
     cursor: pointer;
     text-decoration: none;
-    color: #ffffff !important;
 }
 
 .nav-item i {
-    font-size: 20px !important;
-    margin-bottom: 5px;
+    font-size: 18px !important;
     color: #ffffff !important;
+    margin-bottom: 4px;
 }
 
 .nav-item span {
-    color: #ffdf1b !important; /* আপনার সাইটের গোল্ডেন কালার */
-    font-size: 10px !important;
+    color: #ffdf1b !important; /* গোল্ডেন হলুদ */
+    font-size: 9px !important;
     font-weight: 900 !important;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-/* মাঝখানের মেনু বাটনের বিশেষ ডিজাইন */
-.main-menu {
-    background: #ffdf1b !important;
-    width: 60px !important;
-    height: 60px !important;
+/* মাঝখানের PROMO বাটনের গোল ডিজাইন */
+.promo-center-btn {
+    background: #ffdf1b !important; /* হলুদ ব্যাকগ্রাউন্ড */
+    width: 65px !important;
+    height: 65px !important;
     border-radius: 50% !important;
-    margin-top: -30px !important;
-    border: 5px solid #0a0a0a !important;
+    margin-top: -35px !important;
+    border: 5px solid #0a0a0a !important; /* কালো বর্ডার */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-.main-menu i, .main-menu span {
-    color: #000 !important;
+.promo-center-btn i {
+    color: #000 !important; /* আইকন কালো */
+    font-size: 22px !important;
+    margin-bottom: 2px;
 }
 
-/* গেম কার্ডগুলো যাতে বাটনের নিচে চাপা না পড়ে */
-body { padding-bottom: 90px !important; }
+/* গেম গ্রিড যাতে বাটনের নিচে চাপা না পড়ে */
+body { padding-bottom: 100px !important; }
 </style>
 
-<!-- ৩. আইকনগুলো দেখানোর জন্য এই লিঙ্কটি অবশ্যই হেডারের নিচে থাকতে হবে -->
+<!-- ৩. আইকন দেখানোর জন্য এই লিঙ্কটি সবথেকে জরুরি -->
 <link rel="stylesheet" href="https://cloudflare.com">
-  
+
 </body>
 </html>
