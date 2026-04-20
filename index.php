@@ -683,26 +683,31 @@ num.innerText = '<?php echo $ng_no; ?>';
 
     // লগইন লজিক
     function handleLogin() {
-        const id = document.getElementById('loginID').value;
-        const pass = document.getElementById('loginPass').value;
-        if(!id || !pass) { alert("আইডি ও পাসওয়ার্ড দিন!"); return; }
-        
-        let fd = new FormData();
-        fd.append('username', id); 
-        fd.append('password', pass);
+    const id = document.getElementById('loginID').value;
+    const pass = document.getElementById('loginPass').value;
+    
+    let fd = new FormData();
+    fd.append('username', id);
+    fd.append('password', pass);
 
-        fetch('login_proc.php', { method: 'POST', body: fd })
-        .then(res => res.json())
-        .then(data => {
-            if(data.status === 'success') {
-                isLoggedIn = true; 
-                localStorage.setItem('isLoggedIn', 'true');
-                updateAuthUI(); 
-                closeModal('loginModal'); 
-                location.reload();
-            } else { alert(data.message); }
-        }).catch(() => alert("লগইন সার্ভার কানেকশন এরর!"));
-    }
+    fetch('login_proc.php', { method: 'POST', body: fd })
+    .then(res => {
+        if (!res.ok) throw new Error("HTTP error " + res.status);
+        return res.json();
+    })
+    .then(data => {
+        if (data.status === 'success') {
+            location.reload();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("লগইন সার্ভার কানেকশন এরর!");
+    });
+}
+
 
 function handleLogout() {
     // ১. ব্রাউজারের পুরনো মেমোরি ডিলিট করা
