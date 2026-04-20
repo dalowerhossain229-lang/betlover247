@@ -16,3 +16,22 @@ function processLogin() {
         else { alert(data.message); }
     });
 }
+function openRegister() { document.getElementById('regModal').style.display = 'flex'; }
+
+function processRegister() {
+    const name = document.getElementById('regName').value;
+    const user = document.getElementById('regUser').value;
+    const pass = document.getElementById('regPass').value;
+    
+    let fd = new FormData();
+    fd.append('fullName', name);
+    fd.append('username', user);
+    fd.append('password', pass);
+
+    fetch('register.php', { method: 'POST', body: fd })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        if(data.status === 'success') { closeAll(); openLogin(); }
+    });
+}
