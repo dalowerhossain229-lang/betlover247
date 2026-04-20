@@ -708,15 +708,16 @@ num.innerText = '<?php echo $ng_no; ?>';
     });
 }
 
-
 function handleLogout() {
-    // ১. ব্রাউজারের পুরনো মেমোরি ডিলিট করা
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userBalance');
+    // ব্রাউজারের সব লোকাল মেমোরি ক্লিয়ার করা
+    localStorage.clear();
+    sessionStorage.clear();
     
-    // ২. সার্ভার থেকে লগআউট করা
-    window.location.href = 'logout.php';
+    // সরাসরি logout.php ফাইলে পাঠানো
+    window.location.replace('logout.php'); 
 }
+
+
 window.onload = function() { 
     // সরাসরি PHP সেশন থেকে লগইন স্ট্যাটাস চেক করা (সবথেকে নিরাপদ)
     const isLoggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
