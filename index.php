@@ -67,5 +67,22 @@ include 'header.php'; // উপরের হেডার অংশ নিয়ে 
 .game-card img { width: 100%; height: 70px; object-fit: cover; }
 .game-card p { margin: 0; padding: 5px 0; font-size: 8px; font-weight: 900; color: var(--gold); background: rgba(0,0,0,0.8); }
 </style>
+<!-- লগইন মোডাল -->
+<div id="loginModal" class="modal-bg">
+    <div class="modal-box">
+        <h2 style="color:var(--neon)">LOGIN</h2>
+        <input type="text" id="loginUser" placeholder="ইউজার আইডি">
+        <input type="password" id="loginPass" placeholder="পাসওয়ার্ড">
+        <button class="btn-auth" onclick="processLogin()">প্রবেশ করুন</button>
+        <p onclick="closeAll()" style="font-size:12px; cursor:pointer; margin-top:10px;">বন্ধ করুন</p>
+    </div>
+</div>
+
+<style>
+.modal-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 9999; }
+.modal-box { background: #161b22; padding: 30px; border-radius: 15px; border: 1px solid var(--neon); width: 85%; max-width: 350px; text-align: center; }
+.modal-box input { width: 100%; padding: 12px; margin-bottom: 15px; background: #000; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; outline: none; }
+.modal-box input:focus { border-color: var(--neon); }
+</style>
 
 <?php include 'footer.php'; ?>
