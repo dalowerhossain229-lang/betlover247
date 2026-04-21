@@ -102,5 +102,18 @@ include 'header.php';
     .p-btn:hover { background: #073128; border-color: var(--neon); transform: translateX(5px); }
     .p-btn:active { transform: scale(0.98); }
 </style>
+<!-- Password Update Modal -->
+<div id="passModal" class="modal-overlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 9999;">
+    <div class="modal-content" style="background: #073128; border: 1.5px solid var(--neon); padding: 25px; border-radius: 15px; width: 300px; text-align: center; position: relative; box-shadow: 0 0 20px rgba(0,255,136,0.2);">
+        <span onclick="closeAll()" style="position: absolute; top: 10px; right: 15px; color: #fff; cursor: pointer; font-size: 24px; font-weight: bold;">&times;</span>
+        <h3 style="color: var(--neon); margin-bottom: 20px; font-weight: 900;">UPDATE PASSWORD</h3>
+        
+        <input type="password" id="oldPass" placeholder="বর্তমান পাসওয়ার্ড" style="width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #1a2a22; background: #000; color: #fff; box-sizing: border-box;">
+        
+        <input type="password" id="newPass" placeholder="নতুন পাসওয়ার্ড" style="width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #1a2a22; background: #000; color: #fff; box-sizing: border-box;">
+        
+        <button onclick="processUpdatePass()" style="width: 100%; padding: 14px; background: var(--neon); color: #000; border: none; font-weight: 900; border-radius: 8px; cursor: pointer; text-transform: uppercase;">SAVE CHANGES</button>
+    </div>
+</div>
 
 <?php include 'footer.php'; ?>
