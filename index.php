@@ -85,17 +85,21 @@ include 'header.php';
 </div>
 
 
-<!-- ৫. রেজিস্ট্রেশন পপ-আপ (Modal) -->
-<div id="regModal" class="modal-overlay">
+<div id="regModal" class="modal-overlay" style="display:none;">
     <div class="modal-content">
-        <h2 style="color:var(--neon); margin-top:0; font-size:20px;">REGISTER</h2>
-        <input type="text" id="regName" class="modal-input" placeholder="আপনার পুরো নাম">
-        <input type="text" id="regUser" class="modal-input" placeholder="ইউজার আইডি">
-        <input type="password" id="regPass" class="modal-input" placeholder="পাসওয়ার্ড">
-        <button class="btn-auth-submit" onclick="processRegister()">একাউন্ট খুলুন</button>
-        <p onclick="closeAll()" style="color:#888; font-size:12px; cursor:pointer; margin-top:15px; text-decoration:underline;">বন্ধ করুন</p>
+        <span onclick="closeAll()" class="close-btn">&times;</span>
+        <h2 style="color: var(--neon); margin-bottom: 20px;">REGISTER</h2>
+        
+        <!-- পুরো নাম এর বক্সটি সরিয়ে ফেলা হয়েছে -->
+        <input type="text" id="regUser" placeholder="ইউজার আইডি (Username)" class="modal-input">
+        <input type="password" id="regPass" placeholder="পাসওয়ার্ড (Password)" class="modal-input">
+        
+        <button onclick="processRegister()" class="btn-submit-reg" style="background: var(--gold); color: #000; width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 900; margin-top: 15px; cursor: pointer;">একাউন্ট খুলুন</button>
+        
+        <p onclick="closeAll()" style="color: #555; margin-top: 15px; cursor: pointer; font-size: 13px;">বন্ধ করুন</p>
     </div>
 </div>
+
 
 <style>
 /* ইনডেক্স পেজ স্টাইল */
