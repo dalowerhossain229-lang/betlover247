@@ -54,6 +54,25 @@ include 'header.php';
         <p onclick="closeAll()" style="color:#888; font-size:12px; cursor:pointer; margin-top:15px; text-decoration:underline;">বন্ধ করুন</p>
     </div>
 </div>
+<!-- ৬. উজ্জ্বল ডিপোজিট মোডাল -->
+<div id="depModal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 style="color:var(--neon); margin-top:0; font-size:20px;">DEPOSIT</h2>
+        
+        <!-- বিকাশ/নগদ নম্বর কার্ড -->
+        <div style="background:rgba(0,255,136,0.1); padding:10px; border-radius:10px; border:1px dashed var(--neon); margin-bottom:15px;">
+            <p style="color:#ccc; font-size:10px; margin:0;">Bkash/Nagad (Cash Out)</p>
+            <h3 style="color:var(--gold); margin:5px 0; font-size:18px;">017XXXXXXXX</h3>
+            <span style="background:var(--neon); color:#000; padding:2px 8px; border-radius:5px; font-size:9px; font-weight:900;">AGENT</span>
+        </div>
+
+        <input type="number" id="depAmount" class="modal-input" placeholder="টাকার পরিমাণ">
+        <input type="text" id="depTrx" class="modal-input" placeholder="TrxID (ট্রানজেকশন আইডি)">
+        
+        <button class="btn-auth-submit" onclick="processDeposit()">রিকোয়েস্ট পাঠান</button>
+        <p onclick="closeAll()" style="color:#888; font-size:12px; cursor:pointer; margin-top:15px;">বন্ধ করুন</p>
+    </div>
+</div>
 
 <!-- ৫. রেজিস্ট্রেশন পপ-আপ (Modal) -->
 <div id="regModal" class="modal-overlay">
