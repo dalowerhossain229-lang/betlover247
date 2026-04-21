@@ -136,4 +136,14 @@ window.onclick = function(event) {
         if (menu) menu.style.display = 'none';
     }
 }
+function handleLogout() {
+    if(confirm("আপনি কি লগআউট করতে চান?")) {
+        // ব্রাউজারের লোকাল ডাটা ক্লিয়ার করা
+        localStorage.clear();
+        sessionStorage.clear();
+        
+        // সরাসরি logout.php ফাইলে পাঠানো
+        window.location.replace('logout.php');
+    }
+}
 
