@@ -15,7 +15,7 @@
         <div class="swiper-wrapper">
             <?php
             // ডাটাবেস থেকে ছবি আনার চেষ্টা
-            $slider_res = $conn->query("SELECT * FROM sliders WHERE status = 'active' LIMIT 10");
+            $slider_res = false; 
 
             if ($slider_res && $slider_res->num_rows > 0) {
                 while($slide = $slider_res->fetch_assoc()) {
