@@ -124,4 +124,16 @@ function processWithdraw() {
     })
     .catch(() => alert("সার্ভার এরর! process_withdraw.php চেক করুন।"));
 }
+function showWalletMenu() {
+    const menu = document.getElementById('walletMenu');
+    menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'flex' : 'none';
+}
+
+// মেনুর বাইরে ক্লিক করলে মেনু বন্ধ হওয়া
+window.onclick = function(event) {
+    if (!event.target.matches('.balance-chip-top')) {
+        const menu = document.getElementById('walletMenu');
+        if (menu) menu.style.display = 'none';
+    }
+}
 
