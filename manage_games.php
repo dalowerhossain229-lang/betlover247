@@ -50,7 +50,15 @@ $games = $conn->query("SELECT * FROM game_settings ORDER BY id DESC");
             <p><strong>গেম:</strong> <?php echo $row['game_name']; ?></p>
             <p><strong>RTP:</strong> <?php echo $row['rtp_percent']; ?>%</p>
             <p style="font-size: 10px; color: #555;">API: <?php echo $row['api_key']; ?></p>
-        </div>
+           <div style="margin-top:10px; border-top:1px solid #333; padding-top:10px;">
+    <form method="POST" style="display:flex; gap:10px; align-items:center;">
+        <input type="hidden" name="game_id" value="<?php echo $row['id']; ?>">
+        <span style="font-size:12px; color:#aaa;">RTP:</span>
+        <input type="number" name="rtp_value" value="<?php echo $row['rtp_percent']; ?>" style="width:65px; margin-bottom:0; padding:5px; background:#000; color:#00ff88; border:1px solid #444;">
+        <button type="submit" name="update_rtp" style="background:#00ff88; color:#000; border:none; padding:5px 10px; border-radius:4px; font-weight:bold; cursor:pointer;">SET</button>
+    </form>
+</div>
+    
     <?php endwhile; ?>
 </body>
 </html>
