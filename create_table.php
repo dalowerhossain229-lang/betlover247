@@ -1,7 +1,12 @@
 <?php
+// ১. ডাটাবেস কানেকশন চেক করা
 include 'db.php';
 
-// ১. টেবিল তৈরির SQL কোড
+if (!$conn) {
+    die("কানেকশন ফেল: " . mysqli_connect_error());
+}
+
+// ২. টেবিল তৈরির SQL
 $sql = "CREATE TABLE IF NOT EXISTS `deposits` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(50) NOT NULL,
@@ -13,14 +18,12 @@ $sql = "CREATE TABLE IF NOT EXISTS `deposits` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
-// ২. কোডটি রান করা এবং রেজাল্ট দেখানো
+// ৩. কুয়েরি রান এবং এরর ডিবাগিং
 if ($conn->query($sql) === TRUE) {
-    echo "<div style='text-align:center; margin-top:50px; font-family:sans-serif;'>
-            <h1 style='color:#00ff88;'>চমৎকার!</h1>
-            <p style='font-size:20px;'>deposits টেবিলটি সফলভাবে আপনার ডাটাবেসে তৈরি হয়েছে।</p>
-            <p style='color:red;'><b>নিরাপত্তার জন্য এখনই গিটহাব থেকে create_table.php ফাইলটি ডিলিট করে দিন।</b></p>
-          </div>";
+    echo "<h1 style='color:green; text-align:center;'>চমৎকার! deposits টেবিলটি সফলভাবে তৈরি হয়েছে।</h1>";
 } else {
-    echo "Error: " . $conn->error;
+    // এখানে আসল এররটি দেখাবে
+    echo "<h1 style='color:red; text-align:center;'>টেবিল তৈরি হয়নি!</h1>";
+    echo "<p style='text-align:center;'>এরর মেসেজ: " . $conn->error . "</p>";
 }
 ?>
