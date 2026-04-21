@@ -1,78 +1,106 @@
 <?php
+// ১. সেশন এবং সিকিউরিটি চেক (সবার আগে থাকতে হবে)
 session_start();
 include 'db.php';
-include 'header.php'; // আপনার সেই সুন্দর হেডারটি এখানেও থাকবে
 
+// ইউজার লগইন না থাকলে ইনডেক্স পেজে পাঠিয়ে দিবে
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
 }
 
+// ২. ডাটাবেস থেকে ইউজারের সব তথ্য নিয়ে আসা
 $user = $_SESSION['user_id'];
 $res = $conn->query("SELECT * FROM users WHERE username = '$user'");
 $userData = $res->fetch_assoc();
 
-// ডাটাবেস থেকে তথ্য (আপনার প্রয়োজন অনুযায়ী)
-$balance = $userData['balance'] ?? 0.00;
-$bonus = $userData['bonus_balance'] ?? 0.00;
-$turnover_done = $userData['turnover_done'] ?? 0;
-$turnover_target = $userData['turnover_target'] ?? 1000; // উদাহরণ
-$turnover_percent = ($turnover_done / $turnover_target) * 100;
+// ডাটাবেস ভ্যালু (যদি ডাটাবেসে কলাম না থাকে তবে ০ দেখাবে)
+$balance = (float)($userData['balance'] ?? 0.00);
+$bonus = (float)($userData['bonus_balance'] ?? 0.00);
+$turnover_done = (float)($userData['turnover_done'] ?? 0.00);
+$turnover_target = (float)($userData['turnover_target'] ?? 1000.00);
+
+// টার্নওভার পার্সেন্টেজ হিসাব
+$turnover_percent = ($turnover_target > 0) ? ($turnover_done / $turnover_target) * 100 : 0;
+if($turnover_percent > 100) $turnover_percent = 100;
+
+// ৩. হেডার ইনক্লুড করা (সব রিডাইরেক্ট চেক শেষ করার পর)
+include 'header.php'; 
 ?>
 
-<div class="profile-container" style="padding: 15px; background: var(--dark); min-height: 100vh;">
+<div class="profile-page" style="padding: 15px; max-width: 500px; margin: auto;">
     
-    <!-- ১. ব্যালেন্স ও বোনাস কার্ড -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-        <div style="background: rgba(0,255,136,0.1); border: 1px solid var(--neon); padding: 15px; border-radius: 10px; text-align: center;">
-            <small style="color: #ccc;">Main Balance</small>
-            <h2 style="color: var(--gold); margin: 5px 0;">৳ <?php echo number_format($balance, 2); ?></h2>
+    <!-- ব্যালেন্স কার্ড সেকশন -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
+        <div style="background: linear-gradient(135deg, #073128, #000); border: 1.5px solid var(--neon); padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 5px 15px rgba(0,255,136,0.1);">
+            <small style="color: #aaa; text-transform: uppercase; font-size: 10px;">Main Balance</small>
+            <h2 style="color: var(--gold); margin: 5px 0; font-size: 20px;">৳ <?php echo number_format($balance, 2); ?></h2>
         </div>
-        <div style="background: rgba(255,223,27,0.1); border: 1px solid var(--gold); padding: 15px; border-radius: 10px; text-align: center;">
-            <small style="color: #ccc;">Bonus Balance</small>
-            <h2 style="color: var(--neon); margin: 5px 0;">৳ <?php echo number_format($bonus, 2); ?></h2>
+        
+        <div style="background: linear-gradient(135deg, #2d2600, #000); border: 1.5px solid var(--gold); padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 5px 15px rgba(255,223,27,0.1);">
+            <small style="color: #aaa; text-transform: uppercase; font-size: 10px;">Bonus Balance</small>
+            <h2 style="color: var(--neon); margin: 5px 0; font-size: 20px;">৳ <?php echo number_format($bonus, 2); ?></h2>
         </div>
     </div>
 
-    <!-- ২. টার্নওভার লাইন (Progress Bar) -->
-    <div style="background: #111; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px;">
-            <span>Turnover Progress</span>
-            <span><?php echo $turnover_done; ?> / <?php echo $turnover_target; ?></span>
+    <!-- টার্নওভার প্রগ্রেস বার -->
+    <div style="background: #0d1210; padding: 18px; border-radius: 12px; margin-top: 20px; border: 1px solid #1a2a22;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; font-weight: 900;">
+            <span style="color: #fff;">TURNOVER PROGRESS</span>
+            <span style="color: var(--neon);"><?php echo number_format($turnover_done, 0); ?> / <?php echo number_format($turnover_target, 0); ?></span>
         </div>
-        <div style="width: 100%; height: 8px; background: #222; border-radius: 10px; overflow: hidden;">
+        <div style="width: 100%; height: 10px; background: #222; border-radius: 10px; overflow: hidden; border: 1px solid #333;">
             <div style="width: <?php echo $turnover_percent; ?>%; height: 100%; background: var(--neon); box-shadow: 0 0 10px var(--neon);"></div>
         </div>
+        <p style="font-size: 10px; color: #777; margin-top: 8px; text-align: center;">বোনাস আনলক করতে টার্নওভার সম্পন্ন করুন।</p>
     </div>
 
-    <!-- ৩. মেনু অপশনসমূহ -->
-    <div class="profile-menu" style="display: flex; flex-direction: column; gap: 10px;">
-        <button class="p-menu-btn" onclick="location.href='live_chat.php'"><i class="fa-solid fa-headset"></i> Live Chat</button>
-        <button class="p-menu-btn" onclick="location.href='transactions.php'"><i class="fa-solid fa-list-check"></i> Transaction History</button>
-        <button class="p-menu-btn" onclick="location.href='bet_history.php'"><i class="fa-solid fa-clock-rotate-left"></i> Bet History</button>
-        <button class="p-menu-btn" onclick="openUpdatePass()"><i class="fa-solid fa-key"></i> Update Password</button>
-        <button class="p-menu-btn" style="color: #ff4d4d; border-color: #ff4d4d;" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    <!-- মেনু লিস্ট -->
+    <div style="margin-top: 25px; display: flex; flex-direction: column; gap: 12px; padding-bottom: 30px;">
+        
+        <button class="p-btn" onclick="location.href='live_chat.php'">
+            <i class="fa-solid fa-headset"></i> Live Chat <span style="margin-left:auto; color:#555;">&gt;</span>
+        </button>
+
+        <button class="p-btn" onclick="location.href='transactions.php'">
+            <i class="fa-solid fa-receipt"></i> Transaction History <span style="margin-left:auto; color:#555;">&gt;</span>
+        </button>
+
+        <button class="p-btn" onclick="location.href='bet_history.php'">
+            <i class="fa-solid fa-dice"></i> Bet History <span style="margin-left:auto; color:#555;">&gt;</span>
+        </button>
+
+        <button class="p-btn" onclick="openUpdatePass()">
+            <i class="fa-solid fa-shield-halved"></i> Update Password <span style="margin-left:auto; color:#555;">&gt;</span>
+        </button>
+
+        <button class="p-btn" style="border-color: #ff4d4d22; background: #1a0a0a;" onclick="handleLogout()">
+            <i class="fa-solid fa-power-off" style="color: #ff4d4d;"></i> <span style="color: #ff4d4d;">Logout</span>
+        </button>
+
     </div>
 </div>
 
 <style>
-.p-menu-btn {
-    width: 100%;
-    padding: 15px;
-    background: #0a1510;
-    border: 1px solid #1a2a22;
-    border-radius: 8px;
-    color: white;
-    text-align: left;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.p-menu-btn i { color: var(--neon); width: 20px; }
-.p-menu-btn:hover { background: #073128; border-color: var(--neon); }
+    .p-btn {
+        width: 100%;
+        padding: 16px;
+        background: #0a0f0d;
+        border: 1px solid #1a2a22;
+        border-radius: 10px;
+        color: white;
+        text-align: left;
+        font-weight: 700;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+    .p-btn i { color: var(--neon); font-size: 18px; width: 25px; text-align: center; }
+    .p-btn:hover { background: #073128; border-color: var(--neon); transform: translateX(5px); }
+    .p-btn:active { transform: scale(0.98); }
 </style>
 
 <?php include 'footer.php'; ?>
