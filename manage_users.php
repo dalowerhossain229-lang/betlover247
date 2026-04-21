@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 include 'db.php';
@@ -48,7 +49,15 @@ $users_res = $conn->query("SELECT * FROM users ORDER BY id DESC");
     <?php if($users_res->num_rows > 0): while($row = $users_res->fetch_assoc()): ?>
         <div class="user-card">
             <span class="user-id">👤 <?php echo $row['username']; ?></span>
-            
+            <?php
+$user_ip = $row['last_ip'] ?? '0.0.0.0';
+$ip_check = $conn->query("SELECT COUNT(*) as total FROM users WHERE last_ip = '$user_ip'");
+$ip_count = ($ip_check) ? $ip_check->fetch_assoc()['total'] : 1;
+?>
+<div style="font-size: 12px; margin-bottom: 10px; color: <?php echo ($ip_count > 1) ? '#ff4d4d' : '#00ff88'; ?>;">
+    <b>IP:</b> <?php echo $user_ip; ?> <?php if($ip_count > 1) echo "(Duplicate: $ip_count)"; ?>
+</div>
+
             <form method="POST">
                 <input type="hidden" name="username" value="<?php echo $row['username']; ?>">
                 
