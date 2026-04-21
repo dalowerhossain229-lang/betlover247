@@ -123,6 +123,12 @@ function openUpdatePass() {
         alert("মোডাল খুঁজে পাওয়া যাচ্ছে না!");
     }
 }
+function handleLogout() {
+    if(confirm("আপনি কি নিশ্চিতভাবে লগআউট করতে চান?")) {
+        window.location.href = 'logout.php';
+    }
+}
+    
 </script>
 
 
