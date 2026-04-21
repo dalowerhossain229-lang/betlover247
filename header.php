@@ -32,29 +32,64 @@ if ($isLoggedIn) {
         
         /* টপ নেভিগেশন ডিজাইন */
         .top-nav { 
-            background: linear-gradient(180deg, #073128, #000); 
-            display: flex; justify-content: space-between; 
-            padding: 0 12px; align-items: center; 
-            border-bottom: 2px solid var(--neon); 
-            position: sticky; top: 0; z-index: 1000; height: 65px; 
-            box-shadow: 0 0 20px rgba(0,255,136,0.3);
-        }
+    background: linear-gradient(180deg, #073128, #000); 
+    display: flex; 
+    justify-content: space-between; 
+    padding: 0 8px; 
+    align-items: center; 
+    border-bottom: 2px solid var(--neon); 
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
+    height: 55px !important; /* উচ্চতা কমিয়ে ফিক্সড করা হলো */
+    box-shadow: 0 0 15px rgba(0,255,136,0.2);
+}
 
-        .logo { 
-            font-size: 18px; font-weight: 900; 
-            color: var(--neon); text-shadow: 0 0 10px var(--neon); 
-            font-style: italic; white-space: nowrap; letter-spacing: 1px;
-        }
+.logo { 
+    font-size: 14px !important; /* ১৫ থেকে ১৪ করা হলো */
+    font-weight: 900; 
+    color: var(--neon); 
+    text-shadow: 0 0 10px var(--neon); 
+    font-style: italic; 
+    white-space: nowrap; 
+}
+
+        
         
         .nav-right { display: flex; align-items: center; gap: 8px; }
 
         /* বাটন ডিজাইন */
-        .btn-header {
-            height: 34px; padding: 0 12px; border-radius: 6px; 
-            font-size: 11px; font-weight: 900; cursor: pointer; 
-            display: flex; align-items: center; justify-content: center;
-            text-transform: uppercase; border: none; transition: 0.3s;
-        }
+        /* হেডারের উচ্চতা ফিক্সড করা */
+.top-nav { 
+    background: linear-gradient(180deg, #073128, #000); 
+    display: flex; 
+    justify-content: space-between; 
+    padding: 0 8px; 
+    align-items: center; 
+    border-bottom: 2px solid var(--neon); 
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
+    height: 55px !important; /* উচ্চতা কমিয়ে ফিক্সড করা হলো */
+    box-shadow: 0 0 15px rgba(0,255,136,0.2);
+}
+
+/* বাটনগুলোর সাইজ একটু ছোট করা যাতে ফোনের স্ক্রিনে ধরে যায় */
+.btn-header {
+    height: 28px !important; /* উচ্চতা কমানো হলো */
+    padding: 0 6px !important; 
+    border-radius: 4px; 
+    font-size: 9px !important; /* ফন্ট সাইজ একটু ছোট করা হলো */
+    font-weight: 900; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    text-transform: uppercase; 
+    border: none; 
+    white-space: nowrap; /* লেখা যাতে ভেঙে নিচে না নামে */
+}
+
 
         .btn-offer-top { background: transparent; color: var(--neon); border: 1.5px solid var(--neon); }
         .btn-offer-top:hover { background: rgba(0,255,136,0.1); }
