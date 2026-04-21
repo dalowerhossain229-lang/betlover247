@@ -2,19 +2,8 @@
 include 'header.php'; 
 ?>
 
-<!-- ১. উজ্জ্বল স্লাইডার সেকশন -->
-<div class="slider-container">
-    <div class="slider" id="mainSlider">
-        <div class="slide" style="background: linear-gradient(45deg, #073128, #00ff88);">
-            <div class="slide-text"><h3>Big Bonus</h3><p>প্রথম ডিপোজিটে ১০০% বোনাস!</p></div>
-            <i class="fa-solid fa-coins bg-icon"></i>
-        </div>
-        <div class="slide" style="background: linear-gradient(45deg, #4b0082, #ff00ff);">
-            <div class="slide-text"><h3>New Games</h3><p>সেরা সব নতুন গেম খেলুন।</p></div>
-            <i class="fa-solid fa-gamepad bg-icon"></i>
-        </div>
-    </div>
-</div>
+<?php include 'slider.php'; ?>
+
 
 <!-- ২. নোটিশ বোর্ড -->
 <div class="notice-board">
