@@ -93,10 +93,16 @@ if ($isLoggedIn) {
             <button class="btn-header btn-offer-top" onclick="openOffer()">OFFER</button>
 
             <?php if($isLoggedIn): ?>
-                <!-- ব্যালেন্সে ক্লিক করলে ডিপোজিট কার্ড খুলবে -->
-                <div class="balance-chip-top" onclick="openDeposit()">
-                    ৳ <?php echo number_format($userBalance, 2); ?>
-                </div>
+                <div class="balance-chip-top" onclick="showWalletMenu()">
+    ৳ <?php echo number_format($userBalance, 2); ?>
+</div>
+
+<!-- একটি ছোট মেনু যা ব্যালেন্সে ক্লিক করলে আসবে -->
+<div id="walletMenu" style="display:none; position:absolute; top:65px; right:60px; background:#073128; border:1px solid var(--neon); border-radius:8px; z-index:10000; flex-direction:column; overflow:hidden;">
+    <button onclick="openDeposit()" style="background:none; color:white; border:none; padding:10px 20px; cursor:pointer; border-bottom:1px solid #111;">DEPOSIT</button>
+    <button onclick="openWithdraw()" style="background:none; color:white; border:none; padding:10px 20px; cursor:pointer;">WITHDRAW</button>
+</div>
+
                 <!-- লগআউট বাটন -->
                 <button class="logout-icon" onclick="handleLogout()">
                     <i class="fa-solid fa-power-off"></i>
