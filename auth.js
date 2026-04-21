@@ -147,16 +147,3 @@ function handleLogout() {
         window.location.replace('logout.php');
     }
 }
-function openUpdatePass() {
-    closeAll();
-    document.getElementById('passModal').style.display = 'flex';
-}
-
-function processUpdatePass() {
-    const oldP = document.getElementById('oldPass').value;
-    const newP = document.getElementById('newPass').value;
-    if(!oldP || !newP) { alert("সবগুলো ঘর পূরণ করুন!"); return; }
-    // এখানে আপনার পাসওয়ার্ড আপডেটের API কল হবে (পরে করা যাবে)
-    alert("পাসওয়ার্ড আপডেটের কাজ প্রক্রিয়াধীন...");
-}
-
