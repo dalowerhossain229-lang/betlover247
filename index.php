@@ -4,14 +4,25 @@ include 'header.php';
 
 <?php include 'slider.php'; ?>
 
-
 <!-- ২. নোটিশ বোর্ড -->
 <div class="notice-board">
     <div class="notice-content">
         <i class="fa-solid fa-bullhorn"></i>
-        <marquee scrollamount="5">স্বাগতম BETLOVER777-এ! আমাদের নতুন অফার পেতে এখনই ডিপোজিট করুন। যেকোনো সমস্যায় কাস্টমার সার্ভিসে যোগাযোগ করুন।</marquee>
+        <marquee scrollamount="5">
+            <?php 
+                // অ্যাডমিন প্যানেল থেকে নোটিশ নিয়ে আসা
+                $n_res = $conn->query("SELECT config_value FROM site_configs WHERE config_key = 'notice_text'");
+                if($n_res && $n_res->num_rows > 0) {
+                    echo $n_res->fetch_assoc()['config_value'];
+                } else {
+                    echo "স্বাগতম BETLOVER777-এ!";
+                }
+            ?>
+        </marquee>
     </div>
 </div>
+
+
 
 <!-- ৩. গেম গ্রিড -->
 <div class="game-grid">
