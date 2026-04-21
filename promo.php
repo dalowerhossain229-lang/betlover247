@@ -3,6 +3,10 @@
 session_start();
 include 'db.php';
 include 'header.php'; 
+<script> 
+    var isLoggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>; 
+</script>
+
 ?>
 
 <div class="promo-page-wrapper" style="padding: 15px; background: var(--dark); min-height: 100vh; padding-bottom: 100px;">
@@ -94,6 +98,10 @@ include 'header.php';
 
 <script>
 function openPromoForm(type) {
+    if (!isLoggedIn) {
+        alert("আবেদন করতে হলে আপনাকে আগে লগইন করতে হবে!");
+        return;
+    }
     const title = document.getElementById('promoTitle');
     const content = document.getElementById('promoFormContent');
     title.innerText = type + " Application";
@@ -156,11 +164,37 @@ function openPromoForm(type) {
 }
 
 function closePromoForm() { document.getElementById('promoModal').style.display = 'none'; }
-
 function submitPromoForm() {
-    alert("আপনার আবেদনটি সফলভাবে গৃহীত হয়েছে। এডমিন প্যানেল থেকে যাচাই শেষে আপনাকে জানানো হবে।");
-    closePromoForm();
+    // ফর্মের টাইটেল থেকে টাইপ নেওয়া (যেমন: Insurance)
+    const type = document.getElementById('promoTitle').innerText.replace(' Application', '');
+    
+    // সব ইনপুট থেকে ডাটা সংগ্রহ করা
+    const inputs = document.querySelectorAll('#promoFormContent input, #promoFormContent select');
+    let details = "";
+    inputs.forEach(input => {
+        let label = input.placeholder || "Selection";
+        details += label + ": " + input.value + " | ";
+    });
+
+    let fd = new FormData();
+    fd.append('type', type);
+    fd.append('details', details);
+
+    // ডাটাবেসে পাঠানোর জন্য fetch কল
+    fetch('process_promo.php', {
+        method: 'POST',
+        body: fd
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        if(data.status === 'success') {
+            closePromoForm();
+        }
+    })
+    .catch(() => alert("সার্ভার কানেকশন এরর! process_promo.php ফাইলটি চেক করুন।"));
 }
+
 
 // মোডালের বাইরে ক্লিক করলে বন্ধ হওয়া
 window.onclick = function(event) {
