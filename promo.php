@@ -1,13 +1,13 @@
 <?php
-// ১. সেশন এবং হেডার ইনক্লুড
 session_start();
 include 'db.php';
-include 'header.php'; 
-<script> 
-    var isLoggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>; 
+include 'header.php';
+?>
+
+<script>
+    var isLoggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
 </script>
 
-?>
 
 <div class="promo-page-wrapper" style="padding: 15px; background: var(--dark); min-height: 100vh; padding-bottom: 100px;">
     <h2 style="color: var(--neon); text-align: center; margin: 20px 0; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 0 10px rgba(0,255,136,0.3);">Exclusive Schemes</h2>
