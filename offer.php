@@ -1,14 +1,12 @@
 <?php
+session_start();
 include 'db.php';
-include 'header.php'; // আপনার সেই সুন্দর হেডারটি এখানেও থাকবে
-<?php
-// ডাটাবেস থেকে অফার টেক্সট নিয়ে আসা (নতুন টেবিল site_configs অনুযায়ী)
+include 'header.php';
+
+// ডাটাবেস থেকে অফার টেক্সট নিয়ে আসা
 $res = $conn->query("SELECT config_value FROM site_configs WHERE config_key = 'offer_text'");
 $offerText = ($res && $row = $res->fetch_assoc()) ? $row['config_value'] : "বর্তমানে কোনো অফার নেই।";
 ?>
-
-
-
 <div class="container" style="padding: 20px; text-align: center; margin-top: 20px;">
     <h1 style="color: var(--neon); text-shadow: 0 0 10px var(--neon);">SPECIAL OFFERS</h1>
     
