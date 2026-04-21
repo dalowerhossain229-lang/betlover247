@@ -1,36 +1,36 @@
 <?php
-session_start(); // অটো লগইন করার জন্য সেশন শুরু করা হলো
+session_start();
 include 'db.php';
 header('Content-Type: application/json');
 
-$name = mysqli_real_escape_string($conn, $_POST['fullName'] ?? '');
+// ১. ইনপুট ডাটা নেওয়া
 $user = mysqli_real_escape_string($conn, $_POST['username'] ?? '');
 $pass = $_POST['password'] ?? '';
 
-if (empty($name) || empty($user) || empty($pass)) {
-    echo json_encode(["status" => "error", "message" => "সবগুলো ঘর পূরণ করুন!"]);
+// ২. খালি ঘর চেক করা
+if (empty($user) || empty($pass)) {
+    echo json_encode(["status" => "error", "message" => "ইউজার আইডি এবং পাসওয়ার্ড দিন!"]);
     exit;
 }
 
-$hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
-
-// চেক করা ইউজার আইডি ইতিমধ্যে আছে কি না
+// ৩. চেক করা ইউজার আইডি ইতিমধ্যে আছে কি না
 $check = $conn->query("SELECT id FROM users WHERE username = '$user'");
 
 if ($check->num_rows > 0) {
-    echo json_encode(["status" => "error", "message" => "এই আইডিটি ইতিমধ্যে ব্যবহৃত হয়েছে!"]);
+    echo json_encode(["status" => "error", "message" => "এই ইউজার আইডিটি ইতিমধ্যে ব্যবহার করা হয়েছে!"]);
 } else {
-    // নতুন ইউজার তৈরি (ব্যালেন্স ০.০০ টাকা)
-    $sql = "INSERT INTO users (full_name, username, password, balance) VALUES ('$name', '$user', '$hashed_pass', 0.00)";
+    // ৪. পাসওয়ার্ড হ্যাশ করা এবং ইনসার্ট করা
+    $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
     
+    // আমাদের নতুন টেবিল স্ট্রাকচার অনুযায়ী কুয়েরি
+    $sql = "INSERT INTO users (username, password, balance, status) VALUES ('$user', '$hashed_pass', 0.00, 'active')";
+
     if ($conn->query($sql)) {
-        // --- অটো লগইন লজিক ---
+        // অটো লগইন করার জন্য সেশন সেট করা
         $_SESSION['user_id'] = $user;
-        $_SESSION['balance'] = 0.00;
-        
-        echo json_encode(["status" => "success", "message" => "রেজিস্ট্রেশন সফল! আপনি অটো লগইন হয়েছেন।"]);
+        echo json_encode(["status" => "success", "message" => "রেজিস্ট্রেশন সফল হয়েছে!"]);
     } else {
-        echo json_encode(["status" => "error", "message" => "সার্ভার এরর!"]);
+        echo json_encode(["status" => "error", "message" => "ডাটাবেস এরর: " . $conn->error]);
     }
 }
 ?>
