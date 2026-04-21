@@ -55,6 +55,18 @@ $sliders = $conn->query("SELECT * FROM sliders LIMIT 10");
         <textarea name="config[notice_text]" rows="3"><?php echo $site_data['notice_text'] ?? ''; ?></textarea>
         <button type="submit" name="update_site" class="btn">SAVE NOTICE</button>
     </form>
+<!-- অফার এবং লাইভ সাপোর্ট কন্ট্রোল -->
+<form method="POST" class="card">
+    <h3>🎁 অফার ও সাপোর্ট নিয়ন্ত্রণ</h3>
+    
+    <label>অফার পেজ টেক্সট:</label>
+    <textarea name="config[offer_text]" rows="3"><?php echo $site_data['offer_text'] ?? ''; ?></textarea>
+    
+    <label>লাইভ সাপোর্ট লিঙ্ক (Telegram):</label>
+    <input type="text" name="config[live_chat_link]" value="<?php echo $site_data['live_chat_link'] ?? ''; ?>" placeholder="https://t.me">
+    
+    <button type="submit" name="update_site" class="btn" style="background: #ffdf1b;">SAVE OFFER & SUPPORT</button>
+</form>
 
     <!-- স্লাইডার কন্ট্রোল (১০টি স্লাইডার) -->
     <form method="POST" class="card">
