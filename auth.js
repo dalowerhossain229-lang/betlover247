@@ -8,11 +8,14 @@ function openRegister() {
     closeAll();
     document.getElementById('regModal').style.display = 'flex'; 
 }
-
 function closeAll() { 
     if(document.getElementById('loginModal')) document.getElementById('loginModal').style.display = 'none';
     if(document.getElementById('regModal')) document.getElementById('regModal').style.display = 'none';
+    if(document.getElementById('depModal')) document.getElementById('depModal').style.display = 'none';
+    if(document.getElementById('withdrawModal')) document.getElementById('withdrawModal').style.display = 'none';
 }
+
+
 
 // ২. লগইন প্রসেস
 function processLogin() {
