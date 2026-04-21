@@ -15,22 +15,5 @@
     <button class="btn-auth-submit" onclick="sendDeposit()">SUBMIT REQUEST</button>
 </div>
 
-<script>
-function sendDeposit() {
-    const amount = document.getElementById('d_amount').value;
-    const trx = document.getElementById('d_trx').value;
-    if(!amount || !trx) { alert("সবগুলো তথ্য দিন!"); return; }
 
-    let fd = new FormData();
-    fd.append('amount', amount);
-    fd.append('trx_id', trx);
-
-    fetch('process_deposit.php', { method: 'POST', body: fd })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.message);
-        if(data.status === 'success') location.href = 'index.php';
-    });
-}
-</script>
 <?php include 'footer.php'; ?>
