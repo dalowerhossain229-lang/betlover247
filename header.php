@@ -97,11 +97,15 @@ if ($isLoggedIn) {
     ৳ <?php echo number_format($userBalance, 2); ?>
 </div>
 
-<!-- একটি ছোট মেনু যা ব্যালেন্সে ক্লিক করলে আসবে -->
-<div id="walletMenu" style="display:none; position:absolute; top:65px; right:60px; background:#073128; border:1px solid var(--neon); border-radius:8px; z-index:10000; flex-direction:column; overflow:hidden;">
-    <button onclick="openDeposit()" style="background:none; color:white; border:none; padding:10px 20px; cursor:pointer; border-bottom:1px solid #111;">DEPOSIT</button>
-    <button onclick="openWithdraw()" style="background:none; color:white; border:none; padding:10px 20px; cursor:pointer;">WITHDRAW</button>
+<div id="walletMenu" style="display:none; position:absolute; top:60px; right:55px; background:#073128; border:2px solid var(--neon); border-radius:10px; z-index:10000; flex-direction:column; width:140px; box-shadow: 0 8px 25px rgba(0,0,0,0.6); overflow:hidden;">
+    <div onclick="openDeposit()" style="padding:15px; border-bottom:1px solid rgba(0,255,136,0.2); cursor:pointer; font-weight:900; color:var(--neon); text-align:center; font-size:12px; transition:0.3s;">
+        <i class="fa-solid fa-plus-circle"></i> DEPOSIT
+    </div>
+    <div onclick="openWithdraw()" style="padding:15px; cursor:pointer; font-weight:900; color:#ff4d4d; text-align:center; font-size:12px; transition:0.3s;">
+        <i class="fa-solid fa-minus-circle"></i> WITHDRAW
+    </div>
 </div>
+
 
                 <!-- লগআউট বাটন -->
                 <button class="logout-icon" onclick="handleLogout()">
