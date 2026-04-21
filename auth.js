@@ -40,16 +40,13 @@ function processLogin() {
     })
     .catch(() => alert("লগইন সার্ভার কানেকশন এরর!"));
 }
-// ৩. রেজিস্ট্রেশন প্রসেস (অটো-লগইন সহ)
 function processRegister() {
-    const name = document.getElementById('regName').value;
     const user = document.getElementById('regUser').value;
     const pass = document.getElementById('regPass').value;
     
-    if(!name || !user || !pass) { alert("সবগুলো তথ্য দিন!"); return; }
+    if(!user || !pass) { alert("সবগুলো তথ্য দিন!"); return; }
 
     let fd = new FormData();
-    fd.append('fullName', name);
     fd.append('username', user);
     fd.append('password', pass);
 
@@ -58,13 +55,14 @@ function processRegister() {
     .then(data => {
         if(data.status === 'success') { 
             alert(data.message);
-            location.reload(); // পেজ রিলোড হবে এবং ইউজারকে লগইন অবস্থায় দেখাবে
+            location.reload(); 
         } else {
             alert(data.message);
         }
     })
     .catch(() => alert("রেজিস্ট্রেশন সার্ভার কানেকশন এরর!"));
 }
+
 
 
 // ৪. অন্যান্য লিঙ্ক
