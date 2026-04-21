@@ -73,6 +73,28 @@ include 'header.php';
         <p onclick="closeAll()" style="color:#888; font-size:12px; cursor:pointer; margin-top:15px;">বন্ধ করুন</p>
     </div>
 </div>
+<!-- Withdraw Modal -->
+<div id="withdrawModal" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeAll()">&times;</span>
+        <h2 style="color: #ff4d4d;">WITHDRAW</h2>
+        
+        <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+            <p style="margin: 0; font-size: 13px;">আপনার নম্বর ও পরিমাণ দিন</p>
+        </div>
+
+        <input type="number" id="wdAmount" placeholder="টাকার পরিমাণ (৳)" class="modal-input">
+        <input type="text" id="wdNumber" placeholder="বিকাশ/নগদ নম্বর" class="modal-input">
+        
+        <select id="wdMethod" class="modal-input" style="background: #000; color: #fff;">
+            <option value="Bkash">Bkash</option>
+            <option value="Nagad">Nagad</option>
+        </select>
+        
+        <button class="btn-submit-dep" style="background: #ff4d4d;" onclick="processWithdraw()">উইথড্র রিকোয়েস্ট</button>
+    </div>
+</div>
+
 
 <!-- ৫. রেজিস্ট্রেশন পপ-আপ (Modal) -->
 <div id="regModal" class="modal-overlay">
