@@ -8,12 +8,12 @@
             <i class="fa-solid fa-trophy"></i>
             <span>SPORTS</span>
         </a>
+<div class="nav-tab promo-center" onclick="location.href='promo.php'">
+    <i class="fa-solid fa-gift"></i>
+    <span>PROMO</span>
+</div>
+
         
-        <!-- মাঝখানের উজ্জ্বল PROMO বাটন -->
-        <div class="nav-tab promo-center" onclick="openPromo()">
-            <i class="fa-solid fa-gift"></i>
-            <span>PROMO</span>
-        </div>
         
         <a href="casino.php" class="nav-tab">
             <i class="fa-solid fa-clover"></i>
