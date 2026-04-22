@@ -69,6 +69,12 @@ include 'header.php';
         <button class="p-btn" onclick="location.href='bet_history.php'">
             <i class="fa-solid fa-dice"></i> Bet History <span style="margin-left:auto; color:#555;">&gt;</span>
         </button>
+        <!-- পেমেন্ট নম্বর অ্যাড বাটন -->
+<button class="p-btn" onclick="openPaymentSettings()" style="margin-bottom: 10px; border: 1px solid #00ff88;">
+    <i class="fa-solid fa-wallet" style="color: #00ff88;"></i> 
+    <span style="margin-left: 10px; color: #00ff88;">Payment Numbers</span>
+</button>
+
 
         <button class="p-btn" onclick="openUpdatePass()">
             <i class="fa-solid fa-shield-halved"></i> Update Password <span style="margin-left:auto; color:#555;">&gt;</span>
