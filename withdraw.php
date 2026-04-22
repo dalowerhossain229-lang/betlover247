@@ -10,11 +10,6 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $u = $_SESSION['user_id'];
-$check = $conn->query("SHOW COLUMNS FROM users LIKE 'turnover_completed'");
-if ($check->num_rows == 0) {
-    $conn->query("ALTER TABLE users ADD turnover_target INT DEFAULT 1000");
-    $conn->query("ALTER TABLE users ADD turnover_completed INT DEFAULT 0");
-}
 
 
 // ৩. ইউজারের ডাটা নিয়ে আসা
