@@ -1,6 +1,6 @@
 <?php
 // ১. আপনার Aiven ডাটাবেস কানেকশন
-$host = "commysql-2bfdebf3-dalowerhossain229-37ae.g.aivencloud.com";
+$host = "mysql-2bfdebf3-dalowerhossain229-37ae.g.aivencloud.com";
 $port = "15768";
 $user = "avnadmin";
 $pass = "AVNS__g6bnEBL_NKJqBuj85HD";
