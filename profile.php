@@ -34,17 +34,53 @@ if($percent > 100) $percent = 100;
         </div>
     </div>
 
-    <!-- টার্নওভার প্রগ্রেস বার -->
-    <div style="background: #0a0f0d; border: 1px solid #1a2a22; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-            <span style="font-size:11px; font-weight:bold; color:#888;">TURNOVER PROGRESS</span>
-            <span style="font-size:11px; font-weight:bold; color:#00ff88;"><?php echo number_format($completed); ?> / <?php echo number_format($target); ?></span>
+            <!-- ৩টি আলাদা টার্নওভার প্রগ্রেস বার -->
+        <?php
+        $u_id = $_SESSION['user_id'];
+        $u_data = $conn->query("SELECT * FROM users WHERE username = '$u_id'")->fetch_assoc();
+        
+        function getPercent($done, $target) {
+            if ($target <= 0) return 0;
+            $p = ($done / $target) * 100;
+            return ($p > 100) ? 100 : $p;
+        }
+        ?>
+        <div style="background: #0a0f0d; border: 1px solid #1a2a22; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; display: flex; flex-direction: column; gap: 15px;">
+            
+            <!-- মেইন টার্নওভার -->
+            <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span style="font-size:10px; font-weight:bold; color:#00ff88;">MAIN TURNOVER</span>
+                    <span style="font-size:10px; font-weight:bold; color:#888;"><?php echo number_format($u_data['turnover_completed']); ?> / <?php echo number_format($u_data['turnover_target']); ?></span>
+                </div>
+                <div style="width: 100%; height: 6px; background: #111; border-radius: 10px; overflow: hidden; border: 1px solid #222;">
+                    <div style="width: <?php echo getPercent($u_data['turnover_completed'], $u_data['turnover_target']); ?>%; height: 100%; background: #00ff88; box-shadow: 0 0 8px #00ff88;"></div>
+                </div>
+            </div>
+
+            <!-- বোনাস টার্নওভার -->
+            <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span style="font-size:10px; font-weight:bold; color:#ffdf1b;">BONUS TURNOVER</span>
+                    <span style="font-size:10px; font-weight:bold; color:#888;"><?php echo number_format($u_data['bonus_t_done'] ?? 0); ?> / <?php echo number_format($u_data['bonus_t_target'] ?? 0); ?></span>
+                </div>
+                <div style="width: 100%; height: 6px; background: #111; border-radius: 10px; overflow: hidden; border: 1px solid #222;">
+                    <div style="width: <?php echo getPercent($u_data['bonus_t_done'] ?? 0, $u_data['bonus_t_target'] ?? 0); ?>%; height: 100%; background: #ffdf1b; box-shadow: 0 0 8px #ffdf1b;"></div>
+                </div>
+            </div>
+
+            <!-- PB টার্নওভার -->
+            <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span style="font-size:10px; font-weight:bold; color:#ff4d4d;">PB TURNOVER</span>
+                    <span style="font-size:10px; font-weight:bold; color:#888;"><?php echo number_format($u_data['pb_t_done'] ?? 0); ?> / <?php echo number_format($u_data['pb_t_target'] ?? 0); ?></span>
+                </div>
+                <div style="width: 100%; height: 6px; background: #111; border-radius: 10px; overflow: hidden; border: 1px solid #222;">
+                    <div style="width: <?php echo getPercent($u_data['pb_t_done'] ?? 0, $u_data['pb_t_target'] ?? 0); ?>%; height: 100%; background: #ff4d4d; box-shadow: 0 0 8px #ff4d4d;"></div>
+                </div>
+            </div>
         </div>
-        <div style="width: 100%; height: 8px; background: #111; border-radius: 10px; overflow: hidden; border: 1px solid #222;">
-            <div style="width: <?php echo $percent; ?>%; height: 100%; background: linear-gradient(90deg, #00ff88, #00aa5d); box-shadow: 0 0 8px #00ff88;"></div>
-        </div>
-        <p style="color:#444; font-size:9px; margin-top:8px; text-align:center;">বোনাস আনলক করতে টার্নওভার সম্পন্ন করুন।</p>
-    </div>
+
 
     <!-- মেনু বাটন লিস্ট -->
     <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
