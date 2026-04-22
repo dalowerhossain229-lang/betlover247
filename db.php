@@ -13,11 +13,4 @@ $conn = new mysqli($host, $user, $pass, $dbname, $port);
 if ($conn->connect_error) {
     die("কানেকশন ফেল: " . $conn->connect_error);
 }
-
-// ৩. ডাটাবেস অটো-ফিক্স লজিক (উইথড্র এরর দূর করার জন্য)
-$check = $conn->query("SHOW COLUMNS FROM users LIKE 'turnover_completed'");
-if ($check && $check->num_rows == 0) {
-    $conn->query("ALTER TABLE users ADD turnover_target INT DEFAULT 1000");
-    $conn->query("ALTER TABLE users ADD turnover_completed INT DEFAULT 0");
-}
 ?>
