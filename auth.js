@@ -74,27 +74,8 @@ function openPromo() {
     alert("নতুন প্রোমোশন অফার শীঘ্রই আসছে!");
 }
 function openDeposit() {
-    closeAll();
-    document.getElementById('depModal').style.display = 'flex';
-}
-
-function processDeposit() {
-    const amount = document.getElementById('depAmount').value;
-    const trx = document.getElementById('depTrx').value;
-
-    if(!amount || !trx) { alert("সবগুলো তথ্য দিন!"); return; }
-
-    let fd = new FormData();
-    fd.append('amount', amount);
-    fd.append('trx_id', trx);
-
-    fetch('process_deposit.php', { method: 'POST', body: fd })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.message);
-        if(data.status === 'success') closeAll();
-    })
-    .catch(() => alert("সার্ভার এরর! process_deposit.php চেক করুন।"));
+    // পুরনো মোডাল না খুলে সরাসরি নতুন পেজে নিয়ে যাবে
+    window.location.href = 'deposit.php';
 }
 // উইথড্র কার্ড ওপেন করা
 function openWithdraw() {
