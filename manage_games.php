@@ -11,6 +11,13 @@ if (isset($_POST['add_game'])) {
     $conn->query("INSERT INTO game_settings (game_name, api_key, rtp_percent) VALUES ('$name', '$key', '$rtp')");
     echo "<script>alert('গেম এপিআই সফলভাবে সেভ হয়েছে!'); location.href='manage_games.php';</script>";
 }
+// ৩. RTP আপডেট করার লজিক
+if (isset($_POST['update_rtp'])) {
+    $gid = intval($_POST['game_id']);
+    $val = intval($_POST['rtp_value']);
+    $conn->query("UPDATE game_settings SET rtp_percent = '$val' WHERE id = $gid");
+    echo "<script>alert('RTP সফলভাবে আপডেট হয়েছে!'); location.href='manage_games.php';</script>";
+}
 
 // ২. গেম লিস্ট নিয়ে আসা
 $games = $conn->query("SELECT * FROM game_settings ORDER BY id DESC");
