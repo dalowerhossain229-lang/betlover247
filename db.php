@@ -2,7 +2,7 @@
 // ১. আপনার সঠিক ডাটাবেস তথ্য (পোর্ট ১৫৭৬৪ সহ)
 $host = "mysql-2bfdebf3-dalowerhossain229-37ae.g.aivencloud.com";
 $user = "avnadmin";
-$pass = "AVNS__g6bnEBL_NKJqBuj85HD";
+$pass = "AVNS_g6bnEBL_NKJqBuj85HD";
 $dbname = "defaultdb";
 $port = 15764; // আপনার দেওয়া সঠিক পোর্ট
 
