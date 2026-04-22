@@ -15,3 +15,11 @@ if ($old !== $u_data['password']) {
     echo json_encode(["status" => "error", "message" => "পুরাতন পাসওয়ার্ড ভুল!"]);
     exit;
 }
+
+// নতুন পাসওয়ার্ড আপডেট
+if ($conn->query("UPDATE users SET password = '$new' WHERE username = '$user'")) {
+    echo json_encode(["status" => "success", "message" => "পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে!"]);
+} else {
+    echo json_encode(["status" => "error", "message" => "ডাটাবেস এরর!"]);
+}
+?>
