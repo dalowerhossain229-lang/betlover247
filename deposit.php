@@ -1,13 +1,15 @@
-<?php include 'header.php'; ?>
-<?php
-include 'db.php'; // ডাটাবেস কানেকশন
-// বিকাশ ও নগদ নম্বর নিয়ে আসা
+<?php 
+include 'header.php'; 
+include 'db.php'; 
+
+// ডাটাবেস থেকে এডমিনের সেট করা নম্বরগুলো নিয়ে আসা
 $bkash_res = $conn->query("SELECT config_value FROM site_configs WHERE config_key = 'bkash_num'");
-$bkash_num = ($bkash_res && $bkash_res->num_rows > 0) ? $bkash_res->fetch_assoc()['config_value'] : '017XXXXXXXX';
+$bkash_num = ($bkash_res && $bkash_res->num_rows > 0) ? $bkash_res->fetch_assoc()['config_value'] : 'অ্যাডমিন সেট করেনি';
 
 $nagad_res = $conn->query("SELECT config_value FROM site_configs WHERE config_key = 'nagad_num'");
-$nagad_num = ($nagad_res && $nagad_res->num_rows > 0) ? $nagad_res->fetch_assoc()['config_value'] : '019XXXXXXXX';
+$nagad_num = ($nagad_res && $nagad_res->num_rows > 0) ? $nagad_res->fetch_assoc()['config_value'] : 'অ্যাডমিন সেট করেনি';
 ?>
+
 <div style="padding: 20px; text-align: center; max-width: 400px; margin: auto;">
     <h2 style="color:var(--neon);">DEPOSIT MONEY</h2>
     
