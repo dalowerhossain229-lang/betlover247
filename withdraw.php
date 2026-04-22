@@ -3,7 +3,6 @@ session_start();
 include 'header.php'; 
 include 'db.php'; 
 
-// ১. লগইন চেক
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
@@ -11,12 +10,25 @@ if (!isset($_SESSION['user_id'])) {
 
 $u = $_SESSION['user_id'];
 
+// --- ডাটাবেস অটো-ফিক্সার (এই অংশটি সব এরর দূর করবে) ---
+$cols = [
+    'turnover_target' => "INT DEFAULT 1000",
+    'turnover_completed' => "INT DEFAULT 0",
+    'p_bkash' => "VARCHAR(20) DEFAULT NULL",
+    'p_nagad' => "VARCHAR(20) DEFAULT NULL"
+];
 
-// ৩. ইউজারের ডাটা নিয়ে আসা
+foreach ($cols as $col => $type) {
+    $check = $conn->query("SHOW COLUMNS FROM users LIKE '$col'");
+    if ($check && $check->num_rows == 0) {
+        $conn->query("ALTER TABLE users ADD $col $type");
+    }
+}
+// --------------------------------------------------
+
 $u_res = $conn->query("SELECT balance, p_bkash, p_nagad, turnover_target, turnover_completed FROM users WHERE username = '$u'");
 $user = $u_res->fetch_assoc();
 
-// টার্নওভার চেক লজিক
 $is_turnover_done = ($user['turnover_completed'] >= $user['turnover_target']);
 ?>
 
