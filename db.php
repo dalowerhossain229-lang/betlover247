@@ -1,21 +1,22 @@
 <?php
-// ১. ডাটাবেস তথ্য (পোর্ট ও হোস্ট আলাদা করা হয়েছে)
-$host = "mysql-2bfdebf3-dalowerhossain229-37ae.g.aivencloud.com";
-$user = "avnadmin";
+// ১. ডাটাবেস তথ্য (হোস্টনেমসহ)
+$host = "://aivencloud.com";
+$user = "mysql-ql-2bfdebf3-dalowerhossain229-37ae.g.aivencloud.com";
 $pass = "AVNS__g6bnEBL_NKJqBuj85HD";
 $dbname = "defaultdb";
 $port = 15768;
 
-// ২. এসএসএল মোড ব্যবহার করে কানেকশন (এভেনের জন্য বাধ্যতামূলক)
+// ২. শক্তিশালী কানেকশন পদ্ধতি (SSL হ্যান্ডশেক ফিক্স)
 $conn = mysqli_init();
-mysqli_ssl_set($conn, NULL, NULL, NULL, NULL, NULL); 
+mysqli_options($conn, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, false);
+
 $success = mysqli_real_connect($conn, $host, $user, $pass, $dbname, $port, NULL, MYSQLI_CLIENT_SSL);
 
 if (!$success) {
-    die("কানেকশন ফেল: " . mysqli_connect_error());
+    die("কানেকশন এরর: " . mysqli_connect_error());
 }
 
-// ৩. ডাটাবেস অটো-ফিক্স লজিক (টার্নওভার সিস্টেমের জন্য)
+// ৩. ডাটাবেস অটো-ফিক্স লজিক (উইথড্র ও টার্নওভার এরর দূর করার জন্য)
 $check = $conn->query("SHOW COLUMNS FROM users LIKE 'turnover_completed'");
 if ($check && $check->num_rows == 0) {
     $conn->query("ALTER TABLE users ADD turnover_target INT DEFAULT 1000");
