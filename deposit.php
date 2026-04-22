@@ -16,7 +16,16 @@ if($configs) {
 <div style="padding: 20px; text-align: center; color: white; font-family: sans-serif;">
     <h2 style="color:#00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.5);">💳 SELECT METHOD</h2>
     <p style="font-size: 12px; color: #888; margin-bottom: 20px;">টাকা পাঠিয়ে নিচের তথ্যগুলো পূরণ করুন</p>
-    
+            <!-- PB Promotional Banner -->
+        <div onclick="location.href='pb_deposit.php'" style="background: linear-gradient(90deg, #1a0a00, #4d2600); border: 1px solid #ffdf1b; padding: 15px; border-radius: 12px; margin-bottom: 20px; cursor: pointer; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 15px rgba(255,223,27,0.1);">
+            <div style="background: #ffdf1b; color: #000; padding: 10px; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px;">🎁</div>
+            <div style="text-align: left;">
+                <h4 style="color: #ffdf1b; margin: 0; font-size: 14px; text-transform: uppercase;">Promotional PB Offer!</h4>
+                <p style="color: #fff; margin: 5px 0 0 0; font-size: 11px;">বোনাস ও অফার নিতে এখানে ক্লিক করুন!</p>
+            </div>
+            <div style="margin-left: auto; color: #ffdf1b; font-weight: bold;">></div>
+        </div>
+
     <!-- ৪টি মেথড বাটন -->
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px;">
         <div onclick="selectMethod('Bkash Personal', '<?php echo $nums['bkash_per'] ?? 'বন্ধ'; ?>')" style="background:#1a1a1a; padding:15px; border-radius:12px; border:1px solid #d12053; cursor:pointer; transition: 0.3s;">
