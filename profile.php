@@ -83,12 +83,38 @@ include 'header.php';
         <button class="p-btn" style="border-color: #ff4d4d22; background: #1a0a0a;" onclick="handleLogout()">
             <i class="fa-solid fa-power-off" style="color: #ff4d4d;"></i> <span style="color: #ff4d4d;">Logout</span>
         </button>
-
-    </div>
+        <!-- পেমেন্ট নম্বর লক সেকশন (ID সহ) -->
+        <div id="paymentSection" style="display:none; margin: 20px 0; background: #111; padding: 15px; border-radius: 12px; border: 1px solid #00ff88;">
+            <?php
+            $u = $_SESSION['user_id'];
+            $u_res = $conn->query("SELECT p_bkash, p_nagad FROM users WHERE username = '$u'");
+            $u_data = $u_res->fetch_assoc();
+            ?>
+            <h4 style="color: #00ff88; margin-top: 0; font-size: 14px;">🔒 পেমেন্ট নম্বর সেট করুন</h4>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <small style="color: #888;">Bkash:</small>
+                    <?php if(empty($u_data['p_bkash'])): ?>
+                        <input type="number" id="new_bkash" placeholder="নম্বর দিন" style="background:#000; border:1px solid #333; color:#fff; padding:8px; border-radius:4px; width:150px;">
+                    <?php else: ?>
+                        <span style="color: #ffdf1b; font-weight: bold;"><?php echo $u_data['p_bkash']; ?> ✅</span>
+                    <?php endif; ?>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <small style="color: #888;">Nagad:</small>
+                    <?php if(empty($u_data['p_nagad'])): ?>
+                        <input type="number" id="new_nagad" placeholder="নম্বর দিন" style="background:#000; border:1px solid #333; color:#fff; padding:8px; border-radius:4px; width:150px;">
+                    <?php else: ?>
+                        <span style="color: #ffdf1b; font-weight: bold;"><?php echo $u_data['p_nagad']; ?> ✅</span>
+                    <?php endif; ?>
+                </div>
+                <?php if(empty($u_data['p_bkash']) || empty($u_data['p_nagad'])): ?>
+                    <button onclick="saveNumbers()" style="background: #00ff88; color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer;">নম্বর সেভ ও লক করুন</button>
+                <?php endif; ?>
+    </div
 </div>
 
-<style>
-    .p-btn {
+<style   .p .p-btn {
         width: 100%;
         padding: 16px;
         background: #0a0f0d;
