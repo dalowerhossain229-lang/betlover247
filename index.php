@@ -52,8 +52,14 @@ include 'header.php';
         <img src="lottery.png" alt="lottery">
         <p>LOTTERY</p>
     </div>
-    
-    
+    <div class="game-card" onclick="location.href='aviator/'">
+        <img src="aviator.png" alt="aviator">
+        <p>AVIATOR</p>
+    </div>
+    <div class="game-card" onclick="location.href='lucky777/'">
+        <img src=lucky777.png" alt=lucky777">
+ <p>LUCKY777</p>
+    </div>
 
 
 <!-- ৪. লগইন পপ-আপ (Modal) -->
