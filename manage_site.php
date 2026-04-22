@@ -55,17 +55,27 @@ $sliders = $conn->query("SELECT * FROM sliders LIMIT 10");
         <textarea name="config[notice_text]" rows="3"><?php echo $site_data['notice_text'] ?? ''; ?></textarea>
         <button type="submit" name="update_site" class="btn">SAVE NOTICE</button>
     </form>
-    <!-- পেমেন্ট গেটওয়ে কন্ট্রোল -->
-<form method="POST" class="card">
-    <h3>💰 পেমেন্ট নম্বর নিয়ন্ত্রণ</h3>
-    <label>বিকাশ নম্বর (Personal):</label>
-    <input type="text" name="config[bkash_num]" value="<?php echo $site_data['bkash_num'] ?? ''; ?>" placeholder="বিকাশ নম্বর দিন">
-    
-    <label>নগদ নম্বর (Personal):</label>
-    <input type="text" name="config[nagad_num]" value="<?php echo $site_data['nagad_num'] ?? ''; ?>" placeholder="নগদ নম্বর দিন">
-    
-    <button type="submit" name="update_site" class="btn">SAVE NUMBERS</button>
-</form>
+        <!-- পেমেন্ট গেটওয়ে কন্ট্রোল (৪টি মেথড) -->
+        <form method="POST" class="card">
+            <h3>💰 পেমেন্ট নম্বর নিয়ন্ত্রণ</h3>
+            
+            <label>বিকাশ পারসোনাল:</label>
+            <input type="text" name="config[bkash_per]" value="<?php echo $site_data['bkash_per'] ?? ''; ?>" placeholder="বিকাশ পারসোনাল নম্বর">
+            
+            <label>বিকাশ এজেন্ট:</label>
+            <input type="text" name="config[bkash_agt]" value="<?php echo $site_data['bkash_agt'] ?? ''; ?>" placeholder="বিকাশ এজেন্ট নম্বর">
+            
+            <hr style="border:0.1px solid #1a2a22; margin:15px 0;">
+            
+            <label>নগদ পারসোনাল:</label>
+            <input type="text" name="config[nagad_per]" value="<?php echo $site_data['nagad_per'] ?? ''; ?>" placeholder="নগদ পারসোনাল নম্বর">
+            
+            <label>নগদ এজেন্ট:</label>
+            <input type="text" name="config[nagad_agt]" value="<?php echo $site_data['nagad_agt'] ?? ''; ?>" placeholder="নগদ এজেন্ট নম্বর">
+            
+            <button type="submit" name="update_site" class="btn" style="margin-top:10px;">SAVE ALL NUMBERS</button>
+        </form>
+
 
 <!-- অফার এবং লাইভ সাপোর্ট কন্ট্রোল -->
 <form method="POST" class="card">
