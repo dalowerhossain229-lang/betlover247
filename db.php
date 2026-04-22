@@ -1,14 +1,22 @@
 <?php
-$host = getenv('DB_HOST');
-$user = getenv('DB_USER');
-$pass = getenv('DB_PASS');
-$db   = getenv('DB_NAME');
-$port = getenv('DB_PORT') ?: 15764;
+// ১. আপনার Aiven ডাটাবেস কানেকশন
+$host = "://aivencloud.com";
+$port = "15768";
+$user = "avnadmin";
+$pass = "AVNS__g6bnEBL_NKJqBuj85HD";
+$dbname = "defaultdb";
 
-$conn = mysqli_init();
-if (!$conn->real_connect($host, $user, $pass, $db, $port, NULL, MYSQLI_CLIENT_SSL)) {
-    die("Database Connection Failed!");
+$conn = new mysqli($host, $user, $pass, $dbname, $port);
+
+// কানেকশন চেক
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-$conn->set_charset("utf8mb4");
 
+// ২. ডাটাবেস অটো-ফিক্স লজিক (উইথড্র এরর দূর করার জন্য)
+$check = $conn->query("SHOW COLUMNS FROM users LIKE 'turnover_completed'");
+if ($check && $check->num_rows == 0) {
+    $conn->query("ALTER TABLE users ADD turnover_target INT DEFAULT 1000");
+    $conn->query("ALTER TABLE users ADD turnover_completed INT DEFAULT 0");
+}
 ?>
