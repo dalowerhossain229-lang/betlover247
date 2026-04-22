@@ -7,13 +7,13 @@ $dbname = "defaultdb";
 $port = 15764;
 
 // ২. শক্তিশালী কানেকশন পদ্ধতি (SSL হ্যান্ডশেক ফিক্স)
-$conn = mysqli_init();
-mysqli_options($conn, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, false);
+$conn = mysql_init();
+mysql_options($conn, MYSQL_OPT_SSL_VERIFY_SERVER_CERT, false);
 
-$success = mysqli_real_connect($conn, $host, $user, $pass, $dbname, $port, NULL, MYSQLI_CLIENT_SSL);
+$success = mysql_real_connect($conn, $host, $user, $pass, $dbname, $port, NULL, MYSQL_CLIENT_SSL);
 
 if (!$success) {
-    die("কানেকশন এরর: " . mysqli_connect_error());
+    die("কানেকশন এরর: " . mysql_connect_error());
 }
 
 // ৩. ডাটাবেস অটো-ফিক্স লজিক (উইথড্র ও টার্নওভার এরর দূর করার জন্য)
