@@ -128,6 +128,25 @@ function handleLogout() {
         window.location.href = 'logout.php';
     }
 }
+function saveNumbers() {
+    const bkash = document.getElementById('new_bkash')?.value || "";
+    const nagad = document.getElementById('new_nagad')?.value || "";
+
+    if(!bkash && !nagad) { alert("অন্তত একটি নম্বর দিন!"); return; }
+    if(!confirm("আপনি কি নিশ্চিত? এই নম্বরগুলো আর কখনো পরিবর্তন করা যাবে না!")) return;
+
+    let fd = new FormData();
+    fd.append('bkash', bkash);
+    fd.append('nagad', nagad);
+
+    fetch('process_save_numbers.php', { method: 'POST', body: fd })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        if(data.status === 'success') location.reload();
+    })
+    .catch(() => alert("সার্ভার এরর!"));
+}
     
 </script>
 
