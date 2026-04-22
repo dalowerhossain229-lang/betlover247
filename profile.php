@@ -118,53 +118,8 @@ include 'header.php';
         <button onclick="alert('Password Update Coming Soon!')" style="width: 100%; padding: 12px; background: #00ff88; color: #000; border: none; font-weight: 900; border-radius: 5px; cursor: pointer;">SAVE CHANGES</button>
     </div>
 </div>
-
 <script>
-// ২. সরাসরি ফাংশনটি এখানেই দিয়ে দিলাম যাতে auth.js এর ওপর নির্ভর করতে না হয়
-function openUpdatePass() {
-    const pModal = document.getElementById('passModal');
-    if(pModal) {
-        pModal.style.display = 'flex';
-    } else {
-        alert("মোডাল খুঁজে পাওয়া যাচ্ছে না!");
-    }
-}
-<!-- পেমেন্ট নম্বর লক সেকশন -->
-<?php
-$u = $_SESSION['user_id'];
-$u_data = $conn->query("SELECT p_bkash, p_nagad FROM users WHERE username = '$u'")->fetch_assoc();
-?>
-<div style="margin: 15px 0; background: #111; padding: 15px; border-radius: 12px; border: 1px solid #222;">
-    <h4 style="color: #00ff88; margin-top: 0; font-size: 14px;">🔒 সেভ করা পেমেন্ট নম্বর</h4>
-    <div style="display: flex; flex-direction: column; gap: 10px;">
-        
-        <!-- বিকাশ -->
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <small style="color: #888;">Bkash:</small>
-            <?php if(empty($u_data['p_bkash'])): ?>
-                <input type="number" id="new_bkash" placeholder="নম্বর দিন" style="background:#000; border:1px solid #333; color:#fff; padding:5px; border-radius:4px; width:120px;">
-            <?php else: ?>
-                <span style="color: #ffdf1b; font-weight: bold;"><?php echo $u_data['p_bkash']; ?> ✅</span>
-            <?php endif; ?>
-        </div>
-
-        <!-- নগদ -->
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <small style="color: #888;">Nagad:</small>
-            <?php if(empty($u_data['p_nagad'])): ?>
-                <input type="number" id="new_nagad" placeholder="নম্বর দিন" style="background:#000; border:1px solid #333; color:#fff; padding:5px; border-radius:4px; width:120px;">
-            <?php else: ?>
-                <span style="color: #ffdf1b; font-weight: bold;"><?php echo $u_data['p_nagad']; ?> ✅</span>
-            <?php endif; ?>
-        </div>
-
-        <!-- বাটন শুধুমাত্র তখনই দেখাবে যখন নম্বর সেভ করা থাকবে না -->
-        <?php if(empty($u_data['p_bkash']) || empty($u_data['p_nagad'])): ?>
-            <button onclick="saveNumbers()" style="background: #00ff88; color: #000; border: none; padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; width: 100%;">নম্বর সেভ ও লক করুন</button>
-        <?php endif; ?>
-    </div>
-</div>
-
+// ১. পেমেন্ট বক্স ওপেন করার ফাংশন
 function openPaymentSettings() {
     const paymentBox = document.getElementById('paymentSection');
     if (paymentBox) {
@@ -174,15 +129,32 @@ function openPaymentSettings() {
         } else {
             paymentBox.style.display = 'none';
         }
+    } else {
+        alert("Error: পেমেন্ট বক্স আইডি পাওয়া যায়নি!");
     }
 }
 
-function handleLogout() {
-    if(confirm("আপনি কি নিশ্চিতভাবে লগআউট করতে চান?")) {
-        window.location.href = 'logout.php';
-    }
+// ২. পাসওয়ার্ড আপডেট ফাংশন
+function updatePassword() {
+    const oldPass = document.getElementById('old_pass').value;
+    const newPass = document.getElementById('new_pass').value;
+
+    if(!oldPass || !newPass) { alert("সবগুলো ঘর পূরণ করুন!"); return; }
+
+    let fd = new FormData();
+    fd.append('old_pass', oldPass);
+    fd.append('new_pass', newPass);
+
+    fetch('update_password_proc.php', { method: 'POST', body: fd })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        if(data.status === 'success') location.reload();
+    })
+    .catch(() => alert("সার্ভার এরর!"));
 }
 
+// ৩. নম্বর সেভ করার ফাংশন (স্থায়ী লক)
 function saveNumbers() {
     const bkash = document.getElementById('new_bkash')?.value || "";
     const nagad = document.getElementById('new_nagad')?.value || "";
@@ -202,7 +174,12 @@ function saveNumbers() {
     })
     .catch(() => alert("সার্ভার এরর!"));
 }
+
+// ৪. লগআউট ফাংশন
+function handleLogout() {
+    if (confirm("আপনি কি নিশ্চিতভাবে লগআউট করতে চান?")) {
+        window.location.href = 'logout.php';
+    }
+}
 </script>
-
-
 <?php include 'footer.php'; ?>
