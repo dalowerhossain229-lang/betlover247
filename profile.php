@@ -166,6 +166,16 @@ $u_data = $conn->query("SELECT p_bkash, p_nagad FROM users WHERE username = '$u'
 </div>
 
 
+function openPaymentSettings() {
+    const paymentBox = document.getElementById('paymentSection');
+    if (paymentBox.style.display === 'none') {
+        paymentBox.style.display = 'block';
+        paymentBox.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        paymentBox.style.display = 'none';
+    }
+}
+
     
 function handleLogout() {
     if(confirm("আপনি কি নিশ্চিতভাবে লগআউট করতে চান?")) {
