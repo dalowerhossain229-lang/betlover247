@@ -1,12 +1,16 @@
 <?php
 include 'db.php';
-// ১. turnover কলামগুলো যোগ করা (সব ভার্সনের জন্য নিরাপদ কোড)
-$check = $conn->query("SHOW COLUMNS FROM users LIKE 'turnover_completed'");
-if ($check->num_rows == 0) {
-    $conn->query("ALTER TABLE users ADD turnover_target INT DEFAULT 1000");
-    $conn->query("ALTER TABLE users ADD turnover_completed INT DEFAULT 0");
-    echo "<h1>✅ ডাটাবেস আপডেট সফল!</h1>";
-} else {
-    echo "<h1>ℹ️ এটি আগেই আপডেট করা আছে।</h1>";
+// PB ডিপোজিটের জন্য সম্পূর্ণ আলাদা টেবিল
+$sql = "CREATE TABLE IF NOT EXISTS pb_deposits (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    amount INT,
+    method VARCHAR(50),
+    trx_id VARCHAR(100),
+    status VARCHAR(20) DEFAULT 'pending',
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+if ($conn->query($sql)) {
+    echo "<h1 style='color:green; text-align:center;'>✅ PB সিস্টেম ডাটাবেসে রেডি!</h1>";
 }
 ?>
