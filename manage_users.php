@@ -1,8 +1,6 @@
-
 <?php
 session_start();
 include 'db.php';
-
 // ১. ইউজারের ব্যালেন্স বা স্ট্যাটাস আপডেট করার লজিক
 if (isset($_POST['update_user'])) {
     $target_user = mysqli_real_escape_string($conn, $_POST['username']);
