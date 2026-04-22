@@ -2,7 +2,10 @@
 session_start();
 include 'header.php'; 
 include 'db.php'; 
-
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php"); 
+    exit();
+}
 $u = $_SESSION['user_id'];
 $u_res = $conn->query("SELECT balance, p_bkash, p_nagad, turnover_target, turnover_completed FROM users WHERE username = '$u'");
 $user = $u_res->fetch_assoc();
