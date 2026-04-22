@@ -56,9 +56,9 @@ include 'header.php';
         <img src="aviator.png" alt="aviator">
         <p>AVIATOR</p>
     </div>
-    <div class="game-card" onclick="location.href='lucky777/'">
-        <img src=lucky777.png" alt=lucky777">
- <p>LUCKY777</p>
+    <div class="game-card" onclick="location.href='lucky-777/'">
+        <img src=lucky-777.png" alt="lucky-777">
+ <p>LUCKY-777</p>
     </div>
 
 
