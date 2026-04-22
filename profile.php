@@ -131,6 +131,7 @@ $u_data = $conn->query("SELECT p_bkash, p_nagad FROM users WHERE username = '$u'
 <div style="margin: 15px 0; background: #111; padding: 15px; border-radius: 12px; border: 1px solid #222;">
     <h4 style="color: #00ff88; margin-top: 0; font-size: 14px;">🔒 সেভ করা পেমেন্ট নম্বর</h4>
     <div style="display: flex; flex-direction: column; gap: 10px;">
+        
         <!-- বিকাশ -->
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <small style="color: #888;">Bkash:</small>
@@ -140,6 +141,7 @@ $u_data = $conn->query("SELECT p_bkash, p_nagad FROM users WHERE username = '$u'
                 <span style="color: #ffdf1b; font-weight: bold;"><?php echo $u_data['p_bkash']; ?> ✅</span>
             <?php endif; ?>
         </div>
+
         <!-- নগদ -->
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <small style="color: #888;">Nagad:</small>
@@ -149,11 +151,14 @@ $u_data = $conn->query("SELECT p_bkash, p_nagad FROM users WHERE username = '$u'
                 <span style="color: #ffdf1b; font-weight: bold;"><?php echo $u_data['p_nagad']; ?> ✅</span>
             <?php endif; ?>
         </div>
+
+        <!-- বাটন শুধুমাত্র তখনই দেখাবে যখন নম্বর সেভ করা থাকবে না -->
         <?php if(empty($u_data['p_bkash']) || empty($u_data['p_nagad'])): ?>
-            <button onclick="saveNumbers()" style="background: #00ff88; color: #000; border: none; padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer;">নম্বর সেভ ও লক করুন</button>
+            <button onclick="saveNumbers()" style="background: #00ff88; color: #000; border: none; padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; width: 100%;">নম্বর সেভ ও লক করুন</button>
         <?php endif; ?>
     </div>
 </div>
+
 
     
 function handleLogout() {
