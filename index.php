@@ -42,6 +42,12 @@ include 'header.php';
         <img src="cricket.png" alt="Cricket">
         <p>CRICKET</p>
     </div>
+
+<div class="game-card" onclick="location.href='football/'">
+        <img src="football.png" alt="football">
+        <p>FOOTBALL</p>
+    </div>
+    
 </div>
 
 <!-- ৪. লগইন পপ-আপ (Modal) -->
