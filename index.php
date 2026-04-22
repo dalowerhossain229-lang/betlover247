@@ -47,8 +47,14 @@ include 'header.php';
         <img src="football.png" alt="football">
         <p>FOOTBALL</p>
     </div>
+
+<div class="game-card" onclick="location.href='lottery/'">
+        <img src="lottery.png" alt="lottery">
+        <p>LOTTERY</p>
+    </div>
     
-</div>
+    
+
 
 <!-- ৪. লগইন পপ-আপ (Modal) -->
 <div id="loginModal" class="modal-overlay">
