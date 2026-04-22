@@ -77,32 +77,8 @@ function openDeposit() {
     // পুরনো মোডাল না খুলে সরাসরি নতুন পেজে নিয়ে যাবে
     window.location.href = 'deposit.php';
 }
-// উইথড্র কার্ড ওপেন করা
 function openWithdraw() {
-    closeAll();
-    document.getElementById('withdrawModal').style.display = 'flex';
-}
-
-// উইথড্র রিকোয়েস্ট প্রসেস করা
-function processWithdraw() {
-    const amount = document.getElementById('wdAmount').value;
-    const number = document.getElementById('wdNumber').value;
-    const method = document.getElementById('wdMethod').value;
-
-    if(!amount || !number) { alert("সবগুলো তথ্য দিন!"); return; }
-
-    let fd = new FormData();
-    fd.append('amount', amount);
-    fd.append('number', number);
-    fd.append('method', method);
-
-    fetch('process_withdraw.php', { method: 'POST', body: fd })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.message);
-        if(data.status === 'success') closeAll();
-    })
-    .catch(() => alert("সার্ভার এরর! process_withdraw.php চেক করুন।"));
+    window.location.href = 'withdraw.php';
 }
 function showWalletMenu() {
     const menu = document.getElementById('walletMenu');
