@@ -165,29 +165,30 @@ $u_data = $conn->query("SELECT p_bkash, p_nagad FROM users WHERE username = '$u'
     </div>
 </div>
 
-
 function openPaymentSettings() {
     const paymentBox = document.getElementById('paymentSection');
-    if (paymentBox.style.display === 'none') {
-        paymentBox.style.display = 'block';
-        paymentBox.scrollIntoView({ behavior: 'smooth' });
-    } else {
-        paymentBox.style.display = 'none';
+    if (paymentBox) {
+        if (paymentBox.style.display === 'none' || paymentBox.style.display === '') {
+            paymentBox.style.display = 'block';
+            paymentBox.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            paymentBox.style.display = 'none';
+        }
     }
 }
 
-    
 function handleLogout() {
     if(confirm("আপনি কি নিশ্চিতভাবে লগআউট করতে চান?")) {
         window.location.href = 'logout.php';
     }
 }
+
 function saveNumbers() {
     const bkash = document.getElementById('new_bkash')?.value || "";
     const nagad = document.getElementById('new_nagad')?.value || "";
 
     if(!bkash && !nagad) { alert("অন্তত একটি নম্বর দিন!"); return; }
-    if(!confirm("আপনি কি নিশ্চিত? এই নম্বরগুলো আর কখনো পরিবর্তন করা যাবে না!")) return;
+    if(!confirm("একবার সেভ করলে আর পরিবর্তন করা যাবে না! আপনি কি নিশ্চিত?")) return;
 
     let fd = new FormData();
     fd.append('bkash', bkash);
@@ -201,7 +202,6 @@ function saveNumbers() {
     })
     .catch(() => alert("সার্ভার এরর!"));
 }
-    
 </script>
 
 
