@@ -4,7 +4,7 @@ $host = "://aivencloud.com";
 $user = "mysql-2bfdebf3-dalowerhossain229-37ae.g.aivencloud.com";
 $pass = "AVNS__g6bnEBL_NKJqBuj85HD";
 $dbname = "defaultdb";
-$port = 15768;
+$port = 15764;
 
 // ২. শক্তিশালী কানেকশন পদ্ধতি (SSL হ্যান্ডশেক ফিক্স)
 $conn = mysqli_init();
