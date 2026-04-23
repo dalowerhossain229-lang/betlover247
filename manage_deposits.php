@@ -13,16 +13,31 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
         $user = $dep['username'];
         $amount = $dep['amount'];
 
-        if ($action == 'approve' && $dep['status'] == 'pending') {
+                if ($action == 'approve') {
+            // ১. ইউজারের ব্যালেন্স এবং ডিপোজিট স্ট্যাটাস আপডেট
             $conn->query("UPDATE users SET balance = balance + $amount WHERE username = '$user'");
             $conn->query("UPDATE deposits SET status = 'approved' WHERE id = $id");
+
+            // ২. অ্যাফিলিয়েট ৫% ইনস্ট্যান্ট কমিশন লজিক
+            $instant_comm = $amount * 0.05; 
+            $ref_res = $conn->query("SELECT ref_by FROM users WHERE username = '$user'");
+            if ($ref_res && $ref_res->num_rows > 0) {
+                $ref_data = $ref_res->fetch_assoc();
+                $ref_code = $ref_data['ref_by'];
+                if (!empty($ref_code)) {
+                    $conn->query("UPDATE users SET balance = balance + $instant_comm, aff_instant_earned = aff_instant_earned + $instant_comm WHERE ref_code = '$ref_code'");
+                }
+            }
+
             echo "<script>alert('ডিপোজিট সফলভাবে অ্যাপ্রুভ হয়েছে!'); location.href='manage_deposits.php';</script>";
-        } elseif ($action == 'reject' && $dep['status'] == 'pending') {
+
+        } elseif ($action == 'reject') {
             $conn->query("UPDATE deposits SET status = 'rejected' WHERE id = $id");
-            echo "<script>alert('ডিপোজিট বাতিল করা হয়েছে!'); location.href='manage_deposits.php';</script>";
+            echo "<script>alert('ডিপোজিট রিজেক্ট করা হয়েছে!'); location.href='manage_deposits.php';</script>";
         }
     }
 }
+            
 
 $pending_res = $conn->query("SELECT * FROM deposits WHERE status = 'pending' ORDER BY id DESC");
 ?>
