@@ -10,23 +10,24 @@ if (!isset($_SESSION['user_id'])) {
 
 $u = $_SESSION['user_id'];
 
-// ২. ডাটাবেস থেকে ইউজারের সব তথ্য আগে নিয়ে আসুন
+// ২. ডাটাবেস থেকে ইউজারের সব তথ্য নিয়ে আসা
 $u_res = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $u_data = $u_res->fetch_assoc();
 
-// ৩. এবার চেক করুন সে অ্যাফিলিয়েট মেম্বার কি না (এখন $u_data কাজ করবে)
+// ৩. অ্যাডমিন পারমিশন চেক (is_affiliate ১ না হলে বের করে দিবে)
 if ($u_data['is_affiliate'] != 1) {
-    include 'header.php'; // ডিজাইন সুন্দর রাখার জন্য
+    include 'header.php';
     echo "<div style='color:white; text-align:center; margin-top:100px; font-family:sans-serif;'>
             <h2 style='color:#ff4d4d;'>❌ এক্সেস ডিনাইড!</h2>
-            <p>আপনি এই পেজটি দেখার অনুমতিপ্রাপ্ত নন।</p>
+            <p>এই ফিচারটি শুধুমাত্র অনুমোদিত অ্যাফিলিয়েট পার্টনারদের জন্য।</p>
             <a href='profile.php' style='color:#00ff88; text-decoration:none; font-weight:bold;'>প্রোফাইলে ফিরে যান</a>
           </div>";
     exit();
 }
 
-include 'header.php'; // শুধুমাত্র অ্যাফিলিয়েট হলে হেডার লোড হবে
+include 'header.php'; // শুধুমাত্র পারমিশন থাকলে ডিজাইন লোড হবে
 ?>
+
 
 
 // ইউজারের অ্যাফিলিয়েট ডাটা সংগ্রহ
