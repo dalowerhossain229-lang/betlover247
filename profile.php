@@ -80,6 +80,22 @@ if($percent > 100) $percent = 100;
                 </div>
             </div>
         </div>
+<!-- বোনাস ক্লেইম বাটন -->
+<div style="margin-top: 15px;">
+    <?php 
+    // চেক করা হচ্ছে বোনাস টার্নওভার শেষ হয়েছে কি না
+    $bonus_unlocked = ($u_data['bonus_t_done'] >= $u_data['bonus_t_target'] && $u_data['bonus_t_target'] > 0);
+    
+    if($bonus_unlocked && $u_data['bonus_balance'] > 0): ?>
+        <button onclick="claimBonus()" style="width:100%; padding:15px; background:linear-gradient(90deg, #ffdf1b, #cca200); color:#000; border:none; border-radius:10px; font-weight:bold; cursor:pointer; box-shadow: 0 4px 15px rgba(255,223,27,0.3);">
+            CLAIM BONUS TO MAIN
+        </button>
+    <?php else: ?>
+        <button disabled style="width:100%; padding:15px; background:#1a1a1a; color:#444; border:1px solid #222; border-radius:10px; font-weight:bold; cursor:not-allowed;">
+            BONUS LOCKED (COMPLETE TURNOVER)
+        </button>
+    <?php endif; ?>
+</div>
 
 
     <!-- মেনু বাটন লিস্ট -->
