@@ -27,7 +27,8 @@ include 'header.php';
     <!-- ১. রেফারেল লিঙ্ক সেকশন -->
     <div style="background:#111; padding:20px; border-radius:15px; border:1px dashed #00ff88; margin-top:20px; text-align:center;">
         <p style="color:#888; font-size:12px; margin-bottom:10px;">আপনার মার্কেটিং লিঙ্ক (কপি করুন):</p>
-        <input type="text" readonly value="https://onrender.com<?php echo $u_data['ref_code']; ?>" 
+        <input type="text" readonly value="https://onrender.com<?php echo $u_data['ref_code']; ?>" style="width:100%; background:#000; border:1px solid #333; color:#00ff88; padding:12px; border-radius:8px; font-size:11px; text-align:center; outline:none;">
+
                style="width:100%; background:#000; border:1px solid #333; color:#00ff88; padding:12px; border-radius:8px; font-size:11px; text-align:center; outline:none;">
         <p style="font-size:10px; color:#666; margin-top:12px; line-height:1.5;">প্রতিটি ডিপোজিটে ৫% ইনস্ট্যান্ট কমিশন এবং মাসিক ৪৭% প্রফিট শেয়ার!</p>
     </div>
