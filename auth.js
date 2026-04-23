@@ -40,22 +40,28 @@ function processLogin() {
     })
     .catch(() => alert("লগইন সার্ভার কানেকশন এরর!"));
 }
+
 function processRegister() {
     const user = document.getElementById('regUser').value;
     const pass = document.getElementById('regPass').value;
-    
-    if(!user || !pass) { alert("সবগুলো তথ্য দিন!"); return; }
+    const ref = document.getElementById('regRef').value; // নতুন যোগ করা রেফার কোড
+
+    if(!user || !pass) { 
+        alert('ইউজারনেম এবং পাসওয়ার্ড উভয়ই দিন!'); 
+        return; 
+    }
 
     let fd = new FormData();
     fd.append('username', user);
     fd.append('password', pass);
+    fd.append('ref_by', ref); // রেফার কোডটি এখানে ডাটা হিসেবে যাবে
 
-    fetch('register.php', { method: 'POST', body: fd })
+    fetch('register_proc.php', { method: 'POST', body: fd })
     .then(res => res.json())
     .then(data => {
-        if(data.status === 'success') { 
+        if(data.status === 'success') {
             alert(data.message);
-            location.reload(); 
+            location.reload();
         } else {
             alert(data.message);
         }
