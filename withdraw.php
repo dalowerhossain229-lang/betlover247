@@ -1,7 +1,8 @@
-<?php 
+   <?php 
 ob_start();
 session_start();
 include 'db.php'; 
+
 // ১. লগইন চেক
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
@@ -10,11 +11,11 @@ if (!isset($_SESSION['user_id'])) {
 
 $u = $_SESSION['user_id'];
 
-// ২. ডাটাবেস থেকে তথ্য আনা (নিশ্চিত পদ্ধতি)
-$u_query = "SELECT balance, p_bkash, p_nagad, turnover_target, turnover_completed FROM users WHERE username = '$u'";
+// ২. ডাটাবেস থেকে তথ্য নিয়ে আসা
+$u_query = "SELECT * FROM users WHERE username = '$u'";
 $u_res = $conn->query($u_query);
 
-// ৩. এরর হ্যান্ডেলিং: ডাটা ঠিকমতো আসছে কি না চেক করা
+// ৩. ডাটাবেস তথ্য চেক করা (এটিই এরর দূর করবে)
 if ($u_res && $u_res->num_rows > 0) {
     $user = $u_res->fetch_assoc();
 } else {
@@ -34,17 +35,16 @@ include 'header.php';
     
     <!-- ব্যালেন্স কার্ড -->
     <div style="background: rgba(7, 49, 40, 0.6); border: 1px solid #00ff88; padding: 20px; border-radius: 15px; margin-bottom: 25px;">
-        <small style="color:#888; text-transform: uppercase; font-size: 10px;">Current Balance</small>
+        <small style="color:#888;">Current Balance</small>
         <h2 style="color:#ffdf1b; margin: 10px 0;">৳ <?php echo number_format($user['balance'], 2); ?></h2>
     </div>
 
-    <!-- ৫. টার্নওভার কন্ডিশন -->
+    <!-- টার্নওভার চেক -->
     <?php if (!$is_turnover_done): ?>
         <div style="background: rgba(255, 77, 77, 0.1); border: 1px solid #ff4d4d; padding: 20px; border-radius: 15px; color: #ff4d4d;">
             <p style="font-weight: bold;">⚠️ টার্নওভার অসম্পূর্ণ!</p>
             <small>উইথড্র দিতে আগে টার্নওভার টার্গেট সম্পন্ন করুন।</small>
-            
-            <div style="margin-top: 20px; background: #111; height: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #333;">
+            <div style="margin-top: 15px; background: #111; height: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #333;">
                 <div style="width: <?php echo ($target > 0) ? ($done / $target) * 100 : 0; ?>%; background: #ff4d4d; height: 100%; box-shadow: 0 0 10px #ff4d4d;"></div>
             </div>
             <p style="font-size: 12px; margin-top: 10px; color: #888;">
@@ -52,7 +52,7 @@ include 'header.php';
             </p>
         </div>
     <?php else: ?>
-        <!-- উইথড্র ফর্ম (যখন টার্নওভার শেষ হবে) -->
+        <!-- উইথড্র ফর্ম -->
         <div style="background: #111; padding: 25px; border-radius: 15px; border: 1px solid #333; text-align: left;">
             <label style="color: #888; font-size: 12px;">পেমেন্ট নম্বর সিলেক্ট করুন:</label>
             <select id="w_method" style="width: 100%; padding: 15px; background: #000; color: white; border: 1px solid #444; border-radius: 10px; margin-top: 10px; outline: none;">
@@ -61,9 +61,6 @@ include 'header.php';
                 <?php endif; ?>
                 <?php if(!empty($user['p_nagad'])): ?>
                     <option value="Nagad: <?php echo $user['p_nagad']; ?>">নগদ (<?php echo $user['p_nagad']; ?>)</option>
-                <?php endif; ?>
-                <?php if(empty($user['p_bkash']) && empty($user['p_nagad'])): ?>
-                    <option value="">আগে প্রোফাইল থেকে নম্বর সেট করুন!</option>
                 <?php endif; ?>
             </select>
 
@@ -80,16 +77,11 @@ function submitWithdraw() {
     const method = document.getElementById('w_method').value;
     const amount = document.getElementById('w_amount').value;
     const btn = document.getElementById('wBtn');
-
-    if(!method) { alert("আগে প্রোফাইল থেকে নম্বর সেট করুন!"); return; }
-    if(!amount || amount < 100 || amount > 25000) { alert("উইথড্র লিমিট ১০০ থেকে ২৫,০০০ টাকা!"); return; }
-
+    if(!method) { alert("আগে নম্বর সেট করুন!"); return; }
+    if(amount < 100) { alert("সর্বনিম্ন ১০০ টাকা!"); return; }
     btn.disabled = true; btn.innerText = "প্রসেসিং...";
-
     let fd = new FormData();
-    fd.append('method', method);
-    fd.append('amount', amount);
-
+    fd.append('method', method); fd.append('amount', amount);
     fetch('process_withdraw.php', { method: 'POST', body: fd })
     .then(res => res.json())
     .then(data => {
@@ -100,4 +92,4 @@ function submitWithdraw() {
 }
 </script>
 
-<?php include 'footer.php'; ?>                    
+<?php include 'footer.php'; ?>             
