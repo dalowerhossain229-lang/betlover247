@@ -1,13 +1,16 @@
 <?php 
 session_start();
-include 'header.php'; 
+ob_start(); // এটি সবার আগে দিন, সব এরর দূর করবে
 include 'db.php'; 
 
+// ১. আগে লগইন চেক (হেডার ইনক্লুড করার আগে)
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
 }
 
+include 'header.php'; // লগইন চেক করার পর এটি আসবে
+?>
 $u = $_SESSION['user_id'];
 
 // --- ডাটাবেস অটো-ফিক্সার (এই অংশটি সব এরর দূর করবে) ---
