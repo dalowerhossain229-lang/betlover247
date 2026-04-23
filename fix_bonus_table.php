@@ -1,15 +1,23 @@
 <?php
 include 'db.php';
 
-// বোনাস ব্যালেন্স এবং বোনাস টার্নওভারের ঘরগুলো তৈরি করা
-$sql = "ALTER TABLE users 
-        ADD COLUMN IF NOT EXISTS bonus_balance DECIMAL(10,2) DEFAULT 0.00,
-        ADD COLUMN IF NOT EXISTS bonus_t_target INT DEFAULT 0,
-        ADD COLUMN IF NOT EXISTS bonus_t_done INT DEFAULT 0";
+echo "<div style='font-family:sans-serif; text-align:center; margin-top:50px;'>";
 
-if ($conn->query($sql)) {
-    echo "<h1 style='color:green; text-align:center; font-family:sans-serif;'>✅ বোনাস সিস্টেম ডাটাবেসে রেডি!</h1>";
-} else {
-    echo "এরর: " . $conn->error;
+// বোনাস সিস্টেমের জন্য কলামগুলো আছে কি না চেক করে যোগ করা
+$cols = [
+    'bonus_balance' => "DECIMAL(10,2) DEFAULT 0.00",
+    'bonus_t_target' => "INT DEFAULT 0",
+    'bonus_t_done' => "INT DEFAULT 0"
+];
+
+foreach ($cols as $col => $type) {
+    $check = $conn->query("SHOW COLUMNS FROM users LIKE '$col'");
+    if ($check && $check->num_rows == 0) {
+        $conn->query("ALTER TABLE users ADD $col $type");
+    }
 }
+
+echo "<h1 style='color:green;'>✅ বোনাস সিস্টেম ডাটাবেসে সফলভাবে আপডেট হয়েছে!</h1>";
+echo "<p><a href='admin_bonus.php' style='background:#ffdf1b; color:#000; padding:10px 20px; text-decoration:none; border-radius:5px; font-weight:bold;'>এখন বোনাস পেজে যান</a></p>";
+echo "</div>";
 ?>
