@@ -1,10 +1,33 @@
 <?php 
 session_start();
-include 'header.php'; 
 include 'db.php'; 
 
-if (!isset($_SESSION['user_id'])) { header("Location: index.php"); exit(); }
+// ১. আগে লগইন চেক করুন
+if (!isset($_SESSION['user_id'])) { 
+    header("Location: index.php"); 
+    exit(); 
+}
+
 $u = $_SESSION['user_id'];
+
+// ২. ডাটাবেস থেকে ইউজারের সব তথ্য আগে নিয়ে আসুন
+$u_res = $conn->query("SELECT * FROM users WHERE username = '$u'");
+$u_data = $u_res->fetch_assoc();
+
+// ৩. এবার চেক করুন সে অ্যাফিলিয়েট মেম্বার কি না (এখন $u_data কাজ করবে)
+if ($u_data['is_affiliate'] != 1) {
+    include 'header.php'; // ডিজাইন সুন্দর রাখার জন্য
+    echo "<div style='color:white; text-align:center; margin-top:100px; font-family:sans-serif;'>
+            <h2 style='color:#ff4d4d;'>❌ এক্সেস ডিনাইড!</h2>
+            <p>আপনি এই পেজটি দেখার অনুমতিপ্রাপ্ত নন।</p>
+            <a href='profile.php' style='color:#00ff88; text-decoration:none; font-weight:bold;'>প্রোফাইলে ফিরে যান</a>
+          </div>";
+    exit();
+}
+
+include 'header.php'; // শুধুমাত্র অ্যাফিলিয়েট হলে হেডার লোড হবে
+?>
+
 
 // ইউজারের অ্যাফিলিয়েট ডাটা সংগ্রহ
 $u_res = $conn->query("SELECT * FROM users WHERE username = '$u'");
