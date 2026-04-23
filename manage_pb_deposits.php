@@ -1,7 +1,7 @@
- <?php
+<?php
+ob_start();
 session_start();
 include 'db.php';
-
 // ১. PB রিকোয়েস্ট অ্যাপ্রুভ করার মাস্টার লজিক
 if (isset($_POST['approve_pb'])) {
     $id = intval($_POST['id']);
