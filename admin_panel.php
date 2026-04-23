@@ -65,6 +65,10 @@ $total_wd = $wd_res->fetch_assoc()['total'] ?? 0;
 <a href="admin_aff_clear.php" class="admin-btn" style="border: 1px solid #ffdf1b; color: #ffdf1b; margin-top: 10px;">
     💰 Affiliate Monthly Settlement
 </a>
+ <a href="admin_manage_users.php" class="admin-btn" style="border: 1px solid #00ff88; color: #00ff88;">
+    👥 Manage Users & Affiliate
+</a>
+       
 <a href="logout.php" class="admin-btn" style="border: 1px solid #ff4d4d; color: #ff4d4d;">লগআউট</a>
 
 
