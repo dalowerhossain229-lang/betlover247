@@ -109,6 +109,8 @@ if($percent > 100) $percent = 100;
         <button class="p-btn" onclick="openPaymentSettings()" style="border-color: #00ff88; color: #00ff88; background: rgba(0,255,136,0.02);">Payment Numbers</button>
         
         <button class="p-btn" onclick="location.href='update_password.php'">Update Password ></button>
+        <button class="p-btn" onclick="location.href='affiliate.php'" style="border-color: #ffdf1b; color: #ffdf1b;">🤝 Affiliate Program ></button>
+
         <button class="p-btn" onclick="handleLogout()" style="border-color: rgba(255,77,77,0.2); color: #ff4d4d; background: rgba(255,77,77,0.02);">Logout</button>
     </div>
 
