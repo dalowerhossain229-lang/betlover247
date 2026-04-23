@@ -125,7 +125,9 @@ include 'header.php';
         <!-- পুরো নাম এর বক্সটি সরিয়ে ফেলা হয়েছে -->
         <input type="text" id="regUser" placeholder="ইউজার আইডি (Username)" class="modal-input">
         <input type="password" id="regPass" placeholder="পাসওয়ার্ড (Password)" class="modal-input">
-        
+        <!-- রেফার কোড ইনপুট (ঐচ্ছিক) -->
+<input type="text" id="regRef" placeholder="Referral Code (Optional)" value="<?php echo $_GET['ref'] ?? ''; ?>" style="width: 100%; padding: 12px; margin-top: 10px; background: #000; border: 1px solid #333; color: #fff; border-radius: 8px; outline: none;">
+
         <button onclick="processRegister()" class="btn-submit-reg" style="background: var(--gold); color: #000; width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 900; margin-top: 15px; cursor: pointer;">একাউন্ট খুলুন</button>
         
         <p onclick="closeAll()" style="color: #555; margin-top: 15px; cursor: pointer; font-size: 13px;">বন্ধ করুন</p>
