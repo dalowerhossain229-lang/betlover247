@@ -86,7 +86,8 @@ if($percent > 100) $percent = 100;
     <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
         <button class="p-btn" onclick="location.href='live_chat.php'">Live Chat ></button>
         <button class="p-btn" onclick="location.href='history.php'">Transaction History ></button>
-        <button class="p-btn" onclick="location.href='bet_history.php'">Bet History ></button>
+        <button class="p-btn" onclick="location.href='bet_logs.php'">Bet History ></button>
+
         
         <!-- পেমেন্ট নম্বর বাটন (লক বক্স খুলবে) -->
         <button class="p-btn" onclick="openPaymentSettings()" style="border-color: #00ff88; color: #00ff88; background: rgba(0,255,136,0.02);">Payment Numbers</button>
