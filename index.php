@@ -313,3 +313,48 @@ marquee {
 </script>
 
 <?php include 'footer.php'; ?>
+<script src="https://jsdelivr.net"></script>
+<script>
+let currentSlide = 0;
+
+function boomAndSlide() {
+    const slider = document.querySelector('.slider');
+    const slides = document.querySelectorAll('.slide');
+
+    if (slider && slides.length > 1) {
+        currentSlide = (currentSlide + 1) % slides.length;
+        
+        // ১. প্রথমে স্লাইডটি সরবে
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+        // ২. স্লাইড শেষ হওয়ার ঠিক পরেই বোম বাসটিং ইফেক্ট (Delay: 500ms)
+        setTimeout(() => {
+            // বাম দিক থেকে বিস্ফোরণ
+            confetti({
+                particleCount: 100,
+                startVelocity: 30,
+                spread: 360,
+                origin: { x: 0.2, y: 0.5 },
+                colors: ['#ff0000', '#00ff88', '#ffffff']
+            });
+            // ডান দিক থেকে বিস্ফোরণ
+            confetti({
+                particleCount: 100,
+                startVelocity: 30,
+                spread: 360,
+                origin: { x: 0.8, y: 0.5 },
+                colors: ['#ffdf1b', '#00ff88', '#ffffff']
+            });
+            // মাঝখান থেকে বড় বিস্ফোরণ (বোম বাসটিং স্টাইল)
+            confetti({
+                particleCount: 200,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }, 600); 
+    }
+}
+
+// প্রতি ৬ সেকেন্ড পরপর বিস্ফোরণসহ স্লাইড হবে
+setInterval(boomAndSlide, 6000);
+</script>
