@@ -1,6 +1,8 @@
-   <?php
+<?php
+ob_start();
 session_start();
 include 'db.php';
+?>   
 
 // ১. ইমেজ আপলোড লজিক (শুধুমাত্র PNG)
 if(isset($_POST['upload_slider'])) {
