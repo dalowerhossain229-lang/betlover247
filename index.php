@@ -111,7 +111,7 @@ include 'header.php';
 </div>
 
 
-< ৪. লগইন পপ-আপ (Modal) -->
+<!-- ৪. লগইন পপ-আপ (Modal) -->
 <div id="loginModal" class="modal-overlay">
     <div class="modal-content">
         <h2 style="color:var(--neon); margin-top:0; font-size:20px;">LOGIN</h2>
