@@ -15,15 +15,15 @@ if(isset($_POST['upload_slider'])) {
     } elseif($file_type != "png") {
         echo "<script>alert('শুধুমাত্র PNG ফরম্যাট আপলোড করুন!');</script>";
     } else {
-        $target_dir = "images/";
-        if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
+            // ১৮. টার্গেট ডিরেক্টরি এখন মেইন ফোল্ডার (কোনো ফোল্ডার ছাড়াই)
         $file_name = time() . ".png";
-        $target_file = $target_dir . $file_name;
+        $target_file = $file_name;
 
         if (move_uploaded_file($_FILES["slider_file"]["tmp_name"], $target_file)) {
-            $conn->query("INSERT INTO slider_images (image_path) VALUES ('$target_file')");
-            echo "<script>alert('সফলভাবে যোগ হয়েছে!'); location.href='admin_slider.php';</script>";
-        }
+            // ডাটাবেসে শুধু ফাইলের নাম সেভ হবে
+            $conn->query("INSERT INTO slider_images (image_path) VALUES ('$file_name')");
+            echo "<script>alert('সফলভাবে যোগ হয়েছে!'); location.href='manage_site.php';</script>";
+        }   
     }
 }
 
