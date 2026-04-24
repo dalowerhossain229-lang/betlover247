@@ -313,7 +313,9 @@ marquee {
 </script>
 
 <?php include 'footer.php'; ?>
+<!-- ১. রঙিন কাগজের শক্তিশালী লাইব্রেরি -->
 <script src="https://jsdelivr.net"></script>
+
 <script>
 let currentSlide = 0;
 
@@ -324,37 +326,31 @@ function boomAndSlide() {
     if (slider && slides.length > 1) {
         currentSlide = (currentSlide + 1) % slides.length;
         
-        // ১. প্রথমে স্লাইডটি সরবে
+        // স্লাইড পরিবর্তন
         slider.style.transform = `translateX(-${currentSlide * 100}%)`;
 
-        // ২. স্লাইড শেষ হওয়ার ঠিক পরেই বোম বাসটিং ইফেক্ট (Delay: 500ms)
+        // --- ১০০০০% একুরেট বোম বাস্টিং ইফেক্ট (স্লাইড হওয়ার পর) ---
         setTimeout(() => {
-            // বাম দিক থেকে বিস্ফোরণ
-            confetti({
-                particleCount: 100,
-                startVelocity: 30,
-                spread: 360,
-                origin: { x: 0.2, y: 0.5 },
-                colors: ['#ff0000', '#00ff88', '#ffffff']
-            });
-            // ডান দিক থেকে বিস্ফোরণ
-            confetti({
-                particleCount: 100,
-                startVelocity: 30,
-                spread: 360,
-                origin: { x: 0.8, y: 0.5 },
-                colors: ['#ffdf1b', '#00ff88', '#ffffff']
-            });
-            // মাঝখান থেকে বড় বিস্ফোরণ (বোম বাসটিং স্টাইল)
-            confetti({
-                particleCount: 200,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-        }, 600); 
+            var count = 200;
+            var defaults = { origin: { y: 0.7 } };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            // তিন ধাপে বিস্ফোরণ (আসল বোম স্টাইল)
+            fire(0.25, { spread: 26, startVelocity: 55, });
+            fire(0.2, { spread: 60, });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45, });
+        }, 500); 
     }
 }
 
-// প্রতি ৬ সেকেন্ড পরপর বিস্ফোরণসহ স্লাইড হবে
-setInterval(boomAndSlide, 6000);
+// প্রতি ৫ সেকেন্ড পরপর বোম ফুটে স্লাইড হবে
+setInterval(boomAndSlide, 5000);
 </script>
+<?php include 'footer.php'; ?>
