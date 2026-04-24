@@ -22,6 +22,24 @@ include 'header.php';
     </div>
 </div>
 
+<!-- ডাইনামিক স্লাইডার সেকশন শুরু -->
+<div class="slider-container">
+    <div class="slider">
+        <?php 
+        $get_slides = $conn->query("SELECT * FROM slider_images LIMIT 10");
+        if($get_slides && $get_slides->num_rows > 0):
+            while($s = $get_slides->fetch_assoc()): ?>
+                <div class="slide">
+                    <img src="<?php echo $s['image_path']; ?>" alt="Slide">
+                </div>
+            <?php endwhile; 
+        else: ?>
+            <!-- যদি কোনো ছবি আপলোড করা না থাকে তবে নিচের ডিফল্ট ছবি দেখাবে -->
+            <div class="slide"><img src="images/default_banner.png" alt="Default"></div>
+        <?php endif; ?>
+    </div>
+</div>
+<!-- ডাইনামিক স্লাইডার সেকশন শেষ -->
 
 <!-- গেম গ্রিড সেকশন শুরু -->
 <div class="game-grid">
