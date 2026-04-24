@@ -198,6 +198,17 @@ include 'header.php';
 
 <style>
 /* ইনডেক্স পেজ স্টাইল */
+/* নোটিশ কনটেইনার স্টাইল */
+marquee {
+    display: block;
+    background: #000;
+    color: #00ff88;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: bold;
+    border-bottom: 1px solid #111;
+    margin-top: -20px !important;}
+    
 .slider-container {
     width: 100%;
     height: 180px;
