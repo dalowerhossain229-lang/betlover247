@@ -207,12 +207,14 @@ marquee {
     font-size: 13px;
     font-weight: bold;
     border-bottom: 1px solid #111;
-    margin-top: -20px !important;}
+    position: relative;
+    z-index: 999 !important;
+}
     
 .slider-container {
     width: 100%;
     height: 180px;
-    margin-top: -5px;   /* মাইনাস মার্জিন দিয়ে স্লাইডারকে উপরে তোলা হলো */
+    margin-top: 5px !important;
     margin-bottom: 10px;
     border-radius: 0;
     overflow: hidden;
