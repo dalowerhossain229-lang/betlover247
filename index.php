@@ -224,9 +224,12 @@ include 'header.php';
 .game-card:active { transform: scale(0.95); }
 .game-card img {
     width: 100%;
-    height: auto;
+    height: 110px;       /* সব ছবির উচ্চতা একই ফিক্সড করে দেওয়া হলো */
+    object-fit: cover;    /* ছবি যাতে চ্যাপ্টা না হয়, সুন্দরভাবে ফিট হয় */
     display: block;
+    background: #111;     /* ছবি লোড হওয়ার আগে কালো ব্যাকগ্রাউন্ড দেখাবে */
 }
+
 .game-card p {
     font-size: 10px;
     padding: 5px;
