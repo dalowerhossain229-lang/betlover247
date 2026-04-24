@@ -1,19 +1,19 @@
 <?php 
 include 'header.php'; 
 ?>
-<!-- ২. নোটিশ বোর্ড -->
-<div class="notice-board">
-    <div class="notice-content">
-        <i class="fa-solid fa-bullhorn"></i>
-        <marquee scrollamount="5">
+<!-- ২. ডাইনামিক নোটিশ বোর্ড -->
+<div style="background: #000; border-bottom: 1px solid #111; padding: 12px 0;">
+    <div style="width: 94%; margin: 0 auto; display: flex; align-items: center; gap: 10px;">
+        <span style="color: #00ff88; font-size: 18px;">📢</span>
+        <marquee scrollamount="5" style="color: #00ff88; font-family: sans-serif; font-weight: bold; font-size: 13px; text-transform: uppercase;">
             <?php 
-                // অ্যাডমিন প্যানেল থেকে নোটিশ নিয়ে আসা
-                $n_res = $conn->query("SELECT config_value FROM site_configs WHERE config_key = 'notice_text'");
-                if($n_res && $n_res->num_rows > 0) {
-                    echo $n_res->fetch_assoc()['config_value'];
-                } else {
-                    echo "স্বাগতম BETLOVER777-এ!";
-                }
+            $n_res = $conn->query("SELECT notice FROM settings WHERE id = 1");
+            if ($n_res && $n_res->num_rows > 0) {
+                $n_row = $n_res->fetch_assoc();
+                echo $n_row['notice'];
+            } else {
+                echo "স্বাগতম BETLOVER777 - এ আমাদের সাথে থাকুন এবং জিতে নিন আকর্ষণীয় বোনাস!";
+            }
             ?>
         </marquee>
     </div>
