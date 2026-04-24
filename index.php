@@ -137,22 +137,56 @@ include 'header.php';
 
 <style>
 /* ইনডেক্স পেজ স্টাইল */
-.slider-container { margin: 15px auto; width: 94%; height: 105px; border-radius: 12px; overflow: hidden; border: 1px solid var(--neon); box-shadow: 0 0 10px rgba(0,255,136,0.2); }
-.slider { display: flex; height: 100%; transition: 0.6s ease-in-out; }
-.slide { min-width: 100%; display: flex; align-items: center; padding: 0 20px; position: relative; box-sizing: border-box; }
-.slide-text h3 { margin: 0; color: var(--gold); font-size: 18px; text-transform: uppercase; }
-.slide-text p { margin: 5px 0 0; font-size: 11px; opacity: 0.9; }
-.bg-icon { position: absolute; right: 20px; font-size: 40px; opacity: 0.2; color: #fff; }
+.slider-container {
+    width: 94%;
+    margin: 15px auto;
+    height: 160px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+.slider {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+}
+.slide {
+    min-width: 100%;
+    height: 100%;
+}
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-.notice-board { background: #000; border-top: 1px solid #14362a; border-bottom: 1px solid #14362a; padding: 8px 0; margin-bottom: 15px; }
-.notice-content { display: flex; align-items: center; gap: 10px; color: var(--neon); font-size: 12px; font-weight: bold; padding: 0 10px; }
-
-.game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 0 10px; }
-.game-card { background: #121212; border-radius: 8px; overflow: hidden; border: 1px solid #14362a; cursor: pointer; text-align: center; transition: 0.3s; }
+/* ২. গেম কার্ড গ্লোয়িং ইফেক্ট */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 15px;
+}
+.game-card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #333;
+    transition: 0.3s;
+}
 .game-card:active { transform: scale(0.95); }
-.game-card img { width: 100%; height: 75px; object-fit: cover; display: block; }
-.game-card p { margin: 0; padding: 6px 0; font-size: 8px; font-weight: 900; color: var(--gold); background: rgba(0,0,0,0.85); letter-spacing: 0.5px; }
-
+.game-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.game-card p {
+    font-size: 10px;
+    padding: 5px;
+    text-align: center;
+    color: #888;
+}
 /* মোডাল ফিক্স (পপ-আপ সবার ওপরে থাকার জন্য) */
 .modal-overlay { 
     position: fixed !important; 
