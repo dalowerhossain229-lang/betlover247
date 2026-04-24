@@ -1,9 +1,6 @@
 <?php 
 include 'header.php'; 
-?>
-
-<?php include 'slider.php'; ?>
-
+?
 <!-- ২. নোটিশ বোর্ড -->
 <div class="notice-board">
     <div class="notice-content">
