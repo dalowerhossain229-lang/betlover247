@@ -1,106 +1,69 @@
-<?php
+   <?php
 session_start();
 include 'db.php';
 
-// ১. সেটিংস আপডেট করার লজিক (নোটিশ ও পেমেন্ট নম্বর)
-if (isset($_POST['update_site'])) {
-    foreach ($_POST['config'] as $key => $value) {
-        $key = mysqli_real_escape_string($conn, $key);
-        $value = mysqli_real_escape_string($conn, $value);
-        $conn->query("INSERT INTO site_configs (config_key, config_value) VALUES ('$key', '$value') ON DUPLICATE KEY UPDATE config_value='$value'");
+// ১. ইমেজ আপলোড লজিক (শুধুমাত্র PNG)
+if(isset($_POST['upload_slider'])) {
+    $count_res = $conn->query("SELECT COUNT(*) as total FROM slider_images");
+    $total = $count_res->fetch_assoc()['total'];
+    $file_type = strtolower(pathinfo($_FILES["slider_file"]["name"], PATHINFO_EXTENSION));
+
+    if($total >= 10) {
+        echo "<script>alert('সর্বোচ্চ ১০টি স্লাইডার যোগ করা যাবে!');</script>";
+    } elseif($file_type != "png") {
+        echo "<script>alert('শুধুমাত্র PNG ফরম্যাট আপলোড করুন!');</script>";
+    } else {
+        $target_dir = "images/";
+        if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
+        $file_name = time() . ".png";
+        $target_file = $target_dir . $file_name;
+
+        if (move_uploaded_file($_FILES["slider_file"]["tmp_name"], $target_file)) {
+            $conn->query("INSERT INTO slider_images (image_path) VALUES ('$target_file')");
+            echo "<script>alert('সফলভাবে যোগ হয়েছে!'); location.href='admin_slider.php';</script>";
+        }
     }
-    echo "<script>alert('সেটিংস সফলভাবে আপডেট হয়েছে!'); location.href='manage_site.php';</script>";
 }
 
-// ২. স্লাইডার আপডেট করার লজিক (১০টি স্লাইডার)
-if (isset($_POST['update_sliders'])) {
-    foreach ($_POST['slide_url'] as $id => $url) {
-        $id = intval($id);
-        $url = mysqli_real_escape_string($conn, $url);
-        $conn->query("UPDATE sliders SET image_url = '$url' WHERE id = $id");
-    }
-    echo "<script>alert('স্লাইডার আপডেট সফল!'); location.href='manage_site.php';</script>";
+// ২. ইমেজ ডিলিট লজিক
+if(isset($_GET['del'])) {
+    $id = $_GET['del'];
+    $res = $conn->query("SELECT image_path FROM slider_images WHERE id = $id");
+    $img = $res->fetch_assoc();
+    if($img && file_exists($img['image_path'])) unlink($img['image_path']);
+    $conn->query("DELETE FROM slider_images WHERE id = $id");
+    header("Location: admin_slider.php");
 }
 
-// বর্তমান ডাটাবেস তথ্য নিয়ে আসা
-$configs = $conn->query("SELECT * FROM site_configs");
-$site_data = [];
-while($row = $configs->fetch_assoc()) { $site_data[$row['config_key']] = $row['config_value']; }
-
-$sliders = $conn->query("SELECT * FROM sliders LIMIT 10");
+$sliders = $conn->query("SELECT * FROM slider_images ORDER BY id DESC");
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Site Control | BetLover777</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { background: #0a0f0d; color: white; font-family: sans-serif; padding: 15px; }
-        .card { background: #073128; border: 1.5px solid #00ff88; padding: 20px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
-        h3 { color: #00ff88; border-bottom: 1px solid #1a2a22; padding-bottom: 10px; margin-bottom: 15px; font-size: 16px; }
-        label { font-size: 12px; color: #aaa; display: block; margin-bottom: 5px; }
-        input, textarea { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #1a2a22; background: #000; color: #fff; box-sizing: border-box; }
-        .btn { width: 100%; padding: 15px; background: #00ff88; color: #000; border: none; font-weight: 900; border-radius: 8px; cursor: pointer; text-transform: uppercase; }
-        .back-link { color: #00ff88; text-decoration: none; font-size: 14px; margin-bottom: 20px; display: inline-block; }
+        body { background: #0a0f0d; color: white; font-family: sans-serif; padding: 20px; }
+        .card { background: #111; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 15px; }
+        .btn { background: #00ff88; color: #000; padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .img-box { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #222; padding: 10px 0; }
     </style>
 </head>
 <body>
-    <a href="admin_panel.php" class="back-link">← ড্যাশবোর্ড</a>
-
-    <!-- নোটিশ বোর্ড কন্ট্রোল -->
-    <form method="POST" class="card">
-        <h3>📢 নোটিশ বোর্ড নিয়ন্ত্রণ</h3>
-        <label>আপনার সাইটের স্ক্রলিং নোটিশ লিখুন:</label>
-        <textarea name="config[notice_text]" rows="3"><?php echo $site_data['notice_text'] ?? ''; ?></textarea>
-        <button type="submit" name="update_site" class="btn">SAVE NOTICE</button>
-    </form>
-        <!-- পেমেন্ট গেটওয়ে কন্ট্রোল (৪টি মেথড) -->
-        <form method="POST" class="card">
-            <h3>💰 পেমেন্ট নম্বর নিয়ন্ত্রণ</h3>
-            
-            <label>বিকাশ পারসোনাল:</label>
-            <input type="text" name="config[bkash_per]" value="<?php echo $site_data['bkash_per'] ?? ''; ?>" placeholder="বিকাশ পারসোনাল নম্বর">
-            
-            <label>বিকাশ এজেন্ট:</label>
-            <input type="text" name="config[bkash_agt]" value="<?php echo $site_data['bkash_agt'] ?? ''; ?>" placeholder="বিকাশ এজেন্ট নম্বর">
-            
-            <hr style="border:0.1px solid #1a2a22; margin:15px 0;">
-            
-            <label>নগদ পারসোনাল:</label>
-            <input type="text" name="config[nagad_per]" value="<?php echo $site_data['nagad_per'] ?? ''; ?>" placeholder="নগদ পারসোনাল নম্বর">
-            
-            <label>নগদ এজেন্ট:</label>
-            <input type="text" name="config[nagad_agt]" value="<?php echo $site_data['nagad_agt'] ?? ''; ?>" placeholder="নগদ এজেন্ট নম্বর">
-            
-            <button type="submit" name="update_site" class="btn" style="margin-top:10px;">SAVE ALL NUMBERS</button>
+    <h2>🖼️ SLIDER MANAGER (Max 10)</h2>
+    <div class="card">
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="slider_file" accept="image/png" required><br><br>
+            <button type="submit" name="upload_slider" class="btn">UPLOAD PNG SLIDE</button>
         </form>
-
-
-<!-- অফার এবং লাইভ সাপোর্ট কন্ট্রোল -->
-<form method="POST" class="card">
-    <h3>🎁 অফার ও সাপোর্ট নিয়ন্ত্রণ</h3>
-    
-    <label>অফার পেজ টেক্সট:</label>
-    <textarea name="config[offer_text]" rows="3"><?php echo $site_data['offer_text'] ?? ''; ?></textarea>
-    
-    <label>লাইভ সাপোর্ট লিঙ্ক (Telegram):</label>
-    <input type="text" name="config[live_chat_link]" value="<?php echo $site_data['live_chat_link'] ?? ''; ?>" placeholder="https://t.me">
-    
-    <button type="submit" name="update_site" class="btn" style="background: #ffdf1b;">SAVE OFFER & SUPPORT</button>
-</form>
-
-    <!-- স্লাইডার কন্ট্রোল (১০টি স্লাইডার) -->
-    <form method="POST" class="card">
-        <h3>🖼️ স্লাইডার নিয়ন্ত্রণ (১০টি ব্যানার)</h3>
-        <?php if($sliders->num_rows > 0): while($s = $sliders->fetch_assoc()): ?>
-            <label>স্লাইডার নম্বর <?php echo $s['id']; ?> (Image File Name):</label>
-            <input type="text" name="slide_url[<?php echo $s['id']; ?>]" value="<?php echo $s['image_url']; ?>">
-        <?php endwhile; else: ?>
-            <p style="font-size: 12px; color: #ff4d4d;">স্লাইডার টেবিল তৈরি করা নেই। আগে SQL রান করুন।</p>
-        <?php endif; ?>
-        <button type="submit" name="update_sliders" class="btn" style="background: #ffdf1b;">UPDATE ALL SLIDERS</button>
-    </form>
-
+    </div>
+    <div class="card">
+        <h3>Live Slides:</h3>
+        <?php while($row = $sliders->fetch_assoc()): ?>
+            <div class="img-box">
+                <img src="<?php echo $row['image_path']; ?>" width="100" style="border-radius:5px;">
+                <a href="?del=<?php echo $row['id']; ?>" style="color:#ff4d4d; text-decoration:none; font-weight:bold;">Delete</a>
+            </div>
+        <?php endwhile; ?>
+    </div>
 </body>
 </html>
+         
