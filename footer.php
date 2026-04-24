@@ -80,6 +80,7 @@
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
+             animation: pulse-glow 2s infinite;
         }
 
         .promo-center i {
@@ -93,11 +94,18 @@
             font-size: 9px !important;
             font-weight: 900 !important;
         }
+.nav-tab:active {
+    transform: scale(0.9);
+}
 
-        /* মাউস হোভার ইফেক্ট */
-        .nav-tab:active {
-            transform: scale(0.9);
-        }
+/* এখানে বসান */
+@keyframes pulse-glow { 
+    0% { transform: scale(1); box-shadow: 0 0 10px var(--neon); } 
+    50% { transform: scale(1.1); box-shadow: 0 0 25px var(--neon); } 
+    100% { transform: scale(1); box-shadow: 0 0 10px var(--neon); } 
+}
+
+        
     </style>
 
     <!-- আইকন লাইব্রেরি নিশ্চিত করা -->
