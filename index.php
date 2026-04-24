@@ -199,13 +199,12 @@ include 'header.php';
 <style>
 /* ইনডেক্স পেজ স্টাইল */
 .slider-container {
-    width: 94%;
-    margin: 15px auto;
-    height: 160px;
-    border-radius: 15px;
+    width: 100%;
+    height: 180px;
+    margin-top: -5px;   /* মাইনাস মার্জিন দিয়ে স্লাইডারকে উপরে তোলা হলো */
+    margin-bottom: 10px;
+    border-radius: 0;
     overflow: hidden;
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
 .slider {
     display: flex;
@@ -226,30 +225,29 @@ include 'header.php';
 .game-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    padding: 15px;
+    gap: 8px;           /* কার্ডগুলোর মাঝখানের গ্যাপ কমানো হয়েছে */
+    padding: 10px;
 }
 .game-card {
-    background: #1a1a1a;
-    border-radius: 12px;
+    background: #111;
+    border-radius: 10px;
     overflow: hidden;
-    border: 1px solid #333;
-    transition: 0.3s;
+    height: 130px;      /* কার্ডের মোট দৈর্ঘ্য কমিয়ে ফিক্সড করা হলো */
+    border: 1px solid #222;
+    text-align: center;
 }
 .game-card:active { transform: scale(0.95); }
 .game-card img {
     width: 100%;
-    height: 110px;       /* সব ছবির উচ্চতা একই ফিক্সড করে দেওয়া হলো */
-    object-fit: cover;    /* ছবি যাতে চ্যাপ্টা না হয়, সুন্দরভাবে ফিট হয় */
-    display: block;
-    background: #111;     /* ছবি লোড হওয়ার আগে কালো ব্যাকগ্রাউন্ড দেখাবে */
+    height: 90px;       /* ছবির উচ্চতা কমিয়ে দেওয়া হলো যাতে কার্ড বেশি লম্বা না লাগে */
+    object-fit: cover;
 }
 
 .game-card p {
-    font-size: 10px;
-    padding: 5px;
-    text-align: center;
+    font-size: 9px;     /* টেক্সট ছোট করা হয়েছে */
+    margin: 5px 0;
     color: #888;
+    font-weight: bold;
 }
 /* মোডাল ফিক্স (পপ-আপ সবার ওপরে থাকার জন্য) */
 .modal-overlay { 
