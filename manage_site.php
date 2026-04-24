@@ -30,9 +30,14 @@ if(isset($_GET['del'])) {
     $id = $_GET['del'];
     $res = $conn->query("SELECT image_path FROM slider_images WHERE id = $id");
     $img = $res->fetch_assoc();
-    if($img && file_exists($img['image_path'])) unlink($img['image_path']);
-    $conn->query("DELETE FROM slider_images WHERE id = $id");
-    header("Location: admin_slider.php");
+            if ($img) {
+            if (file_exists($img['image_path'])) {
+                unlink($img['image_path']);
+            }
+        }
+        $conn->query("DELETE FROM slider_images WHERE id = $id");
+        header("Location: admin_slider.php");
+        exit();
 }
 
 $sliders = $conn->query("SELECT * FROM slider_images ORDER BY id DESC");
