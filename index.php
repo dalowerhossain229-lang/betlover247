@@ -290,13 +290,15 @@ include 'header.php';
 <script src="auth.js"></script>
 
 <script>
-// স্লাইডার অটোমেটিক চালানোর ছোট কোড
-let currentSlide = 0;
-setInterval(() => {
-    currentSlide = (currentSlide + 1) % 2; // ২ টি স্লাইড আছে তাই
-    const slider = document.getElementById('mainSlider');
-    if(slider) slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-}, 4000);
+    let currentSlide = 0;
+    setInterval(() => {
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slide');
+        if (slider && slides.length > 1) {
+            currentSlide = (currentSlide + 1) % slides.length;
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+    }, 3000);
 </script>
 
 <?php include 'footer.php'; ?>
