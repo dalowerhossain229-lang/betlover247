@@ -27,19 +27,19 @@ include 'header.php';
 <div class="game-grid">
     <!-- ১. Super Ace -->
     <div class="game-card" onclick="playGame('super-ace')">
-        <img src="images/super-ace.png" alt="Super Ace">
+        <img src="super-ace.png" alt="Super Ace">
         <p>SUPER ACE</p>
     </div>
 
     <!-- ২. Aviator -->
     <div class="game-card" onclick="playGame('aviator')">
-        <img src="images/aviator.png" alt="Aviator">
+        <img src="aviator.png" alt="Aviator">
         <p>AVIATOR</p>
     </div>
 
     <!-- ৩. Chicken Road -->
     <div class="game-card" onclick="playGame('chicken')">
-        <img src="images/chicken.png" alt="Chicken Road">
+        <img src="chicken.png" alt="Chicken Road">
         <p>CHICKEN ROAD</p>
     </div>
 
