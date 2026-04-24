@@ -64,6 +64,20 @@ $sliders = $conn->query("SELECT * FROM slider_images ORDER BY id DESC");
             </div>
         <?php endwhile; ?>
     </div>
+ <div class="card" style="margin-top: 20px; border-top: 2px solid #00ff88; padding-top: 20px;">
+        <h3>📢 Update Notice Board</h3>
+        <form method="POST">
+            <textarea name="new_notice" style="width: 100%; height: 80px; background: #000; color: #00ff88; border: 1px solid #333; padding: 10px; border-radius: 8px; outline:none;" placeholder="এখানে নতুন নোটিশ লিখুন..."></textarea><br><br>
+            <button type="submit" name="update_notice" class="btn">UPDATE NOTICE</button>
+        </form>
+    </div>
+    <?php
+    if(isset($_POST['update_notice'])) {
+        $notice = mysqli_real_escape_string($conn, $_POST['new_notice']);
+        // ডাটাবেসে নোটিশ আপডেট করা (settings টেবিল অনুযায়ী)
+        $conn->query("UPDATE settings SET notice = '$notice' WHERE id = 1");
+        echo "<script>alert('নোটিশ সফলভাবে আপডেট হয়েছে!'); location.href='manage_site.php';</script>";
+    }?>  
 </body>
 </html>
          
