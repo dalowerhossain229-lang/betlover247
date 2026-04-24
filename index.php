@@ -1,6 +1,6 @@
 <?php 
 include 'header.php'; 
-?
+?>
 <!-- ২. নোটিশ বোর্ড -->
 <div class="notice-board">
     <div class="notice-content">
