@@ -213,7 +213,7 @@ marquee {
     
 .slider-container {
     width: 100%;
-    height: 150px;
+    height: 140px;
     margin-top: 5px !important;
     margin-bottom: 10px;
     border-radius: 0;
