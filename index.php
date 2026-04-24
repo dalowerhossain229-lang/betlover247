@@ -23,49 +23,95 @@ include 'header.php';
 </div>
 
 
-
-<!-- ৩. গেম গ্রিড -->
+<!-- গেম গ্রিড সেকশন শুরু -->
 <div class="game-grid">
-    <div class="game-card" onclick="location.href='superace/'">
-        <img src="super-ace.png" alt="Super Ace">
+    <!-- ১. Super Ace -->
+    <div class="game-card" onclick="playGame('super-ace')">
+        <img src="images/super-ace.png" alt="Super Ace">
         <p>SUPER ACE</p>
     </div>
-    <div class="game-card" onclick="location.href='chickenroad/'">
-        <img src="chicken-road.png" alt="Chicken Road">
+
+    <!-- ২. Aviator -->
+    <div class="game-card" onclick="playGame('aviator')">
+        <img src="images/aviator.png" alt="Aviator">
+        <p>AVIATOR</p>
+    </div>
+
+    <!-- ৩. Chicken Road -->
+    <div class="game-card" onclick="playGame('chicken')">
+        <img src="images/chicken.png" alt="Chicken Road">
         <p>CHICKEN ROAD</p>
     </div>
-    <div class="game-card" onclick="location.href='wheel/'">
-        <img src="wheel.png" alt="Wheel">
-        <p>WHEEL</p>
+
+    <!-- ৪. Lucky 777 -->
+    <div class="game-card" onclick="playGame('lucky-777')">
+        <img src="images/lucky-777.png" alt="Lucky 777">
+        <p>LUCKY 777</p>
     </div>
-    <div class="game-card" onclick="location.href='cricket/'">
-        <img src="cricket.png" alt="Cricket">
+
+    <!-- ৫. Crazy Time -->
+    <div class="game-card" onclick="playGame('crazy-time')">
+        <img src="images/crazy-time.png" alt="Crazy Time">
+        <p>CRAZY TIME</p>
+    </div>
+
+    <!-- ৬. Mega Ace -->
+    <div class="game-card" onclick="playGame('mega-ace')">
+        <img src="images/mega-ace.png" alt="Mega Ace">
+        <p>MEGA ACE</p>
+    </div>
+
+    <!-- ৭. Mega Wheel -->
+    <div class="game-card" onclick="playGame('mega-wheel')">
+        <img src="images/mega-wheel.png" alt="Mega Wheel">
+        <p>MEGA WHEEL</p>
+    </div>
+
+    <!-- ৮. Better Ace -->
+    <div class="game-card" onclick="playGame('better-ace')">
+        <img src="images/better-ace.png" alt="Better Ace">
+        <p>BETTER ACE</p>
+    </div>
+
+    <!-- ৯. Cricket -->
+    <div class="game-card" onclick="playGame('cricket')">
+        <img src="images/cricket.png" alt="Cricket">
         <p>CRICKET</p>
     </div>
 
-<div class="game-card" onclick="location.href='football/'">
-        <img src="football.png" alt="football">
+    <!-- ১০. Football -->
+    <div class="game-card" onclick="playGame('football')">
+        <img src="images/football.png" alt="Football">
         <p>FOOTBALL</p>
     </div>
 
-<div class="game-card" onclick="location.href='lottery/'">
-        <img src="lottery.png" alt="lottery">
+    <!-- ১১. Lottery -->
+    <div class="game-card" onclick="playGame('lottery')">
+        <img src="images/lottery.png" alt="Lottery">
         <p>LOTTERY</p>
     </div>
-    <div class="game-card" onclick="location.href='aviator/'">
-        <img src="aviator.png" alt="aviator">
-        <p>AVIATOR</p>
-    </div>
-    <div class="game-card" onclick="location.href='lucky-777/'">
-        <img src=lucky-777.png" alt="lucky-777">
- <p>LUCKY-777</p>
-    </div>
-<div class="game-card" onclick="location.href='crazy-time/'">
-        <img src=crazy-time.png" alt="crazy-time">
-        <p>CRAZY-TIME</p>
+
+    <!-- ১২. Ludu -->
+    <div class="game-card" onclick="playGame('ludu')">
+        <img src="images/ludu.png" alt="Ludu">
+        <p>LUDU</p>
     </div>
 
-<!-- ৪. লগইন পপ-আপ (Modal) -->
+    <!-- ১৩. Wheel -->
+    <div class="game-card" onclick="playGame('wheel')">
+        <img src="images/wheel.png" alt="Wheel">
+        <p>WHEEL</p>
+    </div>
+
+    <!-- ১৪. Slot -->
+    <div class="game-card" onclick="playGame('slot')">
+        <img src="images/slot.png" alt="Slot">
+        <p>SLOT</p>
+    </div>
+</div>
+
+
+< ৪. লগইন পপ-আপ (Modal) -->
 <div id="loginModal" class="modal-overlay">
     <div class="modal-content">
         <h2 style="color:var(--neon); margin-top:0; font-size:20px;">LOGIN</h2>
