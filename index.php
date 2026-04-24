@@ -45,67 +45,67 @@ include 'header.php';
 
     <!-- ৪. Lucky 777 -->
     <div class="game-card" onclick="playGame('lucky-777')">
-        <img src="images/lucky-777.png" alt="Lucky 777">
+        <img src="lucky-777.png" alt="Lucky 777">
         <p>LUCKY 777</p>
     </div>
 
     <!-- ৫. Crazy Time -->
     <div class="game-card" onclick="playGame('crazy-time')">
-        <img src="images/crazy-time.png" alt="Crazy Time">
+        <img src="crazy-time.png" alt="Crazy Time">
         <p>CRAZY TIME</p>
     </div>
 
     <!-- ৬. Mega Ace -->
     <div class="game-card" onclick="playGame('mega-ace')">
-        <img src="images/mega-ace.png" alt="Mega Ace">
+        <img src="mega-ace.png" alt="Mega Ace">
         <p>MEGA ACE</p>
     </div>
 
     <!-- ৭. Mega Wheel -->
     <div class="game-card" onclick="playGame('mega-wheel')">
-        <img src="images/mega-wheel.png" alt="Mega Wheel">
+        <img src="mega-wheel.png" alt="Mega Wheel">
         <p>MEGA WHEEL</p>
     </div>
 
     <!-- ৮. Better Ace -->
     <div class="game-card" onclick="playGame('better-ace')">
-        <img src="images/better-ace.png" alt="Better Ace">
+        <img src="better-ace.png" alt="Better Ace">
         <p>BETTER ACE</p>
     </div>
 
     <!-- ৯. Cricket -->
     <div class="game-card" onclick="playGame('cricket')">
-        <img src="images/cricket.png" alt="Cricket">
+        <img src="cricket.png" alt="Cricket">
         <p>CRICKET</p>
     </div>
 
     <!-- ১০. Football -->
     <div class="game-card" onclick="playGame('football')">
-        <img src="images/football.png" alt="Football">
+        <img src="football.png" alt="Football">
         <p>FOOTBALL</p>
     </div>
 
     <!-- ১১. Lottery -->
     <div class="game-card" onclick="playGame('lottery')">
-        <img src="images/lottery.png" alt="Lottery">
+        <img src="lottery.png" alt="Lottery">
         <p>LOTTERY</p>
     </div>
 
     <!-- ১২. Ludu -->
     <div class="game-card" onclick="playGame('ludu')">
-        <img src="images/ludu.png" alt="Ludu">
+        <img src="ludu.png" alt="Ludu">
         <p>LUDU</p>
     </div>
 
     <!-- ১৩. Wheel -->
     <div class="game-card" onclick="playGame('wheel')">
-        <img src="images/wheel.png" alt="Wheel">
+        <img src="wheel.png" alt="Wheel">
         <p>WHEEL</p>
     </div>
 
     <!-- ১৪. Slot -->
     <div class="game-card" onclick="playGame('slot')">
-        <img src="images/slot.png" alt="Slot">
+        <img src="slot.png" alt="Slot">
         <p>SLOT</p>
     </div>
 </div>
