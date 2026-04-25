@@ -47,7 +47,13 @@ $rtp = $logic_res->fetch_assoc()['rtp_value'] ?? 50;
         .type span { font-size: 15px; color: var(--neon); font-weight: bold; }
 
         /* ৩. আপনার স্কেচ অনুযায়ী ২-লেয়ার চিপস ও প্লাস-মাইনাস */
-        .bottom-panel { background: var(--card); padding: 15px; border-top: 1px solid var(--border); }
+        .bottom-panel { 
+    background: var(--card); 
+    padding: 10px 15px; /* প্যাডিং ১৫ থেকে কমিয়ে ১০ করুন */
+    border-top: 1px solid var(--border); 
+    padding-bottom: 20px; /* এটি আপনার ফোনের নিচের বারের জন্য গ্যাপ */
+}
+
         .amt-wrapper { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
         .math-btn { background: #30363d; border: none; color: #fff; width: 45px; height: 45px; border-radius: 8px; font-size: 25px; flex-shrink: 0; }
         
