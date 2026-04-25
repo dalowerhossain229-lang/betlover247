@@ -36,8 +36,15 @@ $rtp = $logic_res->fetch_assoc()['rtp_value'] ?? 50;
 }
 
 
-        .dice-box { display: flex; gap: 20px; background: rgba(255,255,255,0.02); padding: 25px 45px; border-radius: 20px; border: 1px dashed #444; }
-        .dice { width: 70px; height: 70px; background: #fff; border-radius: 15px; color: #000; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: bold; box-shadow: 0 5px 20px rgba(255,255,255,0.2); }
+        .dice-box { 
+    padding: 10px 30px !important; /* জায়গা কমানো হলো */
+    margin: 10px 0 !important;
+}
+.dice { 
+    width: 60px !important; /* ডাইস এর সাইজ কিছুটা কমানো হলো */
+    height: 60px !important; 
+    font-size: 32px !important; 
+}
         .rolling { animation: shuffle 0.15s infinite; }
         @keyframes shuffle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px) rotate(10deg); } }
 
@@ -52,11 +59,10 @@ $rtp = $logic_res->fetch_assoc()['rtp_value'] ?? 50;
     background: var(--card); 
     padding: 10px 15px; 
     border-top: 1px solid var(--border); 
-    /* নিচের লাইনটি পরিবর্তন করুন */
-    margin-bottom: 35px; /* এটি পুরো লাল চিহ্নিত অংশকে উপরে ঠেলে দিবে */
+    /* এটি আপনার প্লে বাটনকে নেভিগেশন বারের উপরে তুলে দিবে */
+    margin-bottom: 45px !important; 
     box-sizing: border-box;
 }
-
 
         .amt-wrapper { 
     display: flex; 
