@@ -1,6 +1,8 @@
 <?php
+ob_start();
 session_start();
 include 'db.php';
+
 if(!isset($_SESSION['user_id'])) { header("Location: index.php"); exit; }
 $user = $_SESSION['user_id'];
 
