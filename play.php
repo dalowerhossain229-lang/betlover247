@@ -1,4 +1,10 @@
 <?php
+// ১. সবার আগে পিএইচপি ট্যাগ শুরু করতে হবে
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// ২. এরপর সেশন এবং ডাটাবেস কানেক্ট করতে হবে
 session_start();
 include 'db.php';
 
