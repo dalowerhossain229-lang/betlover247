@@ -62,6 +62,40 @@ $game_url = "https://2048.org";
             <span style="color: #fff; font-size: 12px; border-left: 1px solid #333; padding-left: 10px;"><?php echo strtoupper($user); ?></span>
         </div>
     </div>
+    <!-- ডামি বেট টেস্ট বাটন -->
+    <div style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid #333;">
+        <button onclick="testBet()" style="background: #ff4d4d; color: #fff; border: none; padding: 8px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 14px;">
+            🔥 Test Bet (৳ 10.00)
+        </button>
+    </div>
+
+    <script>
+    function testBet() {
+        if(confirm('আপনার ব্যালেন্স থেকে ১০ টাকা কাটা হবে। আপনি কি নিশ্চিত?')) {
+            fetch('api_callback.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'bet',
+                    username: '<?php echo $user; ?>',
+                    amount: 10,
+                    tx_id: 'TXN' + Date.now(),
+                    game_name: 'Test Game'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'ok') {
+                    alert('সফল! ১০ টাকা কাটা হয়েছে।');
+                    location.reload(); 
+                } else {
+                    alert('ভুল হয়েছে: ' + data.message);
+                }
+            })
+            .catch(error => alert('Error: api_callback.php খুঁজে পাওয়া যায়নি।'));
+        }
+    }
+    </script>
 
 
     <!-- আসল গেমটি এখানে লোড হবে -->
