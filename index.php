@@ -106,11 +106,9 @@ include 'header.php';
         <p>LOTTERY</p>
     </div>
 
-    <!-- ৪. Ludu -->
-    <div class="game-card" onclick="location.href='play.php?id=ludu'">
-        <img src="ludu.png" alt="Ludu">
-        <p>LUDU</p>
-    </div>
+<div class="game-card" onclick="location.href='ludu.php'">
+    <img src="ludu.png" alt="Ludu">
+    <p>LUDU LUCKY</p>
 </div>
 
     <!-- ১৩. Wheel -->
