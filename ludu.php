@@ -54,7 +54,13 @@ $rtp = $logic_res->fetch_assoc()['rtp_value'] ?? 50;
     padding-bottom: 20px; /* এটি আপনার ফোনের নিচের বারের জন্য গ্যাপ */
 }
 
-        .amt-wrapper { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .amt-wrapper { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    margin-bottom: 10px; /* ২০ থেকে কমিয়ে ১০ করুন */
+}
+
         .math-btn { background: #30363d; border: none; color: #fff; width: 45px; height: 45px; border-radius: 8px; font-size: 25px; flex-shrink: 0; }
         
         .chip-grid { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; flex-grow: 1; }
