@@ -54,11 +54,15 @@ $game_url = "https://2048.org";
 </head>
 <body>
 
-    <!-- গেম হেডার (ব্যাক বাটন এবং লোগো) -->
+    <!-- গেম হেডার (ব্যাক বাটন এবং ব্যালেন্স) -->
     <div class="game-header">
         <a href="index.php" class="back-btn">⬅️ Back to Home</a>
-        <span style="color: #fff; margin-left: auto; font-size: 12px;">User: <?php echo $user; ?></span>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 15px;">
+            <span style="color: #00ff88; font-weight: bold; font-size: 14px;">৳ <?php echo number_format($current_balance, 2); ?></span>
+            <span style="color: #fff; font-size: 12px; border-left: 1px solid #333; padding-left: 10px;"><?php echo strtoupper($user); ?></span>
+        </div>
     </div>
+
 
     <!-- আসল গেমটি এখানে লোড হবে -->
     <iframe src="<?php echo $game_url; ?>" class="game-frame" allowfullscreen></iframe>
