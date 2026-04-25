@@ -1,6 +1,10 @@
 <?php
 session_start();
 include 'db.php';
+if(!isset($_SESSION['admin_logged_in'])){
+    header("Location: admin_login.php");
+    exit;
+}
 
 // ১. আজকের রিপোর্ট (পয়েন্ট ১ অনুযায়ী)
 $today = date('Y-m-d');
