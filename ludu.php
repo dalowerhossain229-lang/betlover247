@@ -24,57 +24,184 @@ $logic = $logic_res->fetch_assoc()['game_logic'] ?? 'random';
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>7 Up 7 Down - Professional</title>
     <style>
-        body { 
-    background: #0a0b10; 
-    color: #fff; 
-    font-family: sans-serif; 
-    margin: 0; 
-    display: flex; 
-    flex-direction: column; 
-    height: 100vh; /* স্ক্রিনের উচ্চতা ফিক্সড */
-    overflow: hidden; /* বাড়তি অংশ স্ক্রোল হবে না */
-}
-        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background: #161b22; border-bottom: 1px solid #333; }
-        .back-btn, .history-btn { background: #21262d; border: 1px solid #30363d; color: #fff; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold; }
-        .balance-display { color: #00ff88; font-weight: bold; font-size: 15px; }
+    /* ১. মূল লেআউট ফিক্স */
+    body { 
+        background: #0a0b10; 
+        color: #fff; 
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+        margin: 0; 
+        display: flex; 
+        flex-direction: column; 
+        height: 100vh; 
+        width: 100vw;
+        overflow: hidden; /* স্ক্রিন যাতে না কাঁপে */
+    }
 
-        .game-main { 
-    flex-grow: 1; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
-    padding: 10px; /* প্যাডিং কিছুটা কমানো হয়েছে */
-}
-        .bet-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; max-width: 400px; margin-bottom: 40px; }
-        .type-box { background: #21262d; border: 2px solid #333; padding: 18px 5px; text-align: center; border-radius: 15px; cursor: pointer; transition: 0.3s; }
-        .type-box.active { border-color: #00ff88; background: rgba(0,255,136,0.15); box-shadow: 0 0 15px rgba(0,255,136,0.2); }
-        .type-box b { font-size: 14px; display: block; margin-bottom: 4px; }
-        .type-box span { font-size: 11px; color: #00ff88; }
+    /* ২. টপ বার (স্মার্ট ও স্লিম) */
+    .top-bar { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 10px 15px; 
+        background: #161b22; 
+        border-bottom: 1px solid #30363d; 
+        box-sizing: border-box;
+    }
+    .back-btn, .history-btn { 
+        background: #21262d; 
+        border: 1px solid #30363d; 
+        color: #fff; 
+        padding: 6px 12px; 
+        border-radius: 6px; 
+        text-decoration: none; 
+        font-size: 13px; 
+        font-weight: 600;
+    }
+    .balance-display { 
+        color: #00ff88; 
+        font-weight: bold; 
+        font-size: 15px;
+    }
 
-        .dice-area { display: flex; gap: 25px; margin: 20px 0; }
-        .dice { width: 80px; height: 80px; background: #fff; color: #000; display: flex; align-items: center; justify-content: center; font-size: 45px; border-radius: 18px; box-shadow: 0 5px 25px rgba(255,255,255,0.1); font-weight: bold; }
-        .rolling { animation: jumpShuffle 0.2s infinite; }
-        @keyframes jumpShuffle { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-25px) rotate(20deg); } }
+    /* ৩. গেম এরিয়া (মাঝখানে সুন্দরভাবে সাজানো) */
+    .game-main { 
+        flex-grow: 1; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center; 
+        padding: 15px; 
+        box-sizing: border-box;
+    }
 
-        .bottom-panel { 
-    background: #161b22; 
-    padding: 15px; 
-    border-top: 1px solid #333; 
-    width: 100%;
-    box-sizing: border-box;
-    padding-bottom: 25px; /* ফোনের নিচের বারের জন্য গ্যাপ */
-}
-        .amount-selector { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .amt-btn { background: #21262d; border: 1px solid #30363d; color: #fff; padding: 10px 18px; border-radius: 10px; font-size: 14px; cursor: pointer; font-weight: bold; }
-        .amt-btn.active { border-color: #00ff88; color: #00ff88; background: rgba(0,255,136,0.1); }
-        .math-btn { background: #30363d; border: none; color: #fff; width: 40px; height: 40px; border-radius: 8px; font-size: 22px; cursor: pointer; }
+    .bet-types { 
+        display: grid; 
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 10px; 
+        width: 100%; 
+        max-width: 400px; 
+        margin-bottom: 30px; 
+    }
+    .type-box { 
+        background: #21262d; 
+        border: 2px solid #333; 
+        padding: 15px 5px; 
+        text-align: center; 
+        border-radius: 15px; 
+        cursor: pointer; 
+        transition: 0.2s;
+    }
+    .type-box.active { 
+        border-color: #00ff88; 
+        background: rgba(0,255,136,0.1); 
+        box-shadow: 0 0 15px rgba(0,255,136,0.2); 
+    }
+    .type-box b { font-size: 13px; display: block; margin-bottom: 2px; }
+    .type-box span { font-size: 11px; color: #00ff88; }
 
-        .action-bar { display: flex; gap: 12px; align-items: center; }
-        .sound-btn { background: #21262d; border: 1px solid #30363d; color: #fff; width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; }
-        .place-bet-btn { flex-grow: 1; background: #00ff88; border: none; color: #000; height: 55px; border-radius: 12px; font-weight: bold; font-size: 18px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,255,136,0.3); text-transform: uppercase; }
-        .place-bet-btn:disabled { background: #333; color: #888; box-shadow: none; }
-    </style>
+    /* ৪. ডাইস অ্যানিমেশন */
+    .dice-area { display: flex; gap: 20px; margin: 20px 0; }
+    .dice { 
+        width: 75px; 
+        height: 75px; 
+        background: #fff; 
+        color: #000; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        font-size: 40px; 
+        border-radius: 18px; 
+        box-shadow: 0 5px 20px rgba(255,255,255,0.1); 
+        font-weight: bold; 
+    }
+    .rolling { animation: shuffle 0.2s infinite; }
+    @keyframes shuffle { 
+        0%, 100% { transform: translateY(0) rotate(0deg); } 
+        50% { transform: translateY(-15px) rotate(15deg); } 
+    }
+
+    /* ৫. কন্ট্রোল প্যানেল (নিচের অংশ - ১০০০% ফিক্সড) */
+    .bottom-panel { 
+        background: #161b22; 
+        padding: 15px; 
+        border-top: 1px solid #30363d; 
+        width: 100%;
+        box-sizing: border-box;
+        padding-bottom: env(safe-area-inset-bottom, 20px); /* আইফোনের জন্য বিশেষ গ্যাপ */
+    }
+
+    .amount-selector { 
+        display: flex; 
+        align-items: center; 
+        gap: 10px; 
+        margin-bottom: 20px; 
+        overflow-x: auto; /* মোবাইলে সোয়াইপ করার জন্য */
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .amount-selector::-webkit-scrollbar { display: none; }
+
+    .amt-btn { 
+        flex-shrink: 0; 
+        background: #21262d; 
+        border: 1px solid #30363d; 
+        color: #fff; 
+        padding: 10px 18px; 
+        border-radius: 10px; 
+        font-size: 14px; 
+        font-weight: 600;
+    }
+    .amt-btn.active { 
+        border-color: #00ff88; 
+        color: #00ff88; 
+        background: rgba(0,255,136,0.1); 
+    }
+
+    .math-btn { 
+        background: #30363d; 
+        color: #fff; 
+        width: 42px; 
+        height: 42px; 
+        border-radius: 8px; 
+        font-size: 24px; 
+        border: none;
+        flex-shrink: 0;
+    }
+
+    .action-bar { 
+        display: flex; 
+        gap: 12px; 
+        align-items: center; 
+    }
+    .sound-btn { 
+        background: #21262d; 
+        border: 1px solid #30363d; 
+        color: #fff; 
+        width: 55px; 
+        height: 55px; 
+        border-radius: 12px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        font-size: 22px; 
+        flex-shrink: 0;
+    }
+    .place-bet-btn { 
+        flex-grow: 1; 
+        background: #00ff88; 
+        border: none; 
+        color: #000; 
+        height: 55px; 
+        border-radius: 12px; 
+        font-weight: bold; 
+        font-size: 18px; 
+        text-transform: uppercase;
+        box-shadow: 0 4px 15px rgba(0,255,136,0.2);
+    }
+    .place-bet-btn:disabled { background: #333; color: #888; box-shadow: none; }
+</style>
+
 </head>
 <body>
 
@@ -87,7 +214,7 @@ $logic = $logic_res->fetch_assoc()['game_logic'] ?? 'random';
     <div class="game-main">
         <div class="bet-types">
             <div class="type-box" onclick="setBT('under', 1.98)"><b>UNDER 7</b><span>1.98x</span></div>
-            <div class="type-box" onclick="setBT('seven', 5.8)"><b>LUCKY 7</b><span>5.8x</span></div>
+            <div class="type-box" onclick="setBT('seven', 5.8)"><b>LUCKY 7</b><spanx</span></div>
             <div class="type-box" onclick="setBT('over', 1.98)"><b>OVER 7</b><span>1.98x</span></div>
         </div>
         
