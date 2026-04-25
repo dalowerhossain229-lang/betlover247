@@ -26,7 +26,15 @@ $rtp = $logic_res->fetch_assoc()['rtp_value'] ?? 50;
         .bal-box { color: var(--neon); font-weight: 800; font-size: 14px; }
 
         /* ২. গেম বক্স (Dice Area) */
-        .game-area { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-around; padding: 10px; }
+        .game-area { 
+    flex-grow: 1; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; /* space-around থেকে বদলে এটি দিন */
+    padding: 5px; 
+}
+
         .dice-box { display: flex; gap: 20px; background: rgba(255,255,255,0.02); padding: 25px 45px; border-radius: 20px; border: 1px dashed #444; }
         .dice { width: 70px; height: 70px; background: #fff; border-radius: 15px; color: #000; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: bold; box-shadow: 0 5px 20px rgba(255,255,255,0.2); }
         .rolling { animation: shuffle 0.15s infinite; }
