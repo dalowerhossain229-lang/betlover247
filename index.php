@@ -40,11 +40,11 @@ include 'header.php';
 
 <!-- গেম গ্রিড সেকশন শুরু -->
 <div class="game-grid">
-    <!-- ১. Super Ace -->
-    <div class="game-card" onclick="playGame('super-ace')">
+  <!-- ১. Super Ace -->
+    <div class="game-card" onclick="location.href='play.php?id=super-ace'">
         <img src="super-ace.png" alt="Super Ace">
         <p>SUPER ACE</p>
-    </div>
+    </div>  
 
     <!-- ২. Aviator -->
     <div class="game-card" onclick="playGame('aviator')">
@@ -52,14 +52,14 @@ include 'header.php';
         <p>AVIATOR</p>
     </div>
 
-    <!-- ৩. Chicken Road -->
-    <div class="game-card" onclick="playGame('chicken')">
+        <!-- ৩. Chicken Road -->
+    <div class="game-card" onclick="location.href='play.php?id=chicken'">
         <img src="chicken.png" alt="Chicken Road">
         <p>CHICKEN ROAD</p>
     </div>
 
-    <!-- ৪. Lucky 777 -->
-    <div class="game-card" onclick="playGame('lucky-777')">
+    <!-- ২. Lucky 777 -->
+    <div class="game-card" onclick="location.href='play.php?id=lucky-777'">
         <img src="lucky-777.png" alt="Lucky 777">
         <p>LUCKY 777</p>
     </div>
@@ -106,11 +106,12 @@ include 'header.php';
         <p>LOTTERY</p>
     </div>
 
-    <!-- ১২. Ludu -->
-    <div class="game-card" onclick="playGame('ludu')">
+    <!-- ৪. Ludu -->
+    <div class="game-card" onclick="location.href='play.php?id=ludu'">
         <img src="ludu.png" alt="Ludu">
         <p>LUDU</p>
     </div>
+</div>
 
     <!-- ১৩. Wheel -->
     <div class="game-card" onclick="playGame('wheel')">
