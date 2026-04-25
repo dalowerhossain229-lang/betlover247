@@ -31,9 +31,10 @@ $rtp = $logic_res->fetch_assoc()['rtp_value'] ?? 50;
     display: flex; 
     flex-direction: column; 
     align-items: center; 
-    justify-content: center; /* space-around থেকে বদলে এটি দিন */
-    padding: 5px; 
+    justify-content: center; 
+    padding: 0px; /* প্যাডিং একদম ০ করে দিন */
 }
+
 
         .dice-box { display: flex; gap: 20px; background: rgba(255,255,255,0.02); padding: 25px 45px; border-radius: 20px; border: 1px dashed #444; }
         .dice { width: 70px; height: 70px; background: #fff; border-radius: 15px; color: #000; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: bold; box-shadow: 0 5px 20px rgba(255,255,255,0.2); }
@@ -49,10 +50,13 @@ $rtp = $logic_res->fetch_assoc()['rtp_value'] ?? 50;
         /* ৩. আপনার স্কেচ অনুযায়ী ২-লেয়ার চিপস ও প্লাস-মাইনাস */
         .bottom-panel { 
     background: var(--card); 
-    padding: 10px 15px; /* প্যাডিং ১৫ থেকে কমিয়ে ১০ করুন */
+    padding: 10px 15px; 
     border-top: 1px solid var(--border); 
-    padding-bottom: 20px; /* এটি আপনার ফোনের নিচের বারের জন্য গ্যাপ */
+    /* নিচের লাইনটি পরিবর্তন করুন */
+    margin-bottom: 35px; /* এটি পুরো লাল চিহ্নিত অংশকে উপরে ঠেলে দিবে */
+    box-sizing: border-box;
 }
+
 
         .amt-wrapper { 
     display: flex; 
