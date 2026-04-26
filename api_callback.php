@@ -26,7 +26,8 @@ if ($action == "getBalance") {
 
 // ২. বাজি ধরা (Bet) - ব্যালেন্স কাটা
 elseif ($action == "bet") {
-    $conn->query("UPDATE users SET balance = balance - $amount WHERE username = '$username' AND balance >= $amount");
+    $conn->query("UPDATE users SET balance = balance - $amount, turnover = turnover + $amount WHERE username = '$username' AND balance >= $amount");
+
     if ($conn->affected_rows > 0) {
         $conn->query("INSERT INTO game_logs (username, game_name, action, amount, tx_id) VALUES ('$username', '$game', 'bet', $amount, '$tx_id')");
         echo json_encode(["status" => "ok", "message" => "Bet Accepted"]);
