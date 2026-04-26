@@ -28,56 +28,50 @@ function getBar($done, $target) {
     return ($p > 100) ? 100 : $p;
 }
 ?>
-
-
 <div style="padding: 15px; text-align: center; color: white; font-family: sans-serif;">
     
     <!-- ব্যালেন্স সেকশন -->
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+        
+        <!-- মেইন + পিবি ব্যালেন্স (আপনার চাহিদা অনুযায়ী একসাথে) -->
         <div style="background:rgba(0,255,136,0.05); border:1px solid #00ff88; padding:15px; border-radius:12px; box-shadow: 0 0 10px rgba(0,255,136,0.1);">
             <small style="color:#aaa; font-size:10px; text-transform:uppercase;">Main Balance</small>
-            <h2 style="color:#ffdf1b; margin:5px 0;">৳ <?php echo number_format($u_data['balance'], 2); ?></h2>
+            <h2 style="color:#ffdf1b; margin:5px 0;">৳ <?php echo number_format($total_display_balance, 2); ?></h2>
         </div>
+        
+        <!-- বোনাস ব্যালেন্স বক্স -->
         <div style="background:rgba(255,223,27,0.05); border:1px solid #ffdf1b; padding:15px; border-radius:12px;">
             <small style="color:#aaa; font-size:10px; text-transform:uppercase;">Bonus Balance</small>
-            <h2 style="color:#00ff88; margin:5px 0;">৳ <?php echo number_format($u_data['bonus_balance'] ?? 0, 2); ?></h2>
+            <h2 style="color:#00ff88; margin:5px 0;">৳ <?php echo number_format($bonus_b, 2); ?></h2>
         </div>
     </div>
 
-            <!-- ৩টি আলাদা টার্নওভার প্রগ্রেস বার -->
-        <?php
-        $u_id = $_SESSION['user_id'];
-        $u_data = $conn->query("SELECT * FROM users WHERE username = '$u_id'")->fetch_assoc();
-        
-        function getPercent($done, $target) {
-            if ($target <= 0) return 0;
-            $p = ($done / $target) * 100;
-            return ($p > 100) ? 100 : $p;
-        }
+    <!-- ৩টি আলাদা টার্নওভার প্রগ্রেস বার -->
+    <div style="background: #0a0f0d; border: 1px solid #1a2a22; padding: 15px; border-radius: 15px;">
         ?>
-        <div style="background: #0a0f0d; border: 1px solid #1a2a22; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; display: flex; flex-direction: column; gap: 15px;">
-            
-            <!-- মেইন টার্নওভার -->
-            <div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                    <span style="font-size:10px; font-weight:bold; color:#00ff88;">MAIN TURNOVER</span>
-                    <span style="font-size:10px; font-weight:bold; color:#888;"><?php echo number_format($u_data['turnover_completed']); ?> / <?php echo number_format($u_data['turnover_target']); ?></span>
-                </div>
-                <div style="width: 100%; height: 6px; background: #111; border-radius: 10px; overflow: hidden; border: 1px solid #222;">
-                    <div style="width: <?php echo getPercent($u_data['turnover_completed'], $u_data['turnover_target']); ?>%; height: 100%; background: #00ff88; box-shadow: 0 0 8px #00ff88;"></div>
-                </div>
+        <div style="background: #111; padding: 15px; border-radius: 15px; border: 1px solid #1a2a22;">
+        
+        <!-- ১. মেইন টার্নওভার -->
+        <div style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="font-size:10px; font-weight:bold; color:#00ff88;">MAIN TURNOVER</span>
+                <span style="font-size:10px; color:#888;"><?php echo number_format($main_t, 0); ?> / 1,000</span>
             </div>
+            <div style="width: 100%; height: 6px; background: #222; border-radius: 10px;">
+                <div style="width: <?php echo getBar($main_t, 1000); ?>%; background: #00ff88; height: 100%; border-radius: 10px;"></div>
+            </div>
+        </div>
 
-            <!-- বোনাস টার্নওভার -->
-            <div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                    <span style="font-size:10px; font-weight:bold; color:#ffdf1b;">BONUS TURNOVER</span>
-                    <span style="font-size:10px; font-weight:bold; color:#888;"><?php echo number_format($u_data['bonus_t_done'] ?? 0); ?> / <?php echo number_format($u_data['bonus_t_target'] ?? 0); ?></span>
-                </div>
-                <div style="width: 100%; height: 6px; background: #111; border-radius: 10px; overflow: hidden; border: 1px solid #222;">
-                    <div style="width: <?php echo getPercent($u_data['bonus_t_done'] ?? 0, $u_data['bonus_t_target'] ?? 0); ?>%; height: 100%; background: #ffdf1b; box-shadow: 0 0 8px #ffdf1b;"></div>
-                </div>
+        <!-- ২. বোনাস টার্নওভার -->
+        <div style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="font-size:10px; font-weight:bold; color:#ffdf1b;">BONUS TURNOVER</span>
+                <span style="font-size:10px; color:#888;"><?php echo number_format($bonus_t, 0); ?> / 12,000</span>
             </div>
+            <div style="width: 100%; height: 6px; background: #222; border-radius: 10px;">
+                <div style="width: <?php echo getBar($bonus_t, 12000); ?>%; background: #ffdf1b; height: 100%; border-radius: 10px;"></div>
+            </div>
+        </div>    
 
             <!-- PB টার্নওভার -->
             <div>
