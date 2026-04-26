@@ -3,11 +3,7 @@ session_start();
 include 'header.php'; 
 include 'db.php'; 
 
-// ১. লগইন চেক
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
+if (!isset($_SESSION['user_id'])) { header("Location: login.php"); exit(); }
 
 $u = $_SESSION['user_id'];
 $u_res = $conn->query("SELECT * FROM users WHERE username = '$u'");
@@ -18,14 +14,21 @@ $main_b = (float)($u_data['balance'] ?? 0);
 $pb_b = (float)($u_data['pb_balance'] ?? 0);
 $bonus_b = (float)($u_data['bonus_balance'] ?? 0);
 
-// ১. মেইন এবং পিবি ব্যালেন্স যোগ করে দেখানো (আপনার চাহিদা অনুযায়ী)
+// মেইন এবং পিবি ব্যালেন্স যোগ করে দেখানো (আপনার চাহিদা অনুযায়ী)
 $total_display_balance = $main_b + $pb_b;
 
-// ২. টার্নওভারের ডাটা নেওয়া
+// ৩টি টার্নওভারের ডাটা নেওয়া
 $main_t = (float)($u_data['turnover'] ?? 0);
 $bonus_t = (float)($u_data['bonus_turnover'] ?? 0);
 $pb_t = (float)($u_data['pb_turnover'] ?? 0);
+
+// টার্নওভার প্রগ্রেস ফাংশন
+function getBar($done, $target) {
+    $p = ($target > 0) ? ($done / $target) * 100 : 0;
+    return ($p > 100) ? 100 : $p;
+}
 ?>
+
 
 <div style="padding: 15px; text-align: center; color: white; font-family: sans-serif;">
     
