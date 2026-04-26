@@ -13,11 +13,18 @@ $u = $_SESSION['user_id'];
 $u_res = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $u_data = $u_res->fetch_assoc();
 
-// ২. টার্নওভার ক্যালকুলেশন
-$target = $u_data['turnover_target'] ?? 1000;
-$completed = $u_data['turnover_completed'] ?? 0;
-$percent = ($target > 0) ? ($completed / $target) * 100 : 0;
-if($percent > 100) $percent = 100;
+// ৩টি ব্যালেন্স আলাদা করা
+$main_b = (float)($u_data['balance'] ?? 0);
+$pb_b = (float)($u_data['pb_balance'] ?? 0);
+$bonus_b = (float)($u_data['bonus_balance'] ?? 0);
+
+// ১. মেইন এবং পিবি ব্যালেন্স যোগ করে দেখানো (আপনার চাহিদা অনুযায়ী)
+$total_display_balance = $main_b + $pb_b;
+
+// ২. টার্নওভারের ডাটা নেওয়া
+$main_t = (float)($u_data['turnover'] ?? 0);
+$bonus_t = (float)($u_data['bonus_turnover'] ?? 0);
+$pb_t = (float)($u_data['pb_turnover'] ?? 0);
 ?>
 
 <div style="padding: 15px; text-align: center; color: white; font-family: sans-serif;">
