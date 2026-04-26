@@ -73,33 +73,34 @@ function getBar($done, $target) {
             </div>
         </div>    
 
-            <!-- PB টার্নওভার -->
-            <div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                    <span style="font-size:10px; font-weight:bold; color:#ff4d4d;">PB TURNOVER</span>
-                    <span style="font-size:10px; font-weight:bold; color:#888;"><?php echo number_format($u_data['pb_t_done'] ?? 0); ?> / <?php echo number_format($u_data['pb_t_target'] ?? 0); ?></span>
-                </div>
-                <div style="width: 100%; height: 6px; background: #111; border-radius: 10px; overflow: hidden; border: 1px solid #222;">
-                    <div style="width: <?php echo getPercent($u_data['pb_t_done'] ?? 0, $u_data['pb_t_target'] ?? 0); ?>%; height: 100%; background: #ff4d4d; box-shadow: 0 0 8px #ff4d4d;"></div>
-                </div>
+                <!-- ৩. PB TURNOVER -->
+        <div style="margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
+                <span style="color: #00bcd4; font-weight: bold; text-transform: uppercase;">PB Turnover</span>
+                <span style="color: #888;"><?php echo number_format($pb_t, 0); ?> / 360,000</span>
+            </div>
+            <div style="width: 100%; background: #222; height: 6px; border-radius: 10px;">
+                <div style="width: <?php echo getBar($pb_t, 360000); ?>%; background: #00bcd4; height: 100%; border-radius: 10px;"></div>
             </div>
         </div>
-<!-- বোনাস ক্লেইম বাটন -->
-<div style="margin-top: 15px;">
-    <?php 
-    // চেক করা হচ্ছে বোনাস টার্নওভার শেষ হয়েছে কি না
-    $bonus_unlocked = ($u_data['bonus_t_done'] >= $u_data['bonus_t_target'] && $u_data['bonus_t_target'] > 0);
+    </div>
+
+    <!-- ৪. BONUS CLAIM BUTTON -->
+    <div style="margin-top: 20px;">
+        <?php 
+        // বোনাস টার্নওভার ১২০০০ পূর্ণ হলে ক্লেইম বাটন ওপেন হবে
+        if($bonus_t >= 12000 && $bonus_b > 0): 
+        ?>
+            <button onclick="claimBonus()" style="width:100%; padding:15px; background:#00ff88; border:none; border-radius:12px; color:#000; font-weight:bold; cursor:pointer; text-transform:uppercase; font-size:13px;">
+                CLAIM BONUS TO MAIN
+            </button>
+        <?php else: ?>
+            <button disabled style="width:100%; padding:15px; background:#1a1a1a; border:1px solid #333; border-radius:12px; color:#666; font-weight:bold; text-transform:uppercase; font-size:13px;">
+                🔒 BONUS LOCKED (COMPLETE TURNOVER)
+            </button>
+        <?php endif; ?>
+    </div>
     
-    if($bonus_unlocked && $u_data['bonus_balance'] > 0): ?>
-        <button onclick="claimBonus()" style="width:100%; padding:15px; background:linear-gradient(90deg, #ffdf1b, #cca200); color:#000; border:none; border-radius:10px; font-weight:bold; cursor:pointer; box-shadow: 0 4px 15px rgba(255,223,27,0.3);">
-            CLAIM BONUS TO MAIN
-        </button>
-    <?php else: ?>
-        <button disabled style="width:100%; padding:15px; background:#1a1a1a; color:#444; border:1px solid #222; border-radius:10px; font-weight:bold; cursor:not-allowed;">
-            BONUS LOCKED (COMPLETE TURNOVER)
-        </button>
-    <?php endif; ?>
-</div>
 
 
     <!-- মেনু বাটন লিস্ট -->
