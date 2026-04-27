@@ -37,7 +37,6 @@ function getBar($done, $target) {
     $p = ($target > 0) ? ($done / $target) * 100 : 0;
     return ($p > 100) ? 100 : $p;
 }
-
 ?>
 <div style="padding: 15px; text-align: center; color: white; font-family: sans-serif;">
     
