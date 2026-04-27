@@ -14,10 +14,11 @@ $t_main = (float)($dep_res['t_dep'] ?? 0);
 
 // ২. অ্যাডমিন থেকে বোনাস ও পিবি টার্গেট আনা
 $st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
-echo "<pre>"; print_r($st); echo "</pre>"; exit;
+// এটি সরাসরি ইউজারের টেবিল থেকে ওই ইউজারের জন্য সেট করা টার্গেট নিয়ে আসবে
+$t_bonus = (isset($user['bonus_target'])) ? (float)$user['bonus_target'] : 0;
 
 // লাইন ১৭ এবং ১৮ এভাবে নিশ্চিত করুন
-$t_bonus = (float)($st['bonus_target'] ?? 0); 
+
 $t_pb = (float)($st['pb_target'] ?? 10000); // পিবি যেহেতু কাজ করছে, এর নিচের লাইনটিই বোনাস
 
 
@@ -92,9 +93,10 @@ function getBar($done, $target) {
 <div style="margin-bottom: 20px;">
     <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
         <span style="color: #ffc107; font-weight: bold;">Bonus Turnover</span>
-        <span>
-    <?php echo number_format($bonus_t, 0); ?> / <?php echo ($t_bonus > 0) ? number_format($t_bonus, 0) : '0'; ?>
+     <span>
+    <?php echo number_format($bonus_t, 0); ?> / <?php echo number_format($t_bonus, 0); ?>
 </span>
+   
 
     </div>
     <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
