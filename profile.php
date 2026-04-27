@@ -94,10 +94,12 @@ function getBar($done, $target) {
     <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
         <span style="color: #ffc107; font-weight: bold;">Bonus Turnover</span>
         <span>
-            <?php
+       <?php 
+    // এখন ডাটাবেসে কলাম আছে, তাই $user['bonus_target'] কাজ করবে
     $target = isset($user['bonus_target']) ? (float)$user['bonus_target'] : 0;
     echo number_format($bonus_t, 0) . " / " . number_format($target, 0); 
 ?>
+     
  </span>
     </div>
     <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
