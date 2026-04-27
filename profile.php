@@ -6,15 +6,11 @@ include 'db.php';
 if (!isset($_SESSION['user_id'])) { header("Location: login.php"); exit(); }
 
 $u = $_SESSION['user_id'];
-$u_res = $conn->query("SELECT * FROM users WHERE username = '$u'");
-$u_data = $u_res->fetch_assoc();
-
-$u_res = $conn->query("SELECT * FROM users WHERE username = '$u'");
-$u_data = $u_res->fetch_assoc();
+// ইউজারের সব ডাটা একবারেই আনা
+$u_data = $conn->query("SELECT * FROM users WHERE username = '$u'")->fetch_assoc();
 
 // অ্যাডমিন সেটিংস থেকে টার্গেটগুলো আনা
-$st_res = $conn->query("SELECT * FROM settings WHERE id = 1");
-$st = $st_res->fetch_assoc();
+$st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
 $t_main = (float)($st['main_target'] ?? 1000);
 $t_bonus = (float)($st['bonus_target'] ?? 12000);
 $t_pb = (float)($st['pb_target'] ?? 360000);
@@ -24,13 +20,14 @@ $main_b = (float)($u_data['balance'] ?? 0);
 $pb_b = (float)($u_data['pb_balance'] ?? 0);
 $bonus_b = (float)($u_data['bonus_balance'] ?? 0);
 
-// মেইন এবং পিবি ব্যালেন্স যোগ করে দেখানো
+// মেইন এবং পিবি ব্যালেন্স যোগ করে দেখানো (আপনার চাহিদা অনুযায়ী)
 $total_display_balance = $main_b + $pb_b;
 
 // ৩টি টার্নওভারের ডাটা নেওয়া
 $main_t = (float)($u_data['turnover'] ?? 0);
 $bonus_t = (float)($u_data['bonus_turnover'] ?? 0);
 $pb_t = (float)($u_data['pb_turnover'] ?? 0);
+
 
 // টার্নওভার প্রগ্রেস ফাংশন
 function getBar($done, $target) {
