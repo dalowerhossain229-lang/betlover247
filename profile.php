@@ -9,12 +9,22 @@ $u = $_SESSION['user_id'];
 $u_res = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $u_data = $u_res->fetch_assoc();
 
+$u_res = $conn->query("SELECT * FROM users WHERE username = '$u'");
+$u_data = $u_res->fetch_assoc();
+
+// অ্যাডমিন সেটিংস থেকে টার্গেটগুলো আনা
+$st_res = $conn->query("SELECT * FROM settings WHERE id = 1");
+$st = $st_res->fetch_assoc();
+$t_main = (float)($st['main_target'] ?? 1000);
+$t_bonus = (float)($st['bonus_target'] ?? 12000);
+$t_pb = (float)($st['pb_target'] ?? 360000);
+
 // ৩টি ব্যালেন্স আলাদা করা
 $main_b = (float)($u_data['balance'] ?? 0);
 $pb_b = (float)($u_data['pb_balance'] ?? 0);
 $bonus_b = (float)($u_data['bonus_balance'] ?? 0);
 
-// মেইন এবং পিবি ব্যালেন্স যোগ করে দেখানো (আপনার চাহিদা অনুযায়ী)
+// মেইন এবং পিবি ব্যালেন্স যোগ করে দেখানো
 $total_display_balance = $main_b + $pb_b;
 
 // ৩টি টার্নওভারের ডাটা নেওয়া
