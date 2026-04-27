@@ -41,15 +41,15 @@ elseif ($action == "bet") {
         $pb_cut = ($total_b > 0) ? ($pb_b / $total_b) * $amount : 0;
         $bonus_cut = ($total_b > 0) ? ($bonus_b / $total_b) * $amount : 0;
 
-        // ৩. ব্যালেন্স কাটা এবং ৩টি টার্নওভার একসাথে আপডেট করা
-        $conn->query("UPDATE users SET 
-            balance = balance - $main_cut, 
-            pb_balance = pb_balance - $pb_cut, 
-            bonus_balance = bonus_balance - $bonus_cut,
-            turnover = turnover + $amount,
-            pb_turnover = pb_turnover + $amount,
-            bonus_turnover = bonus_turnover + $amount
-            WHERE username = '$username'");
+        // ২. ডাটাবেসে ব্যালেন্স কাটা এবং সেই অনুযায়ী আলাদা আলাদা টার্নওভার বাড়ানো
+$conn->query("UPDATE users SET 
+    balance = balance - $main_cut, 
+    pb_balance = pb_balance - $pb_cut, 
+    bonus_balance = bonus_balance - $bonus_cut,
+    turnover = turnover + $main_cut,      /* মেইন থেকে যতটুকু কাটলো ততটুকু মেইন টার্নওভার */
+    pb_turnover = pb_turnover + $pb_cut,  /* পিবি থেকে যতটুকু কাটলো ততটুকু পিবি টার্নওভার */
+    bonus_turnover = bonus_turnover + $bonus_cut /* বোনাস থেকে যতটুকু কাটলো ততটুকু বোনাস টার্নওভার */
+    WHERE username = '$username'");
         
         if ($conn->affected_rows > 0) {
             $conn->query("INSERT INTO game_logs (username, game_name, action, amount, tx_id) VALUES ('$username', '$game', 'bet', $amount, '$tx_id')");
