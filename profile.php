@@ -62,30 +62,38 @@ function getBar($done, $target) {
     <!-- ৩টি টার্নওভার লাইন (নকশা অনুযায়ী) -->
     <div style="background: #111; padding: 20px; border-radius: 20px; text-align: left; border: 1px solid #222;">
         <!-- মেইন টার্নওভার -->
+        <!-- ১. মেইন টার্নওভার -->
         <div style="margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
-                <span style="color: #00ff88;">Main Turnover</span>
-                <span><?php if($main_t >= $t_main): ?> <b style="color:#00ff88;">COMPLETE ✅</b> <?php else: echo number_format($main_t,0)." / ".number_format($t_main,0); endif; ?></span>
+                <span style="color: #00ff88; font-weight: bold;">Main Turnover</span>
+                <span><?php echo number_format($main_t, 0); ?> / <?php echo number_format($t_main, 0); ?></span>
             </div>
-            <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;"><div style="width:<?php echo getBar($main_t, $t_main); ?>%; background:#00ff88; height:100%; border-radius:10px;"></div></div>
+            <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
+                <div style="width: <?php echo getBar($main_t, $t_main); ?>%; background: #00ff88; height: 100%; border-radius: 10px;"></div>
+            </div>
         </div>
-        <!-- পিবি টার্নওভার -->
+
+        <!-- ২. পিবি টার্নওভার -->
         <div style="margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
-                <span style="color: #00bcd4;">PB Turnover</span>
-                <span><?php if($pb_t >= $t_pb): ?> <b style="color:#00bcd4;">COMPLETE ✅</b> <?php else: echo number_format($pb_t,0)." / ".number_format($t_pb,0); endif; ?></span>
+                <span style="color: #00bcd4; font-weight: bold;">PB Turnover</span>
+                <span><?php echo number_format($pb_t, 0); ?> / <?php echo number_format($t_pb, 0); ?></span>
             </div>
-            <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;"><div style="width:<?php echo getBar($pb_t, $t_pb); ?>%; background:#00bcd4; height:100%; border-radius:10px;"></div></div>
+            <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
+                <div style="width: <?php echo getBar($pb_t, $t_pb); ?>%; background: #00bcd4; height: 100%; border-radius: 10px;"></div>
+            </div>
         </div>
-        <!-- বোনাস টার্নওভার -->
-        <div>
+
+        <!-- ৩. বোনাস টার্নওভার -->
+        <div style="margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
-                <span style="color: #ffdf1b;">Bonus Turnover</span>
-                <span><?php if($bonus_t >= $t_bonus): ?> <b style="color:#ffdf1b;">COMPLETE ✅</b> <?php else: echo number_format($bonus_t,0)." / ".number_format($t_bonus,0); endif; ?></span>
+                <span style="color: #ffdf1b; font-weight: bold;">Bonus Turnover</span>
+                <span><?php echo number_format($bonus_t, 0); ?> / <?php echo number_format($t_bonus, 0); ?></span>
             </div>
-            <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;"><div style="width:<?php echo getBar($bonus_t, $t_bonus); ?>%; background:#ffdf1b; height:100%; border-radius:10px;"></div></div>
+            <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
+                <div style="width: <?php echo getBar($bonus_t, $t_bonus); ?>%; background: #ffdf1b; height: 100%; border-radius: 10px;"></div>
+            </div>
         </div>
-    </div>
 
     <!-- বোনাস ক্লেইম বাটন -->
     <div style="margin-top: 20px;">
