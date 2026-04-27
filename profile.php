@@ -95,11 +95,11 @@ function getBar($done, $target) {
         </div>
   
 
-    <!-- ৪. BONUS CLAIM BUTTON -->
+<!-- ৪. BONUS CLAIM BUTTON -->
     <div style="margin-top: 20px;">
         <?php 
-        // বোনাস টার্নওভার ১২০০০ পূর্ণ হলে ক্লেইম বাটন ওপেন হবে
-        if($bonus_t >= 12000 && $bonus_b > 0): 
+        // অ্যাডমিন থেকে আসা বোনাস টার্গেট অনুযায়ী বাটন সচল হবে
+        if($bonus_t >= $t_bonus && $bonus_b > 0): 
         ?>
             <button onclick="claimBonus()" style="width:100%; padding:15px; background:#00ff88; border:none; border-radius:12px; color:#000; font-weight:bold; cursor:pointer; text-transform:uppercase; font-size:13px;">
                 CLAIM BONUS TO MAIN
