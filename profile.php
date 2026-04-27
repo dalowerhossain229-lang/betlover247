@@ -101,7 +101,8 @@ function getBar($done, $target) {
  </span>
     </div>
     <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
-        <div style="width: <?php echo getBar($bonus_t, $target); ?>%; background: #ffc107; height: 100%; border-radius: 10px;"></div>
+     <div style="width: <?php echo getBar($bonus_t, $target); ?>%; background: #ffc107; height: 100%; border-radius: 10px;"></div>
+   
     </div>
 </div>
 
