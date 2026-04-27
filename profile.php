@@ -60,7 +60,7 @@ function getBar($done, $target) {
         
         <div style="background: #111; padding: 15px; border-radius: 15px; border: 1px solid #1a2a22;">
         
-              <!-- ১. MAIN TURNOVER -->
+        <!-- ১. MAIN TURNOVER -->
         <div style="margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                 <span style="font-size:10px; font-weight:bold; color:#00ff88;">MAIN TURNOVER</span>
@@ -91,7 +91,7 @@ function getBar($done, $target) {
             <div style="width: 100%; height: 6px; background: #222; border-radius: 10px;">
                 <div style="width: <?php echo getBar($pb_t, $t_pb); ?>%; background: #00bcd4; height: 100%; border-radius: 10px;"></div>
             </div>
-        </div>
+        </div>      
   
 
     <!-- 8. BONUS CLAIM BUTTON -->
