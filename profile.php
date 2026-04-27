@@ -14,6 +14,8 @@ $t_main = (float)($dep_res['t_dep'] ?? 0);
 
 // ২. অ্যাডমিন থেকে বোনাস ও পিবি টার্গেট আনা
 $st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
+echo "<pre>"; print_r($st); echo "</pre>"; exit;
+
 // লাইন ১৭ এবং ১৮ এভাবে নিশ্চিত করুন
 $t_bonus = (float)($st['bonus_target'] ?? 0); 
 $t_pb = (float)($st['pb_target'] ?? 10000); // পিবি যেহেতু কাজ করছে, এর নিচের লাইনটিই বোনাস
