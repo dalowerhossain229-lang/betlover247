@@ -16,10 +16,13 @@ $u = $_SESSION['user_id'];
 $query = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $user_data = $query->fetch_assoc(); 
 
-// এই ভেরিয়েবলগুলো ঠিকঠাক সেট করুন
-$done = floatval($user_data['main_t'] ?? 0);
+// ডাটাবেসের কলাম নাম অনুযায়ী পরিবর্তন (যেহেতু আমরা ফিক্স ফাইলে এই নামগুলো দিয়েছি)
+$done = floatval($user_data['main_t'] ?? 0); 
 $target = floatval($user_data['t_main'] ?? 1000);
+
+// টার্নওভার সম্পন্ন হয়েছে কিনা চেক করা
 $is_turnover_done = ($done >= $target);
+
 ?>
 
 <div style="padding: 20px; text-align: center;">
