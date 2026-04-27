@@ -9,14 +9,16 @@ $u = $_SESSION['user_id'];
 // ইউজারের সব ডাটা একবারেই আনা
 $u_data = $conn->query("SELECT * FROM users WHERE username = '$u'")->fetch_assoc();
 
+// ১. অ্যাডমিন থেকে বোনাস ও পিবি টার্গেট আনা
+$st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
+$t_bonus = (float)($st['bonus_target'] ?? 5000);
+$t_pb = (float)($st['pb_target'] ?? 10000);
 
-// অ্যাডমিন সেটিংস থেকে টার্গেটগুলো নিয়ে আসা
-$st_res = $conn->query("SELECT * FROM settings WHERE id = 1");
-$st = $st_res->fetch_assoc();
+// ২. মেইন টার্নওভার টার্গেট = ইউজারের মোট সফল ডিপোজিট (আপনার রিকোয়েস্ট অনুযায়ী)
+$dep_res = $conn->query("SELECT SUM(amount) as t_dep FROM deposits WHERE username = '$u' AND status = 'success'")->fetch_assoc();
+$t_main = (float)($dep_res['t_dep'] ?? 1000); // ডিপোজিট না থাকলে ডিফল্ট ১০০০
 
-$t_main = (float)($st['main_target'] ?? 1000);
-$t_bonus = (float)($st['bonus_target'] ?? 12000);
-$t_pb = (float)($st['pb_target'] ?? 360000);
+
 
 // ৩টি ব্যালেন্স আলাদা করা
 $main_b = (float)($u_data['balance'] ?? 0);
