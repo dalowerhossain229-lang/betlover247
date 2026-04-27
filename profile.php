@@ -84,16 +84,19 @@ function getBar($done, $target) {
             </div>
         </div>
 
-                <!-- ৩. বোনাস টার্নওভার -->
-        <div style="margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
-                <span style="color: #ffdf1b; font-weight: bold;">BONUS TURNOVER</span>
-                <span style="color: #888;"><?php echo number_format($bonus_t, 0); ?> / <?php echo number_format($t_bonus, 0); ?></span>
-            </div>
-            <div style="width: 100%; background: #222; height: 6px; border-radius: 10px;">
-                <div style="width: <?php echo getBar($bonus_t, $t_bonus); ?>%; background: #ffdf1b; height: 100%; border-radius: 10px;"></div>
-            </div>
-        </div>
+           <!-- ৩. বোনাস টার্নওভার -->
+<div style="margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
+        <span style="color: #ffc107; font-weight: bold;">Bonus Turnover</span>
+        <span>
+            <?php echo number_format($bonus_t, 0); ?> / <?php echo number_format($t_bonus, 0); ?>
+        </span>
+    </div>
+    <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
+        <div style="width: <?php echo getBar($bonus_t, $t_bonus); ?>%; background: #ffc107; height: 100%; border-radius: 10px;"></div>
+    </div>
+</div>
+     
 
         <!-- বোনাস ক্লেইম বাটন -->
         <div style="margin-top: 20px;">
