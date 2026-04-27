@@ -8,9 +8,9 @@ if (!isset($_SESSION['user_id'])) { header("Location: login.php"); exit(); }
 $u = $_SESSION['user_id'];
 $u_data = $conn->query("SELECT * FROM users WHERE username = '$u'")->fetch_assoc();
 
-// ১. মেইন টার্গেট = ইউজারের মোট ডিপোজিট (সরাসরি ডাটাবেস থেকে)
-$dep_res = $conn->query("SELECT SUM(amount) as t_dep FROM deposits WHERE username = '$u' AND status = 'success'")->fetch_assoc();
-$t_main = (float)($dep_res['t_dep'] ?? 1000); 
+// ১. মেইন টার্গেট = ইউজারের মোট সফল ডিপোজিট (সরাসরি ডাটাবেস থেকে)
+$dep_res = $conn->query("SELECT SUM(amount) as t_dep FROM deposits WHERE username = '$u' AND (status = 'success' OR status = 'Approved')")->fetch_assoc();
+$t_main = (float)($dep_res['t_dep'] ?? 0); 
 
 // ২. অ্যাডমিন থেকে বোনাস ও পিবি টার্গেট আনা
 $st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
