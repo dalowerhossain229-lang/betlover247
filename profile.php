@@ -96,21 +96,22 @@ function getBar($done, $target) {
         </div>
   
 
-<!-- ৪. BONUS CLAIM BUTTON -->
+    <!-- 8. BONUS CLAIM BUTTON -->
     <div style="margin-top: 20px;">
         <?php 
-        // অ্যাডমিন থেকে আসা বোনাস টার্গেট অনুযায়ী বাটন সচল হবে
+        // অ্যাডমিন টার্গেট এবং বোনাস ব্যালেন্স চেক
         if($bonus_t >= $t_bonus && $bonus_b > 0): 
         ?>
-            <button onclick="claimBonus()" style="width:100%; padding:15px; background:#00ff88; border:none; border-radius:12px; color:#000; font-weight:bold; cursor:pointer; text-transform:uppercase; font-size:13px;">
+            <button onclick="claimBonus()" style="width:100%; padding:15px; background:#00ff88; border:none; border-radius:12px; color:#000; font-weight:bold; cursor:pointer; text-transform:uppercase; font-size:13px; box-shadow: 0 4px 15px rgba(0,255,136,0.3);">
                 CLAIM BONUS TO MAIN
             </button>
         <?php else: ?>
-            <button disabled style="width:100%; padding:15px; background:#1a1a1a; border:1px solid #333; border-radius:12px; color:#666; font-weight:bold; text-transform:uppercase; font-size:13px;">
+            <button disabled style="width:100%; padding:15px; background:#1a1a1a; border:1px solid #333; border-radius:12px; color:#666; font-weight:bold; text-transform:uppercase; font-size:13px; cursor: not-allowed;">
                 🔒 BONUS LOCKED (COMPLETE TURNOVER)
             </button>
         <?php endif; ?>
     </div>
+
     
 
 
