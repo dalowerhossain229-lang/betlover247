@@ -94,12 +94,11 @@ function getBar($done, $target) {
     <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
         <span style="color: #ffc107; font-weight: bold;">Bonus Turnover</span>
         <span>
-            <?php 
-            // $user['bonus_target'] সরাসরি আপনার ইউজার টেবিল থেকে ওই ইউজারের টার্গেট নিয়ে আসবে
-            $target = isset($user['bonus_target']) ? (float)$user['bonus_target'] : 0;
-            echo number_format($bonus_t, 0) . " / " . number_format($target, 0); 
-            ?>
-        </span>
+            <?php
+    $target = isset($user['bonus_target']) ? (float)$user['bonus_target'] : 0;
+    echo number_format($bonus_t, 0) . " / " . number_format($target, 0); 
+?>
+ </span>
     </div>
     <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
         <div style="width: <?php echo getBar($bonus_t, $target); ?>%; background: #ffc107; height: 100%; border-radius: 10px;"></div>
