@@ -10,8 +10,9 @@ if (isset($_POST['send_bonus'])) {
 
     // ইউজারের বোনাস ব্যালেন্স এবং টার্নওভার টার্গেট আপডেট
     $sql = "UPDATE users SET 
-            bonus_balance = bonus_balance + $amount, 
-            bonus_t_target = bonus_t_target + $target 
+                    bonus_balance = bonus_balance + $amount, 
+        bonus_target = $target 
+
             WHERE username = '$user'";
 
     if ($conn->query($sql)) {
@@ -19,7 +20,8 @@ if (isset($_POST['send_bonus'])) {
     }
 }
 
-$users = $conn->query("SELECT username, bonus_balance, bonus_t_target FROM users ORDER BY id DESC");
+$users = $conn->query("SELECT username, bonus_balance, bonus_target FROM users ORDER BY id DESC");
+
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +41,8 @@ $users = $conn->query("SELECT username, bonus_balance, bonus_t_target FROM users
     <?php while($u = $users->fetch_assoc()): ?>
         <div class="card">
             <h4 style="margin:0;">User: <?php echo $u['username']; ?></h4>
-            <small style="color:#888;">Bonus: ৳<?php echo $u['bonus_balance']; ?> | Target: <?php echo $u['bonus_t_target']; ?></small>
+            <small style="color:#888;">Bonus: <?php echo $u['bonus_balance']; ?> | Target: <?php echo $u['bonus_target']; ?></small>
+
             <form method="POST">
                 <input type="hidden" name="username" value="<?php echo $u['username']; ?>">
                 <input type="number" name="amount" placeholder="বোনাস পরিমাণ (৳)" required>
