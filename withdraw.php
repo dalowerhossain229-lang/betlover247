@@ -26,29 +26,30 @@ $is_turnover_done = ($done >= $target);
 
 ?>
 
-<div style="padding: 20px; text-align: center; color: white; font-family: sans-serif; min-height: 85vh;">
+<div style="padding: 20px; text-align: center;">
     <h2 style="color:#00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.3);">💰 WITHDRAW</h2>
-    
+
     <!-- ব্যালেন্স কার্ড -->
-    <div style="background: rgba(7, 49, 40, 0.6); border: 1px solid #00ff88; padding: 20px; border-radius: 15px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,255,136,0.1);">
-        <small style="color:#888; text-transform: uppercase; font-size: 10px; letter-spacing: 1px;">Current Balance</small>
-        <h2 style="color:#ffdf1b; margin: 10px 0; font-size: 32px;">৳ <?php echo number_format($user['balance'], 2); ?></h2>
+    <div style="background: rgba(7, 49, 40, 0.4); border: 1px solid #07ff88; padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+        <small style="color: #888; text-transform: uppercase; font-size: 10px; letter-spacing: 1px;">Current Balance</small>
+        <h2 style="color:#ffdf1b; margin: 10px 0; font-size: 32px;">৳ <?php echo number_format($user_data['balance'], 2); ?></h2>
     </div>
 
     <!-- ৪. টার্নওভার চেক -->
     <?php if (!$is_turnover_done): ?>
-        <div style="background: rgba(255, 77, 77, 0.1); border: 1px solid #ff4d4d; padding: 25px; border-radius: 15px; color: #ff4d4d; animation: fadeIn 0.5s;">
+        <div style="background: rgba(255, 77, 77, 0.1); border: 1px solid #ff4d4d; padding: 25px; border-radius: 15px;">
             <p style="font-weight: bold; margin-bottom: 10px;">⚠️ টার্নওভার অসম্পূর্ণ!</p>
-            <small>উইথড্র দিতে হলে আগে টার্নওভার টার্গেট সম্পন্ন করুন।</small>
-            
+            <small>উইথড্র দিতে হলে আগে টার্নওভার টার্গেট সম্পন্ন করা প্রয়োজন।</small>
+
             <div style="margin-top: 20px; background: #111; height: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #333;">
-                <div style="width: <?php echo ($target > 0) ? ($done / $target) * 100 : 0; ?>%; background: #ff4d4d; height: 100%; box-shadow: 0 0 10px #ff4d4d;"></div>
+                <div style="width: <?php echo ($target > 0) ? ($done / $target) * 100 : 0; ?>%; background: #ff4d4d; height: 100%;"></div>
             </div>
             <p style="font-size: 13px; margin-top: 12px; color: #aaa;">
                 প্রগ্রেস: <?php echo number_format($done); ?> / <?php echo number_format($target); ?>
             </p>
         </div>
     <?php else: ?>
+
         <!-- ৫. উইথড্র ফর্ম (টার্নওভার শেষ হলে দেখাবে) -->
         <div style="background: #111; padding: 25px; border-radius: 15px; border: 1px solid #333; text-align: left; animation: slideUp 0.5s;">
             <label style="color: #888; font-size: 12px;">পেমেন্ট নম্বর সিলেক্ট করুন:</label>
