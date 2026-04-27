@@ -12,13 +12,13 @@ if (!isset($_SESSION['user_id'])) {
 include 'header.php'; 
 $u = $_SESSION['user_id'];
 
-// ২. ডাটাবেস থেকে ইউজারের সব তথ্য আনা
-$u_res = $conn->query("SELECT * FROM users WHERE username = '$u'");
-$user = $u_res->fetch_assoc();
+// ১৬ ও ১৭ নম্বর লাইনের জায়গায় এটি বসান
+$query = $conn->query("SELECT * FROM users WHERE username = '$u'");
+$user = $query->fetch_assoc(); 
 
-// ৩. টার্নওভার ক্যালকুলেশন (ডাটা না থাকলে ডিফল্ট সেট হবে)
-$target = floatval($u_res['turnover_target'] ?? 1000); 
-$done = floatval($u_res['turnover_completed'] ?? 0);
+// এখন আপনার ২০ ও ২১ নম্বর লাইনে $user ব্যবহার করলে আর এরর আসবে না
+$target = floatval($user['turnover_target'] ?? 1000); 
+$done = floatval($user['turnover_completed'] ?? 0);
 $is_turnover_done = ($done >= $target);
 
 ?>
