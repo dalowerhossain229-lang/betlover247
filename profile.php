@@ -15,7 +15,8 @@ $t_main = (float)($dep_res['t_dep'] ?? 0);
 // ২. অ্যাডমিন থেকে বোনাস ও পিবি টার্গেট আনা
 $st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
 // এটি সরাসরি ইউজারের টেবিল থেকে ওই ইউজারের জন্য সেট করা টার্গেট নিয়ে আসবে
-$t_bonus = (isset($user['bonus_target'])) ? (float)$user['bonus_target'] : 0;
+$t_bonus = isset($u_data['bonus_target']) ? (float)$u_data['bonus_target'] : 0;
+
 
 // লাইন ১৭ এবং ১৮ এভাবে নিশ্চিত করুন
 
