@@ -17,9 +17,10 @@ $u_res = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $user = $u_res->fetch_assoc();
 
 // ৩. টার্নওভার ক্যালকুলেশন (ডাটা না থাকলে ডিফল্ট সেট হবে)
-$target = floatval($user['turnover_target'] ?? 1000);
-$done = floatval($user['turnover_completed'] ?? 0);
+$target = floatval($u_res['turnover_target'] ?? 1000); 
+$done = floatval($u_res['turnover_completed'] ?? 0);
 $is_turnover_done = ($done >= $target);
+
 ?>
 
 <div style="padding: 20px; text-align: center; color: white; font-family: sans-serif; min-height: 85vh;">
