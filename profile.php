@@ -14,7 +14,7 @@ $t_main = (float)($dep_res['t_dep'] ?? 0);
 
 // ২. অ্যাডমিন থেকে বোনাস ও পিবি টার্গেট আনা
 $st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
-$t_bonus = (float)($st['bonus_target'] ?? 5000);
+$t_bonus = (float)($st['bonus_target'] ?? 0); 
 $t_pb = (float)($st['pb_target'] ?? 10000);
 
 // ৩. ব্যালেন্স ও টার্নওভার ডাটা
