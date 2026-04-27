@@ -92,24 +92,28 @@ $conn->query("UPDATE users SET
             echo json_encode(["status" => "error", "message" => "Update Failed"]);
         }
         // ১. অ্যাডমিন থেকে বোনাস ও পিবি টার্গেট আনা
-        $st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
+        $st = $conn->query("SELECT bonus_target, pb_target FROM settings WHERE id = 1")->fetch_assoc();
         $t_bonus = (float)($st['bonus_target'] ?? 5000);
         $t_pb = (float)($st['pb_target'] ?? 10000);
 
-        // ২. মেইন টার্গেট = ইউজারের মোট সফল ডিপোজিট (আপনার নতুন চাহিদা)
+        // মেইন টার্গেট = ইউজারের মোট সফল ডিপোজিট (আপনার নতুন চাহিদা অনুযায়ী)
         $dep_res = $conn->query("SELECT SUM(amount) as t_dep FROM deposits WHERE username = '$username' AND status = 'success'")->fetch_assoc();
-        $t_main = (float)($dep_res['t_dep'] ?? 100);
+        $t_main = (float)($dep_res['t_dep'] ?? 1000);
 
-        // ৩. ইউজারের বর্তমান ডাটা আবার নেওয়া
-        $userData = $conn->query("SELECT * FROM users WHERE username = '$username'")->fetch_assoc();
+        // ইউজারের বর্তমান রানিং ডাটা নেওয়া
+        $u_check = $conn->query("SELECT * FROM users WHERE username = '$username'")->fetch_assoc();
+        
+        // --- ২. অটো-মার্জ লজিক ---
 
-        if ($userData['bonus_turnover'] >= $target_bonus && $userData['bonus_balance'] > 0) {
-            $b_amt = $userData['bonus_balance'];
+        // বোনাস টার্নওভার পূরণ হলে মেইন ব্যালেন্সে আনা
+        if ($u_check['bonus_turnover'] >= $t_bonus && $u_check['bonus_balance'] > 0) {
+            $b_amt = $u_check['bonus_balance'];
             $conn->query("UPDATE users SET balance = balance + $b_amt, bonus_balance = 0 WHERE username = '$username'");
         }
-
-        if ($userData['pb_turnover'] >= $target_pb && $userData['pb_balance'] > 0) {
-            $p_amt = $userData['pb_balance'];
+        
+        // পিবি টার্নওভার পূরণ হলে মেইন ব্যালেন্সে আনা
+        if ($u_check['pb_turnover'] >= $t_pb && $u_check['pb_balance'] > 0) {
+            $p_amt = $u_check['pb_balance'];
             $conn->query("UPDATE users SET balance = balance + $p_amt, pb_balance = 0 WHERE username = '$username'");
         }
         
