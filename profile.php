@@ -84,25 +84,30 @@ function getBar($done, $target) {
             </div>
         </div>
 
-        <!-- ৩. বোনাস টার্নওভার -->
+                <!-- ৩. বোনাস টার্নওভার -->
         <div style="margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
-                <span style="color: #ffdf1b; font-weight: bold;">Bonus Turnover</span>
-                <span><?php echo number_format($bonus_t, 0); ?> / <?php echo number_format($t_bonus, 0); ?></span>
+                <span style="color: #ffdf1b; font-weight: bold;">BONUS TURNOVER</span>
+                <span style="color: #888;"><?php echo number_format($bonus_t, 0); ?> / <?php echo number_format($t_bonus, 0); ?></span>
             </div>
-            <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
+            <div style="width: 100%; background: #222; height: 6px; border-radius: 10px;">
                 <div style="width: <?php echo getBar($bonus_t, $t_bonus); ?>%; background: #ffdf1b; height: 100%; border-radius: 10px;"></div>
             </div>
         </div>
 
-    <!-- বোনাস ক্লেইম বাটন -->
-    <div style="margin-top: 20px;">
-        <?php if($bonus_t >= $t_bonus && $bonus_b > 0): ?>
-            <button onclick="claimBonus()" style="width:100%; padding:15px; background:#00ff88; border:none; border-radius:12px; color:#000; font-weight:bold; cursor:pointer;">CLAIM BONUS TO MAIN</button>
-        <?php else: ?>
-            <button disabled style="width:100%; padding:15px; background:#1a1a1a; border:1px solid #333; border-radius:12px; color:#666; font-weight:bold;">🔒 BONUS LOCKED</button>
-        <?php endif; ?>
-    </div>
+        <!-- বোনাস ক্লেইম বাটন -->
+        <div style="margin-top: 20px;">
+            <?php if($bonus_t >= $t_bonus && $bonus_b > 0): ?>
+                <button onclick="claimBonus()" style="width:100%; padding:15px; background:#00ff88; border:none; border-radius:12px; color:#000; font-weight:bold; cursor:pointer; text-transform:uppercase; font-size:13px; box-shadow: 0 4px 15px rgba(0,255,136,0.3);">
+                    CLAIM BONUS TO MAIN
+                </button>
+            <?php else: ?>
+                <button disabled style="width:100%; padding:15px; background:#1a1a1a; border:1px solid #333; border-radius:12px; color:#666; font-weight:bold; text-transform:uppercase; font-size:13px; cursor: not-allowed;">
+                    🔒 BONUS LOCKED (COMPLETE <?php echo number_format($t_bonus, 0); ?> TURNOVER)
+                </button>
+            <?php endif; ?>
+        </div>
+
 
     <!-- মেনু বাটনসমূহ -->
     <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 25px;">
