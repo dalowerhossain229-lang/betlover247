@@ -62,7 +62,7 @@ $is_turnover_done = ($done >= $target);
             
             <button onclick="submitWithdraw()" id="wBtn" style="width: 100%; padding: 18px; background: #00ff88; color: #000; border: none; border-radius: 10px; font-weight: bold; margin-top: 30px; cursor: pointer; font-size: 16px; transition: 0.3s;">রিকোয়েস্ট পাঠান</button>
         </div>
-
+</div>
 <script>
 function submitWithdraw() {
     const method = document.getElementById('w_method').value;
