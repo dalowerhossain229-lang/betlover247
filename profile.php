@@ -46,11 +46,14 @@ function getBar($done, $target) {
             <small style="font-size:9px; color:#888;">MAIN</small>
             <div style="color:#00ff88; font-size:12px; font-weight:bold;">৳<?php echo number_format($main_b, 2); ?></div>
         </div>
-        <!-- পিবি বক্স -->
-        <div style="background:#111; border:1px solid #00bcd4; padding:10px; border-radius:10px;">
-            <small style="font-size:9px; color:#888;">PB</small>
-            <div style="color:#00bcd4; font-size:12px; font-weight:bold;">৳<?php echo number_format($pb_b, 2); ?></div>
-        </div>
+        <!-- মাঝখানের PB বক্স -->
+<div style="background:#111; border:1px solid #00bcd4; padding:10px; border-radius:10px;">
+    <small style="font-size:9px; color:#888;">PB</small>
+    <div style="color:#00bcd4; font-size:12px; font-weight:bold;">
+        ৳<?php echo number_format($pb_b, 2); ?>
+    </div>
+</div>
+
         <!-- বোনাস বক্স -->
         <div style="background:#111; border:1px solid #ffdf1b; padding:10px; border-radius:10px;">
             <small style="font-size:9px; color:#888;">BONUS</small>
