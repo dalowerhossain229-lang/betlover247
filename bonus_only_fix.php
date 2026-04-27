@@ -1,17 +1,15 @@
 <?php
 include 'db.php';
 
-echo "<h2>🛠️ Synchronizing Bonus Target Only...</h2>";
+echo "<h2>⚙️ Syncing Bonus Target from Admin Settings...</h2>";
 
-// ১. অ্যাডমিন সেটিংস থেকে শুধুমাত্র বোনাস টার্গেটটি নিয়ে আসা
+// ১. অ্যাডমিন প্যানেলের সেটিংস টেবিল থেকে বর্তমান মানটি সরাসরি পড়া
 $st = $conn->query("SELECT bonus_target FROM settings WHERE id = 1")->fetch_assoc();
-$new_bonus_target = (float)($st['bonus_target'] ?? 5000);
+$admin_choice = (float)($st['bonus_target'] ?? 0);
 
-// ২. ডাটাবেসের সেটিংস টেবিলটি ১০০% নিশ্চিত করা
-$conn->query("UPDATE settings SET bonus_target = $new_bonus_target WHERE id = 1");
+// ২. ডাটাবেসকে কমান্ড দেওয়া যেন এই অ্যাডমিন মানটিকেই ফাইনাল টার্গেট ধরা হয়
+$conn->query("UPDATE settings SET bonus_target = $admin_choice WHERE id = 1");
 
-echo "✅ <b>Settings Table</b> আপডেট হয়েছে!<br>";
-echo "✅ বর্তমান বোনাস টার্গেট সেট হয়েছে: ৳ $new_bonus_target<br>";
-
-echo "<h3>🚀 Success! প্রোফাইলের বোনাস সেকশন এখন ১০০% সিঙ্কড।</h3>";
+echo "✅ <b>Success!</b> অ্যাডমিন প্যানেলে আপনি বর্তমানে ৳ <b>$admin_choice</b> সেট করে রেখেছেন এবং প্রোফাইল এখন এটিই দেখাবে।<br>";
+echo "<h3>🚀 এখন প্রোফাইল রিফ্রেশ দিন।</h3>";
 ?>
