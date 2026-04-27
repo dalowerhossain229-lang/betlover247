@@ -10,31 +10,32 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $u = $_SESSION['user_id'];
+// ইউজারের সব ডাটা একবারেই আনা
 $u_data = $conn->query("SELECT * FROM users WHERE username = '$u'")->fetch_assoc();
 
-// ২. অ্যাডমিন সেটিংস থেকে টার্গেট আনা
+// ২. অ্যাডমিন সেটিংস থেকে টার্গেটগুলো আনা (কলামের নামগুলো ডাটাবেসের সাথে মিলিয়ে নিন)
 $st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
+$t_main = (float)($st['main_target'] ?? 1000);
 $t_bonus = (float)($st['bonus_target'] ?? 5000);
 $t_pb = (float)($st['pb_target'] ?? 10000);
 
-// ৩. মেইন টার্গেট = মোট সফল ডিপোজিট
-$dep_res = $conn->query("SELECT SUM(amount) as t_dep FROM deposits WHERE username = '$u' AND status = 'success'")->fetch_assoc();
-$t_main = (float)($dep_res['t_dep'] ?? 1000); 
-
-// ৪. ব্যালেন্স ও টার্নওভার ডাটা
+// ৩. ৩টি ব্যালেন্স একদম আলাদা করা (পিবি এখন আর মেইনের সাথে যোগ হবে না)
 $main_b = (float)($u_data['balance'] ?? 0);
-$pb_b = (float)($u_data['pb_balance'] ?? 0);
+$pb_b = (float)($u_data['pb_balance'] ?? 0); // PB আলাদা কলাম থেকে আসবে
 $bonus_b = (float)($u_data['bonus_balance'] ?? 0);
 
+// ৪. ৩টি টার্নওভারের ডাটা নেওয়া
 $main_t = (float)($u_data['turnover'] ?? 0);
 $bonus_t = (float)($u_data['bonus_turnover'] ?? 0);
 $pb_t = (float)($u_data['pb_turnover'] ?? 0);
 
+// প্রগ্রেস বার ক্যালকুলেশন ফাংশন
 function getBar($done, $target) {
     $p = ($target > 0) ? ($done / $target) * 100 : 0;
     return ($p > 100) ? 100 : $p;
 }
 ?>
+
 
 <div style="padding: 15px; text-align: center; color: white; font-family: sans-serif; background: #0a0b10; min-height: 100vh;">
     
