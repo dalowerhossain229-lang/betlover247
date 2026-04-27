@@ -12,18 +12,14 @@ if (!isset($_SESSION['user_id'])) {
 include 'header.php'; 
 $u = $_SESSION['user_id'];
 
-// ১৬ নম্বর লাইন থেকে শুরু
+// ১৬ নম্বর লাইনের আশেপাশে চেক করুন
 $query = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $user_data = $query->fetch_assoc(); 
 
-// ২০ ও ২১ নম্বর লাইন: সরাসরি ডাটাবেস থেকে মান নেওয়া
-$target = floatval($user_data['turnover_target'] ?? 1000); 
-$done = floatval($user_data['turnover_completed'] ?? 0);
-
-// ২২ নম্বর লাইন: টার্নওভার সম্পন্ন হয়েছে কি না চেক
+// এই ভেরিয়েবলগুলো ঠিকঠাক সেট করুন
+$done = floatval($user_data['main_t'] ?? 0);
+$target = floatval($user_data['t_main'] ?? 1000);
 $is_turnover_done = ($done >= $target);
-
-
 ?>
 
 <div style="padding: 20px; text-align: center;">
