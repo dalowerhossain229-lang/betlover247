@@ -57,7 +57,7 @@ function getBar($done, $target) {
 
     <!-- ৩টি আলাদা টার্নওভার প্রগ্রেস বার -->
     <div style="background: #0a0f0d; border: 1px solid #1a2a22; padding: 15px; border-radius: 15px;">
-        ?>
+        
         <div style="background: #111; padding: 15px; border-radius: 15px; border: 1px solid #1a2a22;">
         
               <!-- ১. MAIN TURNOVER -->
