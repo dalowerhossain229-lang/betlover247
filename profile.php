@@ -72,7 +72,8 @@ function getBar($done, $target) {
         <div style="margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
                 <span style="color: #00ff88; font-weight: bold;">Main Turnover</span>
-                <span><?php echo number_format($main_t, 0); ?> / <?php echo number_format($t_main, 0); ?></span>
+               <span><?php echo ($main_t >= $t_main) ? '<b style="color: #4caf50;">✅ Complete</b>' : number_format($main_t, 0) . " / " . number_format($t_main, 0); ?></span>
+ 
             </div>
             <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
                 <div style="width: <?php echo getBar($main_t, $t_main); ?>%; background: #00ff88; height: 100%; border-radius: 10px;"></div>
@@ -83,7 +84,8 @@ function getBar($done, $target) {
         <div style="margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
                 <span style="color: #00bcd4; font-weight: bold;">PB Turnover</span>
-                <span><?php echo number_format($pb_t, 0); ?> / <?php echo number_format($t_pb, 0); ?></span>
+                <span><?php echo ($pb_t >= $t_pb) ? '<b style="color: #4caf50;">✅ Complete</b>' : number_format($pb_t, 0) . " / " . number_format($t_pb, 0); ?></span>
+
             </div>
             <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
                 <div style="width: <?php echo getBar($pb_t, $t_pb); ?>%; background: #00bcd4; height: 100%; border-radius: 10px;"></div>
@@ -95,11 +97,14 @@ function getBar($done, $target) {
     <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
         <span style="color: #ffc107; font-weight: bold;">Bonus Turnover</span>
         <span>
-       <?php 
-        // $u_data ব্যবহার করতে হবে কারণ ইউজারের সব তথ্য এখানেই আছে
+    <?php
     $t_bonus = isset($u_data['bonus_target']) ? (float)$u_data['bonus_target'] : 0;
-    echo number_format($bonus_t, 0) . " / " . number_format($t_bonus, 0); 
-?>  
+    if ($bonus_t >= $t_bonus && $t_bonus > 0) {
+        echo '<b style="color: #4caf50;">✅ Complete</b>';
+    } else {
+        echo number_format($bonus_t, 0) . " / " . number_format($t_bonus, 0);
+    }
+?>   
  </span>
     </div>
     <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
