@@ -9,8 +9,11 @@ $u = $_SESSION['user_id'];
 // ইউজারের সব ডাটা একবারেই আনা
 $u_data = $conn->query("SELECT * FROM users WHERE username = '$u'")->fetch_assoc();
 
-// অ্যাডমিন সেটিংস থেকে টার্গেটগুলো আনা
-$st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
+
+// অ্যাডমিন সেটিংস থেকে টার্গেটগুলো নিয়ে আসা
+$st_res = $conn->query("SELECT * FROM settings WHERE id = 1");
+$st = $st_res->fetch_assoc();
+
 $t_main = (float)($st['main_target'] ?? 1000);
 $t_bonus = (float)($st['bonus_target'] ?? 12000);
 $t_pb = (float)($st['pb_target'] ?? 360000);
