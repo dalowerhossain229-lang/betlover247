@@ -62,10 +62,34 @@ elseif ($action == "bet") {
     }
 }
 
-// ৩. জয়ী হওয়া (Win) - ব্যালেন্স যোগ করা
-elseif ($action == "win") {
-    $conn->query("UPDATE users SET balance = balance + $amount WHERE username = '$username'");
-    $conn->query("INSERT INTO game_logs (username, game_name, action, amount, tx_id) VALUES ('$username', '$game', 'win', $amount, '$tx_id')");
-    echo json_encode(["status" => "ok", "message" => "Win Processed"]);
-}
-?>
+    // ৩. জেতার টাকা যোগ করা (Win) - আনুপাতিক ডিস্ট্রিবিউশন
+    elseif ($action == "win") {
+        $u_sql = $conn->query("SELECT balance, pb_balance, bonus_balance FROM users WHERE username = '$username'");
+        $u = $u_sql->fetch_assoc();
+
+        $main_b = (float)($u['balance'] ?? 0);
+        $pb_b = (float)($u['pb_balance'] ?? 0);
+        $bonus_b = (float)($u['bonus_balance'] ?? 0);
+        $total_b = $main_b + $pb_b + $bonus_b;
+
+        $safe_total = ($total_b > 0) ? $total_b : 1;
+
+        // অনুপাত অনুযায়ী ভাগ করা
+        $main_win = ($main_b / $safe_total) * $amount;
+        $pb_win = ($pb_b / $safe_total) * $amount;
+        $bonus_win = ($bonus_b / $safe_total) * $amount;
+
+        $conn->query("UPDATE users SET 
+            balance = balance + $main_win, 
+            pb_balance = pb_balance + $pb_win, 
+            bonus_balance = bonus_balance + $bonus_win 
+            WHERE username = '$username'");
+
+        if ($conn->affected_rows > 0) {
+            $conn->query("INSERT INTO game_logs (username, game_name, action, amount, tx_id) VALUES ('$username', '$game', 'win', $amount, '$tx_id')");
+            echo json_encode(["status" => "ok", "message" => "Win Distributed"]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Update Failed"]);
+        }
+    }
+
