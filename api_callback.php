@@ -91,12 +91,18 @@ $conn->query("UPDATE users SET
         } else {
             echo json_encode(["status" => "error", "message" => "Update Failed"]);
         }
-$st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
-        $target_bonus = (float)($st['bonus_target'] ?? 12000);
-        $target_pb = (float)($st['pb_target'] ?? 360000);
+        // ১. অ্যাডমিন থেকে বোনাস ও পিবি টার্গেট আনা
+        $st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
+        $t_bonus = (float)($st['bonus_target'] ?? 5000);
+        $t_pb = (float)($st['pb_target'] ?? 10000);
 
+        // ২. মেইন টার্গেট = ইউজারের মোট সফল ডিপোজিট (আপনার নতুন চাহিদা)
+        $dep_res = $conn->query("SELECT SUM(amount) as t_dep FROM deposits WHERE username = '$username' AND status = 'success'")->fetch_assoc();
+        $t_main = (float)($dep_res['t_dep'] ?? 100);
+
+        // ৩. ইউজারের বর্তমান ডাটা আবার নেওয়া
         $userData = $conn->query("SELECT * FROM users WHERE username = '$username'")->fetch_assoc();
-        
+
         if ($userData['bonus_turnover'] >= $target_bonus && $userData['bonus_balance'] > 0) {
             $b_amt = $userData['bonus_balance'];
             $conn->query("UPDATE users SET balance = balance + $b_amt, bonus_balance = 0 WHERE username = '$username'");
