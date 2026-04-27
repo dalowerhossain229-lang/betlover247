@@ -11,16 +11,16 @@ if (!isset($_SESSION['user_id'])) {
 
 include 'header.php'; 
 $u = $_SESSION['user_id'];
-// ১৬ ও ১৭ নম্বর লাইন: ইউজারের সব তথ্য ডাটাবেস থেকে আনা
+
+// ১৬ নম্বর লাইন থেকে শুরু
 $query = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $user_data = $query->fetch_assoc(); 
 
-// ২০ ও ২১ নম্বর লাইন: সরাসরি ডাটাবেস কলাম থেকে মান নেওয়া
-// এখানে 'total_deposit' এবং 'turnover_completed' আপনার ডাটাবেসের কলাম নাম অনুযায়ী পরিবর্তন করে নিন
-$target = floatval($user_data['total_deposit'] ?? 1000); 
+// ২০ ও ২১ নম্বর লাইন: সরাসরি ডাটাবেস থেকে মান নেওয়া
+$target = floatval($user_data['turnover_target'] ?? 1000); 
 $done = floatval($user_data['turnover_completed'] ?? 0);
 
-// ২২ নম্বর লাইন: টার্নওভার সম্পন্ন হয়েছে কি না চেক করা
+// ২২ নম্বর লাইন: টার্নওভার সম্পন্ন হয়েছে কি না চেক
 $is_turnover_done = ($done >= $target);
 
 
