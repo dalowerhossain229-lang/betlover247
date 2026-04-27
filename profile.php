@@ -96,16 +96,15 @@ function getBar($done, $target) {
         <span style="color: #ffc107; font-weight: bold;">Bonus Turnover</span>
         <span>
        <?php 
-    // এখন ডাটাবেসে কলাম আছে, তাই $user['bonus_target'] কাজ করবে
-    $target = isset($user['bonus_target']) ? (float)$user['bonus_target'] : 0;
-    echo number_format($bonus_t, 0) . " / " . number_format($target, 0); 
-?>
-     
+        // $u_data ব্যবহার করতে হবে কারণ ইউজারের সব তথ্য এখানেই আছে
+    $t_bonus = isset($u_data['bonus_target']) ? (float)$u_data['bonus_target'] : 0;
+    echo number_format($bonus_t, 0) . " / " . number_format($t_bonus, 0); 
+?>  
  </span>
     </div>
     <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
-     <div style="width: <?php echo getBar($bonus_t, $target); ?>%; background: #ffc107; height: 100%; border-radius: 10px;"></div>
-   
+     <div style="width: <?php echo getBar($bonus_t, $t_bonus); ?>%; background: #ffc107; height: 100%; border-radius: 10px;"></div>
+
     </div>
 </div>
 
