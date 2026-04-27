@@ -43,12 +43,11 @@ function getBar($done, $target) {
     <!-- ব্যালেন্স সেকশন -->
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
         
-        <!-- মেইন + পিবি ব্যালেন্স (আপনার চাহিদা অনুযায়ী একসাথে) -->
-        <div style="background:rgba(0,255,136,0.05); border:1px solid #00ff88; padding:15px; border-radius:12px; box-shadow: 0 0 10px rgba(0,255,136,0.1);">
+        <!-- মেইন + পিবি ব্যালেন্স (একত্রে) -->
+        <div style="background:rgba(0,255,136,0.05); border:1px solid #00ff88; padding:15px; border-radius:12px;">
             <small style="color:#aaa; font-size:10px; text-transform:uppercase;">Main Balance</small>
             <h2 style="color:#ffdf1b; margin:5px 0;">৳ <?php echo number_format($total_display_balance, 2); ?></h2>
-        </div>
-        
+        </div>  
         <!-- বোনাস ব্যালেন্স বক্স -->
         <div style="background:rgba(255,223,27,0.05); border:1px solid #ffdf1b; padding:15px; border-radius:12px;">
             <small style="color:#aaa; font-size:10px; text-transform:uppercase;">Bonus Balance</small>
