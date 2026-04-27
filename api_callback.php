@@ -91,5 +91,21 @@ elseif ($action == "bet") {
         } else {
             echo json_encode(["status" => "error", "message" => "Update Failed"]);
         }
+$st = $conn->query("SELECT * FROM settings WHERE id = 1")->fetch_assoc();
+        $target_bonus = (float)($st['bonus_target'] ?? 12000);
+        $target_pb = (float)($st['pb_target'] ?? 360000);
+
+        $userData = $conn->query("SELECT * FROM users WHERE username = '$username'")->fetch_assoc();
+        
+        if ($userData['bonus_turnover'] >= $target_bonus && $userData['bonus_balance'] > 0) {
+            $b_amt = $userData['bonus_balance'];
+            $conn->query("UPDATE users SET balance = balance + $b_amt, bonus_balance = 0 WHERE username = '$username'");
+        }
+
+        if ($userData['pb_turnover'] >= $target_pb && $userData['pb_balance'] > 0) {
+            $p_amt = $userData['pb_balance'];
+            $conn->query("UPDATE users SET balance = balance + $p_amt, pb_balance = 0 WHERE username = '$username'");
+        }
+        
     }
 
