@@ -40,20 +40,24 @@ function getBar($done, $target) {
 <div style="padding: 15px; text-align: center; color: white; font-family: sans-serif; background: #0a0b10; min-height: 100vh;">
     
     <!-- ৩টি ব্যালেন্স বক্স -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px;">
+        <!-- মেইন বক্স -->
         <div style="background:#111; border:1px solid #00ff88; padding:10px; border-radius:10px;">
             <small style="font-size:9px; color:#888;">MAIN</small>
             <div style="color:#00ff88; font-size:12px; font-weight:bold;">৳<?php echo number_format($main_b, 2); ?></div>
         </div>
+        <!-- পিবি বক্স -->
         <div style="background:#111; border:1px solid #00bcd4; padding:10px; border-radius:10px;">
             <small style="font-size:9px; color:#888;">PB</small>
             <div style="color:#00bcd4; font-size:12px; font-weight:bold;">৳<?php echo number_format($pb_b, 2); ?></div>
         </div>
+        <!-- বোনাস বক্স -->
         <div style="background:#111; border:1px solid #ffdf1b; padding:10px; border-radius:10px;">
             <small style="font-size:9px; color:#888;">BONUS</small>
             <div style="color:#ffdf1b; font-size:12px; font-weight:bold;">৳<?php echo number_format($bonus_b, 2); ?></div>
         </div>
     </div>
+
 
     <!-- ৩টি টার্নওভার লাইন (নকশা অনুযায়ী) -->
     <div style="background: #111; padding: 20px; border-radius: 20px; text-align: left; border: 1px solid #222;">
