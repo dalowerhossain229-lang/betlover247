@@ -1,54 +1,46 @@
-<?php 
-ob_start();
-session_start();
+<?php
 include 'db.php'; 
+session_start();
+$u = $_SESSION['username']; // আপনার সেশন ভ্যারিয়েবল অনুযায়ী ঠিক করে নিন
 
-// ১. লগইন চেক (হেডার ইনক্লুড করার আগে)
-if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
-}
-
-include 'header.php'; 
-$u = $_SESSION['user_id'];
-
-// ১৬ নম্বর লাইনের আশেপাশে চেক করুন
+// ১. ডাটাবেস থেকে ইউজারের সব তথ্য আনা
 $query = $conn->query("SELECT * FROM users WHERE username = '$u'");
-$user_data = $query->fetch_assoc(); 
+$user_data = $query->fetch_assoc();
 
-// ডাটাবেসের কলাম নাম অনুযায়ী পরিবর্তন (যেহেতু আমরা ফিক্স ফাইলে এই নামগুলো দিয়েছি)
+// ২. মেইন টার্নওভারের মানগুলো সরাসরি ডাটাবেস থেকে নেওয়া
 $done = floatval($user_data['main_t'] ?? 0); 
 $target = floatval($user_data['t_main'] ?? 1000);
 
-// টার্নওভার সম্পন্ন হয়েছে কিনা চেক করা
+// ৩. টার্নওভার সম্পন্ন হয়েছে কি না চেক (২১১৮৯ >= ১০০০ হলে এটি True হবে)
 $is_turnover_done = ($done >= $target);
-
 ?>
 
-<div style="padding: 20px; text-align: center;">
-    <h2 style="color:#00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.3);">💰 WITHDRAW</h2>
+<div style="padding: 20px; text-align: center; background: #000; min-height: 100vh; color: #fff;">
+    <h2 style="color:#00ff88;">💰 WITHDRAW</h2>
 
     <!-- ব্যালেন্স কার্ড -->
     <div style="background: rgba(7, 49, 40, 0.4); border: 1px solid #07ff88; padding: 20px; border-radius: 15px; margin-bottom: 20px;">
-        <small style="color: #888; text-transform: uppercase; font-size: 10px; letter-spacing: 1px;">Current Balance</small>
-        <h2 style="color:#ffdf1b; margin: 10px 0; font-size: 32px;">৳ <?php echo number_format($user_data['balance'], 2); ?></h2>
+        <small style="color: #888; font-size: 10px;">Current Balance</small>
+        <h2 style="color:#ffdf1b; margin: 10px 0; font-size: 32px;">৳ <?php echo number_format($user_data['balance'] ?? 0, 2); ?></h2>
     </div>
 
-    <!-- ৪. টার্নওভার চেক -->
+    <!-- ৪. টার্নওভার চেক সেকশন -->
     <?php if (!$is_turnover_done): ?>
         <div style="background: rgba(255, 77, 77, 0.1); border: 1px solid #ff4d4d; padding: 25px; border-radius: 15px;">
             <p style="font-weight: bold; margin-bottom: 10px;">⚠️ টার্নওভার অসম্পূর্ণ!</p>
             <small>উইথড্র দিতে হলে আগে টার্নওভার টার্গেট সম্পন্ন করা প্রয়োজন।</small>
 
-            <div style="margin-top: 20px; background: #111; height: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #333;">
-              <div style="width: <?php echo ($target > 0) ? ($done / $target) * 100 : 0; ?>%; background: #ff4d4d; height: 100%;"></div>
-  
+            <div style="margin-top: 20px; background: #111; height: 10px; border-radius: 10px; overflow: hidden;">
+                <div style="width: <?php echo ($target > 0) ? ($done / $target) * 100 : 0; ?>%; background: #ff4d4d; height: 100%;"></div>
             </div>
             <p style="font-size: 13px; margin-top: 12px; color: #aaa;">
-                <?php echo number_format($done); ?> / <?php echo number_format($target); ?>
+                প্রগ্রেস: <?php echo number_format($done); ?> / <?php echo number_format($target); ?>
             </p>
         </div>
     <?php else: ?>
+        <!-- টার্নওভার শেষ হলে এই মেসেজটি দেখাবে এবং ফর্মটি নিচে আসবে -->
+        <p style="color: #00ff88; font-weight: bold;">✅ টার্নওভার সম্পন্ন হয়েছে! আপনি এখন উইথড্র দিতে পারবেন।</p>
+    <?php endif; ?>
 
         <!-- ৫. উইথড্র ফর্ম (টার্নওভার শেষ হলে দেখাবে) -->
         <div style="background: #111; padding: 25px; border-radius: 15px; border: 1px solid #333; text-align: left; animation: slideUp 0.5s;">
