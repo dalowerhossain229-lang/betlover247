@@ -45,7 +45,7 @@ $is_turnover_done = ($done >= $target);
   
             </div>
             <p style="font-size: 13px; margin-top: 12px; color: #aaa;">
-                প্রগ্রেস: <?php echo number_format($done); ?> / <?php echo number_format($target); ?>
+                <?php echo number_format($done); ?> / <?php echo number_format($target); ?>
             </p>
         </div>
     <?php else: ?>
