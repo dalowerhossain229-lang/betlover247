@@ -1,15 +1,19 @@
 <?php
-// আপনার ডাটাবেস কানেকশন ফাইল
-include 'db.php'; 
+include 'db.php'; // আপনার ডাটাবেস কানেকশন ফাইল
 
-// ১. ইউজার টেবিলে কলামটি তৈরি করা (যদি না থাকে)
-$sql = "ALTER TABLE users ADD COLUMN IF NOT EXISTS bonus_target DECIMAL(10,2) DEFAULT 0.00";
+// ডাটাবেসে কলামটি আছে কিনা তা চেক করার সহজ পদ্ধতি
+$check = $conn->query("SHOW COLUMNS FROM users LIKE 'bonus_target'");
 
-if ($conn->query($sql) === TRUE) {
-    echo "<h2>✅ Database Table Fixed!</h2>";
-    echo "<p>এখন আপনি অ্যাডমিন প্যানেল থেকে যেকোনো অ্যামাউন্ট সেট করতে পারবেন।</p>";
+if ($check->num_rows == 0) {
+    // যদি কলাম না থাকে তবেই তৈরি করবে
+    $sql = "ALTER TABLE users ADD bonus_target DECIMAL(10,2) DEFAULT 0.00";
+    if ($conn->query($sql) === TRUE) {
+        echo "<h2>✅ Success! bonus_target কলাম তৈরি হয়েছে।</h2>";
+    } else {
+        echo "❌ Error: " . $conn->error;
+    }
 } else {
-    echo "❌ Error: " . $conn->error;
+    echo "<h2>ℹ️ কলামটি অলরেডি ডাটাবেসে আছে।</h2>";
 }
 
 echo "<br><a href='index.php'>সাইটে ফিরে যান</a>";
