@@ -61,39 +61,39 @@ function getBar($done, $target) {
         ?>
         <div style="background: #111; padding: 15px; border-radius: 15px; border: 1px solid #1a2a22;">
         
-        <!-- ১. মেইন টার্নওভার -->
+              <!-- ১. MAIN TURNOVER -->
         <div style="margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                 <span style="font-size:10px; font-weight:bold; color:#00ff88;">MAIN TURNOVER</span>
-                <span style="font-size:10px; color:#888;"><?php echo number_format($main_t, 0); ?> / 1,000</span>
+                <span style="font-size:10px; color:#888;"><?php echo number_format($main_t, 0); ?> / <?php echo number_format($t_main, 0); ?></span>
             </div>
             <div style="width: 100%; height: 6px; background: #222; border-radius: 10px;">
-                <div style="width: <?php echo getBar($main_t, 1000); ?>%; background: #00ff88; height: 100%; border-radius: 10px;"></div>
+                <div style="width: <?php echo getBar($main_t, $t_main); ?>%; background: #00ff88; height: 100%; border-radius: 10px;"></div>
             </div>
         </div>
 
-        <!-- ২. বোনাস টার্নওভার -->
+        <!-- ২. BONUS TURNOVER -->
         <div style="margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                 <span style="font-size:10px; font-weight:bold; color:#ffdf1b;">BONUS TURNOVER</span>
-                <span style="font-size:10px; color:#888;"><?php echo number_format($bonus_t, 0); ?> / 12,000</span>
+                <span style="font-size:10px; color:#888;"><?php echo number_format($bonus_t, 0); ?> / <?php echo number_format($t_bonus, 0); ?></span>
             </div>
             <div style="width: 100%; height: 6px; background: #222; border-radius: 10px;">
-                <div style="width: <?php echo getBar($bonus_t, 12000); ?>%; background: #ffdf1b; height: 100%; border-radius: 10px;"></div>
-            </div>
-        </div>    
-
-                <!-- ৩. PB TURNOVER -->
-        <div style="margin-bottom: 10px;">
-            <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
-                <span style="color: #00bcd4; font-weight: bold; text-transform: uppercase;">PB Turnover</span>
-                <span style="color: #888;"><?php echo number_format($pb_t, 0); ?> / 360,000</span>
-            </div>
-            <div style="width: 100%; background: #222; height: 6px; border-radius: 10px;">
-                <div style="width: <?php echo getBar($pb_t, 360000); ?>%; background: #00bcd4; height: 100%; border-radius: 10px;"></div>
+                <div style="width: <?php echo getBar($bonus_t, $t_bonus); ?>%; background: #ffdf1b; height: 100%; border-radius: 10px;"></div>
             </div>
         </div>
-    </div>
+
+        <!-- ৩. PB TURNOVER -->
+        <div style="margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="font-size:10px; font-weight:bold; color:#00bcd4;">PB TURNOVER</span>
+                <span style="font-size:10px; color:#888;"><?php echo number_format($pb_t, 0); ?> / <?php echo number_format($t_pb, 0); ?></span>
+            </div>
+            <div style="width: 100%; height: 6px; background: #222; border-radius: 10px;">
+                <div style="width: <?php echo getBar($pb_t, $t_pb); ?>%; background: #00bcd4; height: 100%; border-radius: 10px;"></div>
+            </div>
+        </div>
+  
 
     <!-- ৪. BONUS CLAIM BUTTON -->
     <div style="margin-top: 20px;">
