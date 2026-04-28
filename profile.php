@@ -37,22 +37,23 @@ function getBar($done, $target) {
     $p = ($target > 0) ? ($done / $target) * 100 : 0;
     return ($p > 100) ? 100 : $p;
 }
-
 // ১. পিবি ব্যালেন্স ট্রান্সফার লজিক
 if ($pb_t >= $t_pb && $pb_b > 0 && $t_pb > 0) {
-    // এখানে কুয়েরিটি ঠিক করুন: balance = balance + $pb_b
     $conn->query("UPDATE users SET balance = balance + $pb_b, pb_balance = 0 WHERE username = '$u'");
-    header("Location: profile.php");
+    // ৪৫ নম্বর লাইনের বদলে এটি ব্যবহার করুন
+    echo "<script>window.location.href='profile.php';</script>";
     exit();
 }
 
 // ২. বোনাস ব্যালেন্স ট্রান্সফার লজিক
 if ($bonus_t >= $t_bonus && $bonus_b > 0 && $t_bonus > 0) {
-    // এখানে কুয়েরিটি ঠিক করুন: balance = balance + $bonus_b
     $conn->query("UPDATE users SET balance = balance + $bonus_b, bonus_balance = 0, bonus_target = 0 WHERE username = '$u'");
-    header("Location: profile.php");
+    // ৫৩ নম্বর লাইনের বদলে এটি ব্যবহার করুন
+    echo "<script>window.location.href='profile.php';</script>";
     exit();
 }
+
+
 // ৩. সাকসেস পপআপ স্ক্রিপ্ট
 if (isset($msg)) {
     echo "
