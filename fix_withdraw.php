@@ -1,22 +1,29 @@
 <?php
 include 'db.php';
-session_start();
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 
-// ১. আপনার লগইন করা ইউজারনেমটি এখানে বসান (টেস্ট করার জন্য)
-$u = $_SESSION['username'] ?? 'আপনার_ইউজারনেম'; 
+// ১. কলাম আছে কিনা চেক করে তৈরি করার নিরাপদ পদ্ধতি
+function addColumn($conn, $table, $column, $type) {
+    $check = $conn->query("SHOW COLUMNS FROM $table LIKE '$column'");
+    if ($check->num_rows == 0) {
+        $conn->query("ALTER TABLE $table ADD $column $type");
+        return "✅ কলাম '$column' তৈরি হয়েছে।<br>";
+    }
+    return "ℹ️ কলাম '$column' আগে থেকেই আছে।<br>";
+}
 
-// ২. ডাটাবেসে কলাম চেক ও তৈরি করা (যদি না থাকে)
-$conn->query("ALTER TABLE users ADD COLUMN IF NOT EXISTS main_t DECIMAL(10,2) DEFAULT 0.00");
-$conn->query("ALTER TABLE users ADD COLUMN IF NOT EXISTS t_main DECIMAL(10,2) DEFAULT 1000.00");
+echo addColumn($conn, 'users', 'main_t', "DECIMAL(10,2) DEFAULT 0.00");
+echo addColumn($conn, 'users', 't_main', "DECIMAL(10,2) DEFAULT 1000.00");
 
-// ৩. আপনার আইডিতে ২১১৮৯ টার্নওভার সেট করে দেওয়া (যাতে লাল বক্স চলে যায়)
-$update = $conn->query("UPDATE users SET main_t = 21189, t_main = 1000 WHERE username = '$u'");
-
-if($update) {
-    echo "<h2 style='color:green;'>✅ Fix Successful!</h2>";
-    echo "<p>আপনার টার্নওভার ২১,১৮৯ সেট করা হয়েছে। এখন উইথড্র পেজ ওপেন হবে।</p>";
-    echo "<a href='withdraw.php'>উইথড্র পেজে যান</a>";
+// ২. আপনার লগইন করা ইউজারনেম অনুযায়ী টার্নওভার সেট করা
+$u = $_SESSION['username'] ?? ''; 
+if (!empty($u)) {
+    $update = $conn->query("UPDATE users SET main_t = 21189, t_main = 1000 WHERE username = '$u'");
+    if ($update) {
+        echo "<h2>✅ Success! আপনার টার্নওভার আপডেট হয়েছে।</h2>";
+        echo "<a href='withdraw.php' style='padding:10px; background:green; color:white; text-decoration:none;'>উইথড্র পেজে যান</a>";
+    }
 } else {
-    echo "❌ Error: " . $conn->error;
+    echo "<h2 style='color:red;'>⚠️ সেশন পাওয়া যায়নি! দয়া করে আগে লগইন করুন।</h2>";
 }
 ?>
