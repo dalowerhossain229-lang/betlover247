@@ -2,24 +2,17 @@
 session_start();
 include 'db.php';
 
-// ১. লগইন চেক
-$user_id = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
+// ১. সেশন থেকে ইউজার চেক
+$u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
+$bet = isset($_POST['amount']) ? (float)$_POST['amount'] : 10;
+$wallet = isset($_POST['wallet']) ? $_POST['wallet'] : 'main';
 
-if (empty($user_id)) {
+if (empty($u)) {
     echo json_encode(["status" => "error", "message" => "দয়া করে আগে লগইন করুন!"]);
     exit;
 }
 
-// ২. ইনপুট ডেটা ধরা (POST মেথড ব্যবহার করা হয়েছে)
-$bet_amount = isset($_POST['amount']) ? intval($_POST['amount']) : 10;
-$wallet = isset($_POST['wallet']) ? $_POST['wallet'] : 'main';
-
-if ($bet_amount <= 0) {
-    echo json_encode(["status" => "error", "message" => "ভুল অ্যামাউন্ট!"]);
-    exit;
-}
-
-// ৩. ওয়ালেট অনুযায়ী ডাটাবেস কলাম সিলেক্ট করা
+// ২. সিলেক্ট করা ওয়ালেট অনুযায়ী ডাটাবেস কলাম ঠিক করা
 if ($wallet == 'pb') {
     $bal_col = "pb_balance";
     $turn_col = "pb_t";
@@ -31,31 +24,23 @@ if ($wallet == 'pb') {
     $turn_col = "main_t";
 }
 
-// ৪. ইউজারের ব্যালেন্স চেক করা
-$res = $conn->query("SELECT $bal_col FROM users WHERE username = '$user_id' OR id = '$user_id'");
-$u_data = $res->fetch_assoc();
+// ৩. ডাটাবেস থেকে চেক করা যে সেই ওয়ালেটে পর্যাপ্ত টাকা আছে কি না
+$check = $conn->query("SELECT $bal_col FROM users WHERE username = '$u' OR id = '$u'");
+$user_data = $check->fetch_assoc();
 
-if (!$u_data || $u_data[$bal_col] < $bet_amount) {
-    echo json_encode(["status" => "error", "message" => "আপনার পর্যাপ্ত ব্যালেন্স নেই!"]);
+if (!$user_data || $user_data[$bal_col] < $bet) {
+    echo json_encode(["status" => "error", "message" => "আপনার " . strtoupper($wallet) . " ওয়ালেটে পর্যাপ্ত ব্যালেন্স নেই!"]);
     exit;
 }
 
-// ৫. ব্যালেন্স কাটা এবং টার্নওভার আপডেট করা
-// আপনার ডাটাবেসের কলাম অনুযায়ী এটি সাজানো হয়েছে
-$sql = "UPDATE users SET 
-        $bal_col = $bal_col - $bet_amount, 
-        $turn_col = $turn_col + $bet_amount 
-        WHERE username = '$user_id' OR id = '$user_id'";
+// ৪. শুধুমাত্র সিলেক্ট করা ওয়ালেট থেকে টাকা কাটা এবং সেই টার্নওভার বাড়ানো
+$sql = "UPDATE users SET $bal_col = $bal_col - $bet, $turn_col = $turn_col + $bet WHERE username = '$u' OR id = '$u'";
 
 if ($conn->query($sql)) {
-    // ৬. বেট হিস্টোরিতে রেকর্ড রাখা (ঐচ্ছিক)
-    $conn->query("INSERT INTO game_history (username, game_name, wallet_type, bet_amount) VALUES ('$user_id', '2048 Game', '$wallet', $bet_amount)");
+    // ৫. হিস্টোরিতে রেকর্ড সেভ করা
+    $conn->query("INSERT INTO game_history (username, game_name, wallet_type, bet_amount) VALUES ('$u', 'Testing Game', '$wallet', $bet)");
     
-    echo json_encode([
-        "status" => "success",
-        "message" => "বাজি সফলভাবে ধরা হয়েছে!",
-        "new_balance" => ($u_data[$bal_col] - $bet_amount)
-    ]);
+    echo json_encode(["status" => "success", "message" => "বাজি সফল! " . strtoupper($wallet) . " ব্যালেন্স থেকে " . $bet . " টাকা কাটা হয়েছে।"]);
 } else {
     echo json_encode(["status" => "error", "message" => "ডাটাবেস এরর: " . $conn->error]);
 }
