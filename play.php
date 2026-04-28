@@ -121,6 +121,37 @@ $game_url = "https://2048.org";
 </div>
         <a href="bet_history.php" class="history-btn">📜 VIEW BET HISTORY</a>
     </div>
+<script>
+function placeTestBet() {
+    const wallet = document.getElementById('active_wallet').value;
+    const btn = event.target; // যে বাটনে ক্লিক করা হয়েছে
+
+    // টেস্টের জন্য ১০ টাকা এমাউন্ট ধরছি
+    const amount = 10; 
+
+    btn.disabled = true;
+    btn.innerText = "Processing...";
+
+    // সার্ভারে রিকোয়েস্ট পাঠানো
+    fetch(`process_bet.php?amount=${amount}&wallet=${wallet}`)
+    .then(response => response.json())
+    .then(data => {
+        if(data.status === 'success') {
+            alert("বেট সফল! আপনার " + wallet.toUpperCase() + " ব্যালেন্স থেকে " + amount + " টাকা কাটা হয়েছে।");
+            location.reload(); 
+        } else {
+            alert("এরর: " + data.message);
+            btn.disabled = false;
+            btn.innerText = "🎯 PLAY / REFRESH";
+        }
+    })
+    .catch(err => {
+        alert("কানেকশন এরর! process_bet.php ফাইলটি চেক করুন।");
+        btn.disabled = false;
+        btn.innerText = "🎯 PLAY / REFRESH";
+    });
+}
+</script>
 
 </body>
 </html>
