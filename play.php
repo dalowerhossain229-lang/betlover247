@@ -113,25 +113,28 @@ $game_url = "https://your-api-link.com";
         </div>
     </div>
 
-    <!-- গেম কন্টেইনার (এখানে গেম লোড হবে) -->
-    <div class="game-frame-container">
-        <iframe src="<?php echo $game_url; ?>" id="game_frame" style="width: 100%; height: 100%; border: none;"></iframe>
+        <!-- ১. গেম কন্টেইনার (এখানে গেম লোড হবে) -->
+    <div style="width: 100%; height: calc(100vh - 100px); background: #111; display: flex; align-items: center; justify-content: center;">
+        <?php if(!empty($game_url)): ?>
+            <iframe src="<?php echo $game_url; ?>" id="game_frame" style="width: 100%; height: 100%; border: none;"></iframe>
+        <?php else: ?>
+            <p style="color: #555;">Game link is not set yet...</p>
+        <?php echo "</div>"; endif; ?>
     </div>
 
-    <!-- ফুটার: বেট হিস্টোরি -->
-    <div class="game-footer">
-        <a href="bet_history.php" class="history-link">📜 VIEW GAME HISTORY</a>
+    <!-- ২. গেম ফুটার (হিস্টোরি বাটন) -->
+    <div style="background: #000; height: 45px; display: flex; justify-content: center; align-items: center; border-top: 1px solid #333; position: fixed; bottom: 0; width: 100%;">
+        <a href="bet_history.php" style="color: #00ff88; text-decoration: none; font-size: 14px; font-weight: bold; letter-spacing: 1px;">
+            📜 VIEW BET HISTORY
+        </a>
     </div>
 
     <script>
         function switchWallet(walletType) {
-            // ইউজারের সিলেক্ট করা ওয়ালেট টাইপ সেভ করা বা গেমে পাঠানো
-            console.log("Selected Wallet: " + walletType);
-            
-            // আপনি যদি চান ডাটাবেসকে জানাতে যে ইউজার এখন এই ওয়ালেট দিয়ে খেলবে, তবে এখানে AJAX ব্যবহার করতে পারেন
-            // fetch('api_callback.php?update_wallet=' + walletType);
+            console.log("Selected: " + walletType);
+            // এখানে আপনি চাইলে এপিআই-কে নতুন ব্যালেন্স টাইপ পাঠাতে পারেন
         }
     </script>
-
 </body>
 </html>
+
