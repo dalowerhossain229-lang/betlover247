@@ -147,15 +147,17 @@ if (isset($msg)) {
 </div>
         <!-- বোনাস ক্লেইম বাটন -->
         <div style="margin-top: 20px;">
-            <?php if($bonus_t >= $t_bonus && $bonus_b > 0): ?>
-                <button onclick="claimBonus()" style="width:100%; padding:15px; background:#00ff88; border:none; border-radius:12px; color:#000; font-weight:bold; cursor:pointer; text-transform:uppercase; font-size:13px; box-shadow: 0 4px 15px rgba(0,255,136,0.3);">
-                    CLAIM BONUS TO MAIN
-                </button>
-            <?php else: ?>
-                <button disabled style="width:100%; padding:15px; background:#1a1a1a; border:1px solid #333; border-radius:12px; color:#666; font-weight:bold; text-transform:uppercase; font-size:13px; cursor: not-allowed;">
-                    🔒 BONUS LOCKED (COMPLETE <?php echo number_format($t_bonus, 0); ?> TURNOVER)
-                </button>
-            <?php endif; ?>
+           <?php if ($t_bonus > 0 && $bonus_t >= $t_bonus && $bonus_b > 0): ?>
+    <!-- টার্নওভার শেষ এবং ব্যালেন্স থাকলে এই বাটন দেখাবে -->
+    <button onclick="claimBonus()" style="width: 100%; padding: 15px; background: #00ff88; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
+        CLAIM BONUS (৳ <?php echo number_format($bonus_b, 2); ?>)
+    </button>
+<?php elseif ($t_bonus > 0 && $bonus_t < $t_bonus): ?>
+    <!-- টার্নওভার বাকি থাকলে এই বাটন দেখাবে -->
+    <button disabled style="width: 100%; padding: 15px; background: #222; color: #888; border: 1px solid #333; border-radius: 8px;">
+        🔒 BONUS LOCKED (<?php echo number_format($bonus_t); ?> / <?php echo number_format($t_bonus); ?>)
+    </button>
+<?php endif; ?>
         </div>
 
 
