@@ -1,42 +1,21 @@
 <?php
-// ১. সবার আগে পিএইচপি ট্যাগ শুরু করতে হবে
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// ২. এরপর সেশন এবং ডাটাবেস কানেক্ট করতে হবে
+// ১. সেশন এবং ডাটাবেস কানেকশন
 session_start();
 include 'db.php';
 
-// ১. ইউজার লগইন আছে কি না চেক করা
-if (!isset($_SESSION['user_id'])) {
+// ২. ইউজার লগইন চেক
+$u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
+if (empty($u)) {
     header("Location: index.php");
-    exit;
+    exit();
 }
 
-$user = $_SESSION['user_id'];
-$game_id = $_GET['id'] ?? 'default_game'; // গেমের আইডি (যেমন: super-ace)
+// ৩. ডাটাবেস থেকে ইউজারের সব ব্যালেন্স আনা
+$query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
+$user_data = $query->fetch_assoc();
 
-// ২. এপিআই প্রোভাইডার থেকে গেম লিঙ্ক আনার ফাংশন (স্যাম্পল)
-// এখানে আপনার প্রোভাইডারের দেওয়া API Call বসাতে হবে
-// আপাতত আমরা একটি ডামি প্রিভিউ দেখাচ্ছি
-// ২৩ নম্বর লাইন থেকে এই কোডটি শুরু হবে
-$api_url = "api_callback.php";
-
-$post_data = json_encode([
-    "action" => "getBalance",
-    "username" => $user,
-    "amount" => 0,
-    "tx_id" => "TEST_".time()
-]);
-
-$opts = ['http' => ['method' => 'POST', 'header' => 'Content-type: application/json', 'content' => $post_data]];
-$context = stream_context_create($opts);
-// আপনার সাইটের ডোমেইন অনুযায়ী ব্যালেন্স রিকোয়েস্ট পাঠানো
-$response = json_decode(@file_get_contents("http://".$_SERVER['HTTP_HOST']."/".$api_url, false, $context), true);
-
-$current_balance = $response['balance'] ?? 0;
-$game_url = "https://2048.org"; 
+// ৪. আপনার গেম এপিআই ইউআরএল (এখানে আপনার গেম লিঙ্কটি বসবে)
+$game_url = "https://your-api-link.com"; 
 ?>
 
 <!DOCTYPE html>
@@ -44,62 +23,115 @@ $game_url = "https://2048.org";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Play Game - BETLOVER777</title>
+    <title>Play Game - BetLover247</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; font-family: sans-serif; }
-        .game-header { height: 50px; background: #111; display: flex; align-items: center; padding: 0 15px; border-bottom: 1px solid #333; }
-        .back-btn { color: #00ff88; text-decoration: none; font-weight: bold; font-size: 14px; }
-        .game-frame { width: 100%; height: calc(100% - 51px); border: none; }
+        body { margin: 0; padding: 0; background: #000; font-family: sans-serif; overflow: hidden; color: #fff; }
+        
+        /* গেম হেডার ডিজাইন */
+        .game-header { 
+            background: #000; 
+            height: 55px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 0 15px; 
+            border-bottom: 1px solid #00ff88; 
+            box-sizing: border-box;
+        }
+
+        .back-btn { 
+            background: #00ff88; 
+            color: #000; 
+            text-decoration: none; 
+            padding: 6px 12px; 
+            border-radius: 5px; 
+            font-weight: bold; 
+            font-size: 12px; 
+            text-transform: uppercase;
+        }
+
+        .wallet-select { 
+            background: #111; 
+            color: #ffdf1b; 
+            border: 1px solid #333; 
+            padding: 8px; 
+            border-radius: 6px; 
+            font-weight: bold; 
+            font-size: 14px; 
+            outline: none;
+            max-width: 160px;
+        }
+
+        .user-name { 
+            font-size: 12px; 
+            color: #888; 
+            text-align: right; 
+            font-weight: bold;
+        }
+
+        /* গেম এরিয়া (Iframe) */
+        .game-frame-container { 
+            width: 100%; 
+            height: calc(100vh - 95px); 
+            background: #111; 
+        }
+
+        /* ফুটার হিস্ট্রি বাটন */
+        .game-footer { 
+            background: #000; 
+            height: 40px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            border-top: 1px solid #222; 
+        }
+
+        .history-link { 
+            color: #00ff88; 
+            text-decoration: none; 
+            font-size: 13px; 
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- গেম হেডার (ব্যাক বাটন এবং ব্যালেন্স) -->
+    <!-- হেডার: ব্যাক বাটন, ৩টি ব্যালেন্স এবং ইউজারনেম -->
     <div class="game-header">
-        <a href="index.php" class="back-btn">⬅️ Back to Home</a>
-        <div style="margin-left: auto; display: flex; align-items: center; gap: 15px;">
-            <span style="color: #00ff88; font-weight: bold; font-size: 14px;">৳ <?php echo number_format($current_balance, 2); ?></span>
-            <span style="color: #fff; font-size: 12px; border-left: 1px solid #333; padding-left: 10px;"><?php echo strtoupper($user); ?></span>
+        <a href="index.php" class="back-btn">⬅ BACK</a>
+
+        <select id="active_wallet" class="wallet-select" onchange="switchWallet(this.value)">
+            <option value="main">Main: ৳<?php echo number_format($user_data['balance'], 0); ?></option>
+            <option value="pb">PB: ৳<?php echo number_format($user_data['pb_balance'], 0); ?></option>
+            <option value="bonus">Bonus: ৳<?php echo number_format($user_data['bonus_balance'], 0); ?></option>
+        </select>
+
+        <div class="user-name">
+            <small style="display:block; font-size:9px; color:#555;">PLAYER</small>
+            <?php echo $u; ?>
         </div>
     </div>
-    <!-- ডামি বেট টেস্ট বাটন -->
-    <div style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid #333;">
-        <button onclick="testBet()" style="background: #ff4d4d; color: #fff; border: none; padding: 8px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 14px;">
-            🔥 Test Bet (৳ 10.00)
-        </button>
+
+    <!-- গেম কন্টেইনার (এখানে গেম লোড হবে) -->
+    <div class="game-frame-container">
+        <iframe src="<?php echo $game_url; ?>" id="game_frame" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+
+    <!-- ফুটার: বেট হিস্টোরি -->
+    <div class="game-footer">
+        <a href="bet_history.php" class="history-link">📜 VIEW GAME HISTORY</a>
     </div>
 
     <script>
-    function testBet() {
-        if(confirm('আপনার ব্যালেন্স থেকে ১০ টাকা কাটা হবে। আপনি কি নিশ্চিত?')) {
-            fetch('api_callback.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    action: 'bet',
-                    username: '<?php echo $user; ?>',
-                    amount: 10,
-                    tx_id: 'TXN' + Date.now(),
-                    game_name: 'Test Game'
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.status === 'ok') {
-                    alert('সফল! ১০ টাকা কাটা হয়েছে।');
-                    location.reload(); 
-                } else {
-                    alert('ভুল হয়েছে: ' + data.message);
-                }
-            })
-            .catch(error => alert('Error: api_callback.php খুঁজে পাওয়া যায়নি।'));
+        function switchWallet(walletType) {
+            // ইউজারের সিলেক্ট করা ওয়ালেট টাইপ সেভ করা বা গেমে পাঠানো
+            console.log("Selected Wallet: " + walletType);
+            
+            // আপনি যদি চান ডাটাবেসকে জানাতে যে ইউজার এখন এই ওয়ালেট দিয়ে খেলবে, তবে এখানে AJAX ব্যবহার করতে পারেন
+            // fetch('api_callback.php?update_wallet=' + walletType);
         }
-    }
     </script>
-
-
-    <!-- আসল গেমটি এখানে লোড হবে -->
-    <iframe src="<?php echo $game_url; ?>" class="game-frame" allowfullscreen></iframe>
 
 </body>
 </html>
