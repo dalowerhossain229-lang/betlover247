@@ -163,7 +163,13 @@ if (isset($msg)) {
     <!-- মেনু বাটনসমূহ -->
     <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 25px;">
         <button class="p-btn" onclick="location.href='deposit.php'">Deposit ></button>
-        <button class="p-btn" onclick="location.href='withdraw.php'">Withdraw ></button>
+        <!-- সরাসরি লিঙ্ক ব্যবহারের জন্য এটি সবচেয়ে ভালো পদ্ধতি -->
+<a href="withdraw.php" style="text-decoration: none; width: 100%;">
+    <button style="width: 100%; padding: 15px; background: #222; color: #fff; border: 1px solid #333; border-radius: 8px; font-weight: bold; cursor: pointer;">
+        Withdraw >
+    </button>
+</a>
+
         <button class="p-btn" onclick="togglePayment()">Payment Numbers (Lock) ></button>
         <button class="p-btn" onclick="location.href='logout.php'" style="color:#ff4d4d;">Logout</button>
     </div>
