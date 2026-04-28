@@ -10,7 +10,8 @@ $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
 // ৩. ডেমো গেম ইউআরএল (আমরা এখানে একটি জনপ্রিয় ফ্রি গেম লিঙ্ক দিচ্ছি)
-$game_url = "https://spribe.io"; 
+$game_url = "$game_url = "https://slot-online.com";
+"; 
 ?>
 
 <!DOCTYPE html>
