@@ -1,23 +1,24 @@
 <?php
-ob_start(); // এটি আউটপুট বাফার শুরু করবে যাতে হেডার এরর না আসে
-session_start();
+// ১. সেশন এবং ডাটাবেস কানেকশন
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include 'db.php';
-// ... বাকি কোড
 
-// ১. সেশন চেক (আপনার সিস্টেম অনুযায়ী ইউজারনেম নেওয়া)
+// ২. সেশন থেকে ইউজার চেক (আপনার সিস্টেম অনুযায়ী)
 $u = isset($_SESSION['username']) ? $_SESSION['username'] : '';
 
-// লগইন না থাকলে login_proc.php পেজে পাঠিয়ে দিবে
+// যদি লগইন না থাকে তবে মেইন ইনডেক্স পেজে পাঠাবে
 if (empty($u)) {
-    header("Location: login_proc.php");
+    header("Location: index.php"); 
     exit();
 }
 
-// ২. ডাটাবেস থেকে ইউজারের সব তথ্য আনা
+// ৩. ডাটাবেস থেকে ইউজারের সব তথ্য আনা
 $query = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৩. টার্নওভার লজিক (আপনার ডাটাবেস ও প্রোফাইলের সাথে মিল রাখা হয়েছে)
+// ৪. টার্নওভার লজিক (আপনার প্রোফাইলের ২১,১৮৯ মানের সাথে মিল রাখা হয়েছে)
 $done = isset($user_data['main_t']) ? (float)$user_data['main_t'] : 0;
 $target = isset($user_data['t_main']) ? (float)$user_data['t_main'] : 1000;
 $is_turnover_done = ($done >= $target);
@@ -41,7 +42,7 @@ $is_turnover_done = ($done >= $target);
         <h2 style="color:#ffdf1b; margin: 10px 0; font-size: 32px;">৳ <?php echo number_format($user_data['balance'] ?? 0, 2); ?></h2>
     </div>
 
-    <!-- ৪. টার্নওভার চেক সেকশন -->
+    <!-- ৫. টার্নওভার চেক সেকশন -->
     <?php if (!$is_turnover_done): ?>
         <div style="background: rgba(255, 77, 77, 0.1); border: 1px solid #ff4d4d; padding: 25px; border-radius: 15px;">
             <p style="font-weight: bold; margin-bottom: 10px; color: #ff4d4d;">⚠️ টার্নওভার অসম্পূর্ণ!</p>
@@ -56,7 +57,7 @@ $is_turnover_done = ($done >= $target);
             </p>
         </div>
     <?php else: ?>
-        <!-- ৫. উইথড্র ফর্ম (টার্নওভার শেষ হলে এটি দেখাবে) -->
+        <!-- ৬. উইথড্র ফর্ম (টার্নওভার শেষ হলে এটি দেখাবে) -->
         <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid #333; padding: 20px; border-radius: 15px; text-align: left;">
             <p style="color: #00ff88; font-weight: bold; text-align:center; margin-top:0;">✅ আপনি এখন উইথড্র দিতে পারবেন!</p>
             <hr style="border: 0.5px solid #222; margin: 15px 0;">
@@ -96,7 +97,7 @@ function submitWithdraw() {
     btn.disabled = true;
     btn.innerText = "প্রসেসিং...";
     
-    // আপনার রিকোয়েস্ট পাঠানো বা সেভ করার লজিক এখানে আসবে
+    // টেস্ট অ্যালার্ট
     alert("আপনার উইথড্র রিকোয়েস্ট পাঠানো হয়েছে!");
     location.reload();
 }
