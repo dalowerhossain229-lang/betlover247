@@ -202,6 +202,13 @@ function saveNumbers() {
         fetch('api_save_payment.php', {method:'POST', body:fd}).then(r => r.json()).then(d => { alert(d.message); if(d.status==='success') location.reload(); });
     }
 }
+   function claimBonus() {
+    if(confirm("আপনি কি বোনাস টাকা মেইন ব্যালেন্সে যোগ করতে চান?")) {
+        // একটি নতুন ফাইলে রিকোয়েস্ট পাঠানো অথবা বর্তমান পেজেই প্রসেস করা
+        window.location.href = 'profile.php?action=claim_bonus';
+    }
+}
+ 
 </script>
 
 <style> .p-btn { width:100%; padding:15px; background:#0a0f0d; border:1px solid #1a2a22; border-radius:12px; color:white; text-align:left; font-size:13px; cursor:pointer; } </style>
