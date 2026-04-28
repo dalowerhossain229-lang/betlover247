@@ -16,7 +16,7 @@ echo addColumn($conn, 'users', 'main_t', "DECIMAL(10,2) DEFAULT 0.00");
 echo addColumn($conn, 'users', 't_main', "DECIMAL(10,2) DEFAULT 1000.00");
 
 // ২. আপনার লগইন করা ইউজারনেম অনুযায়ী টার্নওভার সেট করা
-$u = $_SESSION['username'] ?? ''; 
+$u = $_SESSION['ABCD'] ?? ''; 
 if (!empty($u)) {
     $update = $conn->query("UPDATE users SET main_t = 21189, t_main = 1000 WHERE username = '$u'");
     if ($update) {
