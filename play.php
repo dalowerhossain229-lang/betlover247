@@ -11,7 +11,6 @@ $user_data = $query->fetch_assoc();
 
 // ৩. ডেমো গেম ইউআরএল (আমরা এখানে একটি জনপ্রিয় ফ্রি গেম লিঙ্ক দিচ্ছি)
 $game_url = "$game_url = "https://slot-online.com";
-"; 
 ?>
 
 <!DOCTYPE html>
