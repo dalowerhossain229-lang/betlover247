@@ -2,14 +2,14 @@
 session_start();
 include 'db.php';
 
-// ১. ইউজার সেশন চেক
-$u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? 'Guest';
+// ১. সেশন থেকে ইউজার চেক
+$u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
 
-// ২. ডাটাবেস থেকে ইউজারের ব্যালেন্স আনা (যাতে ড্রপডাউনে মান দেখায়)
+// ২. ডাটাবেস থেকে তথ্য আনা
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৩. ডেমো গেম ইউআরএল (আমরা এখানে একটি জনপ্রিয় ফ্রি গেম লিঙ্ক দিচ্ছি)
+// ৩. ডেমো গেম লিঙ্ক
 $game_url = "https://2048.org";
 ?>
 
