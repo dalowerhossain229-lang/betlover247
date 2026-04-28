@@ -38,17 +38,17 @@ function getBar($done, $target) {
     return ($p > 100) ? 100 : $p;
 }
 // ১. পিবি ব্যালেন্স ট্রান্সফার লজিক
-if ($pb_t >= $t_pb && $pb_b > 0 && $t_pb > 0) {
+if ($t_pb > 0 && $pb_t >= $t_pb && $pb_b > 0) {
+    // শর্ত: টার্গেট ০ থেকে বেশি হতে হবে এবং বর্তমান টার্নওভার টার্গেটের সমান বা বেশি হতে হবে
     $conn->query("UPDATE users SET balance = balance + $pb_b, pb_balance = 0 WHERE username = '$u'");
-    // ৪৫ নম্বর লাইনের বদলে এটি ব্যবহার করুন
     echo "<script>window.location.href='profile.php';</script>";
     exit();
 }
 
-// ২. বোনাস ব্যালেন্স ট্রান্সফার লজিক
-if ($bonus_t >= $t_bonus && $bonus_b > 0 && $t_bonus > 0) {
+// ২. বোনাস ব্যালেন্স ট্রান্সফার লজিক (এটি আপনার সমস্যার সমাধান করবে)
+if ($t_bonus > 0 && $bonus_t >= $t_bonus && $bonus_b > 0) {
+    // এখানে $t_bonus > 0 দেওয়া হয়েছে যাতে টার্গেট ০ থাকলে অটোমেটিক টাকা ট্রান্সফার না হয়
     $conn->query("UPDATE users SET balance = balance + $bonus_b, bonus_balance = 0, bonus_target = 0 WHERE username = '$u'");
-    // ৫৩ নম্বর লাইনের বদলে এটি ব্যবহার করুন
     echo "<script>window.location.href='profile.php';</script>";
     exit();
 }
