@@ -38,23 +38,21 @@ function getBar($done, $target) {
     return ($p > 100) ? 100 : $p;
 }
 
-
-// ১. পিবি ব্যালেন্স ট্রান্সফার লজিক (শুধু যদি টার্গেট পূরণ হয় এবং টাকা থাকে)
+// ১. পিবি ব্যালেন্স ট্রান্সফার লজিক
 if ($pb_t >= $t_pb && $pb_b > 0 && $t_pb > 0) {
-    $conn->query("UPDATE users SET balance = balance + $pb_b, pb_balance = 0 WHERE id = '$u'");
-    // ট্রান্সফার হয়ে গেলে পেজ রিফ্রেশ যাতে মানগুলো আপডেট হয়
+    // এখানে কুয়েরিটি ঠিক করুন: balance = balance + $pb_b
+    $conn->query("UPDATE users SET balance = balance + $pb_b, pb_balance = 0 WHERE username = '$u'");
     header("Location: profile.php");
     exit();
 }
 
 // ২. বোনাস ব্যালেন্স ট্রান্সফার লজিক
 if ($bonus_t >= $t_bonus && $bonus_b > 0 && $t_bonus > 0) {
-    $conn->query("UPDATE users SET balance = balance + $bonus_b, bonus_balance = 0, bonus_target = 0 WHERE id = '$u'");
+    // এখানে কুয়েরিটি ঠিক করুন: balance = balance + $bonus_b
+    $conn->query("UPDATE users SET balance = balance + $bonus_b, bonus_balance = 0, bonus_target = 0 WHERE username = '$u'");
     header("Location: profile.php");
     exit();
 }
-
-
 // ৩. সাকসেস পপআপ স্ক্রিপ্ট
 if (isset($msg)) {
     echo "
@@ -73,10 +71,7 @@ if (isset($msg)) {
         }, 500);
     </script>";
 }
-
 ?>
-
-
 <div style="padding: 15px; text-align: center; color: white; font-family: sans-serif; background: #0a0b10; min-height: 100vh;">
     
     <!-- ৩টি ব্যালেন্স বক্স -->
@@ -149,9 +144,6 @@ if (isset($msg)) {
 
     </div>
 </div>
-
-     
-
         <!-- বোনাস ক্লেইম বাটন -->
         <div style="margin-top: 20px;">
             <?php if($bonus_t >= $t_bonus && $bonus_b > 0): ?>
