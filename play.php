@@ -131,11 +131,11 @@ function placeTestBet() {
     btn.disabled = true;
     btn.innerText = "PROCESSING...";
 
-    // ফাইলের নাম সংশোধন করা হয়েছে: place_bet.php
     let formData = new FormData();
     formData.append('amount', amount);
     formData.append('wallet', wallet);
 
+    // নিশ্চিত করুন ফাইলের নাম এবং পাথ ঠিক আছে
     fetch('place_bet.php', {
         method: 'POST',
         body: formData
@@ -152,11 +152,13 @@ function placeTestBet() {
         }
     })
     .catch(err => {
-        alert("কানেকশন এরর! place_bet.php ফাইলটি গিটহাবে ঠিকমতো আছে কি না চেক করুন।");
+        console.error(err);
+        alert("কানেকশন এরর! গিটহাবে place_bet.php ফাইলটি নেই অথবা বানান ভুল আছে।");
         btn.disabled = false;
         btn.innerText = "🎯 PLACE BET";
     });
 }
+
 
 </script>
 
