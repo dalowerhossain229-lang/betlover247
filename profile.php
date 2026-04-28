@@ -45,7 +45,7 @@ if ($pb_t >= $t_pb && $pb_b > 0 && $t_pb > 0) {
 
 // ২. বোনাস ব্যালেন্স অটো ট্রান্সফার
 if ($bonus_t >= $t_bonus && $bonus_b > 0 && $t_bonus > 0) {
-    $conn->query("UPDATE users SET balance = balance + $bonus_b, bonus_balance = 0, bonus_target = 0 WHERE id = '$u'");
+    $conn->query("UPDATE users SET balance = balance + $pb_b, pb_balance = 0 WHERE username = '$u'");
     $msg = "আপনার বোনাস ব্যালেন্স মেইন ব্যালেন্সে যোগ করা হয়েছে।";
 }
 
