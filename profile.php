@@ -105,8 +105,14 @@ if (isset($msg)) {
         <div style="margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
                 <span style="color: #00ff88; font-weight: bold;">Main Turnover</span>
-               <span><?php echo ($main_t >= $t_main) ? '<b style="color: #4caf50;">✅ Complete</b>' : number_format($main_t, 0) . " / " . number_format($t_main, 0); ?></span>
- 
+        <?php 
+if ($t_main > 0) {
+    echo ($main_t >= $t_main) ? '<b style="color: #4caf50;">✅ Complete</b>' : number_format($main_t, 0) . " / " . number_format($t_main, 0);
+} else {
+    echo "0 / 0";
+}
+?>
+
             </div>
             <div style="width: 100%; background: #222; height: 4px; border-radius: 10px;">
                 <div style="width: <?php echo getBar($main_t, $t_main); ?>%; background: #00ff88; height: 100%; border-radius: 10px;"></div>
