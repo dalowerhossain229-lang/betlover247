@@ -1,6 +1,8 @@
 <?php
+ob_start(); // এটি আউটপুট বাফার শুরু করবে যাতে হেডার এরর না আসে
 session_start();
 include 'db.php';
+// ... বাকি কোড
 
 // ১. সেশন চেক (আপনার সিস্টেম অনুযায়ী ইউজারনেম নেওয়া)
 $u = isset($_SESSION['username']) ? $_SESSION['username'] : '';
