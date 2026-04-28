@@ -1,28 +1,21 @@
 <?php
-include 'db.php'; // আপনার ডাটাবেস কানেকশন ফাইল
+include 'db.php';
+session_start();
 
-// ১. ডাটাবেসে প্রয়োজনীয় কলামগুলো আছে কি না চেক করা
-$columns = [
-    'main_t' => "DECIMAL(10,2) DEFAULT 0.00",
-    't_main' => "DECIMAL(10,2) DEFAULT 1000.00"
-];
+// ১. আপনার লগইন করা ইউজারনেমটি এখানে বসান (টেস্ট করার জন্য)
+$u = $_SESSION['username'] ?? 'আপনার_ইউজারনেম'; 
 
-foreach ($columns as $col => $type) {
-    $check = $conn->query("SHOW COLUMNS FROM users LIKE '$col'");
-    if ($check->num_rows == 0) {
-        $conn->query("ALTER TABLE users ADD $col $type");
-        echo "✅ Column '$col' created.<br>";
-    }
-}
+// ২. ডাটাবেসে কলাম চেক ও তৈরি করা (যদি না থাকে)
+$conn->query("ALTER TABLE users ADD COLUMN IF NOT EXISTS main_t DECIMAL(10,2) DEFAULT 0.00");
+$conn->query("ALTER TABLE users ADD COLUMN IF NOT EXISTS t_main DECIMAL(10,2) DEFAULT 1000.00");
 
-// ২. টেস্ট ইউজার আপডেট (আপনার টার্নওভার ২১১৮৯ সেট করা)
-// এখানে 'your_username' এর জায়গায় আপনার ইউজারনেম দিন
-$u = 'your_username'; 
-$fix_user = $conn->query("UPDATE users SET main_t = 21189, t_main = 1000 WHERE username = '$u'");
+// ৩. আপনার আইডিতে ২১১৮৯ টার্নওভার সেট করে দেওয়া (যাতে লাল বক্স চলে যায়)
+$update = $conn->query("UPDATE users SET main_t = 21189, t_main = 1000 WHERE username = '$u'");
 
-if($fix_user) {
-    echo "<h2>✅ Fix Successful!</h2>";
-    echo "এখন উইথড্র পেজ রিফ্রেশ করে দেখুন, লাল বক্স চলে যাবে।";
+if($update) {
+    echo "<h2 style='color:green;'>✅ Fix Successful!</h2>";
+    echo "<p>আপনার টার্নওভার ২১,১৮৯ সেট করা হয়েছে। এখন উইথড্র পেজ ওপেন হবে।</p>";
+    echo "<a href='withdraw.php'>উইথড্র পেজে যান</a>";
 } else {
     echo "❌ Error: " . $conn->error;
 }
