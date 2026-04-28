@@ -10,7 +10,7 @@ $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
 // ৩. ডেমো গেম ইউআরএল (আমরা এখানে একটি জনপ্রিয় ফ্রি গেম লিঙ্ক দিচ্ছি)
-$game_url = "https://pragmaticplay.net"; 
+$game_url = "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1"; 
 ?>
 
 <!DOCTYPE html>
