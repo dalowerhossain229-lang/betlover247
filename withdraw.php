@@ -2,11 +2,12 @@
 session_start();
 include 'db.php';
 
-// ১. সেশন থেকে ইউজার চেক (লগইন না থাকলে লগইন পেজে পাঠাবে)
+// ১. সেশন চেক (আপনার সিস্টেম অনুযায়ী ইউজারনেম নেওয়া)
 $u = isset($_SESSION['username']) ? $_SESSION['username'] : '';
 
+// লগইন না থাকলে login_proc.php পেজে পাঠিয়ে দিবে
 if (empty($u)) {
-    header("Location: login.php");
+    header("Location: login_proc.php");
     exit();
 }
 
@@ -14,7 +15,7 @@ if (empty($u)) {
 $query = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৩. টার্নওভার লজিক (আপনার ডাটাবেস কলাম অনুযায়ী)
+// ৩. টার্নওভার লজিক (আপনার ডাটাবেস ও প্রোফাইলের সাথে মিল রাখা হয়েছে)
 $done = isset($user_data['main_t']) ? (float)$user_data['main_t'] : 0;
 $target = isset($user_data['t_main']) ? (float)$user_data['t_main'] : 1000;
 $is_turnover_done = ($done >= $target);
@@ -40,7 +41,7 @@ $is_turnover_done = ($done >= $target);
 
     <!-- ৪. টার্নওভার চেক সেকশন -->
     <?php if (!$is_turnover_done): ?>
-        <div style="background: rgba(255, 77, 77, 0.1); border: 1px solid #ff4d4d; padding: 25px; border-radius: 15px; animation: fadeIn 0.5s ease;">
+        <div style="background: rgba(255, 77, 77, 0.1); border: 1px solid #ff4d4d; padding: 25px; border-radius: 15px;">
             <p style="font-weight: bold; margin-bottom: 10px; color: #ff4d4d;">⚠️ টার্নওভার অসম্পূর্ণ!</p>
             <small style="color: #ccc;">উইথড্র দিতে হলে আগে মেইন টার্নওভার টার্গেট সম্পন্ন করা প্রয়োজন।</small>
 
@@ -54,7 +55,7 @@ $is_turnover_done = ($done >= $target);
         </div>
     <?php else: ?>
         <!-- ৫. উইথড্র ফর্ম (টার্নওভার শেষ হলে এটি দেখাবে) -->
-        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid #333; padding: 20px; border-radius: 15px; text-align: left; animation: slideUp 0.5s ease;">
+        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid #333; padding: 20px; border-radius: 15px; text-align: left;">
             <p style="color: #00ff88; font-weight: bold; text-align:center; margin-top:0;">✅ আপনি এখন উইথড্র দিতে পারবেন!</p>
             <hr style="border: 0.5px solid #222; margin: 15px 0;">
             
@@ -93,16 +94,11 @@ function submitWithdraw() {
     btn.disabled = true;
     btn.innerText = "প্রসেসিং...";
     
-    // এখানে আপনার রিকোয়েস্ট সেভ করার লজিক (Fetch/AJAX) আসবে
+    // আপনার রিকোয়েস্ট পাঠানো বা সেভ করার লজিক এখানে আসবে
     alert("আপনার উইথড্র রিকোয়েস্ট পাঠানো হয়েছে!");
     location.reload();
 }
 </script>
-
-<style>
-@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-</style>
 
 </body>
 </html>
