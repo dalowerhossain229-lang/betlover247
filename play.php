@@ -125,39 +125,39 @@ $game_url = "https://2048.org";
 <script>
 function placeTestBet() {
     const wallet = document.getElementById('active_wallet').value;
-    const btn = event.target; // যে বাটনে ক্লিক করা হয়েছে
-
-    // টেস্টের জন্য ১০ টাকা এমাউন্ট ধরছি
+    const btn = document.getElementById('play_btn');
     const amount = 10; 
 
     btn.disabled = true;
-    btn.innerText = "Processing...";
+    btn.innerText = "PROCESSING...";
 
-    // সার্ভারে রিকোয়েস্ট পাঠানো
-    // জাভাস্ক্রিপ্টের এই লাইনটি চেক করুন
-fetch('place_bet.php', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: `amount=${amount}&wallet=${wallet}`
-})
+    // ফাইলের নাম সংশোধন করা হয়েছে: place_bet.php
+    let formData = new FormData();
+    formData.append('amount', amount);
+    formData.append('wallet', wallet);
 
+    fetch('place_bet.php', {
+        method: 'POST',
+        body: formData
+    })
     .then(response => response.json())
     .then(data => {
         if(data.status === 'success') {
-            alert("বেট সফল! আপনার " + wallet.toUpperCase() + " ব্যালেন্স থেকে " + amount + " টাকা কাটা হয়েছে।");
+            alert("বাজি সফল! আপনার " + wallet.toUpperCase() + " ব্যালেন্স থেকে " + amount + " টাকা কাটা হয়েছে।");
             location.reload(); 
         } else {
             alert("এরর: " + data.message);
             btn.disabled = false;
-            btn.innerText = "🎯 PLAY / REFRESH";
+            btn.innerText = "🎯 PLACE BET";
         }
     })
     .catch(err => {
-        alert("কানেকশন এরর! process_bet.php ফাইলটি চেক করুন।");
+        alert("কানেকশন এরর! place_bet.php ফাইলটি গিটহাবে ঠিকমতো আছে কি না চেক করুন।");
         btn.disabled = false;
-        btn.innerText = "🎯 PLAY / REFRESH";
+        btn.innerText = "🎯 PLACE BET";
     });
 }
+
 </script>
 
 </body>
