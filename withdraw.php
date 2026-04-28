@@ -1,18 +1,18 @@
 <?php
-// ১. সেশন এবং ডাটাবেস কানেকশন
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 include 'db.php';
 
-// ২. সেশন থেকে ইউজার চেক (আপনার সিস্টেম অনুযায়ী)
-$u = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+// ইউজারের সেশন চেক (আপনার সিস্টেমে যা ব্যবহার হয়েছে সেটিই খুঁজবে)
+$u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
 
-// যদি লগইন না থাকে তবে মেইন ইনডেক্স পেজে পাঠাবে
 if (empty($u)) {
-    header("Location: index.php"); 
+    // লগইন না থাকলে হোম পেজে পাঠাবে
+    header("Location: index.php");
     exit();
 }
+
 
 // ৩. ডাটাবেস থেকে ইউজারের সব তথ্য আনা
 $query = $conn->query("SELECT * FROM users WHERE username = '$u'");
