@@ -1,21 +1,20 @@
 <?php
-// ১. সেশন এবং ডাটাবেস কানেকশন
 session_start();
 include 'db.php';
 
-// ২. ইউজার লগইন চেক
+// ১. সেশন থেকে ইউজার চেক
 $u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
 if (empty($u)) {
     header("Location: index.php");
     exit();
 }
 
-// ৩. ডাটাবেস থেকে ইউজারের সব ব্যালেন্স আনা
+// ২. ডাটাবেস থেকে ইউজারের সব ব্যালেন্স আনা
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৪. আপনার গেম এপিআই ইউআরএল (এখানে আপনার গেম লিঙ্কটি বসবে)
-$game_url = "https://your-api-link.com"; 
+// ৩. অ্যাডমিন প্যানেল থেকে গেম লিঙ্ক আনা (আপনার সেটিংস টেবিল অনুযায়ী)
+$game_url = "https://google.com"; // এখানে আপনার আসল API বা ডেমো গেম লিঙ্কটি বসান
 ?>
 
 <!DOCTYPE html>
@@ -34,8 +33,8 @@ $game_url = "https://your-api-link.com";
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            padding: 0 15px; 
-            border-bottom: 1px solid #00ff88; 
+            padding: 0 10px; 
+            border-bottom: 2px solid #222; 
             box-sizing: border-box;
         }
 
@@ -43,10 +42,10 @@ $game_url = "https://your-api-link.com";
             background: #00ff88; 
             color: #000; 
             text-decoration: none; 
-            padding: 6px 12px; 
+            padding: 8px 15px; 
             border-radius: 5px; 
             font-weight: bold; 
-            font-size: 12px; 
+            font-size: 13px; 
             text-transform: uppercase;
         }
 
@@ -59,45 +58,53 @@ $game_url = "https://your-api-link.com";
             font-weight: bold; 
             font-size: 14px; 
             outline: none;
-            max-width: 160px;
+            flex-grow: 1;
+            margin: 0 10px;
+            text-align: center;
         }
 
         .user-name { 
-            font-size: 12px; 
+            font-size: 11px; 
             color: #888; 
             text-align: right; 
-            font-weight: bold;
+            min-width: 60px;
         }
 
-        /* গেম এরিয়া (Iframe) */
-        .game-frame-container { 
+        /* গেম কন্টেইনার */
+        .game-area { 
             width: 100%; 
-            height: calc(100vh - 95px); 
-            background: #111; 
+            height: calc(100vh - 100px); 
+            background: #1a1a1a; 
+            position: relative;
         }
 
         /* ফুটার হিস্ট্রি বাটন */
         .game-footer { 
             background: #000; 
-            height: 40px; 
+            height: 45px; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            border-top: 1px solid #222; 
+            border-top: 1px solid #333;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
 
         .history-link { 
             color: #00ff88; 
             text-decoration: none; 
-            font-size: 13px; 
+            font-size: 14px; 
             font-weight: bold;
-            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
     </style>
 </head>
 <body>
 
-    <!-- হেডার: ব্যাক বাটন, ৩টি ব্যালেন্স এবং ইউজারনেম -->
+    <!-- হেডার সেকশন -->
     <div class="game-header">
         <a href="index.php" class="back-btn">⬅ BACK</a>
 
@@ -108,33 +115,35 @@ $game_url = "https://your-api-link.com";
         </select>
 
         <div class="user-name">
-            <small style="display:block; font-size:9px; color:#555;">PLAYER</small>
+            <small style="display:block; font-size:8px; color:#555;">PLAYER</small>
             <?php echo $u; ?>
         </div>
     </div>
 
-        <!-- ১. গেম কন্টেইনার (এখানে গেম লোড হবে) -->
-    <div style="width: 100%; height: calc(100vh - 100px); background: #111; display: flex; align-items: center; justify-content: center;">
-        <?php if(!empty($game_url)): ?>
-            <iframe src="<?php echo $game_url; ?>" id="game_frame" style="width: 100%; height: 100%; border: none;"></iframe>
-        <?php else: ?>
-            <p style="color: #555;">Game link is not set yet...</p>
-        <?php echo "</div>"; endif; ?>
+    <!-- গেম এরিয়া (Iframe) -->
+    <div class="game-area">
+        <iframe 
+            src="<?php echo $game_url; ?>" 
+            id="game_frame" 
+            style="width: 100%; height: 100%; border: none;"
+            allow="autoplay; fullscreen; gaming"
+            sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-scripts allow-same-origin">
+        </iframe>
     </div>
 
-    <!-- ২. গেম ফুটার (হিস্টোরি বাটন) -->
-    <div style="background: #000; height: 45px; display: flex; justify-content: center; align-items: center; border-top: 1px solid #333; position: fixed; bottom: 0; width: 100%;">
-        <a href="bet_history.php" style="color: #00ff88; text-decoration: none; font-size: 14px; font-weight: bold; letter-spacing: 1px;">
+    <!-- ফুটার সেকশন -->
+    <div class="game-footer">
+        <a href="bet_history.php" class="history-link">
             📜 VIEW BET HISTORY
         </a>
     </div>
 
     <script>
         function switchWallet(walletType) {
-            console.log("Selected: " + walletType);
-            // এখানে আপনি চাইলে এপিআই-কে নতুন ব্যালেন্স টাইপ পাঠাতে পারেন
+            console.log("Selected Wallet: " + walletType);
+            // এখানে আপনি চাইলে AJAX ব্যবহার করে সার্ভারে ওয়ালেট টাইপ আপডেট করতে পারেন
         }
     </script>
+
 </body>
 </html>
-
