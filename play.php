@@ -114,10 +114,11 @@ $game_url = "https://2048.org";
 
     <div class="game-footer">
         <div style="margin-bottom: 10px;">
-    <button onclick="document.getElementById('game_frame').contentWindow.location.reload();" 
-            style="background: #00ff88; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; width: 80%;">
-        🎯 PLAY / REFRESH
-    </button>
+<button onclick="placeTestBet()" id="play_btn" 
+        style="background: #00ff88; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; width: 80%;">
+    🎯 PLAY / BET
+</button>
+
 </div>
         <a href="bet_history.php" class="history-btn">📜 VIEW BET HISTORY</a>
     </div>
