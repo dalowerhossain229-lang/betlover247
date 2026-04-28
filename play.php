@@ -134,7 +134,13 @@ function placeTestBet() {
     btn.innerText = "Processing...";
 
     // সার্ভারে রিকোয়েস্ট পাঠানো
-    fetch(`process_bet.php?amount=${amount}&wallet=${wallet}`)
+    // জাভাস্ক্রিপ্টের এই লাইনটি চেক করুন
+fetch('place_bet.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `amount=${amount}&wallet=${wallet}`
+})
+
     .then(response => response.json())
     .then(data => {
         if(data.status === 'success') {
