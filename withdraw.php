@@ -18,10 +18,11 @@ if (empty($u)) {
 $query = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৪. টার্নওভার লজিক (আপনার প্রোফাইলের ২১,১৮৯ মানের সাথে মিল রাখা হয়েছে)
-$done = isset($user_data['main_t']) ? (float)$user_data['main_t'] : 0;
-$target = isset($user_data['t_main']) ? (float)$user_data['t_main'] : 1000;
+// ৪. টার্নওভার লজিক (আপনার ডাটাবেসের কলাম অনুযায়ী)
+$done = (float)($user_data['main_t'] ?? 0); 
+$target = (float)($user_data['t_main'] ?? 500); // যদি t_main না থাকে তবে ডিফল্ট ৫০০ দেখাবে
 $is_turnover_done = ($done >= $target);
+
 ?>
 
 <!DOCTYPE html>
