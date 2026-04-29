@@ -50,7 +50,8 @@ $is_turnover_done = ($done >= $target);
             <small style="color: #ccc;">উইথড্র দিতে হলে আগে মেইন টার্নওভার টার্গেট সম্পন্ন করা প্রয়োজন।</small>
 
             <div style="margin-top: 20px; background: #111; height: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #333;">
-                <?php $percent = ($target > 0) ? ($done / $target) * 100 : 0; ?>
+                <?php $percent = ($target > 0) ? ($done / $target) * 100 : 0; if($percent > 100) $percent = 100; ?>
+
                 <div style="width: <?php echo ($percent > 100) ? 100 : $percent; ?>%; background: #ff4d4d; height: 100%;"></div>
             </div>
             <p style="font-size: 13px; margin-top: 12px; color: #aaa;">
