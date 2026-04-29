@@ -28,15 +28,17 @@ $t_bonus = isset($u_data['bonus_target']) ? (float)$u_data['bonus_target'] : 0;
 
 $t_pb = (float)($st['pb_target'] ?? 10000); // পিবি যেহেতু কাজ করছে, এর নিচের লাইনটিই বোনাস
 
-
-// ৩. ব্যালেন্স ও টার্নওভার ডাটা
+// ৩. ব্যালেন্স ও টার্নওভার ডাটা (সংশোধিত)
 $main_b = (float)($u_data['balance'] ?? 0);
 $pb_b = (float)($u_data['pb_balance'] ?? 0);
 $bonus_b = (float)($u_data['bonus_balance'] ?? 0);
 
-$main_t = (float)($u_data['turnover'] ?? 0);
-$bonus_t = (float)($u_data['bonus_turnover'] ?? 0);
-$pb_t = (float)($u_data['pb_turnover'] ?? 0);
+// এখানে কলামের নামগুলো ডাটাবেসের সাথে মিলিয়ে দেওয়া হয়েছে
+$main_t = (float)($u_data['main_t'] ?? 0);
+$bonus_t = (float)($u_data['bonus_t'] ?? 0);
+$pb_t = (float)($u_data['pb_t'] ?? 0);
+
+
 
 // ৪. প্রগ্রেস বার ফাংশন
 function getBar($done, $target) {
