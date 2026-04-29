@@ -16,13 +16,13 @@ if (empty($u)) {
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৩. টার্নওভার লজিক (প্রোফাইল পেজের কলামের সাথে মিল রেখে)
+// ৪. টার্নওভার লজিক (আপনার প্রোফাইল পেজের সাথে মিল রেখে)
 $done = (float)($user_data['main_t'] ?? 0); 
-$target = (float)($user_data['t_main'] ?? 500); // যদি কলামের নাম 'target' হয় তবে সেটি দিন
+$target = (float)($user_data['t_main'] ?? 700); 
 
-// ৪. কন্ডিশন: টার্নওভার শেষ হয়েছে কি না
+// ৫. কন্ডিশন: এটি পূরণ হলেই উইথড্র ফরম আসবে
 $is_turnover_done = ($done >= $target);
-?>
+
 
 
 <!DOCTYPE html>
