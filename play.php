@@ -1,8 +1,15 @@
 <?php
+ob_start();
 session_start();
 include 'db.php';
+
 // ১. সেশন থেকে ইউজার চেক
 $u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
+
+if (empty($u)) {
+    header("Location: index.php");
+    exit();
+}
 
 // ২. ডাটাবেস থেকে তথ্য আনা
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
@@ -11,6 +18,7 @@ $user_data = $query->fetch_assoc();
 // ৩. ডেমো গেম লিঙ্ক
 $game_url = "https://2048.org";
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
