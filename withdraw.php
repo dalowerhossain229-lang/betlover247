@@ -50,14 +50,21 @@ $is_turnover_done = ($done >= $target);
             <small style="color: #ccc;">উইথড্র দিতে হলে আগে মেইন টার্নওভার টার্গেট সম্পন্ন করা প্রয়োজন।</small>
 
             <div style="margin-top: 20px; background: #111; height: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #333;">
-                <?php $percent = ($target > 0) ? ($done / $target) * 100 : 0; if($percent > 100) $percent = 100; ?>
+<?php 
+    // ১. প্রগ্রেস পার্সেন্টেজ হিসাব (এটি উপরে থাকা জরুরি)
+    $percent = ($target > 0) ? ($done / $target) * 100 : 0; 
+?>
 
-                <div style="width: <?php echo ($percent > 100) ? 100 : $percent; ?>%; background: #ff4d4d; height: 100%;"></div>
-            </div>
-            <p style="font-size: 13px; margin-top: 12px; color: #aaa;">
-             প্রগ্রেস: <?php echo number_format($done, 0); ?> / <?php echo number_format($target, 0); ?>
-   
-            </p>
+<div style="margin-top: 20px; background: #111; height: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #333;">
+    <!-- ৫৫ নম্বর লাইন: প্রগ্রেস বার -->
+    <div style="width: <?php echo ($percent > 100) ? 100 : $percent; ?>%; background: #ff4d4d; height: 100%;"></div>
+</div>
+
+<p style="font-size: 13px; margin-top: 10px; color: #aaa;">
+    <!-- ৫৮ নম্বর লাইন: প্রগ্রেস টেক্সট -->
+    প্রগ্রেস: <?php echo number_format($done, 0); ?> / <?php echo number_format($target, 0); ?>
+</p>
+
         </div>
     <?php else: ?>
         <!-- ৬. উইথড্র ফর্ম (টার্নওভার শেষ হলে এটি দেখাবে) -->
