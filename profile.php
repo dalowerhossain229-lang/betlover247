@@ -1,11 +1,17 @@
-<?php 
+<?php
+ob_start();
 session_start();
-include 'header.php'; 
-include 'db.php'; 
+include 'db.php';
 
-if (!isset($_SESSION['user_id'])) { header("Location: login.php"); exit(); }
+// লগইন চেক (হেডার ইনক্লুড করার আগেই করতে হবে)
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit();
+}
 
+include 'header.php';
 $u = $_SESSION['user_id'];
+
 $u_data = $conn->query("SELECT * FROM users WHERE username = '$u'")->fetch_assoc();
 
 // ১. মেইন টার্গেট = ইউজারের মোট সফল ডিপোজিট (সরাসরি ডাটাবেস থেকে)
