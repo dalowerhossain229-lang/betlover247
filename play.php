@@ -139,11 +139,11 @@ function placeTestBet() {
     fetch('place_bet.php', {
         method: 'POST',
         body: formData
-    })
+        }) // ১৪২ নম্বর লাইনের সেমিকোলন (;) ডিলিট করা হয়েছে
     .then(response => response.json())
     .then(data => {
         if(data.status === 'success') {
-            alert("বাজি সফল! আপনার " + wallet.toUpperCase() + " ব্যালেন্স থেকে " + amount + " টাকা কাটা হয়েছে।");
+            alert("বাজি সফল! আপনার ব্যালেন্স আপডেট করা হয়েছে।");
             location.reload(); 
         } else {
             alert("এরর: " + data.message);
@@ -151,6 +151,12 @@ function placeTestBet() {
             btn.innerText = "🎯 PLACE BET";
         }
     })
+    .catch(err => {
+        alert("কানেকশন এরর! place_bet.php ফাইলটি চেক করুন।");
+        btn.disabled = false;
+        btn.innerText = "🎯 PLACE BET";
+    });
+
     .catch(err => {
         console.error(err);
         alert("কানেকশন এরর! গিটহাবে place_bet.php ফাইলটি নেই অথবা বানান ভুল আছে।");
