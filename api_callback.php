@@ -2,7 +2,7 @@
 include 'db.php';
 header('Content-Type: application/json');
 
-// প্রোভাইডার থেকে আসা JSON ডাটা রিসিভ করা
+// ১. এপিআই থেকে আসা ডেটা ধরা
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
@@ -11,111 +11,53 @@ if (!$data) {
     exit;
 }
 
-$action = $data['action']; // getBalance, bet, win, refund
+$action   = $data['action']; // bet, win, refund
 $username = mysqli_real_escape_string($conn, $data['username']);
-$amount = floatval($data['amount'] ?? 0);
-$tx_id = mysqli_real_escape_string($conn, $data['tx_id'] ?? '');
-$game = mysqli_real_escape_string($conn, $data['game_name'] ?? 'Casino');
+$amount   = floatval($data['amount'] ?? 0);
+$game     = mysqli_real_escape_string($conn, $data['game_name'] ?? 'Casino');
 
-// ১. ব্যালেন্স চেক করা
-if ($action == "getBalance") {
-    $res = $conn->query("SELECT balance FROM users WHERE username = '$username'");
-    $row = $res->fetch_assoc();
-    echo json_encode(["status" => "ok", "balance" => $row['balance'] ?? 0]);
+// ২. ইউজার বর্তমানে কোন ওয়ালেট সিলেক্ট করে খেলছে তা চেক করা
+$u_sql = $conn->query("SELECT * FROM users WHERE username = '$username'");
+$u_data = $u_sql->fetch_assoc();
+
+if (!$u_data) {
+    echo json_encode(["status" => "error", "message" => "User Not Found"]);
+    exit;
 }
 
-// ২. বাজি ধরা (Bet) - ব্যালেন্স কাটা
-elseif ($action == "bet") {
-    // ১. ইউজারের ৩টি ব্যালেন্স নেওয়া
-    $u_sql = $conn->query("SELECT balance, pb_balance, bonus_balance FROM users WHERE username = '$username'");
-    $u = $u_sql->fetch_assoc();
+// আপনার সিস্টেম অনুযায়ী এক্টিভ ওয়ালেট ধরা (ডিফল্ট: balance)
+// আপনি যদি সেশনে বা ডাটাবেসে ওয়ালেট টাইপ সেভ করেন তবে সেটি এখানে কল করবেন
+$wallet = $u_data['active_wallet'] ?? 'main'; 
 
-    $main_b = (float)($u['balance'] ?? 0);
-    $pb_b = (float)($u['pb_balance'] ?? 0);
-    $bonus_b = (float)($u['bonus_balance'] ?? 0);
-    $total_b = $main_b + $pb_b + $bonus_b;
+if ($wallet == 'pb') {
+    $bal_col = "pb_balance"; $turn_col = "pb_t";
+} elseif ($wallet == 'bonus') {
+    $bal_col = "bonus_balance"; $turn_col = "bonus_t";
+} else {
+    $bal_col = "balance"; $turn_col = "main_t";
+}
 
-    if ($total_b >= $amount) {
-        // ২. পারসেন্টেজ অনুযায়ী টাকা ভাগ করা
-        $main_cut = ($total_b > 0) ? ($main_b / $total_b) * $amount : 0;
-        $pb_cut = ($total_b > 0) ? ($pb_b / $total_b) * $amount : 0;
-        $bonus_cut = ($total_b > 0) ? ($bonus_b / $total_b) * $amount : 0;
-
-        // ২. ডাটাবেসে ব্যালেন্স কাটা এবং সেই অনুযায়ী আলাদা আলাদা টার্নওভার বাড়ানো
-$conn->query("UPDATE users SET 
-    balance = balance - $main_cut, 
-    pb_balance = pb_balance - $pb_cut, 
-    bonus_balance = bonus_balance - $bonus_cut,
-    turnover = turnover + $main_cut,      /* মেইন থেকে যতটুকু কাটলো ততটুকু মেইন টার্নওভার */
-    pb_turnover = pb_turnover + $pb_cut,  /* পিবি থেকে যতটুকু কাটলো ততটুকু পিবি টার্নওভার */
-    bonus_turnover = bonus_turnover + $bonus_cut /* বোনাস থেকে যতটুকু কাটলো ততটুকু বোনাস টার্নওভার */
-    WHERE username = '$username'");
-        
-        if ($conn->affected_rows > 0) {
-            $conn->query("INSERT INTO game_logs (username, game_name, action, amount, tx_id) VALUES ('$username', '$game', 'bet', $amount, '$tx_id')");
-            echo json_encode(["status" => "ok", "message" => "Smart Bet Accepted"]);
-        } else {
-            echo json_encode(["status" => "error", "message" => "Transaction Failed"]);
-        }
+// ৩. বেট করার লজিক (টাকা কাটা)
+if ($action == "bet") {
+    if ($u_data[$bal_col] >= $amount) {
+        $conn->query("UPDATE users SET $bal_col = $bal_col - $amount, $turn_col = $turn_col + $amount WHERE username = '$username'");
+        $conn->query("INSERT INTO game_logs (username, game_name, action, amount) VALUES ('$username', '$game', 'bet', '$amount')");
+        echo json_encode(["status" => "ok", "message" => "Bet Accepted"]);
     } else {
-        echo json_encode(["status" => "error", "message" => "Insufficient Total Balance"]);
+        echo json_encode(["status" => "error", "message" => "Insufficient Balance"]);
     }
+} 
+
+// ৪. উইন করার লজিক (টাকা যোগ হওয়া)
+elseif ($action == "win") {
+    $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
+    $conn->query("INSERT INTO game_logs (username, game_name, action, amount) VALUES ('$username', '$game', 'win', '$amount')");
+    echo json_encode(["status" => "ok", "message" => "Win Distributed"]);
 }
 
-    // ৩. জেতার টাকা যোগ করা (Win) - আনুপাতিক ডিস্ট্রিবিউশন
-    elseif ($action == "win") {
-        $u_sql = $conn->query("SELECT balance, pb_balance, bonus_balance FROM users WHERE username = '$username'");
-        $u = $u_sql->fetch_assoc();
-
-        $main_b = (float)($u['balance'] ?? 0);
-        $pb_b = (float)($u['pb_balance'] ?? 0);
-        $bonus_b = (float)($u['bonus_balance'] ?? 0);
-        $total_b = $main_b + $pb_b + $bonus_b;
-
-        $safe_total = ($total_b > 0) ? $total_b : 1;
-
-        // অনুপাত অনুযায়ী ভাগ করা
-        $main_win = ($main_b / $safe_total) * $amount;
-        $pb_win = ($pb_b / $safe_total) * $amount;
-        $bonus_win = ($bonus_b / $safe_total) * $amount;
-
-        $conn->query("UPDATE users SET 
-            balance = balance + $main_win, 
-            pb_balance = pb_balance + $pb_win, 
-            bonus_balance = bonus_balance + $bonus_win 
-            WHERE username = '$username'");
-
-        if ($conn->affected_rows > 0) {
-            $conn->query("INSERT INTO game_logs (username, game_name, action, amount, tx_id) VALUES ('$username', '$game', 'win', $amount, '$tx_id')");
-            echo json_encode(["status" => "ok", "message" => "Win Distributed"]);
-        } else {
-            echo json_encode(["status" => "error", "message" => "Update Failed"]);
-        }
-        // ১. অ্যাডমিন থেকে বোনাস ও পিবি টার্গেট আনা
-        $st = $conn->query("SELECT bonus_target, pb_target FROM settings WHERE id = 1")->fetch_assoc();
-        $t_bonus = (float)($st['bonus_target'] ?? 5000);
-        $t_pb = (float)($st['pb_target'] ?? 10000);
-
-        // মেইন টার্গেট = ইউজারের মোট সফল ডিপোজিট (আপনার নতুন চাহিদা অনুযায়ী)
-        $dep_res = $conn->query("SELECT SUM(amount) as t_dep FROM deposits WHERE username = '$username' AND status = 'success'")->fetch_assoc();
-        $t_main = (float)($dep_res['t_dep'] ?? 1000);
-
-        // ইউজারের বর্তমান রানিং ডাটা নেওয়া
-        $u_check = $conn->query("SELECT * FROM users WHERE username = '$username'")->fetch_assoc();
-        
-        // --- ২. অটো-মার্জ লজিক ---
-
-        // বোনাস টার্নওভার পূরণ হলে মেইন ব্যালেন্সে আনা
-        if ($u_check['bonus_turnover'] >= $t_bonus && $u_check['bonus_balance'] > 0) {
-            $b_amt = $u_check['bonus_balance'];
-            $conn->query("UPDATE users SET balance = balance + $b_amt, bonus_balance = 0 WHERE username = '$username'");
-        }
-        
-        // পিবি টার্নওভার পূরণ হলে মেইন ব্যালেন্সে আনা
-        if ($u_check['pb_turnover'] >= $t_pb && $u_check['pb_balance'] > 0) {
-            $p_amt = $u_check['pb_balance'];
-            $conn->query("UPDATE users SET balance = balance + $p_amt, pb_balance = 0 WHERE username = '$username'");
-        }
-        
-    }
-
+// ৫. রিফান্ড লজিক
+elseif ($action == "refund") {
+    $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
+    echo json_encode(["status" => "ok", "message" => "Refund Processed"]);
+}
+?>
