@@ -143,10 +143,10 @@ function placeTestBet() {
     formData.append('amount', amount);
     formData.append('wallet', wallet);
 
-    fetch('place_bet.php', {
-        method: 'POST',
-        body: formData
-    })
+    fetch('./place_bet.php', {
+    method: 'POST',
+    body: formData
+})
     .then(response => {
         if (!response.ok) throw new Error('Network response was not ok');
         return response.json();
