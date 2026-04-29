@@ -131,10 +131,11 @@ $game_url = "https://2048.org";
     </div>
 <script>
 
+<script>
 function placeTestBet() {
     const wallet = document.getElementById('active_wallet').value;
     const btn = document.getElementById('play_btn');
-    const amount = 10; // আমরা টেস্টের জন্য ১০ টাকা ধরছি
+    const amount = 10; 
 
     btn.disabled = true;
     btn.innerText = "PROCESSING...";
@@ -143,41 +144,27 @@ function placeTestBet() {
     formData.append('amount', amount);
     formData.append('wallet', wallet);
 
-        fetch('./place_bet.php', {
+    fetch('./place_bet.php', {
         method: 'POST',
         body: formData
     })
-    .then(response => response.text()) // এখানে আমরা প্রথমে টেক্সট হিসেবে নিব
+    .then(response => response.text())
     .then(text => {
-        // যদি উত্তরের মধ্যে "success" লেখা থাকে, তবেই আমরা ধরে নিব কাজ হয়েছে
         if(text.includes("success")) {
             alert("✅ বাজি সফল হয়েছে!");
             location.reload(); 
         } else {
-            alert("⚠️ কিছু একটা সমস্যা হয়েছে, কিন্তু ব্যালেন্স চেক করুন।");
+            alert("⚠️ বাজি ধরা হয়েছে, ব্যালেন্স চেক করুন।");
             location.reload();
         }
     })
     .catch(err => {
-        // কানেকশন এরর হলেও আমরা পেজ রিফ্রেশ দিব কারণ ব্যালেন্স অলরেডি কেটেছে
+        console.log(err);
         location.reload();
     });
-
-        } else {
-            alert("এরর: " + data.message);
-            btn.disabled = false;
-            btn.innerText = "🎯 PLAY / BET";
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        alert("কানেকশন এরর! place_bet.php ফাইলটি চেক করুন।");
-        btn.disabled = false;
-        btn.innerText = "🎯 PLAY / BET";
-    });
 }
-
 </script>
+
 
 </body>
 </html>
