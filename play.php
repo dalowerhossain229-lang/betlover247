@@ -123,12 +123,13 @@ $game_url = "https://2048.org";
         <a href="bet_history.php" class="history-btn">📜 VIEW BET HISTORY</a>
     </div>
 <script>
+
 function placeTestBet() {
     const wallet = document.getElementById('active_wallet').value;
     const btn = document.getElementById('play_btn');
-    const amount = 10; 
+    const amount = 10; // আমরা টেস্টের জন্য ১০ টাকা ধরছি
 
-        btn.disabled = true;
+    btn.disabled = true;
     btn.innerText = "PROCESSING...";
 
     let formData = new FormData();
@@ -139,38 +140,27 @@ function placeTestBet() {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+    })
     .then(data => {
         if(data.status === 'success') {
-            alert("বাজি সফল! আপনার ব্যালেন্স আপডেট করা হয়েছে।");
+            alert("বাজি সফল! আপনার " + wallet.toUpperCase() + " ব্যালেন্স থেকে " + amount + " টাকা কাটা হয়েছে।");
             location.reload(); 
         } else {
             alert("এরর: " + data.message);
             btn.disabled = false;
-            btn.innerText = "🎯 PLACE BET";
+            btn.innerText = "🎯 PLAY / BET";
         }
     })
     .catch(err => {
-        console.log(err);
-        alert("কানেকশন এরর! place_bet.php ফাইলটি চেক করুন।");
-        btn.disabled = false;
-        btn.innerText = "🎯 PLACE BET";
-    });
-
-    .catch(err => {
-        alert("কানেকশন এরর! place_bet.php ফাইলটি চেক করুন।");
-        btn.disabled = false;
-        btn.innerText = "🎯 PLACE BET";
-    });
-
-    .catch(err => {
         console.error(err);
-        alert("কানেকশন এরর! গিটহাবে place_bet.php ফাইলটি নেই অথবা বানান ভুল আছে।");
+        alert("কানেকশন এরর! place_bet.php ফাইলটি চেক করুন।");
         btn.disabled = false;
-        btn.innerText = "🎯 PLACE BET";
+        btn.innerText = "🎯 PLAY / BET";
     });
 }
-
 
 </script>
 
