@@ -1,6 +1,9 @@
 <?php
 session_start();
 include 'db.php';
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+// নিশ্চিত করুন db.php ফাইলটি এই একই ফোল্ডারে আছে
 
 // ১. সেশন থেকে ইউজার চেক
 $u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
