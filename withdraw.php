@@ -4,26 +4,26 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 include 'db.php';
 
-// ইউজারের সেশন চেক (আপনার সিস্টেমে যা ব্যবহার হয়েছে সেটিই খুঁজবে)
+// ১. সেশন থেকে ইউজার চেক
 $u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
 
 if (empty($u)) {
-    // লগইন না থাকলে হোম পেজে পাঠাবে
     header("Location: index.php");
     exit();
 }
 
-
-// ৩. ডাটাবেস থেকে ইউজারের সব তথ্য আনা
-$query = $conn->query("SELECT * FROM users WHERE username = '$u'");
+// ২. ডাটাবেস থেকে ইউজারের সব তথ্য আনা (সঠিক কুয়েরি)
+$query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৪. টার্নওভার লজিক (আপনার ডাটাবেসের কলাম অনুযায়ী)
+// ৩. টার্নওভার লজিক (প্রোফাইল পেজের কলামের সাথে মিল রেখে)
 $done = (float)($user_data['main_t'] ?? 0); 
-$target = (float)($user_data['t_main'] ?? 500); // যদি t_main না থাকে তবে ডিফল্ট ৫০০ দেখাবে
-$is_turnover_done = ($done >= $target);
+$target = (float)($user_data['t_main'] ?? 500); // যদি কলামের নাম 'target' হয় তবে সেটি দিন
 
+// ৪. কন্ডিশন: টার্নওভার শেষ হয়েছে কি না
+$is_turnover_done = ($done >= $target);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
