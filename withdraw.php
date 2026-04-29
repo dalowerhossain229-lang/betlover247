@@ -51,21 +51,21 @@ $is_turnover_done = ($done >= $target);
 
             <div style="margin-top: 20px; background: #111; height: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #333;">
 <?php 
-    // ১. প্রগ্রেস পার্সেন্টেজ হিসাব (এটি উপরে থাকা জরুরি)
+    // ১. প্রগ্রেস পার্সেন্টেজ হিসাব ($done এবং $target ভেরিয়েবল ব্যবহার করে)
     $percent = ($target > 0) ? ($done / $target) * 100 : 0; 
+    if($percent > 100) $percent = 100;
 ?>
 
 <div style="margin-top: 20px; background: #111; height: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #333;">
-    <!-- ৫৫ নম্বর লাইন: প্রগ্রেস বার -->
-    <div style="width: <?php echo ($percent > 100) ? 100 : $percent; ?>%; background: #ff4d4d; height: 100%;"></div>
+    <!-- প্রগ্রেস বার: এখন এটি ডাটাবেস অনুযায়ী নড়াচড়া করবে -->
+    <div style="width: <?php echo $percent; ?>%; background: #ff4d4d; height: 100%;"></div>
 </div>
 
-<p style="font-size: 13px; margin-top: 10px; color: #aaa;">
-    <!-- ৫৮ নম্বর লাইন: প্রগ্রেস টেক্সট -->
+<p style="font-size: 13px; margin-top: 10px; color: #aaa; text-align: center;">
+    <!-- প্রগ্রেস টেক্সট: এখানে এখন ৫০০ / ৭০০ দেখাবে -->
     প্রগ্রেস: <?php echo number_format($done, 0); ?> / <?php echo number_format($target, 0); ?>
 </p>
-
-        </div>
+ 
     <?php else: ?>
         <!-- ৬. উইথড্র ফর্ম (টার্নওভার শেষ হলে এটি দেখাবে) -->
         <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid #333; padding: 20px; border-radius: 15px; text-align: left;">
