@@ -129,7 +129,7 @@ $game_url = "https://2048.org";
 </div>
         <a href="bet_history.php" class="history-btn">📜 VIEW BET HISTORY</a>
     </div>
-<script>
+
 
 <script>
 function placeTestBet() {
