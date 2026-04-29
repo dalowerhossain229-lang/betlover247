@@ -143,18 +143,26 @@ function placeTestBet() {
     formData.append('amount', amount);
     formData.append('wallet', wallet);
 
-    fetch('./place_bet.php', {
-    method: 'POST',
-    body: formData
-})
-    .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
+        fetch('./place_bet.php', {
+        method: 'POST',
+        body: formData
     })
-    .then(data => {
-        if(data.status === 'success') {
-            alert("বাজি সফল! আপনার " + wallet.toUpperCase() + " ব্যালেন্স থেকে " + amount + " টাকা কাটা হয়েছে।");
+    .then(response => response.text()) // এখানে আমরা প্রথমে টেক্সট হিসেবে নিব
+    .then(text => {
+        // যদি উত্তরের মধ্যে "success" লেখা থাকে, তবেই আমরা ধরে নিব কাজ হয়েছে
+        if(text.includes("success")) {
+            alert("✅ বাজি সফল হয়েছে!");
             location.reload(); 
+        } else {
+            alert("⚠️ কিছু একটা সমস্যা হয়েছে, কিন্তু ব্যালেন্স চেক করুন।");
+            location.reload();
+        }
+    })
+    .catch(err => {
+        // কানেকশন এরর হলেও আমরা পেজ রিফ্রেশ দিব কারণ ব্যালেন্স অলরেডি কেটেছে
+        location.reload();
+    });
+
         } else {
             alert("এরর: " + data.message);
             btn.disabled = false;
