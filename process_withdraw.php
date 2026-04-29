@@ -14,14 +14,15 @@ $amount = intval($_POST['amount'] ?? 0);
 $method = mysqli_real_escape_string($conn, $_POST['method'] ?? '');
 
 // ২. ইউজারের তথ্য ও টার্নওভার ডাটাবেস থেকে নেওয়া
-$res = $conn->query("SELECT balance, turnover_target, turnover_completed FROM users WHERE username = '$user'");
+$res = $conn->query("SELECT balance, main_t, t_main FROM users WHERE username = '$user'");
 $u_data = $res->fetch_assoc();
 
 // ৩. টার্নওভার চেক
-if ($u_data['turnover_completed'] < $u_data['turnover_target']) {
-    echo json_encode(["status" => "error", "message" => "উইথড্র দিতে আগে আপনার টার্নওভার টার্গেট সম্পন্ন করুন!"]);
+if ($u_data['main_t'] < $u_data['t_main']) {
+    echo json_encode(["status" => "error", "message" => "উইথড্র দিতে আগে টার্নওভার টার্গেট পূরণ করুন।"]);
     exit;
 }
+
 
 // ৪. উইথড্র লিমিট চেক (১০০ - ২৫,০০০)
 if ($amount < 100 || $amount > 25000) {
