@@ -5,37 +5,46 @@ include 'db.php';
 
 // ১. সেশন থেকে ইউজার চেক
 $u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
-$amount = 10;
-$wallet = $_POST['wallet'] ?? 'main';
+$bet = isset($_POST['amount']) ? (float)$_POST['amount'] : 10; // বাজি ধরার টাকা
+$wallet = isset($_POST['wallet']) ? $_POST['wallet'] : 'main'; // ইউজার যা সিলেক্ট করেছে
 
 if (empty($u)) {
-    die("error");
+    die("error_no_session");
 }
 
-// ২. ওয়ালেট কলাম নির্ধারণ (আপনার ডাটাবেসের কলামের নামগুলো নিশ্চিত করুন)
+// ২. ডাটাবেসের কলাম নির্ধারণ (আপনার প্রোফাইল পেজের সাথে মিল রেখে)
 if ($wallet == 'pb') { 
-    $col = "pb_balance"; $t_col = "pb_t"; 
+    $bal_col = "pb_balance"; 
+    $turn_col = "pb_t"; 
 } elseif ($wallet == 'bonus') { 
-    $col = "bonus_balance"; $t_col = "bonus_t"; 
+    $bal_col = "bonus_balance"; 
+    $turn_col = "bonus_t"; 
 } else { 
-    $col = "balance"; $t_col = "main_t"; 
+    $bal_col = "balance"; 
+    $turn_col = "main_t"; 
 }
 
-// ৩. ডাটাবেস আপডেট (আমরা শুধু ইউজারনেম দিয়ে চেক করছি যাতে ভুল না হয়)
-$sql = "UPDATE users SET $col = $col - $amount, $t_col = $t_col + $amount WHERE username = '$u'";
+// ৩. ডাটাবেস থেকে বর্তমান ব্যালেন্স চেক করা
+$check = $conn->query("SELECT $bal_col FROM users WHERE username = '$u'");
+$user_data = $check->fetch_assoc();
+
+if (!$user_data || $user_data[$bal_col] < $bet) {
+    die("insufficient_balance"); // টাকা না থাকলে বাজি ধরবে না
+}
+
+// ৪. বাজি ধরার আসল কাজ (টাকা বিয়োগ হবে এবং টার্নওভার যোগ হবে)
+$sql = "UPDATE users SET 
+        $bal_col = $bal_col - $bet, 
+        $turn_col = $turn_col + $bet 
+        WHERE username = '$u'";
 
 if ($conn->query($sql)) {
-    // ডাটাবেসে আপডেট হয়েছে কি না তা চেক করা
-    if ($conn->affected_rows > 0) {
-        $conn->query("INSERT INTO game_history (username, game_name, wallet_type, bet_amount) VALUES ('$u', '2048 Game', '$wallet', $amount)");
-        echo "success";
-    } else {
-        // যদি ইউজারনেম না মিলে তবে আইডি দিয়ে চেষ্টা করবে
-        $conn->query("UPDATE users SET $col = $col - $amount, $t_col = $t_col + $amount WHERE id = '$u'");
-        echo "success";
-    }
+    // ৫. বেট হিস্টোরিতে রেকর্ড সেভ করা
+    $conn->query("INSERT INTO game_history (username, game_name, wallet_type, bet_amount) VALUES ('$u', '2048 Game', '$wallet', $bet)");
+    
+    echo "success"; // এটি পেলে আপনার গেমে পপআপ আসবে
 } else {
-    echo "error";
+    echo "error_db";
 }
 ob_end_flush();
 ?>
