@@ -45,27 +45,32 @@ $is_turnover_done = ($done >= $target);
 
     <!-- ৫. টার্নওভার চেক সেকশন -->
     <?php if (!$is_turnover_done): ?>
-        <div style="background: rgba(255, 77, 77, 0.1); border: 1px solid #ff4d4d; padding: 25px; border-radius: 15px;">
-            <p style="font-weight: bold; margin-bottom: 10px; color: #ff4d4d;">⚠️ টার্নওভার অসম্পূর্ণ!</p>
-            <small style="color: #ccc;">উইথড্র দিতে হলে আগে মেইন টার্নওভার টার্গেট সম্পন্ন করা প্রয়োজন।</small>
+    <!-- টার্নওভার কার্ড শুরু -->
+    <div style="background: linear-gradient(145deg, #1a1a1a, #111); padding: 25px; border-radius: 15px; border: 1px solid #333; margin-top: 20px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
+        
+        <div style="font-size: 18px; color: #ffdf1b; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            ⚠️ টার্নওভার প্রগ্রেস
+        </div>
 
-            <div style="margin-top: 20px; background: #111; height: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #333;">
-<?php 
-    // ১. প্রগ্রেস পার্সেন্টেজ হিসাব ($done এবং $target ভেরিয়েবল ব্যবহার করে)
-    $percent = ($target > 0) ? ($done / $target) * 100 : 0; 
-    if($percent > 100) $percent = 100;
-?>
+        <?php $percent = ($target > 0) ? ($done / $target) * 100 : 0; ?>
+        <div style="background: #222; height: 12px; border-radius: 10px; width: 100%; border: 1px solid #333; overflow: hidden; margin: 15px 0;">
+            <div style="width: <?php echo min($percent, 100); ?>%; background: linear-gradient(90deg, #ff4d4d, #f00); height: 100%; border-radius: 10px; transition: width 0.5s ease;"></div>
+        </div>
 
-<div style="margin-top: 20px; background: #111; height: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #333;">
-    <!-- প্রগ্রেস বার: এখন এটি ডাটাবেস অনুযায়ী নড়াচড়া করবে -->
-    <div style="width: <?php echo $percent; ?>%; background: #ff4d4d; height: 100%;"></div>
-</div>
+        <p style="color: #ccc; font-size: 15px; margin: 5px 0;">
+            প্রগ্রেস: <b style="color: #fff;"><?php echo number_format($done, 0); ?></b> / <b style="color: #00ff88;"><?php echo number_format($target, 0); ?></b>
+        </p>
+        
+        <p style="color: #777; font-size: 12px; margin-top: 10px; line-height: 1.6;">
+            টাকা উইথড্র দিতে হলে আরও <b style="color: #ff4d4d;"><?php echo number_format($target - $done, 0); ?></b> টাকার বাজি খেলা প্রয়োজন।
+        </p>
 
-<p style="font-size: 13px; margin-top: 10px; color: #aaa; text-align: center;">
-    <!-- প্রগ্রেস টেক্সট: এখানে এখন ৫০০ / ৭০০ দেখাবে -->
-    প্রগ্রেস: <?php echo number_format($done, 0); ?> / <?php echo number_format($target, 0); ?>
-</p>
- 
+        <a href="play.php" style="display: inline-block; margin-top: 20px; background: #00ff88; color: #000; padding: 10px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 12px;">
+            🎯 খেলা চালিয়ে যান
+        </a>
+    </div>
+    <!-- টার্নওভার কার্ড শেষ -->
+
     <?php else: ?>
         <!-- ৬. উইথড্র ফর্ম (টার্নওভার শেষ হলে এটি দেখাবে) -->
         <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid #333; padding: 20px; border-radius: 15px; text-align: left;">
