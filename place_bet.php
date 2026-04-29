@@ -1,16 +1,22 @@
 <?php
-session_start();
+// ১. সেশন স্টার্ট করা (সবার আগে এটি থাকতে হবে)
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 include 'db.php';
 
-// ১. সেশন চেক
-$u = $_SESSION['username'] ?? '';
-$amount = 10; // টেস্টের জন্য ১০ টাকা
-$wallet = $_POST['wallet'] ?? 'main';
+// ২. সেশন থেকে ইউজার চেক (স্মার্ট চেক)
+$u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
 
 if (empty($u)) {
-    echo json_encode(["status" => "error", "message" => "সেশন পাওয়া যায়নি!"]);
+    // যদি সেশন না পায় তবে ডাটাবেস এরর না দিয়ে এটি পাঠাবে
+    echo json_encode(["status" => "error", "message" => "সেশন পাওয়া যায়নি! দয়া করে পেজটি রিফ্রেশ দিন।"]);
     exit;
 }
+
+// ৩. এরপর আপনার বাকি কুয়েরি লজিক...
+
 
 // ২. কলাম নির্ধারণ
 if ($wallet == 'pb') { 
