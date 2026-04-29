@@ -128,18 +128,17 @@ function placeTestBet() {
     const btn = document.getElementById('play_btn');
     const amount = 10; 
 
-    btn.disabled = true;
+        btn.disabled = true;
     btn.innerText = "PROCESSING...";
 
     let formData = new FormData();
     formData.append('amount', amount);
     formData.append('wallet', wallet);
 
-    // নিশ্চিত করুন ফাইলের নাম এবং পাথ ঠিক আছে
     fetch('place_bet.php', {
         method: 'POST',
         body: formData
-        }) // ১৪২ নম্বর লাইনের সেমিকোলন (;) ডিলিট করা হয়েছে
+    })
     .then(response => response.json())
     .then(data => {
         if(data.status === 'success') {
@@ -151,6 +150,13 @@ function placeTestBet() {
             btn.innerText = "🎯 PLACE BET";
         }
     })
+    .catch(err => {
+        console.log(err);
+        alert("কানেকশন এরর! place_bet.php ফাইলটি চেক করুন।");
+        btn.disabled = false;
+        btn.innerText = "🎯 PLACE BET";
+    });
+
     .catch(err => {
         alert("কানেকশন এরর! place_bet.php ফাইলটি চেক করুন।");
         btn.disabled = false;
