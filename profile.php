@@ -184,6 +184,29 @@ if ($t_main > 0) {
         Withdraw >
     </button>
 </a>
+<!-- পেমেন্ট নম্বর সেটআপ শুরু -->
+<div style="background: #111; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px; text-align: left;">
+    <h4 style="color: #00ff88; margin-top: 0; font-size: 14px;">📋 পেমেন্ট নম্বর (Locked)</h4>
+    <form action="save_payment.php" method="POST">
+        
+        <label style="color: #888; font-size: 11px; display: block; margin-bottom: 5px;">বিকাশ (Personal):</label>
+        <input type="text" name="bkash" value="<?php echo $u_data['bkash_number'] ?? ''; ?>" 
+               placeholder="017XXXXXXXX" <?php if(!empty($u_data['bkash_number'])) echo 'readonly'; ?> 
+               style="width: 100%; background: #222; color: #fff; padding: 10px; border-radius: 8px; border: 1px solid #444; margin-bottom: 12px; box-sizing: border-box; <?php if(!empty($u_data['bkash_number'])) echo 'color:#777; border:none;'; ?>">
+        
+        <label style="color: #888; font-size: 11px; display: block; margin-bottom: 5px;">নগদ (Personal):</label>
+        <input type="text" name="nagad" value="<?php echo $u_data['nagad_number'] ?? ''; ?>" 
+               placeholder="018XXXXXXXX" <?php if(!empty($u_data['nagad_number'])) echo 'readonly'; ?> 
+               style="width: 100%; background: #222; color: #fff; padding: 10px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px; box-sizing: border-box; <?php if(!empty($u_data['nagad_number'])) echo 'color:#777; border:none;'; ?>">
+        
+        <?php if(empty($u_data['bkash_number']) || empty($u_data['nagad_number'])): ?>
+            <button type="submit" style="width: 100%; background: #00ff88; color: #000; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; font-size: 13px;">নম্বর সেভ করুন</button>
+        <?php else: ?>
+            <p style="color: #ff4d4d; font-size: 10px; text-align: center; margin: 0;">⚠️ পেমেন্ট নম্বর লক করা হয়েছে।</p>
+        <?php endif; ?>
+    </form>
+</div>
+<!-- পেমেন্ট নম্বর সেটআপ শেষ -->
 
         
         <button class="p-btn" onclick="location.href='logout.php'" style="color:#ff4d4d;">Logout</button>
