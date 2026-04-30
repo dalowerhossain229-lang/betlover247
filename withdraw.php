@@ -27,7 +27,7 @@ if ($target <= 0) {
 }
 
 $is_turnover_done = ($done >= $target);
-
+?>
 
 
 <!DOCTYPE html>
