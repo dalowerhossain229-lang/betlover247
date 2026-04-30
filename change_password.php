@@ -24,7 +24,8 @@ if (empty($old) || empty($new)) {
     $res = $conn->query("SELECT password FROM users WHERE username = '$u'");
     $user = $res->fetch_assoc();
 
-    if ($user && $user['password'] === $old) {
+    if ($user && ($old === $user['password'] || password_verify($old, $user['password']))) {
+
         if ($conn->query("UPDATE users SET password = '$new' WHERE username = '$u'")) {
             echo "<h2 style='color:#00ff88;'>✅ পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে!</h2>";
             echo "<br><a href='profile.php' style='color:#ffdf1b; text-decoration:none;'>প্রোফাইলে ফিরে যান</a>";
