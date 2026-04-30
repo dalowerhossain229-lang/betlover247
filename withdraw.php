@@ -1,7 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+ob_start();
+session_start();
 include 'db.php';
 
 // ১. সেশন থেকে ইউজার চেক
@@ -12,20 +11,21 @@ if (empty($u)) {
     exit();
 }
 
-// ২. ডাটাবেস থেকে ইউজারের সব তথ্য আনা (সঠিক কুয়েরি)
+// ২. ডাটাবেস থেকে ইউজারের লেটেস্ট তথ্য আনা (১৪০০ এর জন্য এটি জরুরি)
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ২০-২১ নম্বর লাইনের আশেপাশে এটি ঠিক করুন
+// ৩. টার্নওভার লজিক (প্রোফাইল পেজের কলামের সাথে মিল রেখে)
 $done = (float)($user_data['main_t'] ?? 0); 
-
-// এটি সরাসরি ডাটাবেস থেকে আসা 't_main' মানটি নিবে
 $target = (float)($user_data['t_main'] ?? 0); 
 
-// যদি ডাটাবেসে কোনো মান না থাকে তবেই ডিফল্ট ৫০০ দেখাবে
+// ৪. যদি ডাটাবেসে টার্গেট ০ থাকে তবে ডিফল্ট ৫০০ (আপনার ইচ্ছা অনুযায়ী)
 if($target <= 0) { $target = 500; }
 
+// ৫. কন্ডিশন: এটি সংজ্ঞায়িত না থাকলে ৪৯ নম্বর লাইনে এরর আসবে
+$is_turnover_done = ($done >= $target);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
