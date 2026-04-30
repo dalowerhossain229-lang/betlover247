@@ -74,8 +74,7 @@ $target = (float)($user_data['t_main'] ?? 3250);
         </form>
 
         <p class="note">
-            ⚠️ তথ্য ভুল হলে রিকোয়েস্ট বাতিল হতে পারে। <br>
-            আপনার বর্তমান টার্নওভার প্রগ্রেস: <b><?php echo number_format($done, 0); ?> / <?php echo number_format($target, 0); ?></b>
+            ⚠️ তথ্য ভুল হলে রিকোয়েস্ট বাতিল হতে পারে। 
         </p>
     </div>
 
