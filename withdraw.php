@@ -16,7 +16,12 @@ $user_data = $query->fetch_assoc();
 
 // ৩. টার্নওভার লজিক (প্রোফাইল পেজের কলামের সাথে মিল রেখে)
 $done = (float)($user_data['main_t'] ?? 0); 
-$target = (float)($user_data['t_main'] ?? 1400); // ডাটাবেস থেকে না পেলে ডিফল্ট ১৪০০
+// ১৯ নম্বর লাইনটি হুবহু এভাবে লিখুন
+$target = (float)($user_data['t_main'] ?? $user_data['deposit'] ?? 0);
+
+// যদি সব খালি থাকে, তবেই সে ১০০০ না দেখিয়ে ০ দেখাবে
+if($target <= 0) { $target = 0; }
+
 
 $is_turnover_done = ($done >= $target);
 ?>
