@@ -185,18 +185,11 @@ if ($t_main > 0) {
     </button>
 </a>
 
-        <button class="p-btn" onclick="togglePayment()">Payment Numbers (Lock) ></button>
+        
         <button class="p-btn" onclick="location.href='logout.php'" style="color:#ff4d4d;">Logout</button>
     </div>
 
-    <!-- পেমেন্ট লক বক্স -->
-    <div id="paymentBox" style="display:none; background:#111; padding:15px; border-radius:12px; border:1px solid #00ff88; margin-top:10px;">
-        <h4 style="color:#00ff88; font-size:12px;">LOCK PAYMENT NUMBERS</h4>
-        <input type="number" id="bk" placeholder="Bkash" style="width:90%; background:#000; border:1px solid #333; color:#fff; padding:8px; margin-bottom:10px;">
-        <input type="number" id="ng" placeholder="Nagad" style="width:90%; background:#000; border:1px solid #333; color:#fff; padding:8px; margin-bottom:10px;">
-        <button onclick="saveNumbers()" style="background:#00ff88; width:100%; padding:10px; border-radius:8px; font-weight:bold;">LOCK NOW</button>
-    </div>
-</div>
+
 
 <script>
 function togglePayment() { const x = document.getElementById('paymentBox'); x.style.display = x.style.display === 'none' ? 'block' : 'none'; }
@@ -207,15 +200,7 @@ function claimBonus() {
     }
 }
 
-function saveNumbers() {
-    const bk = document.getElementById('bk').value;
-    const ng = document.getElementById('ng').value;
-    if(!bk && !ng) return alert("Enter number!");
-    if(confirm("Lock numbers permanently?")) {
-        let fd = new FormData(); fd.append('bkash', bk); fd.append('nagad', ng);
-        fetch('api_save_payment.php', {method:'POST', body:fd}).then(r => r.json()).then(d => { alert(d.message); if(d.status==='success') location.reload(); });
-    }
-}
+
    function claimBonus() {
     if(confirm("আপনি কি বোনাস টাকা মেইন ব্যালেন্সে যোগ করতে চান?")) {
         // একটি নতুন ফাইলে রিকোয়েস্ট পাঠানো অথবা বর্তমান পেজেই প্রসেস করা
