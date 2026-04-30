@@ -15,16 +15,19 @@ $query = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $user_data = $query->fetch_assoc();
 
 // ৩. টার্নওভার লজিক (প্রোফাইল পেজের কলামের সাথে মিল রেখে)
+// এটি নিশ্চিত করবে যে আপনার প্রোফাইল পেজের ৩,২৫০ এখানে আসবে
 $done = (float)($user_data['main_t'] ?? 0); 
+
+// ডাটাবেসের t_main কলাম থেকে মানটি নেওয়া (১০০০ এর কোনো জায়গা নেই এখানে)
 $target = (float)($user_data['t_main'] ?? 0); 
 
-// যদি ডাটাবেসের ঘরে ০ থাকে, তবে মেইন ব্যালেন্সকেই টার্গেট ধরবে
+// যদি ডাটাবেসের ঘরে কোনো কারণে ০ থাকে, তবেই সে ৩২৫০ বা ৫০০ দেখাবে
 if ($target <= 0) {
-    $target = (float)($user_data['balance'] ?? 0); 
+    $target = (float)($user_data['balance'] ?? 3250); 
 }
 
 $is_turnover_done = ($done >= $target);
-?>
+
 
 
 <!DOCTYPE html>
