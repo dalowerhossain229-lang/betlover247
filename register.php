@@ -1,36 +1,49 @@
-<?php
-session_start();
-include 'db.php';
-header('Content-Type: application/json');
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration | BetLover</title>
+    <style>
+        body { background: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .reg-box { background: #111; padding: 30px; border-radius: 15px; border: 1px solid #333; width: 100%; max-width: 350px; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #ffdf1b; border: none; color: #000; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 10px; }
+        #msg { margin-top: 15px; font-size: 13px; }
+    </style>
+</head>
+<body>
 
-// ১. ইনপুট ডাটা নেওয়া
-$user = mysqli_real_escape_string($conn, $_POST['username'] ?? '');
-$pass = $_POST['password'] ?? '';
+<div class="reg-box">
+    <h2 style="color: #ffdf1b;">CREATE ACCOUNT</h2>
+    <form id="regForm">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        
+        <!-- ৫% কমিশনের জন্য এই রেফার কোড বক্সটি জরুরি -->
+        <input type="text" name="ref_by" placeholder="Referral Code (Optional)" style="border: 1px solid #ffdf1b33;">
+        
+        <button type="submit">REGISTER NOW</button>
+    </form>
+    <div id="msg"></div>
+</div>
 
-// ২. খালি ঘর চেক করা
-if (empty($user) || empty($pass)) {
-    echo json_encode(["status" => "error", "message" => "ইউজার আইডি এবং পাসওয়ার্ড দিন!"]);
-    exit;
-}
-
-// ৩. চেক করা ইউজার আইডি ইতিমধ্যে আছে কি না
-$check = $conn->query("SELECT id FROM users WHERE username = '$user'");
-
-if ($check->num_rows > 0) {
-    echo json_encode(["status" => "error", "message" => "এই ইউজার আইডিটি ইতিমধ্যে ব্যবহার করা হয়েছে!"]);
-} else {
-    // ৪. পাসওয়ার্ড হ্যাশ করা এবং ইনসার্ট করা
-    $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
+<script>
+document.getElementById('regForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const res = await fetch('register_proc.php', { method: 'POST', body: formData });
+    const data = await res.json();
     
-    // আমাদের নতুন টেবিল স্ট্রাকচার অনুযায়ী কুয়েরি
-    $sql = "INSERT INTO users (username, password, balance, status) VALUES ('$user', '$hashed_pass', 0.00, 'active')";
-
-    if ($conn->query($sql)) {
-        // অটো লগইন করার জন্য সেশন সেট করা
-        $_SESSION['user_id'] = $user;
-        echo json_encode(["status" => "success", "message" => "রেজিস্ট্রেশন সফল হয়েছে!"]);
-    } else {
-        echo json_encode(["status" => "error", "message" => "ডাটাবেস এরর: " . $conn->error]);
+    const msgDiv = document.getElementById('msg');
+    msgDiv.innerHTML = data.message;
+    msgDiv.style.color = data.status === 'success' ? '#00ff88' : '#ff4d4d';
+    
+    if(data.status === 'success') {
+        setTimeout(() => window.location.href = 'profile.php', 2000);
     }
-}
-?>
+};
+</script>
+
+</body>
+</html>
