@@ -9,30 +9,29 @@ $u = $_SESSION['username'] ?? '';
 $old_pass = $_POST['old_pass'] ?? '';
 $new_pass = $_POST['new_pass'] ?? '';
 
-if (!empty($u) && !empty($old_pass) && !empty($new_pass)) {
-    // ১. ডাটাবেস থেকে ইউজারের বর্তমান পাসওয়ার্ড আনা
+// ১. কোনো ঘর খালি আছে কি না চেক করা
+if (empty($u) || empty($old_pass) || empty($new_pass)) {
+    echo "<h2 style='color:red;'>❌ সব ঘর পূরণ করুন!</h2>";
+    echo "<br><a href='profile.php' style='color:#fff;'>ফিরে যান</a>";
+} else {
+    // ২. ডাটাবেস থেকে বর্তমান পাসওয়ার্ড চেক করা
     $query = $conn->query("SELECT password FROM users WHERE username = '$u'");
     $user = $query->fetch_assoc();
 
     if ($user['password'] === $old_pass) {
-        // ২. পাসওয়ার্ড আপডেট করা
+        // ৩. পাসওয়ার্ড মিলে গেলে আপডেট করা
         if ($conn->query("UPDATE users SET password = '$new_pass' WHERE username = '$u'")) {
-            echo "<div style='border:1px solid #00ff88; padding:30px; border-radius:15px; display:inline-block;'>";
-            echo "<h2 style='color:#00ff88;'>✅ পাসওয়ার্ড পরিবর্তন সফল!</h2>";
-            echo "<p>আপনার নতুন পাসওয়ার্ডটি সেভ করা হয়েছে।</p>";
-            echo "<br><a href='profile.php' style='background:#00ff88; color:#000; padding:10px 20px; border-radius:5px; text-decoration:none; font-weight:bold;'>প্রোফাইলে ফিরে যান</a>";
-            echo "</div>";
+            echo "<h2 style='color:#00ff88;'>✅ পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে!</h2>";
+            echo "<p>এখন নতুন পাসওয়ার্ড দিয়ে লগইন করতে পারবেন।</p>";
+            echo "<br><a href='profile.php' style='color:#ffdf1b;'>প্রোফাইলে ফিরে যান</a>";
         }
     } else {
-        echo "<div style='border:1px solid #ff4d4d; padding:30px; border-radius:15px; display:inline-block;'>";
-        echo "<h2 style='color:#ff4d4d;'>❌ ভুল পাসওয়ার্ড!</h2>";
-        echo "<p>আপনার দেওয়া বর্তমান পাসওয়ার্ডটি সঠিক নয়।</p>";
-        echo "<br><a href='profile.php' style='background:#ff4d4d; color:#fff; padding:10px 20px; border-radius:5px; text-decoration:none; font-weight:bold;'>আবার চেষ্টা করুন</a>";
-        echo "</div>";
+        // ৪. পাসওয়ার্ড না মিললে
+        echo "<h2 style='color:red;'>❌ বর্তমান পাসওয়ার্ডটি ভুল!</h2>";
+        echo "<br><a href='profile.php' style='color:#fff;'>আবার চেষ্টা করুন</a>";
     }
-} else {
-    header("Location: profile.php");
 }
-echo "</body>";
-ob_end_flush(); ?>
 
+echo "</body>";
+ob_end_flush(); 
+?>
