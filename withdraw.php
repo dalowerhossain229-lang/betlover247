@@ -1,4 +1,4 @@
-   <?php
+<?php
 ob_start();
 session_start();
 include 'db.php';
@@ -81,4 +81,3 @@ $target = (float)($user_data['t_main'] ?? 3250);
 
 </body>
 </html>
-         
