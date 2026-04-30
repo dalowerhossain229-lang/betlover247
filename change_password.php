@@ -20,11 +20,11 @@ if (empty($old) || empty($new)) {
     echo "<br><a href='profile.php' style='color:#fff;'>আবার ট্রাই করুন</a>";
     echo "</div>";
 } else {
-    // ৪. ডাটাবেস চেক ও আপডেট
-    $res = $conn->query("SELECT password FROM users WHERE username = '$u'");
-    $user = $res->fetch_assoc();
+        $q = "SELECT * FROM users WHERE username = '$u' AND password = '$old'";
+        $res = $conn->query($q);
 
-    if ($user && ($old === $user['password'] || password_verify($old, $user['password']))) {
+        if ($res && $res->num_rows > 0) {
+
 
         if ($conn->query("UPDATE users SET password = '$new' WHERE username = '$u'")) {
             echo "<h2 style='color:#00ff88;'>✅ পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে!</h2>";
