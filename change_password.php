@@ -10,8 +10,9 @@ echo "<body style='background:#000; color:#fff; font-family:sans-serif; text-ali
 $u = $_SESSION['username'] ?? '';
 
 // সম্ভাব্য সব ধরণের ইনপুট নাম চেক করা (আপনার ফরমের সাথে মিল রাখতে)
-$old_pass = $_POST['current_password'] ?? $_POST['old_pass'] ?? $_POST['oldpassword'] ?? '';
-$new_pass = $_POST['new_password'] ?? $_POST['new_pass'] ?? $_POST['newpassword'] ?? '';
+// ১১ ও ১২ নম্বর লাইন এভাবে আপডেট করুন
+$old_pass = $_POST['old_pass'] ?? '';
+$new_pass = $_POST['new_pass'] ?? '';
 
 // ২. কোনো ঘর খালি আছে কি না চেক করা
 if (empty($u) || empty($old_pass) || empty($new_pass)) {
