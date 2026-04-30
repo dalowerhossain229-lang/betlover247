@@ -5,9 +5,11 @@ include 'db.php';
 
 echo "<body style='background:#000; color:#fff; font-family:sans-serif; text-align:center; padding:50px;'>";
 
+// ৮ থেকে ১০ নম্বর লাইন এভাবে আপডেট করুন
 $u = $_SESSION['username'] ?? '';
-$old_pass = $_POST['old_pass'] ?? '';
-$new_pass = $_POST['new_pass'] ?? '';
+$old_pass = $_POST['current_password'] ?? $_POST['old_pass'] ?? '';
+$new_pass = $_POST['new_password'] ?? $_POST['new_pass'] ?? '';
+
 
 // ১. কোনো ঘর খালি আছে কি না চেক করা
 if (empty($u) || empty($old_pass) || empty($new_pass)) {
