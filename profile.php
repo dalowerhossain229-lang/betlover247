@@ -255,6 +255,21 @@ if ($t_main > 0) {
     </div>
 </div>
 <!-- ট্রানজেকশন হিস্টোরি শেষ -->
+       <!-- পাসওয়ার্ড পরিবর্তন সেকশন শুরু -->
+<div class="card" style="background: #111; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px;">
+    <h4 style="color: #ffdf1b; margin-top: 0; font-size: 15px; padding-bottom: 10px;">🔐 পাসওয়ার্ড পরিবর্তন</h4>
+    <form action="change_password.php" method="POST">
+        <label style="color: #888; font-size: 11px; display: block; margin-bottom: 5px;">বর্তমান পাসওয়ার্ড:</label>
+        <input type="password" name="old_pass" placeholder="Current Password" required style="width: 100%; background: #222; color: #fff; padding: 10px; border-radius: 8px; border: 1px solid #444; margin-bottom: 12px; box-sizing: border-box;">
+        
+        <label style="color: #888; font-size: 11px; display: block; margin-bottom: 5px;">নতুন পাসওয়ার্ড:</label>
+        <input type="password" name="new_pass" placeholder="New Password" required style="width: 100%; background: #222; color: #fff; padding: 10px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px; box-sizing: border-box;">
+        
+        <button type="submit" style="width: 100%; background: #ffdf1b; color: #000; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; font-size: 13px;">পাসওয়ার্ড আপডেট করুন</button>
+    </form>
+</div>
+<!-- পাসওয়ার্ড পরিবর্তন শেষ -->
+ 
      
         <button class="p-btn" onclick="location.href='logout.php'" style="color:#ff4d4d;">Logout</button>
     </div>
