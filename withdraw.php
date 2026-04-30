@@ -11,17 +11,23 @@ if (empty($u)) {
     exit();
 }
 
-// ১৫ থেকে ২০ নম্বর লাইন এভাবে একদম প্রোফাইল পেজের মতো করে দিন
-$query = $conn->query("SELECT * FROM users WHERE username = '$u'");
+// ২. ডাটাবেস থেকে ইউজারের লেটেস্ট তথ্য আনা (১,৪০০ এর জন্য এটি জরুরি)
+$query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-// প্রোফাইল পেজের সেই সফল লজিক
+// ৩. টার্নওভার লজিক (আপনার প্রোফাইল পেজের কলামের সাথে মিল রেখে)
 $done = (float)($user_data['main_t'] ?? 0); 
 $target = (float)($user_data['t_main'] ?? 0); 
 
-// যদি ডাটাবেসে টার্গেট না থাকে তবে প্রোফাইল পেজের মতো ডিফল্ট সেট করা
-if($target <= 0) { $target = 1400; } 
+// ৪. যদি ডাটাবেসে টার্গেট ০ থাকে তবেই ডিফল্ট ১৪০০ (আপনার রিকোয়ারমেন্ট অনুযায়ী)
+if($target <= 0) { 
+    $target = 1400; 
+}
+
+// ৫. এটিই সেই ভেরিয়েবল যা না থাকার কারণে এরর আসছিল
+$is_turnover_done = ($done >= $target);
 ?>
+
 
 
 
