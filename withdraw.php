@@ -1,4 +1,4 @@
-<?php
+   <?php
 ob_start();
 session_start();
 include 'db.php';
@@ -10,80 +10,75 @@ if (empty($u)) {
     exit();
 }
 
-// ২. ডাটাবেস থেকে তথ্য আনা (প্রোফাইল পেজের মতো হুবহু এক কুয়েরি)
-$query = $conn->query("SELECT * FROM users WHERE username = '$u'");
+// ২. ডাটাবেস থেকে ইউজারের সব তাজা তথ্য আনা
+$query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৩. টার্নওভার লজিক (প্রোফাইল পেজের কলামের সাথে মিল রেখে)
-// এটি নিশ্চিত করবে যে আপনার প্রোফাইল পেজের ৩,২৫০ এখানে আসবে
+// ৩. টার্নওভার লজিক (এটি ব্যাকএন্ডে কাজ করবে)
 $done = (float)($user_data['main_t'] ?? 0); 
-
-// ডাটাবেসের t_main কলাম থেকে মানটি নেওয়া (১০০০ এর কোনো জায়গা নেই এখানে)
-$target = (float)($user_data['t_main'] ?? 0); 
-
-// যদি ডাটাবেসের ঘরে কোনো কারণে ০ থাকে, তবেই সে ৩২৫০ বা ৫০০ দেখাবে
-if ($target <= 0) {
-    $target = (float)($user_data['balance'] ?? 3250); 
-}
-
-$is_turnover_done = ($done >= $target);
+$target = (float)($user_data['t_main'] ?? 3250); 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Withdraw</title>
+    <title>Withdraw - BetLover</title>
     <style>
         body { background: #000; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
-        .card { background: #111; border: 1px solid #333; border-radius: 15px; padding: 20px; margin-top: 20px; }
-        .balance-box { border: 1px solid #00ff88; padding: 20px; border-radius: 15px; margin-bottom: 20px; }
-        .progress-container { background: #222; height: 12px; border-radius: 10px; width: 100%; margin: 15px 0; overflow: hidden; }
-        .progress-bar { background: linear-gradient(90deg, #ff4d4d, #f00); height: 100%; border-radius: 10px; transition: width 0.5s ease; }
-        .btn-play { display: inline-block; background: #00ff88; color: #000; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; margin-top: 20px; text-transform: uppercase; font-size: 13px; }
+        .balance-box { border: 1px solid #00ff88; padding: 20px; border-radius: 15px; margin-bottom: 25px; background: rgba(0,255,136,0.05); }
+        .withdraw-card { background: #111; border: 1px solid #333; border-radius: 15px; padding: 25px; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .input-group { margin-bottom: 15px; }
+        label { color: #888; font-size: 13px; display: block; margin-bottom: 8px; }
+        select, input { width: 100%; background: #222; color: #fff; padding: 12px; border-radius: 8px; border: 1px solid #444; box-sizing: border-box; font-size: 15px; }
+        select:focus, input:focus { border-color: #00ff88; outline: none; }
+        .btn-submit { width: 100%; background: #00ff88; color: #000; padding: 15px; border-radius: 8px; border: none; font-weight: bold; font-size: 16px; margin-top: 15px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        .note { color: #555; font-size: 12px; text-align: center; margin-top: 20px; line-height: 1.5; }
     </style>
 </head>
 <body>
 
-    <h2 style="color: #00ff88; letter-spacing: 1px;">💰 WITHDRAW</h2>
+    <h2 style="color: #00ff88; margin-bottom: 30px;">🏧 WITHDRAW</h2>
 
-    <!-- ১. ব্যালেন্স সেকশন -->
+    <!-- ১. বর্তমান ব্যালেন্স প্রদর্শন -->
     <div class="balance-box">
-        <small style="color: #888;">CURRENT BALANCE</small>
-        <h1 style="color: #ffdf1b; margin: 5px 0;">৳ <?php echo number_format($user_data['balance'], 2); ?></h1>
+        <small style="color: #888; letter-spacing: 1px;">AVAILABLE BALANCE</small>
+        <h1 style="color: #ffdf1b; margin: 10px 0;">৳ <?php echo number_format($user_data['balance'], 2); ?></h1>
     </div>
 
-    <!-- ২. টার্নওভার চেক সেকশন -->
-    <?php if (!$is_turnover_done): ?>
-        <div class="card">
-            <h3 style="color: #ffdf1b; margin-bottom: 20px;">⚠️ টার্নওভার প্রগ্রেস</h3>
-            <?php echo number_format($done, 0); ?> / <?php echo number_format($target, 0); ?>
-            <div class="progress-container">
-                <?php $p = ($target > 0) ? ($done / $target) * 100 : 0; ?>
-                <div class="progress-bar" style="width: <?php echo min($p, 100); ?>%;"></div>
+    <!-- ২. সরাসরি উইথড্র ফর্ম -->
+    <div class="withdraw-card">
+        <form action="process_withdraw.php" method="POST">
+            
+            <div class="input-group">
+                <label>পেমেন্ট মেথড সিলেক্ট করুন:</label>
+                <select name="method" required>
+                    <option value="bkash">বিকাশ (bKash)</option>
+                    <option value="nagad">নগদ (Nagad)</option>
+                    <option value="rocket">রকেট (Rocket)</option>
+                </select>
             </div>
 
-            <p style="font-size: 16px; margin: 5px 0;">
-                
-            </p>
+            <div class="input-group">
+                <label>আপনার নম্বর দিন:</label>
+                <input type="text" name="number" placeholder="017XXXXXXXX" required pattern="[0-9]{11}">
+            </div>
 
-            <p style="color: #777; font-size: 13px;">
-                উইথড্র দিতে হলে আরও <b style="color: #ff4d4d;"><?php echo number_format(max(0, $target - $done), 0); ?></b> টাকার বাজি খেলা প্রয়োজন।
-            </p>
+            <div class="input-group">
+                <label>উইথড্র পরিমাণ (৳১০০ - ৳<?php echo number_format($user_data['balance'], 0, '.', ''); ?>):</label>
+                <input type="number" name="amount" min="100" max="<?php echo $user_data['balance']; ?>" placeholder="টাকার পরিমাণ লিখুন" required>
+            </div>
 
-            <a href="play.php" class="btn-play">🎯 খেলা চালিয়ে যান</a>
-        </div>
+            <button type="submit" class="btn-submit">রিকোয়েস্ট পাঠান</button>
+        </form>
 
-    <?php else: ?>
-        <!-- ৩. উইথড্র ফরম (টার্নওভার কমপ্লিট হলে এটি দেখাবে) -->
-        <div class="card" style="border-color: #00ff88;">
-            <h3 style="color: #00ff88;">✅ উইথড্র ফরম</h3>
-            <p style="color: #888;">আপনার টার্নওভার সম্পন্ন হয়েছে। এখন টাকা তুলতে পারেন।</p>
-            <!-- আপনার বিকাশ/নগদ ফরমের কোড এখানে আসবে -->
-        </div>
-    <?php endif; ?>
+        <p class="note">
+            ⚠️ তথ্য ভুল হলে রিকোয়েস্ট বাতিল হতে পারে। <br>
+            আপনার বর্তমান টার্নওভার প্রগ্রেস: <b><?php echo number_format($done, 0); ?> / <?php echo number_format($target, 0); ?></b>
+        </p>
+    </div>
 
 </body>
 </html>
+         
