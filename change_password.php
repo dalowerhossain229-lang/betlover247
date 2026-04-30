@@ -34,5 +34,5 @@ if (!empty($u) && !empty($old_pass) && !empty($new_pass)) {
     header("Location: profile.php");
 }
 echo "</body>";
-<?php ob_end_flush(); ?>
+ob_end_flush(); ?>
 
