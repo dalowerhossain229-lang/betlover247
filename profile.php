@@ -174,6 +174,14 @@ if ($t_main > 0) {
 <?php endif; ?>
         </div>
 
+<!-- অ্যাফিলিয়েট বাটন: শুধুমাত্র অনুমোদিত মেম্বাররাই দেখবে -->
+<?php if (isset($user_data['is_affiliate']) && $user_data['is_affiliate'] == 1): ?>
+    <div style="margin-bottom: 15px; width: 100%;">
+        <a href="affiliate.php" style="display: block; background: linear-gradient(90deg, #ffdf1b, #ffa500); color: #000; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; text-align: center; font-size: 14px;">
+            🤝 AFFILIATE PANEL
+        </a>
+    </div>
+<?php endif; ?>
 
     <!-- মেনু বাটনসমূহ -->
     <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 25px;">
