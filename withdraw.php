@@ -6,7 +6,8 @@ include 'db.php';
 $u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
 if (empty($u)) { header("Location: index.php"); exit(); }
 
-$query = $conn->query("SELECT balance, bkash_number, nagad_number FROM users WHERE username = '$u'");
+// ইউজারের ব্যালেন্স এবং প্রোফাইলে সেভ করা নম্বরগুলো আনা
+$query = $conn->query("SELECT balance, bkash_number, nagad_number, main_t, t_main FROM users WHERE username = '$u'");
 $user_data = $query->fetch_assoc();
 
 $saved_bkash = $user_data['bkash_number'] ?? '';
@@ -26,7 +27,6 @@ $saved_nagad = $user_data['nagad_number'] ?? '';
         label { color: #888; font-size: 13px; display: block; margin-bottom: 8px; }
         input, select { width: 100%; background: #222; color: #fff; padding: 14px; border-radius: 12px; border: 1px solid #444; box-sizing: border-box; font-size: 15px; margin-bottom: 20px; }
         .btn-submit { width: 100%; background: #00ff88; color: #000; padding: 16px; border-radius: 12px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; text-transform: uppercase; }
-        .limit-text { color: #555; font-size: 12px; display: block; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -36,12 +36,11 @@ $saved_nagad = $user_data['nagad_number'] ?? '';
     <div class="balance-box">
         <small style="color: #888;">AVAILABLE BALANCE</small>
         <h1 style="color: #ffdf1b; margin: 5px 0;">৳ <?php echo number_format($user_data['balance'], 2); ?></h1>
-        <span class="limit-text">লিমিট: ৳১০০ - ৳২৫,০০০</span>
+        <span style="color: #555; font-size: 12px;">লিমিট: ৳১০০ - ৳২৫,০০০</span>
     </div>
 
     <div class="card">
         <form action="process_withdraw.php" method="POST">
-            
             <label>পেমেন্ট মেথড সিলেক্ট করুন:</label>
             <select name="method" required>
                 <option value="bkash">বিকাশ (<?php echo $saved_bkash ?: 'নম্বর সেট নেই'; ?>)</option>
@@ -56,7 +55,7 @@ $saved_nagad = $user_data['nagad_number'] ?? '';
     </div>
 
     <p style="text-align: center; color: #444; font-size: 12px; margin-top: 20px;">
-        নম্বর পরিবর্তন করতে <a href="profile.php" style="color: #00ff88; text-decoration: none;">প্রোফাইলে যান</a>
+        ⚠️ টার্নওভার পূরণ না হলে রিকোয়েস্ট অটো-ক্যানসেল হবে।
     </p>
 
 </body>
