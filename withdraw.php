@@ -16,13 +16,15 @@ if (empty($u)) {
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৪. টার্নওভার লজিক (আপনার প্রোফাইল পেজের সাথে মিল রেখে)
+// ২০-২১ নম্বর লাইনের আশেপাশে এটি ঠিক করুন
 $done = (float)($user_data['main_t'] ?? 0); 
-$target = (float)($user_data['t_main'] ?? 700); 
 
-// ৫. কন্ডিশন: এটি পূরণ হলেই উইথড্র ফরম আসবে
-$is_turnover_done = ($done >= $target);
-?>
+// এটি সরাসরি ডাটাবেস থেকে আসা 't_main' মানটি নিবে
+$target = (float)($user_data['t_main'] ?? 0); 
+
+// যদি ডাটাবেসে কোনো মান না থাকে তবেই ডিফল্ট ৫০০ দেখাবে
+if($target <= 0) { $target = 500; }
+
 
 
 <!DOCTYPE html>
