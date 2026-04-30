@@ -10,24 +10,22 @@ if (empty($u)) {
     exit();
 }
 
-// ২. সরাসরি ডাটাবেস থেকে তথ্য আনা (প্রোফাইল পেজের সাথে মিল রেখে)
+// ২. ডাটাবেস থেকে তথ্য আনা (প্রোফাইল পেজের মতো হুবহু এক কুয়েরি)
 $query = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $user_data = $query->fetch_assoc();
 
-// withdraw.php-তে এই পরিবর্তনটি নিশ্চিত করুন
+// ৩. টার্নওভার লজিক (প্রোফাইল পেজের কলামের সাথে মিল রেখে)
 $done = (float)($user_data['main_t'] ?? 0); 
-
-// এটি সরাসরি ডাটাবেসের সেই ৩,২৫০ মানটি টেনে আনবে
 $target = (float)($user_data['t_main'] ?? 0); 
 
-// প্রোফাইল পেজের সাথে মিল রাখতে এটি যোগ করুন
+// যদি ডাটাবেসের ঘরে ০ থাকে, তবে মেইন ব্যালেন্সকেই টার্গেট ধরবে
 if ($target <= 0) {
     $target = (float)($user_data['balance'] ?? 0); 
 }
 
-
 $is_turnover_done = ($done >= $target);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="bn">
