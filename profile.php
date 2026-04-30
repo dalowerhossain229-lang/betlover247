@@ -208,7 +208,54 @@ if ($t_main > 0) {
 </div>
 <!-- পেমেন্ট নম্বর সেটআপ শেষ -->
 
-        
+   <!-- ট্রানজেকশন হিস্টোরি সেকশন শুরু -->
+<div class="card" style="background: #111; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px;">
+    <h4 style="color: #00ff88; margin-top: 0; font-size: 15px; border-bottom: 1px solid #222; padding-bottom: 10px;">📜 ট্রানজেকশন হিস্টোরি</h4>
+    
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left; color: #ccc;">
+            <thead>
+                <tr style="border-bottom: 1px solid #222;">
+                    <th style="padding: 10px 5px;">তারিখ</th>
+                    <th style="padding: 10px 5px;">ধরণ</th>
+                    <th style="padding: 10px 5px;">পরিমাণ</th>
+                    <th style="padding: 10px 5px;">অবস্থা</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // আপনার টেবিল 'deposits' এবং 'withdraws' অনুযায়ী কুয়েরি
+                $trans_query = "SELECT 'Deposit' as type, amount, status, date FROM deposits WHERE username = '$u' 
+                                UNION 
+                                SELECT 'Withdraw' as type, amount, status, date FROM withdraws WHERE username = '$u' 
+                                ORDER BY date DESC LIMIT 10";
+                
+                $trans_res = $conn->query($trans_query);
+
+                if ($trans_res && $trans_res->num_rows > 0) {
+                    while($row = $trans_res->fetch_assoc()) {
+                        // স্ট্যাটাস অনুযায়ী কালার কোড
+                        $s = strtolower($row['status']);
+                        $status_color = ($s == 'approved' || $s == 'success' || $s == '1') ? '#00ff88' : ($s == 'pending' || $s == '0' ? '#ffdf1b' : '#ff4d4d');
+                        $type_icon = ($row['type'] == 'Deposit') ? '📥' : '📤';
+                        
+                        echo "<tr style='border-bottom: 1px solid #111;'>";
+                        echo "<td style='padding: 10px 5px; font-size: 10px;'>" . date('d M, h:i A', strtotime($row['date'])) . "</td>";
+                        echo "<td style='padding: 10px 5px;'>$type_icon " . $row['type'] . "</td>";
+                        echo "<td style='padding: 10px 5px; color: #fff; font-weight: bold;'>৳" . number_format($row['amount'], 0) . "</td>";
+                        echo "<td style='padding: 10px 5px; color: $status_color; font-weight: bold;'>" . ucfirst($row['status']) . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4' style='padding: 20px; text-align: center; color: #555;'>কোনো রেকর্ড পাওয়া যায়নি।</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- ট্রানজেকশন হিস্টোরি শেষ -->
+     
         <button class="p-btn" onclick="location.href='logout.php'" style="color:#ff4d4d;">Logout</button>
     </div>
 
