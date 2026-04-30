@@ -25,7 +25,7 @@ $target = (float)($user_data['t_main'] ?? 0);
 // যদি ডাটাবেসে কোনো মান না থাকে তবেই ডিফল্ট ৫০০ দেখাবে
 if($target <= 0) { $target = 500; }
 
-
+?>
 
 <!DOCTYPE html>
 <html lang="en">
