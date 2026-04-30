@@ -52,25 +52,23 @@ $is_turnover_done = ($done >= $target);
 
     <!-- ৫. টার্নওভার চেক সেকশন -->
     <?php if (!$is_turnover_done): ?>
-    <!-- টার্নওভার কার্ড শুরু -->
-    <div style="background: linear-gradient(145deg, #1a1a1a, #111); padding: 25px; border-radius: 15px; border: 1px solid #333; margin-top: 20px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
-        
-        <div style="font-size: 18px; color: #ffdf1b; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-            ⚠️ টার্নওভার প্রগ্রেস
-        </div>
+<!-- টার্নওভার কার্ডের ভেতর এই অংশটুকু হুবহু বসান -->
+<div style="background: #222; height: 12px; border-radius: 10px; width: 100%; border: 1px solid #333; overflow: hidden; margin: 15px 0;">
+    <?php 
+        // সরাসরি ক্যালকুলেশন
+        $p = ($target > 0) ? ($done / $target) * 100 : 0; 
+    ?>
+    <div style="width: <?php echo min($p, 100); ?>%; background: linear-gradient(90deg, #ff4d4d, #f00); height: 100%; border-radius: 10px;"></div>
+</div>
 
-        <?php $percent = ($target > 0) ? ($done / $target) * 100 : 0; ?>
-        <div style="background: #222; height: 12px; border-radius: 10px; width: 100%; border: 1px solid #333; overflow: hidden; margin: 15px 0;">
-            <div style="width: <?php echo min($percent, 100); ?>%; background: linear-gradient(90deg, #ff4d4d, #f00); height: 100%; border-radius: 10px; transition: width 0.5s ease;"></div>
-        </div>
+<p style="color: #ccc; font-size: 15px; margin: 5px 0;">
+    <!-- এখানে কোনো ৯০০ লেখা নেই, সব ডাটাবেস থেকে আসবে -->
+    প্রগ্রেস: <b style="color: #fff;"><?php echo number_format($done, 0); ?></b> / <b style="color: #00ff88;"><?php echo number_format($target, 0); ?></b>
+</p>
 
-        <p style="color: #ccc; font-size: 15px; margin: 5px 0;">
-            প্রগ্রেস: <b style="color: #fff;"><?php echo number_format($done, 0); ?></b> / <b style="color: #00ff88;"><?php echo number_format($target, 0); ?></b>
-        </p>
-        
-        <p style="color: #777; font-size: 12px; margin-top: 10px; line-height: 1.6;">
-            টাকা উইথড্র দিতে হলে আরও <b style="color: #ff4d4d;"><?php echo number_format($target - $done, 0); ?></b> টাকার বাজি খেলা প্রয়োজন।
-        </p>
+<p style="color: #777; font-size: 12px; margin-top: 10px; line-height: 1.6;">
+    টাকা উইথড্র দিতে হলে আরও <b style="color: #ff4d4d;"><?php echo number_format(max(0, $target - $done), 0); ?></b> টাকার বাজি খেলা প্রয়োজন।
+</p>
 
         <a href="play.php" style="display: inline-block; margin-top: 20px; background: #00ff88; color: #000; padding: 10px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 12px;">
             🎯 খেলা চালিয়ে যান
