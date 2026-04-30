@@ -12,8 +12,10 @@ if (empty($u)) {
 }
 
 // ২. ডাটাবেস থেকে ইউজারের লেটেস্ট তথ্য আনা (১৪০০ এর জন্য এটি জরুরি)
-$query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
+// এটি নিশ্চিত করবে যে সরাসরি আপনার লগইন করা আইডির সব তাজা তথ্য আসবে
+$query = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $user_data = $query->fetch_assoc();
+
 // ১৯ থেকে ২৩ নম্বর লাইন এভাবে সংশোধন করুন
 $done = (float)($user_data['main_t'] ?? 0); 
 $target = (float)($user_data['t_main'] ?? 0); 
