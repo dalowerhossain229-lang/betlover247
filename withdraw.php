@@ -14,13 +14,16 @@ if (empty($u)) {
 $query = $conn->query("SELECT * FROM users WHERE username = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৩. টার্নওভার লজিক (প্রোফাইল পেজের কলামের সাথে মিল রেখে)
+// withdraw.php-তে এই পরিবর্তনটি নিশ্চিত করুন
 $done = (float)($user_data['main_t'] ?? 0); 
-// ১৯ নম্বর লাইনটি হুবহু এভাবে লিখুন
-$target = (float)($user_data['t_main'] ?? $user_data['deposit'] ?? 0);
 
-// যদি সব খালি থাকে, তবেই সে ১০০০ না দেখিয়ে ০ দেখাবে
-if($target <= 0) { $target = 0; }
+// এটি সরাসরি ডাটাবেসের সেই ৩,২৫০ মানটি টেনে আনবে
+$target = (float)($user_data['t_main'] ?? 0); 
+
+// প্রোফাইল পেজের সাথে মিল রাখতে এটি যোগ করুন
+if ($target <= 0) {
+    $target = (float)($user_data['balance'] ?? 0); 
+}
 
 
 $is_turnover_done = ($done >= $target);
@@ -55,14 +58,14 @@ $is_turnover_done = ($done >= $target);
     <?php if (!$is_turnover_done): ?>
         <div class="card">
             <h3 style="color: #ffdf1b; margin-bottom: 20px;">⚠️ টার্নওভার প্রগ্রেস</h3>
-            
+            <?php echo number_format($done, 0); ?> / <?php echo number_format($target, 0); ?>
             <div class="progress-container">
                 <?php $p = ($target > 0) ? ($done / $target) * 100 : 0; ?>
                 <div class="progress-bar" style="width: <?php echo min($p, 100); ?>%;"></div>
             </div>
 
             <p style="font-size: 16px; margin: 5px 0;">
-                প্রগ্রেস: <b style="color: #fff;"><?php echo number_format($done, 0); ?></b> / <b style="color: #00ff88;"><?php echo number_format($target, 0); ?></b>
+                
             </p>
 
             <p style="color: #777; font-size: 13px;">
