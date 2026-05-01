@@ -3,10 +3,26 @@ session_start();
 include 'header.php'; 
 include 'db.php'; 
 if (!isset($_SESSION['user_id'])) { header("Location: index.php"); exit(); }
+$st_res = $conn->query("SELECT * FROM settings WHERE id = 1");
+$st = $st_res->fetch_assoc();    
 ?>
 
 <div style="padding: 20px; text-align: center; color: white;">
     <h2 style="color:#ffdf1b;">🎁 PROMOTIONAL DEPOSIT (PB)</h2>
+    <div style="background: rgba(255, 223, 27, 0.05); border: 1px solid #ffdf1b55; padding: 15px; border-radius: 15px; margin: 15px 0; text-align: center;">
+    <p style="color: #ffdf1b; font-size: 13px; margin-bottom: 12px; font-weight: bold;">💰 আমাদের অফিশিয়াল নম্বরসমূহ:</p>
+    
+    <!-- বিকাশ (Personal & Agent) -->
+    <div style="display: flex; justify-content: space-around; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px;">
+        <div>
+            <small style="color: #888;">বিকাশ (P):</small><br>
+            <b style="color: #fff; font-size: 13px;"><?php echo $st['admin_bkash_p'] ?? '017XXXXXXXX'; ?></b>
+        </div>
+        <div>
+            <small style="color: #888;">বিকাশ (A):</small><br>
+            <b style="color: #fff; font-size: 13px;"><?php echo $st['admin_bkash_a'] ?? '017XXXXXXXX'; ?></b>
+        </div>
+    </div>
     <div style="background:rgba(0,255,136,0.1); border:1px solid #00ff88; padding:15px; border-radius:12px; margin-bottom:20px;">
         <p style="margin:0; font-weight:bold; color:#00ff88;">৳১০০ থেকে ৳১০,০০০ পর্যন্ত ডিপোজিট করুন</p>
         <small style="color:#aaa;">অ্যাডমিন আপনার ডিপোজিটের ওপর প্রমোশনাল বোনাস ও টার্নওভার সেট করে দেবে।</small>
