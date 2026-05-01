@@ -40,7 +40,10 @@ $sql = "UPDATE users SET
 
 if ($conn->query($sql)) {
 
-$conn->query("INSERT INTO bets (username, bet_amount, win_amount, balance_type, game_name, status) VALUES ('$u', '$bet', 0, '$wallet', '2048 Game', 'pending')");
+// ৪৩ নম্বর লাইনটি এভাবে দিন
+$stmt = $conn->prepare("INSERT INTO bets (username, bet_amount, win_amount, balance_type, game_name, status) VALUES (?, ?, 0, ?, '2048 Game', 'pending')");
+$stmt->bind_param("sds", $u, $bet, $wallet);
+$stmt->execute();
 
 
     echo "success"; // এটি পেলে আপনার গেমে পপআপ আসবে
