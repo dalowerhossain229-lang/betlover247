@@ -62,18 +62,18 @@ if (($user['is_affiliate'] ?? 0) != 1) {
             • মাসের শেষে মেম্বারদের মোট লস বা প্রফিটের ৪৭% আপনার একাউন্টে যোগ হবে।
         </div>
     </div>
-<!-- শুধুমাত্র ৫% ডিপোজিট কমিশন ট্রান্সফার বাটন -->
-<div class="card" style="margin-top: 20px; background: #1a1a1a; border: 1px solid #ffdf1b33;">
+<!-- ৫% কমিশন মেইন ব্যালেন্সে নেওয়ার বাটন -->
+<div class="card" style="margin-top: 20px; background: #1a1a1a; border: 1px solid #ffdf1b;">
     <p style="color: #888; font-size: 13px;">আপনার ৫% ডিপোজিট কমিশন ব্যালেন্স</p>
     <h2 style="color: #ffdf1b; margin: 5px 0;">৳<?php echo number_format($user['aff_balance'], 2); ?></h2>
     
-    <form action="transfer_5percent.php" method="POST" style="margin-top: 15px;">
-        <button type="submit" onclick="return confirm('আপনি কি নিশ্চিত?')" style="width: 85%; background: #ffdf1b; color: #000; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer;">
-            মেইন ব্যালেন্সে নিন
+    <form action="transfer_5percent.php" method="POST">
+        <button type="submit" onclick="return confirm('আপনি কি এই টাকা মেইন ব্যালেন্সে নিতে চান?')" style="width: 100%; background: #ffdf1b; color: #000; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer;">
+            মেইন ব্যালেন্সে ট্রান্সফার করুন
         </button>
     </form>
-    <p style="font-size: 11px; color: #666; margin-top: 10px;">*ক্লিক করলে সব কমিশন আপনার গেমিং ব্যালেন্সে যোগ হবে।</p>
 </div>
+
 
     <a href="profile.php" class="back-btn">← প্রোফাইলে ফিরে যান</a>
 
