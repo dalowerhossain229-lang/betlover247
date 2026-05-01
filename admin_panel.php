@@ -66,7 +66,9 @@ $total_wd = $wd_res->fetch_assoc()['total'] ?? 0;
         <a href="admin_bonus.php" style="display: flex; align-items: center; gap: 10px; padding: 15px; background: #111; border: 1px solid #ffdf1b; color: #ffdf1b; text-decoration: none; border-radius: 10px; margin-top: 10px; font-weight: bold;">
     🎁 Manage User Bonus & Turnover
 </a>
-<a href="admin_aff_clear.php" class="admin-btn" style="border: 1px solid #ffdf1b; color: #ffdf1b; margin-top: 10px;">
+<!-- ৬৯ নম্বর লাইনটি এভাবে লিখুন -->
+<a href="admin_aff_settle.php" class="admin-btn">
+
     💰 Affiliate Monthly Settlement
 </a>
  <a href="admin_manage_users.php" class="admin-btn" style="border: 1px solid #00ff88; color: #00ff88;">
