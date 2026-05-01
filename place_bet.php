@@ -39,9 +39,9 @@ $sql = "UPDATE users SET
         WHERE username = '$u'";
 
 if ($conn->query($sql)) {
-    // ৫. বেট হিস্টোরিতে রেকর্ড সেভ করা
-  // ৪৩ নম্বর লাইনে এটি বসান (হিস্টোরিতে তথ্য সেভ করার জন্য)
-$conn->query("INSERT INTO bets (username, bet_amount, win_amount, balance_type, game_name, status) VALUES ('$u', '$bet', '0', '$wallet', '2048 Game', 'pending')");
+
+$conn->query("INSERT INTO bets (username, bet_amount, win_amount, balance_type, game_name, status) VALUES ('$u', '$bet', 0, '$wallet', '2048 Game', 'pending')");
+
 
     echo "success"; // এটি পেলে আপনার গেমে পপআপ আসবে
 } else {
