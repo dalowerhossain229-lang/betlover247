@@ -289,20 +289,28 @@ if ($t_main > 0) {
 <!-- পাসওয়ার্ড পরিবর্তন শেষ -->
  
    <?php
-// সেটিংস থেকে হোয়াটসঅ্যাপ নম্বর আনা
+// ১. নম্বরটি ডাটাবেস থেকে আনা
 $wa_res = $conn->query("SELECT whatsapp_no FROM settings WHERE id = 1");
 $wa_data = $wa_res->fetch_assoc();
-$wa_no = $wa_data['whatsapp_no'] ?? '8801700000000';
+$wa_no = preg_replace('/[^0-9]/', '', $wa_data['whatsapp_no'] ?? '8801306650323'); 
 ?>
 
-<!-- ডাইনামিক হোয়াটসঅ্যাপ বাটন -->
-<div style="margin-bottom: 15px; width: 100%;">
-     <a href="https://wa.me<?php echo str_replace('+', '', $wa_no); ?>" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #25D366; color: #fff; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px;">
-
-        <img src="https://wikimedia.org" width="18" style="margin-right: 8px;">
+<!-- ২. হোয়াটসঅ্যাপ বাটন (সাদা বক্সের ভেতরে) -->
+<div class="card" style="background: #111; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px;">
+    <button onclick="openWA()" style="width: 100%; display: flex; align-items: center; justify-content: center; background: #25D366; color: #fff; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; font-size: 14px;">
+        <img src="https://wikimedia.org" width="18" style="margin-right: 10px;">
         হোয়াটসঅ্যাপ লাইভ চ্যাট
-    </a>
+    </button>
 </div>
+
+<script>
+function openWA() {
+    // জাভাস্ক্রিপ্ট দিয়ে সরাসরি অ্যাপ ওপেন করার কমান্ড
+    var number = "<?php echo $wa_no; ?>";
+    window.open("https://whatsapp.com" + number + "&text=Hi, I need help!", "_blank");
+}
+</script>
+
   
         <button class="p-btn" onclick="location.href='logout.php'" style="color:#ff4d4d;">Logout</button>
     </div>
