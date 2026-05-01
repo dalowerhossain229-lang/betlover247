@@ -15,7 +15,8 @@ $u = $_SESSION['user_id'];
 $u_data = $conn->query("SELECT * FROM users WHERE username = '$u'")->fetch_assoc();
 // ১৫ নম্বর লাইন (যা আগে থেকেই আছে)
 $u_data = $conn->query("SELECT * FROM users WHERE username = '$u'");
-$user_data = $u_data->fetch_assoc(); 
+$user_data = $u_data->fetch_assoc(); $u_data = $user_data;
+
 ?>
 
 <?php if (isset($user_data['is_affiliate']) && $user_data['is_affiliate'] == 1): ?>
