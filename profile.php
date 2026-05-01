@@ -202,29 +202,39 @@ if ($t_main > 0) {
         Withdraw >
     </button>
 </a>
-<!-- পেমেন্ট নম্বর সেটআপ শুরু -->
-<div style="background: #111; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px; text-align: left;">
-    <h4 style="color: #00ff88; margin-top: 0; font-size: 14px;">📋 পেমেন্ট নম্বর (Locked)</h4>
-    <form action="save_payment.php" method="POST">
-        
-        <label style="color: #888; font-size: 11px; display: block; margin-bottom: 5px;">বিকাশ (Personal):</label>
-        <input type="text" name="bkash" value="<?php echo $u_data['bkash_number'] ?? ''; ?>" 
-               placeholder="017XXXXXXXX" <?php if(!empty($u_data['bkash_number'])) echo 'readonly'; ?> 
-               style="width: 100%; background: #222; color: #fff; padding: 10px; border-radius: 8px; border: 1px solid #444; margin-bottom: 12px; box-sizing: border-box; <?php if(!empty($u_data['bkash_number'])) echo 'color:#777; border:none;'; ?>">
-        
-        <label style="color: #888; font-size: 11px; display: block; margin-bottom: 5px;">নগদ (Personal):</label>
-        <input type="text" name="nagad" value="<?php echo $u_data['nagad_number'] ?? ''; ?>" 
-               placeholder="018XXXXXXXX" <?php if(!empty($u_data['nagad_number'])) echo 'readonly'; ?> 
-               style="width: 100%; background: #222; color: #fff; padding: 10px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px; box-sizing: border-box; <?php if(!empty($u_data['nagad_number'])) echo 'color:#777; border:none;'; ?>">
-        
-        <?php if(empty($u_data['bkash_number']) || empty($u_data['nagad_number'])): ?>
-            <button type="submit" style="width: 100%; background: #00ff88; color: #000; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; font-size: 13px;">নম্বর সেভ করুন</button>
-        <?php else: ?>
-            <p style="color: #ff4d4d; font-size: 10px; text-align: center; margin: 0;">⚠️ পেমেন্ট নম্বর লক করা হয়েছে।</p>
-        <?php endif; ?>
-    </form>
+<!-- পেমেন্ট নম্বর সেকশন (Hidable) -->
+<div class="card" style="background: #111; padding: 10px; border-radius: 12px; border: 1px solid #333; margin-bottom: 12px; overflow: hidden;">
+    
+    <!-- এই হেডার বারটিতে ক্লিক করলে বক্স খুলবে -->
+    <div onclick="toggleBox('payBox', 'payIcon')" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:10px;">
+        <h4 style="color:#00ff88; margin:0; font-size:15px;">📋 পেমেন্ট নম্বর (Locked)</h4>
+        <span id="payIcon" style="color:#888;">▼</span>
+    </div>
+    
+    <!-- এই অংশটি শুরুতে লুকানো থাকবে -->
+    <div id="payBox" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 10px;">
+        <form action="save_payment.php" method="POST" style="padding-top:15px; padding-bottom:15px;">
+            
+            <label style="color:#888; font-size:11px; display:block; margin-bottom:5px;">বিকাশ (Personal):</label>
+            <input type="text" name="bkash" value="<?php echo $u_data['bkash_number'] ?? ''; ?>" 
+                   placeholder="017XXXXXXXX" <?php if(!empty($u_data['bkash_number'])) echo 'readonly'; ?> 
+                   style="width:100%; background:#222; color:#fff; padding:10px; border-radius:8px; border:1px solid #444; margin-bottom:12px; box-sizing:border-box; <?php if(!empty($u_data['bkash_number'])) echo 'opacity:0.6;'; ?>">
+
+            <label style="color:#888; font-size:11px; display:block; margin-bottom:5px;">নগদ (Personal):</label>
+            <input type="text" name="nagad" value="<?php echo $u_data['nagad_number'] ?? ''; ?>" 
+                   placeholder="018XXXXXXXX" <?php if(!empty($u_data['nagad_number'])) echo 'readonly'; ?> 
+                   style="width:100%; background:#222; color:#fff; padding:10px; border-radius:8px; border:1px solid #444; margin-bottom:15px; box-sizing:border-box; <?php if(!empty($u_data['nagad_number'])) echo 'opacity:0.6;'; ?>">
+
+            <?php if(empty($u_data['bkash_number']) || empty($u_data['nagad_number'])): ?>
+                <button type="submit" style="width:100%; background:#00ff88; color:#000; padding:12px; border-radius:8px; border:none; font-weight:bold; cursor:pointer;">নম্বর সেভ করুন</button>
+            <?php else: ?>
+                <p style="color: #ff4d4d; font-size: 11px; text-align: center; margin: 0;">🔒 নম্বরটি লক করা আছে। পরিবর্তনের জন্য সাপোর্ট টিমে যোগাযোগ করুন।</p>
+            <?php endif; ?>
+            
+        </form>
+    </div>
 </div>
-<!-- পেমেন্ট নম্বর সেটআপ শেষ -->
+
 <!-- ট্রানজেকশন হিস্টোরি বক্স (Hidable) -->
 <div class="card" style="background: #111; padding: 10px; border-radius: 12px; border: 1px solid #333; margin-bottom: 12px; overflow: hidden;">
     
