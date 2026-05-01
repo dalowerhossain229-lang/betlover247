@@ -297,7 +297,8 @@ $wa_no = $wa_data['whatsapp_no'] ?? '8801700000000';
 
 <!-- ডাইনামিক হোয়াটসঅ্যাপ বাটন -->
 <div style="margin-bottom: 15px; width: 100%;">
-    <a href="https://wa.me<?php echo $wa_no; ?>" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #25D366; color: #fff; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);">
+     <a href="https://wa.me<?php echo str_replace('+', '', $wa_no); ?>" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #25D366; color: #fff; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px;">
+
         <img src="https://wikimedia.org" width="18" style="margin-right: 8px;">
         হোয়াটসঅ্যাপ লাইভ চ্যাট
     </a>
