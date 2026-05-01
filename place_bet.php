@@ -4,14 +4,13 @@ session_start();
 include 'db.php';
 
 // ১. সেশন থেকে ইউজার চেক
-$u = $_SESSION['username'] ?? $_SESSION['user_id'] ?? '';
-$bet = isset($_POST['amount']) ? (float)$_POST['amount'] : 10; // বাজি ধরার টাকা
-$wallet = isset($_POST['wallet']) ? $_POST['wallet'] : 'main'; // ইউজার যা সিলেক্ট করেছে
-
-if (empty($u)) {
+if (isset($_SESSION['user_id'])) {
+    $u = $_SESSION['user_id'];
+} elseif (isset($_SESSION['username'])) {
+    $u = $_SESSION['username'];
+} else {
     die("error_no_session");
 }
-
 // ২. ডাটাবেসের কলাম নির্ধারণ (আপনার প্রোফাইল পেজের সাথে মিল রেখে)
 if ($wallet == 'pb') { 
     $bal_col = "pb_balance"; 
