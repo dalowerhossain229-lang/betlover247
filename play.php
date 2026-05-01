@@ -133,6 +133,15 @@ $game_url = "https://2048.org";
 
 
 <script>
+ function updateWallet(walletType) {
+    // ডাটাবেস বা সেশনে ওয়ালেট টাইপ সেভ করার জন্য কল
+    fetch('update_wallet.php?type=' + walletType)
+    .then(() => {
+        // পেজ রিফ্রেশ করলে এখন সেটি সিলেক্ট করা ওয়ালেটেই থাকবে
+        location.reload();
+    });
+}
+   
 function placeTestBet() {
     const wallet = document.getElementById('active_wallet').value;
     const btn = document.getElementById('play_btn');
