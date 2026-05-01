@@ -1,18 +1,18 @@
 <?php
-include 'db.php';
+ob_start();
 session_start();
+include 'db.php';
 
-// ১. সেশন থেকে ইউজার চেক
-$u = $_SESSION['username'] ?? '';
+// ১. লগইন চেক ও ইউজার ডাটা আনা
+$u = $_SESSION['user_id'] ?? '';
 if (empty($u)) { header("Location: index.php"); exit(); }
 
-// ২. ডাটাবেস থেকে ইউজারের অ্যাফিলিয়েট তথ্য আনা
-$query = $conn->query("SELECT * FROM users WHERE username = '$u'");
-$user = $query->fetch_assoc();
+$u_res = $conn->query("SELECT * FROM users WHERE username = '$u'");
+$user = $u_res->fetch_assoc();
 
-// ৩. যদি সে অ্যাফিলিয়েট মেম্বার না হয়, তবে এক্সেস বন্ধ
+// ২. অ্যাফিলিয়েট চেক
 if (($user['is_affiliate'] ?? 0) != 1) {
-    echo "<body style='background:#000; color:red; text-align:center; padding-top:50px;'><h2>Access Denied!</h2><p>আপনি অ্যাফিলিয়েট মেম্বার নন।</p></body>";
+    echo "<body style='background:#000; color:red; text-align:center; padding-top:50px;'><h2>অ্যাক্সেস ডিনাইড!</h2><p>আপনি অ্যাফিলিয়েট মেম্বার নন।</p></body>";
     exit();
 }
 ?>
@@ -26,49 +26,54 @@ if (($user['is_affiliate'] ?? 0) != 1) {
     <style>
         body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 15px; text-align: center; }
         .card { background: #111; border: 1px solid #333; padding: 20px; border-radius: 15px; margin-bottom: 15px; }
-        .stat-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        .stat { background: #1a1a1a; padding: 15px; border-radius: 10px; border: 1px solid #222; }
-        .ref-code { font-size: 24px; color: #ffdf1b; font-weight: bold; letter-spacing: 2px; margin: 15px 0; }
-        .btn-copy { background: #ffdf1b; color: #000; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; }
+        .stat-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .stat { background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #222; text-align: center; }
+        .ref-code { font-size: 26px; color: #ffdf1b; font-weight: bold; letter-spacing: 2px; margin: 15px 0; background: #222; padding: 10px; border-radius: 8px; }
+        .btn-copy { background: #ffdf1b; color: #000; padding: 12px 25px; border-radius: 8px; border:none; font-weight: bold; cursor: pointer; width: 100%; }
+        .back-btn { display:inline-block; margin-top: 20px; color: #888; text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <h2 style="color: #ffdf1b;">🤝 AFFILIATE PANEL</h2>
+    <h2 style="color: #ffdf1b; margin-top: 20px;">🤝 অ্যাফিলিয়েট ড্যাশবোর্ড</h2>
 
     <div class="card">
-        <p style="color: #888; font-size: 14px;">আপনার ইউনিক রেফার কোড</p>
+        <p style="color: #888; font-size: 14px; margin-bottom: 5px;">আপনার ইউনিক রেফার কোড</p>
         <div class="ref-code" id="refCode"><?php echo $user['ref_code']; ?></div>
-        <button class="btn-copy" onclick="copyCode()">COPY CODE</button>
+        <button class="btn-copy" onclick="copyCode()">কপি কোড</button>
     </div>
 
     <div class="stat-box">
         <div class="stat">
             <small style="color: #00ff88;">ডিপোজিট কমিশন (৫%)</small>
-            <h3 style="margin: 10px 0;">৳<?php echo number_format($user['aff_balance'], 2); ?></h3>
+            <h2 style="margin: 10px 0; font-size: 18px;">৳<?php echo number_format($user['aff_balance'], 2); ?></h2>
         </div>
         <div class="stat">
             <small style="color: #ff4d4d;">লস/প্রফিট শেয়ার (৪৭%)</small>
-            <h3 style="margin: 10px 0;">৳<?php echo number_format($user['player_loss_profit'], 2); ?></h3>
+            <h2 style="margin: 10px 0; font-size: 18px;">৳<?php echo number_format($user['player_loss_profit'], 2); ?></h2>
         </div>
     </div>
 
     <div class="card" style="margin-top: 20px; text-align: left;">
-        <h4 style="margin: 0; color: #ffdf1b;">কিভাবে কাজ করে?</h4>
-        <ul style="font-size: 13px; color: #bbb; padding-left: 20px;">
-            <li>আপনার কোড দিয়ে কেউ জয়েন করলে সে আপনার মেম্বার।</li>
-            <li>সে যতবার ডিপোজিট করবে, আপনি সাথে সাথে ৫% পাবেন।</li>
-            <li>মাসের শেষে প্লেয়ারের নিট লস/প্রফিটের ওপর ৪৭% সেটেলমেন্ট হবে।</li>
-        </ul>
+        <h4 style="margin: 0 0 10px 0; color: #ffdf1b; font-size: 16px;">💡 এটি কিভাবে কাজ করে?</h4>
+        <div style="font-size: 13px; color: #bbb; line-height: 1.6;">
+            • আপনার কোড দিয়ে রেজিস্ট্রেশন করলে সে আপনার মেম্বার হবে।<br>
+            • আপনার মেম্বার প্রতিবার ডিপোজিট করলে আপনি সাথে সাথে ৫% পাবেন।<br>
+            • মাসের শেষে মেম্বারদের মোট লস বা প্রফিটের ৪৭% আপনার একাউন্টে যোগ হবে।
+        </div>
     </div>
+
+    <a href="profile.php" class="back-btn">← প্রোফাইলে ফিরে যান</a>
 
     <script>
         function copyCode() {
             var code = document.getElementById("refCode").innerText;
-            navigator.clipboard.writeText(code);
-            alert("কোড কপি করা হয়েছে: " + code);
+            navigator.clipboard.writeText(code).then(() => {
+                alert("রেফার কোড কপি করা হয়েছে: " + code);
+            });
         }
     </script>
 
 </body>
 </html>
+<?php ob_end_flush(); ?>
