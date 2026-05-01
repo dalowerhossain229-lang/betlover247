@@ -68,11 +68,15 @@ $ng_a = $st['admin_nagad_a'] ?? '018XXXXXXXX';
 let selectedMethod = "";
 function selectMethod(m, num) {
     selectedMethod = m;
-    document.getElementById('methodName').innerText = m + " - Cash Out";
+    // পারসোনাল হলে 'Send Money' আর এজেন্ট হলে 'Cash Out' দেখাবে
+    let type = m.includes('Personal') ? 'Send Money' : 'Cash Out';
+    
+    document.getElementById('methodName').innerText = m + " - " + type;
     document.getElementById('displayNum').innerText = num;
     document.getElementById('numberBox').style.display = 'block';
     document.getElementById('depositForm').style.display = 'block';
 }
+
 
 function copyNum() {
     let num = document.getElementById('displayNum').innerText;
