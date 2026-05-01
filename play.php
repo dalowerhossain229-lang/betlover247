@@ -133,6 +133,59 @@ $game_url = "https://2048.org";
 </div>
         <a href="bet_history.php" class="history-btn">📜 VIEW BET HISTORY</a>
     </div>
+<!-- ১৩৬ নম্বর লাইন থেকে শুরু করুন -->
+<div class="card" style="background: #111; padding: 10px; border-radius: 12px; border: 1px solid #333; margin: 20px 10px; overflow: hidden;">
+    <div onclick="toggleBox('betHistoryBox', 'betHistIcon')" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:10px;">
+        <h4 style="color:#00ff88; margin:0; font-size:15px;">📜 My Bet History</h4>
+        <span id="betHistIcon" style="color:#888;">▼</span>
+    </div>
+    
+    <div id="betHistoryBox" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 10px;">
+        <div style="padding: 15px 0; overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 11px; text-align: center;">
+                <tr style="color: #888; border-bottom: 1px solid #333;">
+                    <th style="padding: 10px;">সময়</th>
+                    <th>পরিমাণ</th>
+                    <th>ওয়ালেট</th>
+                    <th>ফলাফল</th>
+                </tr>
+                <?php
+                $u_id = $_SESSION['user_id'];
+                $bets = $conn->query("SELECT * FROM bets WHERE username = '$u_id' ORDER BY id DESC LIMIT 10");
+
+                if ($bets && $bets->num_rows > 0) {
+                    while($b = $bets->fetch_assoc()) {
+                        $res_color = ($b['win_loss'] == 'win') ? '#00ff88' : '#ff4d4d';
+                        echo "<tr style='border-bottom: 1px solid #222;'>";
+                        echo "<td style='padding: 10px; color: #777;'>" . date('h:i A', strtotime($b['created_at'])) . "</td>";
+                        echo "<td>৳" . number_format($b['bet_amount'], 0) . "</td>";
+                        echo "<td>" . strtoupper($b['active_wallet'] ?? 'MAIN') . "</td>";
+                        echo "<td style='color: $res_color; font-weight: bold;'>" . strtoupper($b['win_loss']) . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4' style='padding: 20px; color: #555;'>এখনো কোনো বেট নেই</td></tr>";
+                }
+                ?>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleBox(id, iconId) {
+    var content = document.getElementById(id);
+    var icon = document.getElementById(iconId);
+    if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+        content.style.maxHeight = "0px";
+        icon.innerText = "▼";
+    } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+        icon.innerText = "▲";
+    }
+}
+</script>
+<!-- ১৩৬ নম্বর লাইন এখানে শেষ হবে -->
 
 
 <script>
