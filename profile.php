@@ -26,7 +26,7 @@ if (isset($user_data['is_affiliate']) && $user_data['is_affiliate'] == 1): ?>
         </a>
     </div>
 <?php endif; ?>
-
+<?php
 // ১. মেইন টার্গেট = ইউজারের মোট সফল ডিপোজিট (সরাসরি ডাটাবেস থেকে)
 $dep_res = $conn->query("SELECT SUM(amount) as t_dep FROM deposits WHERE username = '$u' AND (status = 'success' OR status = 'Approved')")->fetch_assoc();
 $t_main = (float)($dep_res['t_dep'] ?? 0); 
