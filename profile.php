@@ -225,54 +225,55 @@ if ($t_main > 0) {
     </form>
 </div>
 <!-- পেমেন্ট নম্বর সেটআপ শেষ -->
-
-   <!-- ট্রানজেকশন হিস্টোরি সেকশন শুরু -->
-<div class="card" style="background: #111; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px;">
-    <h4 style="color: #00ff88; margin-top: 0; font-size: 15px; border-bottom: 1px solid #222; padding-bottom: 10px;">📜 ট্রানজেকশন হিস্টোরি</h4>
+<!-- ট্রানজেকশন হিস্টোরি বক্স (Hidable) -->
+<div class="card" style="background: #111; padding: 10px; border-radius: 12px; border: 1px solid #333; margin-bottom: 12px; overflow: hidden;">
     
-    <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left; color: #ccc;">
-            <thead>
-                <tr style="border-bottom: 1px solid #222;">
-                    <th style="padding: 10px 5px;">তারিখ</th>
-                    <th style="padding: 10px 5px;">ধরণ</th>
-                    <th style="padding: 10px 5px;">পরিমাণ</th>
-                    <th style="padding: 10px 5px;">অবস্থা</th>
+    <!-- এই হেডার বারটিতে ক্লিক করলে বক্স খুলবে -->
+    <div onclick="toggleBox('historyBox', 'histIcon')" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:10px;">
+        <h4 style="color:#ffdf1b; margin:0; font-size:15px;">📜 ট্রানজেকশন হিস্টোরি</h4>
+        <span id="histIcon" style="color:#888;">▼</span>
+    </div>
+    
+    <!-- এই অংশটি শুরুতে লুকানো থাকবে -->
+    <div id="historyBox" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 10px;">
+        <div style="padding-top:15px; padding-bottom:15px; overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: center;">
+                <tr style="color: #888; border-bottom: 1px solid #333;">
+                    <th style="padding: 10px;">তারিখ</th>
+                    <th>ধরণ</th>
+                    <th>পরিমাণ</th>
+                    <th>অবস্থা</th>
                 </tr>
-            </thead>
-            <tbody>
                 <?php
-                // আপনার টেবিল 'deposits' এবং 'withdraws' অনুযায়ী কুয়েরি
-                $trans_query = "SELECT 'Deposit' as type, amount, status, date FROM deposits WHERE username = '$u' 
-                                UNION 
-                                SELECT 'Withdraw' as type, amount, status, date FROM withdraws WHERE username = '$u' 
-                                ORDER BY date DESC LIMIT 10";
-                
-                $trans_res = $conn->query($trans_query);
+                // আপনার ডাটাবেস থেকে শেষ ১০টি লেনদেন আনা হচ্ছে
+                $history = $conn->query("SELECT type, amount, status, date FROM (
+                    SELECT 'Deposit' as type, amount, status, created_at as date FROM deposits WHERE username = '$u'
+                    UNION ALL
+                    SELECT 'Withdraw' as type, amount, status, created_at as date FROM withdraws WHERE username = '$u'
+                ) as transactions ORDER BY date DESC LIMIT 10");
 
-                if ($trans_res && $trans_res->num_rows > 0) {
-                    while($row = $trans_res->fetch_assoc()) {
-                        // স্ট্যাটাস অনুযায়ী কালার কোড
-                        $s = strtolower($row['status']);
-                        $status_color = ($s == 'approved' || $s == 'success' || $s == '1') ? '#00ff88' : ($s == 'pending' || $s == '0' ? '#ffdf1b' : '#ff4d4d');
-                        $type_icon = ($row['type'] == 'Deposit') ? '📥' : '📤';
+                if ($history && $history->num_rows > 0) {
+                    while($row = $history->fetch_assoc()) {
+                        // স্ট্যাটাস অনুযায়ী রং নির্ধারণ
+                        $status_text = ucfirst($row['status']);
+                        $status_color = ($row['status'] == 'success' || $row['status'] == 'Approved' || $row['status'] == '1') ? '#00ff88' : ($row['status'] == 'pending' ? '#ffdf1b' : '#ff4d4d');
                         
-                        echo "<tr style='border-bottom: 1px solid #111;'>";
-                        echo "<td style='padding: 10px 5px; font-size: 10px;'>" . date('d M, h:i A', strtotime($row['date'])) . "</td>";
-                        echo "<td style='padding: 10px 5px;'>$type_icon " . $row['type'] . "</td>";
-                        echo "<td style='padding: 10px 5px; color: #fff; font-weight: bold;'>৳" . number_format($row['amount'], 0) . "</td>";
-                        echo "<td style='padding: 10px 5px; color: $status_color; font-weight: bold;'>" . ucfirst($row['status']) . "</td>";
+                        echo "<tr style='border-bottom: 1px solid #222;'>";
+                        echo "<td style='padding: 10px; color: #bbb;'>" . date('d M', strtotime($row['date'])) . "</td>";
+                        echo "<td>" . $row['type'] . "</td>";
+                        echo "<td>৳" . number_format($row['amount'], 0) . "</td>";
+                        echo "<td style='color: $status_color; font-weight: bold;'>$status_text</td>";
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='4' style='padding: 20px; text-align: center; color: #555;'>কোনো রেকর্ড পাওয়া যায়নি।</td></tr>";
+                    echo "<tr><td colspan='4' style='padding: 20px; text-align: center; color: #555;'>কোনো রেকর্ড পাওয়া যায়নি</td></tr>";
                 }
                 ?>
-            </tbody>
-        </table>
+            </table>
+        </div>
     </div>
 </div>
-<!-- ট্রানজেকশন হিস্টোরি শেষ -->
+
 <!-- পাসওয়ার্ড পরিবর্তন বক্স (Hidable) -->
 <div class="card" style="background: #111; padding: 10px; border-radius: 12px; border: 1px solid #333; margin-bottom: 12px; overflow: hidden;">
     
