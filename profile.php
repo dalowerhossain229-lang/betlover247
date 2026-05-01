@@ -307,7 +307,7 @@ $wa_no = preg_replace('/[^0-9]/', '', $wa_data['whatsapp_no'] ?? '8801306650323'
 function openWA() {
     // জাভাস্ক্রিপ্ট দিয়ে সরাসরি অ্যাপ ওপেন করার কমান্ড
     var number = "<?php echo $wa_no; ?>";
-    window.open("https://whatsapp.com/send?phone=" + number + "&text=Hi, I need help!", "_blank");
+    window.open("https://api.whatsapp.com/send?phone=" + number + "&text=Hi, I need help!", "_blank");
 }
 </script>
 
