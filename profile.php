@@ -273,20 +273,29 @@ if ($t_main > 0) {
     </div>
 </div>
 <!-- ট্রানজেকশন হিস্টোরি শেষ -->
-       <!-- পাসওয়ার্ড পরিবর্তন সেকশন শুরু -->
-<div class="card" style="background: #111; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px;">
-    <h4 style="color: #ffdf1b; margin-top: 0; font-size: 15px; padding-bottom: 10px;">🔐 পাসওয়ার্ড পরিবর্তন</h4>
-    <form action="change_password.php" method="POST">
-        <label style="color: #888; font-size: 11px; display: block; margin-bottom: 5px;">বর্তমান পাসওয়ার্ড:</label>
-        <input type="password" name="old_pass" placeholder="Current Password" required style="width: 100%; background: #222; color: #fff; padding: 10px; border-radius: 8px; border: 1px solid #444; margin-bottom: 12px; box-sizing: border-box;">
-        
-        <label style="color: #888; font-size: 11px; display: block; margin-bottom: 5px;">নতুন পাসওয়ার্ড:</label>
-        <input type="password" name="new_pass" placeholder="New Password" required style="width: 100%; background: #222; color: #fff; padding: 10px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px; box-sizing: border-box;">
-        
-        <button type="submit" style="width: 100%; background: #ffdf1b; color: #000; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; font-size: 13px;">পাসওয়ার্ড আপডেট করুন</button>
-    </form>
+<!-- পাসওয়ার্ড পরিবর্তন বক্স (Hidable) -->
+<div class="card" style="background: #111; padding: 10px; border-radius: 12px; border: 1px solid #333; margin-bottom: 12px; overflow: hidden;">
+    
+    <!-- এই হেডার বারটিতে ক্লিক করলে বক্স খুলবে -->
+    <div onclick="toggleBox('passBox', 'passIcon')" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:10px;">
+        <h4 style="color:#ffdf1b; margin:0; font-size:15px;">🔐 পাসওয়ার্ড পরিবর্তন</h4>
+        <span id="passIcon" style="color:#888;">▼</span>
+    </div>
+    
+    <!-- এই অংশটি শুরুতে লুকানো থাকবে -->
+    <div id="passBox" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 10px;">
+        <form action="change_password.php" method="POST" style="padding-top:15px; padding-bottom:15px;">
+            <label style="color:#888; font-size:11px; display:block; margin-bottom:5px;">বর্তমান পাসওয়ার্ড:</label>
+            <input type="password" name="old_pass" placeholder="Current Password" required style="width:100%; background:#222; color:#fff; padding:10px; border-radius:8px; border:1px solid #444; margin-bottom:12px; box-sizing:border-box;">
+            
+            <label style="color:#888; font-size:11px; display:block; margin-bottom:5px;">নতুন পাসওয়ার্ড:</label>
+            <input type="password" name="new_pass" placeholder="New Password" required style="width:100%; background:#222; color:#fff; padding:10px; border-radius:8px; border:1px solid #444; margin-bottom:15px; box-sizing:border-box;">
+            
+            <button type="submit" style="width:100%; background:#ffdf1b; color:#000; padding:12px; border-radius:8px; border:none; font-weight:bold; cursor:pointer;">আপডেট করুন</button>
+        </form>
+    </div>
 </div>
-<!-- পাসওয়ার্ড পরিবর্তন শেষ -->
+
  
 <?php
 // ১. নম্বরটি ডাটাবেস থেকে আনা
@@ -333,6 +342,17 @@ function claimBonus() {
     if(confirm("আপনি কি বোনাস টাকা মেইন ব্যালেন্সে যোগ করতে চান?")) {
         // একটি নতুন ফাইলে রিকোয়েস্ট পাঠানো অথবা বর্তমান পেজেই প্রসেস করা
         window.location.href = 'profile.php?action=claim_bonus';
+    }
+}
+function toggleBox(id, iconId) {
+    var content = document.getElementById(id);
+    var icon = document.getElementById(iconId);
+    if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+        content.style.maxHeight = "0px";
+        icon.innerText = "▼";
+    } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+        icon.innerText = "▲";
     }
 }
  
