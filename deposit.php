@@ -28,18 +28,21 @@ $ng_a = $st['admin_nagad_a'] ?? '018XXXXXXXX';
 
     <!-- ৪টি মেথড বাটন -->
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px;">
-        <div onclick="selectMethod('Bkash Personal', '<?php echo $nums['bkash_per'] ?? 'বন্ধ'; ?>')" style="background:#1a1a1a; padding:15px; border-radius:12px; border:1px solid #d12053; cursor:pointer; transition: 0.3s;">
-            <img src="https://betlover777.com" width="35" onerror="this.src='https://placeholder.com'"><br><small style="display:block; margin-top:5px;">বিকাশ পারসোনাল</small>
-        </div>
-        <div onclick="selectMethod('Bkash Agent', '<?php echo $nums['bkash_agt'] ?? 'বন্ধ'; ?>')" style="background:#1a1a1a; padding:15px; border-radius:12px; border:1px solid #d12053; cursor:pointer;">
-            <img src="https://betlover777.com" width="35" onerror="this.src='https://placeholder.com'"><br><small style="display:block; margin-top:5px;">বিকাশ এজেন্ট</small>
-        </div>
-        <div onclick="selectMethod('Nagad Personal', '<?php echo $nums['nagad_per'] ?? 'বন্ধ'; ?>')" style="background:#1a1a1a; padding:15px; border-radius:12px; border:1px solid #f7941d; cursor:pointer;">
-            <img src="https://betlover777.com" width="35" onerror="this.src='https://placeholder.com'"><br><small style="display:block; margin-top:5px;">নগদ পারসোনাল</small>
-        </div>
-        <div onclick="selectMethod('Nagad Agent', '<?php echo $nums['nagad_agt'] ?? 'বন্ধ'; ?>')" style="background:#1a1a1a; padding:15px; border-radius:12px; border:1px solid #f7941d; cursor:pointer;">
-            <img src="https://betlover777.com" width="35" onerror="this.src='https://placeholder.com'"><br><small style="display:block; margin-top:5px;">নগদ এজেন্ট</small>
-        </div>
+       <div onclick="selectMethod('Bkash Personal', '<?php echo $st['admin_bkash_p']; ?>')" style="background:#111; padding:15px; border-radius:10px; border:1px solid #333; cursor:pointer; text-align:center;">
+                <img src="https://betlover777.com" width="35"><br><small>বিকাশ পারসোনাল</small>
+            </div>
+
+            <div onclick="selectMethod('Bkash Agent', '<?php echo $st['admin_bkash_a']; ?>')" style="background:#111; padding:15px; border-radius:10px; border:1px solid #333; cursor:pointer; text-align:center;">
+                <img src="https://betlover777.com" width="35"><br><small>বিকাশ এজেন্ট</small>
+            </div>
+
+            <div onclick="selectMethod('Nagad Personal', '<?php echo $st['admin_nagad_p']; ?>')" style="background:#111; padding:15px; border-radius:10px; border:1px solid #333; cursor:pointer; text-align:center;">
+                <img src="https://betlover777.com" width="35"><br><small>নগদ পারসোনাল</small>
+            </div>
+
+            <div onclick="selectMethod('Nagad Agent', '<?php echo $st['admin_nagad_a']; ?>')" style="background:#111; padding:15px; border-radius:10px; border:1px solid #333; cursor:pointer; text-align:center;">
+                <img src="https://betlover777.com" width="35"><br><small>নগদ এজেন্ট</small>
+            </div> 
     </div>
 
     <!-- নম্বর ডিসপ্লে বক্স -->
