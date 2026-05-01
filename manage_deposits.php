@@ -18,16 +18,20 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
             $conn->query("UPDATE users SET balance = balance + $amount WHERE username = '$user'");
             $conn->query("UPDATE deposits SET status = 'approved' WHERE id = $id");
 
-            // ২. অ্যাফিলিয়েট ৫% ইনস্ট্যান্ট কমিশন লজিক
-            $instant_comm = $amount * 0.05; 
-            $ref_res = $conn->query("SELECT ref_by FROM users WHERE username = '$user'");
-            if ($ref_res && $ref_res->num_rows > 0) {
-                $ref_data = $ref_res->fetch_assoc();
-                $ref_code = $ref_data['ref_by'];
-                if (!empty($ref_code)) {
-                    $conn->query("UPDATE users SET balance = balance + $instant_comm, aff_instant_earned = aff_instant_earned + $instant_comm WHERE ref_code = '$ref_code'");
-                }
+                    // ২. অ্যাফিলিয়েট ৫% ইনস্ট্যান্ট কমিশন লজিক (সংশোধিত)
+        $instant_comm = $amount * 0.05;
+        $ref_res = $conn->query("SELECT ref_by FROM users WHERE username = '$user'");
+        
+        if ($ref_res && $ref_res->num_rows > 0) {
+            $ref_data = $ref_res->fetch_assoc();
+            $ref_code = $ref_data['ref_by'];
+            
+            if (!empty($ref_code)) {
+                // সরাসরি অ্যাফিলিয়েট মেম্বারের aff_balance এ টাকা পাঠানো হচ্ছে
+                $conn->query("UPDATE users SET aff_balance = aff_balance + $instant_comm WHERE ref_code = '$ref_code' AND is_affiliate = 1");
             }
+        }
+
 
             echo "<script>alert('ডিপোজিট সফলভাবে অ্যাপ্রুভ হয়েছে!'); location.href='manage_deposits.php';</script>";
 
