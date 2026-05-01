@@ -29,19 +29,20 @@ $ng_a = $st['admin_nagad_a'] ?? '018XXXXXXXX';
     <!-- ৪টি মেথড বাটন -->
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px;">
        <div onclick="selectMethod('Bkash Personal', '<?php echo $st['admin_bkash_p']; ?>')" style="background:#111; padding:15px; border-radius:10px; border:1px solid #333; cursor:pointer; text-align:center;">
-                <img src="https://betlover777.com" width="35"><br><small>বিকাশ পারসোনাল</small>
+               <img src="https://github.io" width="35" onerror="this.src='https://icons8.com'"><br><small>বিকাশ পারসোনাল</small> 
             </div>
 
             <div onclick="selectMethod('Bkash Agent', '<?php echo $st['admin_bkash_a']; ?>')" style="background:#111; padding:15px; border-radius:10px; border:1px solid #333; cursor:pointer; text-align:center;">
-                <img src="https://betlover777.com" width="35"><br><small>বিকাশ এজেন্ট</small>
+               <img src="https://github.io" width="35" onerror="this.src='https://icons8.com'"><br><small>বিকাশ এজেন্ট</small> 
             </div>
 
             <div onclick="selectMethod('Nagad Personal', '<?php echo $st['admin_nagad_p']; ?>')" style="background:#111; padding:15px; border-radius:10px; border:1px solid #333; cursor:pointer; text-align:center;">
-                <img src="https://betlover777.com" width="35"><br><small>নগদ পারসোনাল</small>
+               <img src="https://github.io" width="35" onerror="this.src='https://icons8.com'"><br><small>নগদ পারসোনাল</small>
+ 
             </div>
 
             <div onclick="selectMethod('Nagad Agent', '<?php echo $st['admin_nagad_a']; ?>')" style="background:#111; padding:15px; border-radius:10px; border:1px solid #333; cursor:pointer; text-align:center;">
-                <img src="https://betlover777.com" width="35"><br><small>নগদ এজেন্ট</small>
+               <img src="https://github.io" width="35" onerror="this.src='https://icons8.com'"><br><small>নগদ এজেন্ট</small> 
             </div> 
     </div>
 
