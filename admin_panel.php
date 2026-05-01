@@ -61,6 +61,10 @@ $total_wd = $wd_res->fetch_assoc()['total'] ?? 0;
         <a href="manage_staff.php" class="admin-btn"><i class="fa-solid fa-user-shield"></i> স্টাফ, এজেন্ট ও সাব-এডমিন</a>
         <a href="manage_games.php" class="admin-btn"><i class="fa-solid fa-gamepad"></i> গেম এপিআই ও আরটিপি (RTP)</a>
         <a href="manage_site.php" class="admin-btn"><i class="fa-solid fa-gears"></i> স্লাইডার ও নোটিশ বোর্ড কন্ট্রোল</a>
+        <a href="manage_payment_methods.php" class="admin-btn" style="background: #ffdf1b; color: #000;">
+    💰 Manage Deposit Numbers
+</a>
+
         <a href="manage_whatsapp.php" class="admin-btn" style="background: #25D366; color: #fff;">
     📱 WhatsApp Control
 </a>
