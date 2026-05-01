@@ -118,7 +118,7 @@ if (isset($msg)) {
         <!-- বোনাস বক্স -->
         <div style="background:#111; border:1px solid #ffdf1b; padding:10px; border-radius:10px;">
             <small style="font-size:9px; color:#888;">BONUS</small>
-            <div style="color:#ffdf1b; font-size:12px; font-weight:bold;">৳<?php echo number_format($bonus_b, 2); ?></div>
+            <div style="llll:#ffdf1b; font-size:12px; font-weight:bold;">৳<?php echo number_format($bonus_b, 2); ?></div>
         </div>
     </div>
 
@@ -288,7 +288,21 @@ if ($t_main > 0) {
 </div>
 <!-- পাসওয়ার্ড পরিবর্তন শেষ -->
  
-     
+   <?php
+// সেটিংস থেকে হোয়াটসঅ্যাপ নম্বর আনা
+$wa_res = $conn->query("SELECT whatsapp_no FROM settings WHERE id = 1");
+$wa_data = $wa_res->fetch_assoc();
+$wa_no = $wa_data['whatsapp_no'] ?? '8801700000000';
+?>
+
+<!-- ডাইনামিক হোয়াটসঅ্যাপ বাটন -->
+<div style="margin-bottom: 15px; width: 100%;">
+    <a href="https://wa.me<?php echo $wa_no; ?>" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #25D366; color: #fff; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);">
+        <img src="https://wikimedia.org" width="18" style="margin-right: 8px;">
+        হোয়াটসঅ্যাপ লাইভ চ্যাট
+    </a>
+</div>
+  
         <button class="p-btn" onclick="location.href='logout.php'" style="color:#ff4d4d;">Logout</button>
     </div>
 
