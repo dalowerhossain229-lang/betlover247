@@ -98,10 +98,11 @@ $game_url = "https://2048.org";
         <a href="index.php" class="back-btn">⬅ BACK</a>
 <!-- ১০০ নম্বর লাইনটি এভাবে লিখুন -->
 <select id="active_wallet" class="wallet-select" onchange="updateWallet(this.value)">
+<option value="main" <?php if($user_data['active_wallet'] == 'main') echo 'selected'; ?>>Main: ...</option>
+<option value="pb" <?php if($user_data['active_wallet'] == 'pb') echo 'selected'; ?>>PB: ...</option>
+<option value="bonus" <?php if($user_data['active_wallet'] == 'bonus') echo 'selected'; ?>>Bonus: ...</option>
 
-            <option value="main">Main: ৳<?php echo number_format($user_data['balance'] ?? 0, 0); ?></option>
-            <option value="pb">PB: ৳<?php echo number_format($user_data['pb_balance'] ?? 0, 0); ?></option>
-            <option value="bonus">Bonus: ৳<?php echo number_format($user_data['bonus_balance'] ?? 0, 0); ?></option>
+            
         </select>
 
         <div style="font-size: 11px; color: #888; text-align: right;">
