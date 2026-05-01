@@ -3,14 +3,14 @@ session_start();
 include 'header.php'; 
 include 'db.php'; 
 
-// ডাটাবেস থেকে ৪টি নম্বর নিয়ে আসা
-$configs = $conn->query("SELECT * FROM site_configs");
-$nums = [];
-if($configs) {
-    while($r = $configs->fetch_assoc()){ 
-        $nums[$r['config_key']] = $r['config_value']; 
-    }
-}
+// ১. অ্যাডমিন প্যানেলের নম্বরগুলো একবারে নিয়ে আসা
+$st_res = $conn->query("SELECT * FROM settings WHERE id = 1");
+$st = $st_res->fetch_assoc();
+
+$bk_p = $st['admin_bkash_p'] ?? '017XXXXXXXX';
+$bk_a = $st['admin_bkash_a'] ?? '017XXXXXXXX';
+$ng_p = $st['admin_nagad_p'] ?? '018XXXXXXXX';
+$ng_a = $st['admin_nagad_a'] ?? '018XXXXXXXX';
 ?>
 
 <div style="padding: 20px; text-align: center; color: white; font-family: sans-serif;">
