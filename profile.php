@@ -303,13 +303,7 @@ $wa_no = preg_replace('/[^0-9]/', '', $wa_data['whatsapp_no'] ?? '8801306650323'
     </button>
 </div>
 
-<script>
-function openWA() {
-    // জাভাস্ক্রিপ্ট দিয়ে সরাসরি অ্যাপ ওপেন করার কমান্ড
-    var number = "<?php echo $wa_no; ?>";
-    window.open("https://whatsapp.com" + number + "&text=Hi, I need help!", "_blank");
-}
-</script>
+
 
   
         <button class="p-btn" onclick="location.href='logout.php'" style="color:#ff4d4d;">Logout</button>
@@ -326,7 +320,12 @@ function claimBonus() {
     }
 }
 
-
+function openWA() {
+    // জাভাস্ক্রিপ্ট দিয়ে সরাসরি অ্যাপ ওপেন করার কমান্ড
+    var number = "<?php echo $wa_no; ?>";
+    window.open("https://whatsapp.com" + number + "&text=Hi, I need help!", "_blank");
+}
+}
    function claimBonus() {
     if(confirm("আপনি কি বোনাস টাকা মেইন ব্যালেন্সে যোগ করতে চান?")) {
         // একটি নতুন ফাইলে রিকোয়েস্ট পাঠানো অথবা বর্তমান পেজেই প্রসেস করা
