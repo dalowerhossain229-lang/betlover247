@@ -191,17 +191,24 @@ if ($t_main > 0) {
 <?php endif; ?>
         </div>
 
+<!-- ১৯৬ নম্বর লাইন থেকে শুরু -->
+<div style="margin-bottom: 12px; width: 100%;">
+    <a href="deposit.php" style="display: flex; justify-content: space-between; align-items: center; background: #111; padding: 18px 15px; border-radius: 12px; border: 1px solid #333; text-decoration: none;">
+        <span style="color: #fff; font-size: 15px; font-weight: bold;">💰 DEPOSIT</span>
+        <span style="color: #888;">❯</span>
+    </a>
+</div>
+
+<div style="margin-bottom: 20px; width: 100%;">
+    <a href="withdraw.php" style="display: flex; justify-content: space-between; align-items: center; background: #111; padding: 18px 15px; border-radius: 12px; border: 1px solid #333; text-decoration: none;">
+        <span style="color: #fff; font-size: 15px; font-weight: bold;">🏧 WITHDRAW</span>
+        <span style="color: #888;">❯</span>
+    </a>
+</div>
+<!-- ২০৪ নম্বর লাইন শেষ -->
 
 
-    <!-- মেনু বাটনসমূহ -->
-    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 25px;">
-        <button class="p-btn" onclick="location.href='deposit.php'">Deposit ></button>
-        <!-- সরাসরি লিঙ্ক ব্যবহারের জন্য এটি সবচেয়ে ভালো পদ্ধতি -->
-<a href="withdraw.php" style="text-decoration: none; width: 100%;">
-    <button style="width: 100%; padding: 15px; background: #222; color: #fff; border: 1px solid #333; border-radius: 8px; font-weight: bold; cursor: pointer;">
-        Withdraw >
-    </button>
-</a>
+    
 <!-- পেমেন্ট নম্বর সেকশন (Hidable) -->
 <div class="card" style="background: #111; padding: 10px; border-radius: 12px; border: 1px solid #333; margin-bottom: 12px; overflow: hidden;">
     
