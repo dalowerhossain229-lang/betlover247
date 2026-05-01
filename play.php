@@ -128,10 +128,7 @@ $game_url = "https://2048.org";
 <button onclick="placeTestBet()" id="play_btn" style="background: #00ff88; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; width: 100%;">
     🎯 PLAY / BET
 </button>
-
-
 </div>
-        <a href="bet_history.php" class="history-btn">📜 VIEW BET HISTORY</a>
     </div>
 <!-- ১৩৬ নম্বর লাইনে এটি বসান -->
 <div style="margin-top: 20px; padding: 0 10px;">
