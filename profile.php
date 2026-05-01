@@ -18,7 +18,7 @@ $u_data = $conn->query("SELECT * FROM users WHERE username = '$u'");
 
 // ঠিক তার নিচে এটি বসান
 $user_data = $u_data->fetch_assoc(); 
-
+?>
 if (isset($user_data['is_affiliate']) && $user_data['is_affiliate'] == 1): ?>
     <div style="margin: 15px 0; width: 100%;">
         <a href="affiliate.php" style="display: block; background: linear-gradient(90deg, #ffdf1b, #ffa500); color: #000; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: bold; text-align: center; box-shadow: 0 4px 15px rgba(255, 223, 27, 0.3);">
