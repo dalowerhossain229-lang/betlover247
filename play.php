@@ -96,15 +96,17 @@ $game_url = "https://2048.org";
 
     <div class="game-header">
         <a href="index.php" class="back-btn">⬅ BACK</a>
-<!-- ১০০ নম্বর লাইনটি এভাবে লিখুন -->
-<select id="active_wallet" class="wallet-select" onchange="updateWallet(this.value)">
-<option value="main" <?php if($user_data['active_wallet'] == 'main') echo 'selected'; ?>>Main: ...</option>
-<option value="pb" <?php if($user_data['active_wallet'] == 'pb') echo 'selected'; ?>>PB: ...</option>
-<option value="bonus" <?php if($user_data['active_wallet'] == 'bonus') echo 'selected'; ?>>Bonus: ...</option>
-
-            
-        </select>
-
+<select id="active_wallet" onchange="updateWallet(this.value)" style="background: #000; color: #ffdf1b; border: 1px solid #333; padding: 5px; border-radius: 5px; font-weight: bold; outline: none;">
+    <?php
+    // ডাটাবেস থেকে সব ব্যালেন্স একবারে নিয়ে আসা
+    $u_id = $_SESSION['user_id'];
+    $st = $conn->query("SELECT balance, pb_balance, bonus_balance, active_wallet FROM users WHERE username = '$u_id'")->fetch_assoc();
+    $act = $st['active_wallet'] ?? 'main';
+    ?>
+    <option value="main" <?php if($act == 'main') echo 'selected'; ?>>Main: ৳<?php echo number_format($st['balance'], 2); ?></option>
+    <option value="pb" <?php if($act == 'pb') echo 'selected'; ?>>PB: ৳<?php echo number_format($st['pb_balance'], 2); ?></option>
+    <option value="bonus" <?php if($act == 'bonus') echo 'selected'; ?>>Bonus: ৳<?php echo number_format($st['bonus_balance'], 2); ?></option>
+</select>
         <div style="font-size: 11px; color: #888; text-align: right;">
             <small style="display:block; font-size:8px;">PLAYER</small>
             <?php echo $u; ?>
