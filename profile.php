@@ -288,7 +288,7 @@ if ($t_main > 0) {
 </div>
 <!-- পাসওয়ার্ড পরিবর্তন শেষ -->
  
-   <?php
+<?php
 // ১. নম্বরটি ডাটাবেস থেকে আনা
 $wa_res = $conn->query("SELECT whatsapp_no FROM settings WHERE id = 1");
 $wa_data = $wa_res->fetch_assoc();
@@ -302,6 +302,14 @@ $wa_no = preg_replace('/[^0-9]/', '', $wa_data['whatsapp_no'] ?? '8801306650323'
         হোয়াটসঅ্যাপ লাইভ চ্যাট
     </button>
 </div>
+
+<script>
+function openWA() {
+    // জাভাস্ক্রিপ্ট দিয়ে সরাসরি অ্যাপ ওপেন করার কমান্ড
+    var number = "<?php echo $wa_no; ?>";
+    window.open("https://whatsapp.com" + number + "&text=Hi, I need help!", "_blank");
+}
+</script>
 
 
 
@@ -320,12 +328,7 @@ function claimBonus() {
     }
 }
 
-function openWA() {
-    // জাভাস্ক্রিপ্ট দিয়ে সরাসরি অ্যাপ ওপেন করার কমান্ড
-    var number = "<?php echo $wa_no; ?>";
-    window.open("https://whatsapp.com" + number + "&text=Hi, I need help!", "_blank");
-}
-}
+
    function claimBonus() {
     if(confirm("আপনি কি বোনাস টাকা মেইন ব্যালেন্সে যোগ করতে চান?")) {
         // একটি নতুন ফাইলে রিকোয়েস্ট পাঠানো অথবা বর্তমান পেজেই প্রসেস করা
