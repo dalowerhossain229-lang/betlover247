@@ -96,6 +96,8 @@ $game_url = "https://2048.org";
 
     <div class="game-header">
         <a href="index.php" class="back-btn">⬅ BACK</a>
+        <a href="bet_logs.php" class="back-btn" style="background: #111; color: #ffdf1b; border: 1px solid #333; margin-left: 5px; text-decoration: none;">📜 HISTORY</a>
+
 <select id="active_wallet" onchange="updateWallet(this.value)" style="background: #000; color: #ffdf1b; border: 1px solid #333; padding: 5px; border-radius: 5px; font-weight: bold; outline: none;">
     <?php
     // ডাটাবেস থেকে সব ব্যালেন্স একবারে নিয়ে আসা
@@ -130,12 +132,6 @@ $game_url = "https://2048.org";
 </button>
 </div>
     </div>
-<!-- ১৩৬ নম্বর লাইনে এটি বসান -->
-<div style="margin-top: 20px; padding: 0 10px;">
-<a href="bet_logs.php" style="display: flex; justify-content: center; align-items: center; background: #111; padding: 12px; border-radius: 10px; border: 1px solid #333; text-decoration: none; margin-top: 15px;">
-    <span style="color: #ffdf1b; font-size: 14px; font-weight: bold;">📜 View Detailed Bet History</span>
-    <span style="color: #888; margin-left: 10px;">❯</span>
-</a>
 
 </div>
 
