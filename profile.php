@@ -321,14 +321,22 @@ $wa_res = $conn->query("SELECT whatsapp_no FROM settings WHERE id = 1");
 $wa_data = $wa_res->fetch_assoc();
 $wa_no = preg_replace('/[^0-9]/', '', $wa_data['whatsapp_no'] ?? '8801306650323'); 
 ?>
-
-<!-- ২. হোয়াটসঅ্যাপ বাটন (সাদা বক্সের ভেতরে) -->
-<div class="card" style="background: #111; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px;">
-    <button onclick="openWA()" style="width: 100%; display: flex; align-items: center; justify-content: center; background: #25D366; color: #fff; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; font-size: 14px;">
-        <img src="https://wikimedia.org" width="18" style="margin-right: 10px;">
-        হোয়াটসঅ্যাপ লাইভ চ্যাট
-    </button>
+<div class="card" style="background: #111; padding: 10px; border-radius: 12px; border: 1px solid #333; margin-bottom: 12px; overflow: hidden;">
+    <div onclick="toggleBox('chatBox', 'chatIcon')" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:10px;">
+        <h4 style="color:#25D366; margin:0; font-size:15px;">💬 কাস্টমার সাপোর্ট</h4>
+        <span id="chatIcon" style="color:#888;">▼</span>
+    </div>
+    
+    <div id="chatBox" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 10px;">
+        <div style="padding: 15px 0;">
+            <button onclick="openWA()" style="width:100%; background:#25D366; color:#fff; padding:12px; border-radius:10px; border:none; font-weight:bold; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+                <img src="https://flaticon.com" width="20" style="margin-right:10px; filter:brightness(0) invert(1);">
+                হোয়াটসঅ্যাপ লাইভ চ্যাট
+            </button>
+        </div>
+    </div>
 </div>
+
 
 <script>
 function openWA() {
