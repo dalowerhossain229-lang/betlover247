@@ -132,10 +132,11 @@ $game_url = "https://2048.org";
     </div>
 <!-- ১৩৬ নম্বর লাইনে এটি বসান -->
 <div style="margin-top: 20px; padding: 0 10px;">
-    <a href="bet_logs.php" style="display: flex; justify-content: space-between; align-items: center; background: #111; padding: 15px; border-radius: 12px; border: 1px solid #333; text-decoration: none; transition: 0.3s;">
-        <span style="color: #fff; font-size: 14px; font-weight: bold;">📜 View Detailed Bet History</span>
-        <span style="color: #888;">❯</span>
-    </a>
+<a href="bet_logs.php" style="display: flex; justify-content: center; align-items: center; background: #111; padding: 12px; border-radius: 10px; border: 1px solid #333; text-decoration: none; margin-top: 15px;">
+    <span style="color: #ffdf1b; font-size: 14px; font-weight: bold;">📜 View Detailed Bet History</span>
+    <span style="color: #888; margin-left: 10px;">❯</span>
+</a>
+
 </div>
 
 
