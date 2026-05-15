@@ -125,15 +125,6 @@ $game_url = $aviator_base_url . "?userId=" . urlencode($u);
             allow="autoplay; fullscreen; gaming">
         </iframe>
     </div>
-
-    <div class="game-footer">
-        <div style="margin-bottom: 10px;">
-<button onclick="placeTestBet()" id="play_btn" style="background: #00ff88; color: #000; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; width: 100%;">
-    🎯 PLAY / BET
-</button>
-</div>
-    </div>
-
 </div>
 
 
