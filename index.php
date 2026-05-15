@@ -47,7 +47,8 @@ include 'header.php';
     </div>  
 
     <!-- ২. Aviator -->
-    <div class="game-card" onclick="playGame('aviator')">
+    <div class="game-card" onclick="location.href='play.php?id=aviator'">
+
         <img src="aviator.png" alt="Aviator">
         <p>AVIATOR</p>
     </div>
