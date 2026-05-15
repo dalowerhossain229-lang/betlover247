@@ -18,7 +18,7 @@ $user_data = $query->fetch_assoc();
 // ৩. গেম লোড লিঙ্ক
 $aviator_base_url = "https://aviator2-0-azym.onrender.com"; 
 $game_url = $aviator_base_url . "?userId=" . urlencode($u);
-
+?>
 
 
 <!DOCTYPE html>
