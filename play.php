@@ -15,9 +15,10 @@ if (empty($u)) {
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৩. ডেমো গেম লিঙ্ক
-$game_url = "https://2048.org";
-?>
+// ৩. গেম লোড লিঙ্ক
+$aviator_base_url = "https://aviator2-0-azym.onrender.com"; 
+$game_url = $aviator_base_url . "?userId=" . urlencode($u);
+
 
 
 <!DOCTYPE html>
