@@ -35,12 +35,12 @@ if ($wallet == 'pb') {
 } else {
     $bal_col = "balance"; $turn_col = "main_t";
 }
-// 🎰 ১. বাজি ধরার লজিক (আনুমানিক ৪১-৫০ নম্বর লাইনের কাছাকাছি এটি রিপ্লেস করুন)
+// 🎰 ১. বাজি ধরার লজিক (api_callback.php ফাইলের বেট সেকশনে এটি রিপ্লেস করুন)
 if ($action == "bet") {
     $update = $conn->query("UPDATE users SET balance = balance - $amount, main_t = main_t + $amount WHERE username = '$username'");
     
     if ($update) {
-        // 📝 হিস্ট্রি পেজে দেখানোর জন্য bets টেবিলে বাজি ধরার রেকর্ড সেভ করা হলো
+        // 📝 বাজি ধরার সাথে সাথে টেবিলের স্ট্যাটাস সরাসরি 'bet' হিসেবে ইনসার্ট হবে
         $conn->query("INSERT INTO bets (username, amount, game_id, status) VALUES ('$username', '$amount', 'Aviator', 'bet')");
         
         $current_bal = floatval($u_data['balance']) - $amount;
