@@ -51,6 +51,7 @@ if ($action == "bet") {
 }
 
 
+
 // ৪. উইন করার লজিক (টাকা যোগ হওয়া)
 elseif ($action == "win") {
     $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
