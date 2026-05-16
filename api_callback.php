@@ -31,7 +31,7 @@ if (empty($username)) {
 }
 
 // ২. ডাটাবেজ থেকে রিয়েল-টাইমে ইউজারের ওয়ালেটের সর্বশেষ তথ্য আনা
-$u_sql = $conn->query("SELECT * FROM users WHERE username = '$username'");
+$u_sql = $conn->query("SELECT * FROM users WHERE LOWER(username) = LOWER('$username')");
 $u_data = $u_sql->fetch_assoc();
 
 if (!$u_data) {
