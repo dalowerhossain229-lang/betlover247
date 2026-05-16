@@ -49,13 +49,14 @@ if ($action == "bet") {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
-// 💰 ২. ক্যাশআউট বা জেতার লজিক (আনুমানিক ৫৬-৬৪ নম্বর লাইনের কাছাকাছি এটি রিপ্লেস করুন)
+
+// 💰 ক্যাশআউট বা জেতার লজিক (api_callback.php ফাইলের উইন সেকশনে এটি রিপ্লেস করুন)
 elseif ($action == "win") {
     $update = $conn->query("UPDATE users SET balance = balance + $amount WHERE username = '$username'");
     
     if ($update) {
-        // 📝 হিস্ট্রি পেজে দেখানোর জন্য bets টেবিলে জেতার রেকর্ড সেভ করা হলো
-        $conn->query("INSERT INTO bets (username, amount, game_id, status) VALUES ('$username', '$amount', 'Aviator', 'win')");
+        // নতুন বাজি আলাদা করে ইনসার্ট না করে, চলতি 'bet' স্ট্যাটাসটিকে আপডেট করে 'win' করে দেওয়া হলো
+        $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE username = '$username' AND game_id = 'Aviator' AND status = 'bet' ORDER BY id DESC LIMIT 1");
         
         $current_bal = floatval($u_data['balance']) + $amount;
         echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $current_bal]);
