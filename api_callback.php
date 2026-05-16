@@ -37,18 +37,19 @@ if ($wallet == 'pb') {
     $bal_col = "balance"; $turn_col = "main_t";
 }
 
-// ৩. বেট করার লজিক (টাকা কাটা)
 if ($action == "bet") {
-    if ($u_data[$bal_col] >= $amount) {
-        $conn->query("UPDATE users SET $bal_col = $bal_col - $amount, $turn_col = $turn_col + $amount WHERE username = '$username'");
-        
-//$conn->query("INSERT INTO bets (username, game_name, status, amount) VALUES ('$username', '$game', 'bet', '$amount')");
-
-        echo json_encode(["status" => "ok", "message" => "Bet Accepted"]);
+    // ডাটাবেজে প্লেয়ারের ব্যালেন্স সরাসরি মাইনাস করার কুয়েরি (কোনো কন্ডিশন লকিং ছাড়া)
+    $update = $conn->query("UPDATE users SET $bal_col = $bal_col - $amount, $turn_col = $turn_col + $amount WHERE username = '$username'");
+    
+    if ($update) {
+        // নতুন ব্যালেন্স হিসাব করা
+        $current_bal = floatval($u_data[$bal_col]) - $amount;
+        echo json_encode(["status" => "ok", "message" => "Bet Accepted", "balance" => $current_bal]);
     } else {
-        echo json_encode(["status" => "error", "message" => "Insufficient Balance"]);
+        echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
-} 
+}
+
 
 // ৪. উইন করার লজিক (টাকা যোগ হওয়া)
 elseif ($action == "win") {
