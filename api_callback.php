@@ -48,18 +48,21 @@ if ($action == "bet") {
     }
 }
 
-
-// 💰 ক্যাশআউট বা জেতার লজিক
+// 💰 ক্যাশআউট বা জেতার লজিক (আনুমানিক ৬০-৬৫ নম্বর লাইনের কাছে এটি রিপ্লেস করুন)
 elseif ($action == "win") {
-    $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
+    // ডাইনামিক ভেরিয়েবল বাদ দিয়ে সরাসরি আপনার ডাটাবেজের আসল কলাম 'balance' লিখে দেওয়া হলো
+    $update = $conn->query("UPDATE users SET balance = balance + $amount WHERE username = '$username'");
     
     if ($update) {
-        $current_bal = floatval($u_data[$bal_col]) + $amount;
+        // ডাটাবেজ থেকে প্লেয়ারের নতুন ব্যালেন্স হিসাব করা
+        $current_bal = floatval($u_data['balance']) + $amount;
         echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $current_bal]);
     } else {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
+
+
 // 🔄 রিফান্ড লজিক
 elseif ($action == "refund") {
     $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
