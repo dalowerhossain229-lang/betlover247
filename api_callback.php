@@ -41,7 +41,7 @@ if ($wallet == 'pb') {
 if ($action == "bet") {
     if ($u_data[$bal_col] >= $amount) {
         $conn->query("UPDATE users SET $bal_col = $bal_col - $amount, $turn_col = $turn_col + $amount WHERE username = '$username'");
-        $conn->query("INSERT INTO game_logs (username, game_name, action, amount) VALUES ('$username', '$game', 'bet', '$amount')");
+        $conn->query("INSERT INTO bets (username, game_name, status, amount) VALUES ('$username', '$game', 'bet', '$amount')");
         echo json_encode(["status" => "ok", "message" => "Bet Accepted"]);
     } else {
         echo json_encode(["status" => "error", "message" => "Insufficient Balance"]);
