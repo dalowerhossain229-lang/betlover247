@@ -40,7 +40,8 @@ if (!$u_data) {
 }
 
 // 🎯 ৩টি ওয়ালেটের রিয়েল-টাইম কলাম ট্র্যাকিং (আপনার ডাটাবেজের সঠিক নাম অনুযায়ী ফিক্সড)
-$wallet = strtolower($u_data['active_wallet'] ?? 'main');
+$wallet = strtolower($u_data['wallet'] ?? 'main');
+
 
 if ($wallet == 'pb' || $wallet == 'promo') {
     $bal_col = "pb_balance"; 
