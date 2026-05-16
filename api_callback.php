@@ -49,13 +49,13 @@ if ($action == "bet") {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
-// 💰 ২. ক্যাশআউট বা জেতার লজিক
+// 💰 ২. ক্যাশআউট বা জেতার লজিক (api_callback.php ফাইলের উইন সেকশনে এটি রিপ্লেস করুন)
 elseif ($action == "win") {
     $update = $conn->query("UPDATE users SET balance = balance + $amount WHERE username = '$username'");
     
     if ($update) {
-        // 📝 game_id এর জায়গায় ডাইনামিক ভেরিয়েবল '$game' ব্যবহার করা হলো যাতে Casino নামের সাথে ম্যাচ করে
-        $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE username = '$username' AND game_id = '$game' AND status = 'bet' ORDER BY id DESC LIMIT 1");
+        // 📝 জটিল কন্ডিশন বাদ দিয়ে ওই প্লেয়ারের সর্বশেষ 'bet' বাজিটিকে সরাসরি 'win' এ রূপান্তর করার কুয়েরি
+        $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE username = '$username' AND status = 'bet' ORDER BY id DESC LIMIT 1");
         
         $current_bal = floatval($u_data['balance']) + $amount;
         echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $current_bal]);
@@ -73,10 +73,10 @@ elseif ($action == "refund") {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
-// 🔴 ৩. লস লজিক (প্লেন ক্রাশ খেলে এটি অটোমেটিক কাজ করবে)
+// 🔴 ৩. লস লজিক (api_callback.php ফাইলের লস সেকশনে এটি রিপ্লেস করুন)
 elseif ($action == "loss") {
-    // 📝 এখানেও game_id এর জায়গায় ডাইনামিক ভেরিয়েবল '$game' ব্যবহার করা হলো
-    $conn->query("UPDATE bets SET status = 'loss' WHERE username = '$username' AND game_id = '$game' AND status = 'bet' ORDER BY id DESC LIMIT 1");
+    // 📝 জটিল কন্ডিশন বাদ দিয়ে ওই প্লেয়ারের সর্বশেষ 'bet' বাজিটিকে সরাসরি 'loss' এ রূপান্তর করার কুয়েরি
+    $conn->query("UPDATE bets SET status = 'loss' WHERE username = '$username' AND status = 'bet' ORDER BY id DESC LIMIT 1");
     echo json_encode(["status" => "ok", "message" => "Loss Recorded"]);
 }
 ?>
