@@ -35,19 +35,20 @@ if ($wallet == 'pb') {
 } else {
     $bal_col = "balance"; $turn_col = "main_t";
 }
-
-// 🎰 বাজি ধরার লজিক
 if ($action == "bet") {
-    // এখানে ভুলটি সংশোধন করে $update করা হলো
-    $update = $conn->query("UPDATE users SET $bal_col = $bal_col - $amount, $turn_col = $turn_col + $amount WHERE username = '$username'");
+    // ডাইনামিক ভেরিয়েবল বাদ দিয়ে সরাসরি আপনার ডাটাবেজের আসল কলাম 'balance' লিখে দেওয়া হলো
+    $update = $conn->query("UPDATE users SET balance = balance - $amount, main_t = main_t + $amount WHERE username = '$username'");
     
     if ($update) {
-        $current_bal = floatval($u_data[$bal_col]) - $amount;
+        // ডাটাবেজ থেকে প্লেয়ারের নতুন ব্যালেন্স রিড করা
+        $current_bal = floatval($u_data['balance']) - $amount;
         echo json_encode(["status" => "ok", "message" => "Bet Accepted", "balance" => $current_bal]);
     } else {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
+
+
 // 💰 ক্যাশআউট বা জেতার লজিক
 elseif ($action == "win") {
     $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
