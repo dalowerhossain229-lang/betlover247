@@ -2,7 +2,7 @@
 include 'db.php';
 header('Content-Type: application/json');
 
-// ১. এপিআই থেকে আসা ডেটা ধরা
+// ১. এভিয়েটোর থেকে আসা ডেটা ধরা
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
@@ -11,12 +11,12 @@ if (!$data) {
     exit;
 }
 
-$action   = $data['action']; // bet, win, refund
+$action = $data['action'];
 $username = mysqli_real_escape_string($conn, $data['username']);
-$amount   = floatval($data['amount'] ?? 0);
-$game     = mysqli_real_escape_string($conn, $data['game_name'] ?? 'Casino');
+$amount = floatval($data['amount'] ?? 0);
+$game = mysqli_real_escape_string($conn, $data['game_name'] ?? 'Casino');
 
-// ২. ইউজার বর্তমানে কোন ওয়ালেট সিলেক্ট করে খেলছে তা চেক করা
+// ২. ইউজারের বর্তমান ওয়ালেট সিলেক্ট করে ব্যালেন্স চেক করা
 $u_sql = $conn->query("SELECT * FROM users WHERE username = '$username'");
 $u_data = $u_sql->fetch_assoc();
 
@@ -25,9 +25,8 @@ if (!$u_data) {
     exit;
 }
 
-// আপনার সিস্টেম অনুযায়ী এক্টিভ ওয়ালেট ধরা (ডিফল্ট: balance)
-// আপনি যদি সেশনে বা ডাটাবেসে ওয়ালেট টাইপ সেভ করেন তবে সেটি এখানে কল করবেন
-$wallet = $u_data['active_wallet'] ?? 'main'; 
+// আপনার সিস্টেম অনুযায়ী ওয়ালেট নির্ধারণ
+$wallet = $u_data['active_wallet'] ?? 'main';
 
 if ($wallet == 'pb') {
     $bal_col = "pb_balance"; $turn_col = "pb_t";
@@ -37,33 +36,37 @@ if ($wallet == 'pb') {
     $bal_col = "balance"; $turn_col = "main_t";
 }
 
+// 🎰 বাজি ধরার লজিক
 if ($action == "bet") {
-    // ডাটাবেজে প্লেয়ারের ব্যালেন্স সরাসরি মাইনাস করার কুয়েরি (কোনো কন্ডিশন লকিং ছাড়া)
+    // এখানে ভুলটি সংশোধন করে $update করা হলো
     $update = $conn->query("UPDATE users SET $bal_col = $bal_col - $amount, $turn_col = $turn_col + $amount WHERE username = '$username'");
     
     if ($update) {
-        // নতুন ব্যালেন্স হিসাব করা
         $current_bal = floatval($u_data[$bal_col]) - $amount;
         echo json_encode(["status" => "ok", "message" => "Bet Accepted", "balance" => $current_bal]);
     } else {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
-
-
-
-// ৪. উইন করার লজিক (টাকা যোগ হওয়া)
+// 💰 ক্যাশআউট বা জেতার লজিক
 elseif ($action == "win") {
-    $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
+    $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
     
-//$conn->query("INSERT INTO bets (username, game_name, status, amount) VALUES ('$username', '$game', 'win', '$amount')");
-
-    echo json_encode(["status" => "ok", "message" => "Win Distributed"]);
+    if ($update) {
+        $current_bal = floatval($u_data[$bal_col]) + $amount;
+        echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $current_bal]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
+    }
 }
-
-// ৫. রিফান্ড লজিক
+// 🔄 রিফান্ড লজিক
 elseif ($action == "refund") {
-    $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
-    echo json_encode(["status" => "ok", "message" => "Refund Processed"]);
+    $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
+    if ($update) {
+        $current_bal = floatval($u_data[$bal_col]) + $amount;
+        echo json_encode(["status" => "ok", "message" => "Refund Processed", "balance" => $current_bal]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
+    }
 }
 ?>
