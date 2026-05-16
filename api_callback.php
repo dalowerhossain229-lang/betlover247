@@ -54,8 +54,9 @@ elseif ($action == "win") {
     $update = $conn->query("UPDATE users SET balance = balance + $amount WHERE username = '$username'");
     
     if ($update) {
-        // 📝 LIMIT 1 সরিয়ে দেওয়া হলো যাতে একই রাউন্ডের সব একটিভ বাজি একসাথে 'win' এ আপডেট হয়
-        $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE username = '$username' AND status = 'bet'");
+        // এভিয়েটর থেকে আসা bet_amount এবং পরিমাণ ধরে নির্দিষ্ট বাজিটিকে 'win' এ রূপান্তর করা হলো
+        $bet_amount = floatval($data['bet_amount'] ?? 0);
+        $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE username = '$username' AND amount = '$bet_amount' AND status = 'bet' ORDER BY id DESC LIMIT 1");
         
         $current_bal = floatval($u_data['balance']) + $amount;
         echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $current_bal]);
@@ -63,6 +64,7 @@ elseif ($action == "win") {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
+
 // 🔄 রিফান্ড লজিক
 elseif ($action == "refund") {
     $update = $conn->query("UPDATE users SET balance = balance + $amount WHERE username = '$username'");
