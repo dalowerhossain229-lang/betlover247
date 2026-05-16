@@ -35,32 +35,35 @@ if ($wallet == 'pb') {
 } else {
     $bal_col = "balance"; $turn_col = "main_t";
 }
+// 🎰 ১. বাজি ধরার লজিক (আনুমানিক ৪১-৫০ নম্বর লাইনের কাছাকাছি এটি রিপ্লেস করুন)
 if ($action == "bet") {
-    // ডাইনামিক ভেরিয়েবল বাদ দিয়ে সরাসরি আপনার ডাটাবেজের আসল কলাম 'balance' লিখে দেওয়া হলো
     $update = $conn->query("UPDATE users SET balance = balance - $amount, main_t = main_t + $amount WHERE username = '$username'");
     
     if ($update) {
-        // ডাটাবেজ থেকে প্লেয়ারের নতুন ব্যালেন্স রিড করা
+        // 📝 হিস্ট্রি পেজে দেখানোর জন্য bets টেবিলে বাজি ধরার রেকর্ড সেভ করা হলো
+        $conn->query("INSERT INTO bets (username, amount, game_id, status) VALUES ('$username', '$amount', 'Aviator', 'bet')");
+        
         $current_bal = floatval($u_data['balance']) - $amount;
         echo json_encode(["status" => "ok", "message" => "Bet Accepted", "balance" => $current_bal]);
     } else {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
-
-// 💰 ক্যাশআউট বা জেতার লজিক (আনুমানিক ৬০-৬৫ নম্বর লাইনের কাছে এটি রিপ্লেস করুন)
+// 💰 ২. ক্যাশআউট বা জেতার লজিক (আনুমানিক ৫৬-৬৪ নম্বর লাইনের কাছাকাছি এটি রিপ্লেস করুন)
 elseif ($action == "win") {
-    // ডাইনামিক ভেরিয়েবল বাদ দিয়ে সরাসরি আপনার ডাটাবেজের আসল কলাম 'balance' লিখে দেওয়া হলো
     $update = $conn->query("UPDATE users SET balance = balance + $amount WHERE username = '$username'");
     
     if ($update) {
-        // ডাটাবেজ থেকে প্লেয়ারের নতুন ব্যালেন্স হিসাব করা
+        // 📝 হিস্ট্রি পেজে দেখানোর জন্য bets টেবিলে জেতার রেকর্ড সেভ করা হলো
+        $conn->query("INSERT INTO bets (username, amount, game_id, status) VALUES ('$username', '$amount', 'Aviator', 'win')");
+        
         $current_bal = floatval($u_data['balance']) + $amount;
         echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $current_bal]);
     } else {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
+
 
 
 // 🔄 রিফান্ড লজিক
