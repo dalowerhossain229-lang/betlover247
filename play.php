@@ -15,10 +15,12 @@ if (empty($u)) {
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৩. গেম লোড লিঙ্ক
-$aviator_base_url = "https://aviator2-0-azym.onrender.com"; 
-$game_url = $aviator_base_url . "?userId=" . urlencode($u);
+// ৩. গেম লোড লিঙ্ক (৩টি ওয়ালেট ডাইনামিক সিঙ্কের জন্য আপডেট করা হয়েছে)
+$aviator_base_url = "https://onrender.com"; 
+$active_wallet = $user_data['active_wallet'] ?? 'main';
+$game_url = $aviator_base_url . "?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
 ?>
+
 
 
 <!DOCTYPE html>
