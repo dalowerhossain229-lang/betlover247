@@ -41,7 +41,9 @@ if ($wallet == 'pb') {
 if ($action == "bet") {
     if ($u_data[$bal_col] >= $amount) {
         $conn->query("UPDATE users SET $bal_col = $bal_col - $amount, $turn_col = $turn_col + $amount WHERE username = '$username'");
-        $conn->query("INSERT INTO bets (username, game_name, status, amount) VALUES ('$username', '$game', 'bet', '$amount')");
+        // পুরানো INSERT INTO game_logs লাইনটি কেটে এটি বসান:
+$conn->query("INSERT INTO bets (username, game_name, status, amount) VALUES ('$username', '$game', 'bet', '$amount')");
+
         echo json_encode(["status" => "ok", "message" => "Bet Accepted"]);
     } else {
         echo json_encode(["status" => "error", "message" => "Insufficient Balance"]);
@@ -51,7 +53,9 @@ if ($action == "bet") {
 // ৪. উইন করার লজিক (টাকা যোগ হওয়া)
 elseif ($action == "win") {
     $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
-    $conn->query("INSERT INTO game_logs (username, game_name, action, amount) VALUES ('$username', '$game', 'win', '$amount')");
+    // পুরানো INSERT INTO game_logs লাইনটি কেটে এটি বসান:
+$conn->query("INSERT INTO bets (username, game_name, status, amount) VALUES ('$username', '$game', 'win', '$amount')");
+
     echo json_encode(["status" => "ok", "message" => "Win Distributed"]);
 }
 
