@@ -49,13 +49,11 @@ if ($action == "bet") {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
-
-// 💰 ক্যাশআউট বা জেতার লজিক (api_callback.php ফাইলের উইন সেকশনে এটি রিপ্লেস করুন)
 elseif ($action == "win") {
     $update = $conn->query("UPDATE users SET balance = balance + $amount WHERE username = '$username'");
     
     if ($update) {
-        // নতুন বাজি আলাদা করে ইনসার্ট না করে, চলতি 'bet' স্ট্যাটাসটিকে আপডেট করে 'win' করে দেওয়া হলো
+        // 📝 চলতি 'bet' স্ট্যাটাসটিকে আপডেট করে 'win' করে দেওয়া হলো
         $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE username = '$username' AND game_id = 'Aviator' AND status = 'bet' ORDER BY id DESC LIMIT 1");
         
         $current_bal = floatval($u_data['balance']) + $amount;
@@ -64,17 +62,22 @@ elseif ($action == "win") {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
-
-
-
 // 🔄 রিফান্ড লজিক
 elseif ($action == "refund") {
-    $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
+    $update = $conn->query("UPDATE users SET balance = balance + $amount WHERE username = '$username'");
     if ($update) {
-        $current_bal = floatval($u_data[$bal_col]) + $amount;
+        $current_bal = floatval($u_data['balance']) + $amount;
         echo json_encode(["status" => "ok", "message" => "Refund Processed", "balance" => $current_bal]);
     } else {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
+// 🔴 লস লজিক (প্লেন ক্রাশ খেলে এটি অটোমেটিক কাজ করবে)
+elseif ($action == "loss") {
+    // ডাটাবেজের চলতি বাজিটিকে আপডেট করে 'loss' করে দেওয়া হলো
+    $conn->query("UPDATE bets SET status = 'loss' WHERE username = '$username' AND game_id = 'Aviator' AND status = 'bet' ORDER BY id DESC LIMIT 1");
+    echo json_encode(["status" => "ok", "message" => "Loss Recorded"]);
+}
 ?>
+
+
