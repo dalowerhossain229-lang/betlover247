@@ -35,12 +35,22 @@ if ($wallet == 'pb') {
 } else {
     $bal_col = "balance"; $turn_col = "main_t";
 }
-// 🎰 ১. বাজি ধরার লজিক (api_callback.php ফাইলের বেট সেকশনে এটি রিপ্লেস করুন)
+// 🎰 ১. বাজি ধরার লজিক (api_callback.php এর বেট সেকশনে এটি রিপ্লেস করুন)
 if ($action == "bet") {
+    // 🛡️ অ্যান্টি-ডাবল ক্লিক প্রোটোকল: একই প্লেয়ারের একই বাজি ২ সেকেন্ডের মধ্যে ডুপ্লিকেট হলে তা ব্লক করা হবে
+    $check_dup = $conn->query("SELECT id FROM bets WHERE username = '$username' AND amount = '$amount' AND status = 'bet' AND created_at >= NOW() - INTERVAL 2 SECOND LIMIT 1");
+    
+    if ($check_dup && $check_dup->num_rows > 0) {
+        // ডুপ্লিকেট রিকোয়েস্ট হলে ডাটাবেজে নতুন করে রো তৈরি না করে সরাসরি সাকসেস রিটার্ন করবে
+        echo json_encode(["status" => "ok", "message" => "Duplicate Bypass", "balance" => floatval($u_data['balance'])]);
+        exit;
+    }
+
+    // ডুপ্লিকেট না হলে মেইন ব্যালেন্স থেকে টাকা কাটবে
     $update = $conn->query("UPDATE users SET balance = balance - $amount, main_t = main_t + $amount WHERE username = '$username'");
     
     if ($update) {
-        // 📝 বাজি ধরার সাথে সাথে টেবিলের স্ট্যাটাস সরাসরি 'bet' হিসেবে ইনসার্ট হবে
+        // bets টেবিলে বাজি ইনসার্ট করা
         $conn->query("INSERT INTO bets (username, amount, game_id, status) VALUES ('$username', '$amount', 'Aviator', 'bet')");
         
         $current_bal = floatval($u_data['balance']) - $amount;
@@ -49,6 +59,7 @@ if ($action == "bet") {
         echo json_encode(["status" => "error", "message" => "Database Update Failed"]);
     }
 }
+
 // 💰 ২. ক্যাশআউট বা জেতার লজিক (api_callback.php এর উইন সেকশনে এটি রিপ্লেস করুন)
 elseif ($action == "win") {
     $update = $conn->query("UPDATE users SET balance = balance + $amount WHERE username = '$username'");
