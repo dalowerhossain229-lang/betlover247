@@ -16,7 +16,7 @@ if (!$data) {
 $action = $data['action'];
 
 // 🎯 সেশন ট্র্যাকিং ফিক্স: আপনার ডাটাবেজ সেশনের 'user_id' কী-টি এখানে যুক্ত করা হলো
-$username = !empty($data['username']) ? mysqli_real_escape_string($conn, $data['username']) : '';
+$username = !empty($data['username']) ? mysqli_real_escape_string($conn, $data['user_id']) : '';
 if (empty($username) && isset($_SESSION['user_id'])) {
     $username = mysqli_real_escape_string($conn, $_SESSION['user_id']);
 }
@@ -30,11 +30,11 @@ if (empty($username)) {
 }
 
 // ডাটাবেজ থেকে ইউজারের সঠিক তথ্য আনা (Case-Insensitive)
-$u_sql = $conn->query("SELECT * FROM users WHERE LOWER(username) = LOWER('$username')");
+$u_sql = $conn->query("SELECT * FROM users WHERE LOWER(username) = LOWER('$user_id')");
 $u_data = $u_sql->fetch_assoc();
 
 if (!$u_data) {
-    echo json_encode(["status" => "error", "message" => "User Not Found in DB for " . $username]);
+    echo json_encode(["status" => "error", "message" => "User Not Found in DB for " . $user_id]);
     exit;
 }
 
@@ -56,7 +56,7 @@ if ($pb_bal >= $amount) {
 
 // 🎰 বাজি ধরার লজিক
 if ($action == "bet") {
-    $check_dup = $conn->query("SELECT id FROM bets WHERE username = '$username' AND amount = '$amount' AND status = 'bet' AND created_at >= NOW() - INTERVAL 2 SECOND LIMIT 1");
+    $check_dup = $conn->query("SELECT id FROM bets WHERE username = '$user_id' AND amount = '$amount' AND status = 'bet' AND created_at >= NOW() - INTERVAL 2 SECOND LIMIT 1");
     if ($check_dup && $check_dup->num_rows > 0) {
         echo json_encode(["status" => "ok", "message" => "Duplicate Bypass", "balance" => $user_current_balance]);
         exit;
@@ -79,10 +79,10 @@ if ($action == "bet") {
 }
 // 💰 ক্যাশআউট লজিক
 elseif ($action == "win") {
-    $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$username'");
+    $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '$user_id'");
     
     if ($update) {
-        $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE username = '$username' AND status = 'bet'");
+        $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE username = '$user_id' AND status = 'bet'");
         $new_balance = $user_current_balance + $amount;
         echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $new_balance]);
     } else {
@@ -91,7 +91,7 @@ elseif ($action == "win") {
 }
 // 🔴 লস লজিক
 elseif ($action == "loss") {
-    $conn->query("UPDATE bets SET status = 'loss' WHERE username = '$username' AND status = 'bet'");
+    $conn->query("UPDATE bets SET status = 'loss' WHERE username = '$user_id' AND status = 'bet'");
     echo json_encode(["status" => "ok", "message" => "Loss Recorded"]);
 }
 ?>
