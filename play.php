@@ -128,51 +128,26 @@ $game_url = $aviator_base_url . "?userId=" . urlencode($u) . "&wallet=" . urlenc
         </iframe>
     </div>
 </div>
-
-
-
 <script>
- function updateWallet(walletType) {
-    // ডাটাবেস বা সেশনে ওয়ালেট টাইপ সেভ করার জন্য কল
+// 🎰 ১. থিমের নিজস্ব ওয়ালেট সিলেকশন রিফ্রেশার
+function updateWallet(walletType) {
     fetch('update_wallet.php?type=' + walletType)
     .then(() => {
-        // পেজ রিফ্রেশ করলে এখন সেটি সিলেক্ট করা ওয়ালেটেই থাকবে
         location.reload();
     });
 }
-   
-function placeTestBet() {
-    const wallet = document.getElementById('active_wallet').value;
-    const btn = document.getElementById('play_btn');
-    const amount = 10; 
 
-    btn.disabled = true;
-    btn.innerText = "PROCESSING...";
-
-    let formData = new FormData();
-    formData.append('amount', amount);
-    formData.append('wallet', wallet);
-
-    fetch('./place_bet.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(text => {
-        if(text.includes("success")) {
-            alert("✅ বাজি সফল হয়েছে!");
-            location.reload(); 
-        } else {
-            alert("⚠️ বাজি ধরা হয়েছে, ব্যালেন্স চেক করুন।");
-            location.reload();
-        }
-    })
-    .catch(err => {
-        console.log(err);
+// 🎯 ২. এভিয়েটর গেম থেকে আসা লাইভ বাজি ধরার সিগন্যাল লিসেনার
+window.addEventListener("message", function(event) {
+    if (event.data && event.data.action === "refresh_wallet") {
+        // বাজি ধরা বা জেতার সাথে সাথে আইফ্রেমের দেয়াল ভেঙে মেইন পেজ রিফ্রেশ করে ব্যালেন্স সিঙ্ক করবে
         location.reload();
-    });
-}
+    }
+});
 </script>
+
+
+
 
 
 </body>
