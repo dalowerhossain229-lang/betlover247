@@ -3,7 +3,7 @@ ob_start();
 session_start();
 include 'db.php';
 
-// ১. সেশন থেকে ইউজার চেক
+// 🎯 ১. সেশন থেকে নিখুঁতভাবে ইউজার আইডি চেক
 if (isset($_SESSION['user_id'])) {
     $u = $_SESSION['user_id'];
 } elseif (isset($_SESSION['username'])) {
@@ -11,43 +11,49 @@ if (isset($_SESSION['user_id'])) {
 } else {
     die("error_no_session");
 }
-// ২. ডাটাবেসের কলাম নির্ধারণ (আপনার প্রোফাইল পেজের সাথে মিল রেখে)
-if ($wallet == 'pb') { 
-    $bal_col = "pb_balance"; 
-    $turn_col = "pb_t"; 
-} elseif ($wallet == 'bonus') { 
-    $bal_col = "bonus_balance"; 
-    $turn_col = "bonus_t"; 
-} else { 
-    $bal_col = "balance"; 
-    $turn_col = "main_t"; 
+
+// ফ্রন্টএন্ড থেকে আসা বাজি এবং ওয়ালেটের ডাটা নেওয়া
+$bet = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
+$wallet = isset($_POST['wallet']) ? strtolower($_POST['wallet']) : 'main';
+
+// 🎯 ২. আপনার ডাটাবেজ কলামের নামের সাথে মিল রেখে ওয়ালেট কন্ডিশন ফিক্সড
+if ($wallet == 'pb') {
+    $bal_col = "pb_balance";
+    $turn_col = "pb_t";
+} elseif ($wallet == 'bonus') {
+    $bal_col = "bonus_balance";
+    $turn_col = "bonus_t";
+} else {
+    $bal_col = "balance";
+    $turn_col = "t_main"; // 🔗 আপনার ডাটাবেজের আসল কলামের নাম t_main
 }
 
-// ৩. ডাটাবেস থেকে বর্তমান ব্যালেন্স চেক করা
-$check = $conn->query("SELECT $bal_col FROM users WHERE username = '$u'");
+// 🎯 ৩. ডাটাবেজ থেকে রিয়েল-টাইম কারেন্ট ব্যালেন্স চেক করা
+$check = $conn->query("SELECT $bal_col FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $check->fetch_assoc();
 
-if (!$user_data || $user_data[$bal_col] < $bet) {
-    die("insufficient_balance"); // টাকা না থাকলে বাজি ধরবে না
+if (!$user_data || floatval($user_data[$bal_col]) < $bet) {
+    die("insufficient_balance"); // টাকা না থাকলে বাজি ধরতে দেবে না
 }
 
-// ৪. বাজি ধরার আসল কাজ (টাকা বিয়োগ হবে এবং টার্নওভার যোগ হবে)
-$sql = "UPDATE users SET 
-        $bal_col = $bal_col - $bet, 
-        $turn_col = $turn_col + $bet 
-        WHERE username = '$u'";
+// 🎯 ৪. ব্যালেন্স কাটা এবং টার্নওভার যোগ করার মূল কুয়েরি
+$sql = "UPDATE users SET $bal_col = $bal_col - $bet, $turn_col = $turn_col + $bet WHERE username = '$u' OR id = '$u'";
 
 if ($conn->query($sql)) {
-
-// ৪৩ নম্বর লাইনটি এভাবে দিন
-$stmt = $conn->prepare("INSERT INTO bets (username, bet_amount, win_amount, balance_type, game_name, status) VALUES (?, ?, 0, ?, '2048 Game', 'pending')");
-$stmt->bind_param("sds", $u, $bet, $wallet);
-$stmt->execute();
-
-
-    echo "success"; // এটি পেলে আপনার গেমে পপআপ আসবে
+    
+    // 🎯 ৫. আপনার bets টেবিলের আসল কলাম অনুযায়ী প্রিপেয়ার্ড স্টেটমেন্ট ফিক্সড
+    $stmt = $conn->prepare("INSERT INTO bets (username, amount, game_id, status) VALUES (?, ?, 'Aviator', 'pending')");
+    $stmt->bind_param("sd", $u, $bet);
+    
+    if ($stmt->execute()) {
+        echo "success"; // বাজি সফল হলে এটি মেইন ড্যাশবোর্ডে পাঠাবে
+    } else {
+        echo "error_db";
+    }
+    $stmt->close();
 } else {
     echo "error_db";
 }
+
 ob_end_flush();
 ?>
