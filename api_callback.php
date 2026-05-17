@@ -15,10 +15,10 @@ if (!$data) {
 
 $action = $data['action'];
 
-// 🎯 সেশন ডাটা ব্লক হলেও যাতে এভিয়েটরের লিঙ্ক থেকে সরাসরি ইউজারনেম ক্যাচ করতে পারে
+// 🎯 সেশন ট্র্যাকিং ফিক্স: আপনার ডাটাবেজ সেশনের 'user_id' কী-টি এখানে যুক্ত করা হলো
 $username = !empty($data['username']) ? mysqli_real_escape_string($conn, $data['username']) : '';
-if (empty($username) && isset($_SESSION['username'])) {
-    $username = mysqli_real_escape_string($conn, $_SESSION['username']);
+if (empty($username) && isset($_SESSION['user_id'])) {
+    $username = mysqli_real_escape_string($conn, $_SESSION['user_id']);
 }
 
 $amount = floatval($data['amount'] ?? 0);
@@ -38,25 +38,24 @@ if (!$u_data) {
     exit;
 }
 
-// 🎯 আপনার ডাটাবেজ স্ট্রাকচারের সাথে হুবহু মিল রেখে ওয়ালেট সিলেকশন ফিক্সড করা হলো
-$wallet = strtolower($data['wallet'] ?? $u_data['active_wallet'] ?? 'main');
+// 스마트 ওয়ালেট ডিটেক্টর লজিক
+$pb_bal = floatval($u_data['pb_balance'] ?? 0);
+$bonus_bal = floatval($u_data['bonus_balance'] ?? 0);
+$main_bal = floatval($u_data['balance'] ?? 0);
 
-if ($wallet == 'pb') {
-    $bal_col = "pb_balance"; 
-    $turn_col = "pb_t";
-} elseif ($wallet == 'bonus') {
-    $bal_col = "bonus_balance"; 
-    $turn_col = "bonus_t";
+if ($pb_bal >= $amount) {
+    $bal_col = "pb_balance"; $turn_col = "pb_t";
+    $user_current_balance = $pb_bal;
+} elseif ($bonus_bal >= $amount) {
+    $bal_col = "bonus_balance"; $turn_col = "bonus_t";
+    $user_current_balance = $bonus_bal;
 } else {
-    $bal_col = "balance"; 
-    $turn_col = "t_main"; // <--- আপনার ডাটাবেজের আসল কলামের নাম t_main
+    $bal_col = "balance"; $turn_col = "t_main";
+    $user_current_balance = $main_bal;
 }
-
-$user_current_balance = floatval($u_data[$bal_col] ?? 0);
 
 // 🎰 বাজি ধরার লজিক
 if ($action == "bet") {
-    // অ্যান্টি-ডাবল ক্লিক প্রোটোকল
     $check_dup = $conn->query("SELECT id FROM bets WHERE username = '$username' AND amount = '$amount' AND status = 'bet' AND created_at >= NOW() - INTERVAL 2 SECOND LIMIT 1");
     if ($check_dup && $check_dup->num_rows > 0) {
         echo json_encode(["status" => "ok", "message" => "Duplicate Bypass", "balance" => $user_current_balance]);
@@ -68,7 +67,6 @@ if ($action == "bet") {
         exit;
     }
 
-    // সঠিক ওয়ালেটের ব্যালেন্স আপডেট কুয়েরি
     $update = $conn->query("UPDATE users SET $bal_col = $bal_col - $amount, $turn_col = $turn_col + $amount WHERE username = '$username'");
     
     if ($update) {
