@@ -1,4 +1,5 @@
 <?php
+// ১. ক্রস-ওরিজিন এবং সেশন প্রোটেকশন হেডার
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
@@ -8,10 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { exit(0); }
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
 include 'db.php';
 
+// ২. এভিয়েটোর নোড সার্ভার থেকে আসা রিকোয়েস্ট বডি ডাটা পড়া
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 if (!$data) {
-    echo json_encode(["status" => "error", "message" => "Invalid JSON"]);
+    echo json_encode(["status" => "error", "message" => "Invalid Request JSON"]);
     exit;
 }
 
@@ -23,57 +25,70 @@ if (empty($username) && isset($_SESSION['user_id'])) {
 
 $amount = floatval($data['amount'] ?? 0);
 if (empty($username)) {
-    echo json_encode(["status" => "error", "message" => "Empty User"]);
+    echo json_encode(["status" => "error", "message" => "Empty Username Parameter"]);
     exit;
 }
 
+// ৩. ডাটাবেজ থেকে ইউজারের তাজা তথ্য সংগ্রহ
 $u_sql = $conn->query("SELECT * FROM users WHERE LOWER(username) = LOWER('$username')");
 $u_data = $u_sql->fetch_assoc();
 if (!$u_data) {
-    echo json_encode(["status" => "error", "message" => "User Not Found"]);
+    echo json_encode(["status" => "error", "message" => "User Not Found in Database"]);
     exit;
 }
 
-// 🎯 আপনার ডাটাবেজ কলামের নামের সাথে মিল রেখে স্মার্ট অটো-ওয়ালেট ডিটেক্টর
-$pb_bal = floatval($u_data['pb_balance'] ?? 0);
-$bonus_bal = floatval($u_data['bonus_balance'] ?? 0);
-$main_bal = floatval($u_data['balance'] ?? 0);
+// 🎯 ৪. কঠোর ওয়ালেট লকিং মেকানিজম (যা আপনার বাগটি চিরতরে শেষ করবে)
+// প্লেয়ার স্ক্রিনে যে ওয়ালেট সিলেক্ট করেছে, নোড সার্ভার থেকে পাঠানো ঠিক সেই ওয়ালেট আইডি-ই রিড করা হবে
+$wallet = strtolower($data['wallet'] ?? 'main');
 
-if ($pb_bal >= $amount) {
-    $bal_col = "pb_balance"; $turn_col = "pb_t"; $user_current_balance = $pb_bal;
-} elseif ($bonus_bal >= $amount) {
-    $bal_col = "bonus_balance"; $turn_col = "bonus_t"; $user_current_balance = $bonus_bal;
+if ($wallet === 'pb') {
+    $bal_col = "pb_balance"; 
+    $turn_col = "pb_t"; 
+    $user_current_balance = floatval($u_data['pb_balance'] ?? 0);
+} elseif ($wallet === 'bonus') {
+    $bal_col = "bonus_balance"; 
+    $turn_col = "bonus_t"; 
+    $user_current_balance = floatval($u_data['bonus_balance'] ?? 0);
 } else {
-    $bal_col = "balance"; $turn_col = "t_main"; $user_current_balance = $main_bal;
+    // ডিফল্ট অথবা 'main' সিলেক্ট করা থাকলে কঠোরভাবে শুধু মেইন ব্যালেন্স থেকেই টাকা কাটবে
+    $bal_col = "balance"; 
+    $turn_col = "t_main"; 
+    $user_current_balance = floatval($u_data['balance'] ?? 0);
 }
 
-// 🎰 বাজি ধরার লজিক
+// 🎰 ৫. বাজি ধরার লজিক
 if ($action == "bet") {
     if ($user_current_balance < $amount) {
-        echo json_encode(["status" => "error", "message" => "Insufficient Balance!"]);
+        echo json_encode(["status" => "error", "message" => "Insufficient Balance in Selected Wallet!"]);
         exit;
     }
+
+    // শুধুমাত্র প্লেয়ারের সিলেক্ট করা কলামের ব্যালেন্স এবং টার্নওভার আপডেট কুয়েরি
     $update = $conn->query("UPDATE users SET $bal_col = $bal_col - $amount, $turn_col = $turn_col + $amount WHERE username = '{$u_data['username']}'");
+    
     if ($update) {
         $conn->query("INSERT INTO bets (username, amount, game_id, status) VALUES ('{$u_data['username']}', '$amount', 'Aviator', 'pending')");
-        echo json_encode(["status" => "ok", "balance" => $user_current_balance - $amount]);
+        $new_balance = $user_current_balance - $amount;
+        echo json_encode(["status" => "ok", "message" => "Bet Accepted", "balance" => $new_balance]);
     } else {
-        echo json_encode(["status" => "error", "message" => "DB Error"]);
+        echo json_encode(["status" => "error", "message" => "Database Bet Update Failed"]);
     }
 }
-// 💰 ক্যাশআউট বা জেতার লজিক
+// 💰 ৬. ক্যাশআউট বা জেতার লজিক (ঠিক সিলেক্ট করা ওয়ালেটেই উইন ক্রেডিট হবে)
 elseif ($action == "win") {
     $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '{$u_data['username']}'");
+    
     if ($update) {
         $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE username = '{$u_data['username']}' AND status = 'pending'");
-        echo json_encode(["status" => "ok", "balance" => $user_current_balance + $amount]);
+        $new_balance = $user_current_balance + $amount;
+        echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $new_balance]);
     } else {
-        echo json_encode(["status" => "error", "message" => "DB Error"]);
+        echo json_encode(["status" => "error", "message" => "Database Win Update Failed"]);
     }
 }
-// 🔴 লস লজিক
+// 🔴 ৭. লস লজিক
 elseif ($action == "loss") {
     $conn->query("UPDATE bets SET status = 'loss' WHERE username = '{$u_data['username']}' AND status = 'pending'");
-    echo json_encode(["status" => "ok"]);
+    echo json_encode(["status" => "ok", "message" => "Loss Recorded"]);
 }
 ?>
