@@ -107,36 +107,36 @@ $game_url = $aviator_base_url . "?userId=" . urlencode($u) . "&wallet=" . urlenc
     <!-- 🎯 এভিয়েটর গেম লোড আইফ্রেম -->
     <iframe src="<?php echo $game_url; ?>" id="game_frame" allow="autoplay; fullscreen; gaming"></iframe>
 </div>
-
 <script>
 // ১. ওয়ালেট সিলেকশন রিফ্রেশার
 function updateWallet(walletType) {
-fetch('update_wallet.php?type=' + walletType)
-.then(() => {
-location.reload();
-});
+    fetch('update_wallet.php?type=' + walletType)
+    .then(() => {
+        location.reload();
+    });
 }
 
 // 🎯 ২. ইউনিভার্সাল রিফ্রেশ-মুক্ত ব্যালেন্স সিঙ্ক (যা সাথে সাথে ওপরের ব্যালেন্স আপডেট করবে)
 window.addEventListener("message", function(event) {
-if (event.data && event.data.action === "refresh_wallet") {
-fetch(window.location.href)
-.then(response => response.text())
-.then(html => {
-const parser = new DOMParser();
-const doc = parser.parseFromString(html, 'text/html');
+    if (event.data && event.data.action === "refresh_wallet") {
+        fetch(window.location.href)
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
 
-// 🎯 থিমের সম্ভাব্য সব ব্যালেন্স আইডি ও ড্রপডাউন কন্টেইনার এক ক্লিকে লাইভ সিঙ্ক করার মেকানিজম
-const selectors = ['#active_wallet', '#balance', '#main-balance', '.user-balance', '.balance-amount', '[id*="balance"]'];
+            // 🎯 থিমের সম্ভাব্য সব ব্যালেন্স আইডি ও ড্রপডাউন কন্টেইনার এক ক্লিকে লাইভ সিঙ্ক করার মেকানিজম
+            const selectors = ['#active_wallet', '#balance', '#main-balance', '.user-balance', '.balance-amount', '[id*="balance"]'];
 
-selectors.forEach(selector => {
-const newEl = doc.querySelector(selector);
-const currentEl = document.querySelector(selector);
-if (newEl && currentEl) {
-currentEl.innerHTML = newEl.innerHTML;
-}
-});
-}
+            selectors.forEach(selector => {
+                const newEl = doc.querySelector(selector);
+                const currentEl = document.querySelector(selector);
+                if (newEl && currentEl) {
+                    currentEl.innerHTML = newEl.innerHTML;
+                }
+            });
+        }) // <-- এখানে .then(html => { এর ক্লোজিং বাদ পড়েছিল
+    }); // <-- এখানে window.addEventListener এর ক্লোজিং বাদ পড়েছিল
 });
 </script>
 </body>
