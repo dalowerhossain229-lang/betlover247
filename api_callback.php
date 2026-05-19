@@ -79,7 +79,8 @@ elseif ($action == "win") {
     $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '{$u_data['username']}'");
     
     if ($update) {
-        $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE username = '{$u_data['username']}' AND status = 'pending'");
+        $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE username = '{$u_data['username']}' AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet') ORDER BY id DESC LIMIT 1");
+
         $new_balance = $user_current_balance + $amount;
         echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $new_balance]);
     } else {
@@ -88,7 +89,8 @@ elseif ($action == "win") {
 }
 // 🔴 ৭. লস লজিক
 elseif ($action == "loss") {
-    $conn->query("UPDATE bets SET status = 'loss' WHERE username = '{$u_data['username']}' AND status = 'pending'");
+    $conn->query("UPDATE bets SET status = 'loss' WHERE username = '{$u_data['username']}' AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet') ORDER BY id DESC LIMIT 1");
+
     echo json_encode(["status" => "ok", "message" => "Loss Recorded"]);
 }
 ?>
