@@ -136,8 +136,8 @@ if (newEl && currentEl) {
 currentEl.innerHTML = newEl.innerHTML;
 }
 });
-
-
+}
+});
 </script>
 </body>
 </html>
