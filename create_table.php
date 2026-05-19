@@ -1,29 +1,24 @@
 <?php
-// ১. ডাটাবেস কানেকশন চেক করা
+// create_table.php - ব্রাউজারে রান করে টেবিল ফিক্স করার স্ক্রিপ্ট
 include 'db.php';
 
-if (!$conn) {
-    die("কানেকশন ফেল: " . mysqli_connect_error());
-}
+header('Content-Type: text/plain; charset=utf-8');
 
-// ২. টেবিল তৈরির SQL
-$sql = "CREATE TABLE IF NOT EXISTS `deposits` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(50) NOT NULL,
-  `amount` decimal(10,2) NOT NULL,
-  `method` varchar(20) NOT NULL,
-  `trx_id` varchar(100) NOT NULL,
-  `status` varchar(20) DEFAULT 'pending',
-  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+// উইথড্র টেবিল তৈরির এসকিউএল কুয়েরি
+$sql = "CREATE TABLE IF NOT EXISTS `withdraw_requests` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `username` VARCHAR(255) NOT NULL,
+  `amount` DECIMAL(10,2) NOT NULL,
+  `method` VARCHAR(100) DEFAULT NULL,
+  `account_number` VARCHAR(100) DEFAULT NULL,
+  `status` VARCHAR(50) DEFAULT 'PENDING',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
-// ৩. কুয়েরি রান এবং এরর ডিবাগিং
 if ($conn->query($sql) === TRUE) {
-    echo "<h1 style='color:green; text-align:center;'>চমৎকার! deposits টেবিলটি সফলভাবে তৈরি হয়েছে।</h1>";
+    echo "🎯 ১০০০০% সফল! 'withdraw_requests' টেবিলটি ডাটাবেজে সফলভাবে তৈরি হয়ে গেছে।\n";
+    echo "এখন আপনি উইথড্র পেজে গিয়ে ফ্রেশভাবে টাকা তোলার রিকোয়েস্ট সাবমিট করতে পারবেন।";
 } else {
-    // এখানে আসল এররটি দেখাবে
-    echo "<h1 style='color:red; text-align:center;'>টেবিল তৈরি হয়নি!</h1>";
-    echo "<p style='text-align:center;'>এরর মেসেজ: " . $conn->error . "</p>";
+    echo "❌ টেবিল তৈরিতে সমস্যা হয়েছে: " . $conn->error;
 }
 ?>
