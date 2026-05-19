@@ -109,29 +109,36 @@ $game_url = $aviator_base_url . "?userId=" . urlencode($u) . "&wallet=" . urlenc
 </div>
 
 <script>
-// 🎰 ১. ওয়ালেট সিলেকশন রিফ্রেশার
+// ১. ওয়ালেট সিলেকশন রিফ্রেশার
 function updateWallet(walletType) {
-    fetch('update_wallet.php?type=' + walletType)
-    .then(() => {
-        location.reload();
-    });
+fetch('update_wallet.php?type=' + walletType)
+.then(() => {
+location.reload();
+});
 }
-// 🎯 রিফ্রেশ-মুক্ত ব্যালেন্স সিঙ্ক: এটি পেজ রিলোড না করে ব্যাকগ্রাউন্ডে টাকা আপডেট করবে
+
+// 🎯 ২. ইউনিভার্সাল রিফ্রেশ-মুক্ত ব্যালেন্স সিঙ্ক (যা সাথে সাথে ওপরের ব্যালেন্স আপডেট করবে)
 window.addEventListener("message", function(event) {
-    if (event.data && event.data.action === "refresh_wallet") {
-        fetch(window.location.href)
-        .then(response => response.text())
-        .then(html => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const newSelect = doc.getElementById('active_wallet');
-            const currentSelect = document.getElementById('active_wallet');
-            if (newSelect && currentSelect) {
-                currentSelect.innerHTML = newSelect.innerHTML;
-            }
-        });
+if (event.data && event.data.action === "refresh_wallet") {
+fetch(window.location.href)
+.then(response => response.text())
+.then(html => {
+const parser = new DOMParser();
+const doc = parser.parseFromString(html, 'text/html');
+
+// 🎯 থিমের সম্ভাব্য সব ব্যালেন্স আইডি ও ড্রপডাউন কন্টেইনার এক ক্লিকে লাইভ সিঙ্ক করার মেকানিজম
+const selectors = ['#active_wallet', '#balance', '#main-balance', '.user-balance', '.balance-amount', '[id*="balance"]'];
+
+selectors.forEach(selector => {
+const newEl = doc.querySelector(selector);
+const currentEl = document.querySelector(selector);
+if (newEl && currentEl) {
+currentEl.innerHTML = newEl.innerHTML;
+}
+});
+
 
 </script>
-
 </body>
 </html>
+
