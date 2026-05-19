@@ -107,6 +107,7 @@ $game_url = $aviator_base_url . "?userId=" . urlencode($u) . "&wallet=" . urlenc
     <!-- 🎯 এভিয়েটর গেম লোড আইফ্রেম -->
     <iframe src="<?php echo $game_url; ?>" id="game_frame" allow="autoplay; fullscreen; gaming"></iframe>
 </div>
+
 <script>
 // ১. ওয়ালেট সিলেকশন রিফ্রেশার
 function updateWallet(walletType) {
@@ -135,10 +136,9 @@ window.addEventListener("message", function(event) {
                     currentEl.innerHTML = newEl.innerHTML;
                 }
             });
-        }) // <-- এখানে .then(html => { এর ক্লোজিং বাদ পড়েছিল
-    }); // <-- এখানে window.addEventListener এর ক্লোজিং বাদ পড়েছিল
+        });
+    }
 });
 </script>
 </body>
 </html>
-
