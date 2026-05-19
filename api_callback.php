@@ -89,7 +89,7 @@ elseif ($action == "win") {
 }
 // 🔴 ৭. লস লজিক
 elseif ($action == "loss") {
-    $conn->query("UPDATE bets SET status = 'loss' WHERE username = '{$u_data['username']}' AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet') ORDER BY id DESC LIMIT 1");
+$conn->query("UPDATE bets SET status = 'loss' WHERE LOWER(username) = LOWER('$username') AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR LOWER(status) = 'pending ⏳') ORDER BY id DESC LIMIT 1");
 
     echo json_encode(["status" => "ok", "message" => "Loss Recorded"]);
 }
