@@ -52,7 +52,7 @@ if ($wallet === 'pb') {
 } else {
     // ডিফল্ট অথবা 'main' সিলেক্ট করা থাকলে কঠোরভাবে শুধু মেইন ব্যালেন্স থেকেই টাকা কাটবে
     $bal_col = "balance"; 
-    $turn_col = "turnover"; 
+    $turn_col = "main_t"; 
     $user_current_balance = floatval($u_data['balance'] ?? 0);
 }
 
