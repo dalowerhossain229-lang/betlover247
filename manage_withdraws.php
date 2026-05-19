@@ -27,7 +27,8 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 }
 
 // ২. পেন্ডিং রিকোয়েস্টগুলো ডাটাবেস থেকে নেওয়া
-$pending_res = $conn->query("SELECT * FROM withdraws WHERE status = 'pending' ORDER BY id DESC");
+$pending_res = $conn->query("SELECT * FROM withdraw_requests WHERE LOWER(status) = 'pending' ORDER BY id DESC");
+
 ?>
 
 <!DOCTYPE html>
