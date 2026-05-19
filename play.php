@@ -116,14 +116,21 @@ function updateWallet(walletType) {
         location.reload();
     });
 }
-
-// 🎯 ২. এভিয়েটর গেম থেকে আসা লাইভ বাজি ধরার সিগন্যাল লিসেনার
+// 🎯 রিফ্রেশ-মুক্ত ব্যালেন্স সিঙ্ক: এটি পেজ রিলোড না করে ব্যাকগ্রাউন্ডে টাকা আপডেট করবে
 window.addEventListener("message", function(event) {
     if (event.data && event.data.action === "refresh_wallet") {
-        // বাজি ধরা বা জেতার সাথে সাথে আইফ্রেমের দেয়াল ভেঙে মেইন পেজ রিফ্রেশ করে ব্যালেন্স সিঙ্ক করবে
-        location.reload();
-    }
-});
+        fetch(window.location.href)
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const newSelect = doc.getElementById('active_wallet');
+            const currentSelect = document.getElementById('active_wallet');
+            if (newSelect && currentSelect) {
+                currentSelect.innerHTML = newSelect.innerHTML;
+            }
+        });
+
 </script>
 
 </body>
