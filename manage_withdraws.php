@@ -58,7 +58,7 @@ $pending_res = $conn->query("SELECT * FROM withdraw_requests WHERE LOWER(status)
             <p style="margin: 5px 0;"><strong>ইউজার:</strong> <?php echo htmlspecialchars($row['username']); ?></p>
             <p style="margin: 5px 0;"><strong>পরিমাণ:</strong> <span style="color: #ffdf1b; font-size: 18px;">৳ <?php echo htmlspecialchars($row['amount']); ?></span></p>
             
-            // 🎯 মোবাইল নম্বর ফিক্সড: আপনার ডাটাবেজের আসল কলাম 'number' ম্যাপ করা হলো যাতে নম্বর স্পষ্টভাবে স্ক্রিনে দেখা যায়
+            
             <p style="margin: 5px 0;"><strong>মেথড ও নম্বর:</strong> <span class="method-tag"><?php echo htmlspecialchars($row['method']); ?></span> - <?php echo htmlspecialchars($row['number'] ?? $row['account_number'] ?? ''); ?></p>
             
             <div class="btn-group">
