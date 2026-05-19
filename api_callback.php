@@ -79,7 +79,7 @@ elseif ($action == "win") {
     $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '{$u_data['username']}'");
     
     if ($update) {
-        $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE username = '{$u_data['username']}' AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet') ORDER BY id DESC LIMIT 1");
+        $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE LOWER(username) = LOWER('$username') AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳')");
 
         $new_balance = $user_current_balance + $amount;
         echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $new_balance]);
