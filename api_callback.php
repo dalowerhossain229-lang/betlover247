@@ -74,25 +74,27 @@ if ($action == "bet") {
         echo json_encode(["status" => "error", "message" => "Database Bet Update Failed"]);
     }
 }
-// 💰 ৬. ক্যাশআউট বা জেতার লজিক (ঠিক সিলেক্ট করা ওয়ালেটেই উইন ক্রেডিট হবে)
+// 🎯 api_callback.php এর win এবং loss ব্লকের পুরানো কোড কেটে হুবহু এটি বসাবেন:
+
 elseif ($action == "win") {
-        $clean_winning_amount = floatval($amount);
-        $update = $conn->query("UPDATE users SET $bal_col = CAST($bal_col AS DECIMAL(15,2)) + CAST($clean_winning_amount AS DECIMAL(15,2)) WHERE username = '{$u_data['username']}'");
-        if ($update) {
-            $conn->query("UPDATE bets SET status = 'win', amount = '$clean_winning_amount' WHERE LOWER(username) = LOWER('$username') AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳')");
-            $fresh_user = $conn->query("SELECT $bal_col FROM users WHERE username = '{$u_data['username']}'")->fetch_assoc();
-            $new_balance = floatval($fresh_user[$bal_col]);
-            echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $new_balance]);
-        } else {
-            echo json_encode(["status" => "error", "message" => "Database Win Update Failed!"]);
-        }
-
+    $clean_winning_amount = floatval($data['amount'] ?? 0);
+    
+    // ডাটাবেজে গাণিতিক যোগ কঠোরভাবে লক করা হলো
+    $update = $conn->query("UPDATE users SET $bal_col = CAST($bal_col AS DECIMAL(15,2)) + CAST($clean_winning_amount AS DECIMAL(15,2)) WHERE username = '{$u_data['username']}'");
+    
+    if ($update) {
+        // 🛡️ ইউনিক আইডি লক: 'ORDER BY id DESC LIMIT 1' ব্যবহারের ফলে এটি কেবল চলতি রাউন্ডের সর্বশেষ বাজিটিকেই 'win' করবে, পেছনের কোনো পেন্ডিং বাজিকে স্পর্শ করার ক্ষমতা এর থাকবে না
+        $conn->query("UPDATE bets SET status = 'win', amount = '$clean_winning_amount' WHERE LOWER(username) = LOWER('$username') AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳') ORDER BY id DESC LIMIT 1");
+        
+        $fresh_user = $conn->query("SELECT $bal_col FROM users WHERE username = '{$u_data['username']}'")->fetch_assoc();
+        echo json_encode(["status" => "ok", "balance" => floatval($fresh_user[$bal_col])]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "DB Win Error"]);
+    }
 }
-// 🔴 ৭. লস লজিক
 elseif ($action == "loss") {
-$conn->query("UPDATE bets SET status = 'loss' WHERE LOWER(username) = LOWER('$username') AND LOWER(game_id) = 'aviator' AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳') ORDER BY id DESC LIMIT 1");
-
-
+    // 🛡️ ইউনিক আইডি লক: বিমান ক্রাশ খেলে এটি কেবল চলতি রাউন্ডের সর্বশেষ বাজিটিকেই 'loss' আপডেট করবে, পুরানো ডেটা সুরক্ষিত থাকবে
+    $conn->query("UPDATE bets SET status = 'loss' WHERE LOWER(username) = LOWER('$username') AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳') ORDER BY id DESC LIMIT 1");
     echo json_encode(["status" => "ok", "message" => "Loss Recorded"]);
 }
 ?>
