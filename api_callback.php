@@ -76,16 +76,17 @@ if ($action == "bet") {
 }
 // 💰 ৬. ক্যাশআউট বা জেতার লজিক (ঠিক সিলেক্ট করা ওয়ালেটেই উইন ক্রেডিট হবে)
 elseif ($action == "win") {
-    $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount WHERE username = '{$u_data['username']}'");
-    
-    if ($update) {
-        $conn->query("UPDATE bets SET status = 'win', amount = '$amount' WHERE LOWER(username) = LOWER('$username') AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳')");
+        $clean_winning_amount = floatval($amount);
+        $update = $conn->query("UPDATE users SET $bal_col = CAST($bal_col AS DECIMAL(15,2)) + CAST($clean_winning_amount AS DECIMAL(15,2)) WHERE username = '{$u_data['username']}'");
+        if ($update) {
+            $conn->query("UPDATE bets SET status = 'win', amount = '$clean_winning_amount' WHERE LOWER(username) = LOWER('$username') AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳')");
+            $fresh_user = $conn->query("SELECT $bal_col FROM users WHERE username = '{$u_data['username']}'")->fetch_assoc();
+            $new_balance = floatval($fresh_user[$bal_col]);
+            echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $new_balance]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Database Win Update Failed!"]);
+        }
 
-        $new_balance = $user_current_balance + $amount;
-        echo json_encode(["status" => "ok", "message" => "Win Distributed", "balance" => $new_balance]);
-    } else {
-        echo json_encode(["status" => "error", "message" => "Database Win Update Failed"]);
-    }
 }
 // 🔴 ৭. লস লজিক
 elseif ($action == "loss") {
