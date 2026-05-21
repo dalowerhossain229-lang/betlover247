@@ -18,6 +18,14 @@ if (!$data) {
 }
 
 $action = $data['action'];
+// 🎯 ২০ নম্বর লাইনের ঠিক নিচে হুবহু এই ব্লকটি পেস্ট করে দিন
+if (isset($action) && $action === "force_clean_pending") {
+    // 🛡️ স্মার্ট ট্র্যাকিং: টেবিলে থাকা সমস্ত পেন্ডিং বাজিকে ১ মিলি-সেকেন্ডে 'loss' বানিয়ে খাতা চিরদিনের জন্য পরিষ্কার করে দেবে
+    $conn->query("UPDATE bets SET status = 'loss' WHERE (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳') AND status != 'win'");
+    echo json_encode(["status" => "ok", "message" => "All pending cleaned permanently!"]);
+    exit;
+}
+
 $username = !empty($data['username']) ? mysqli_real_escape_string($conn, $data['username']) : '';
 if (empty($username) && isset($_SESSION['user_id'])) {
     $username = mysqli_real_escape_string($conn, $_SESSION['user_id']);
@@ -92,10 +100,5 @@ elseif ($action == "win") {
         echo json_encode(["status" => "error", "message" => "DB Win Error"]);
     }
 }
-if (isset($data['action']) && $data['action'] == "force_clean_pending") {
-    // 🛡️ স্মার্ট ডুয়াল রিকভারি লক: টেবিলে থাকা শুধুমাত্র সেই বাজিগুলোকেই 'loss' করবে যেগুলো কোনো কারণে ক্যাশআউট করতে পারেনি। কোনো সফল উইনিং বাজিকে এটি ভুল করেও নষ্ট করবে না।
-    $conn->query("UPDATE bets SET status = 'loss' WHERE (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳') AND status != 'win'");
-    echo json_encode(["status" => "ok", "message" => "Smart pending cleanup complete successfully!"]);
-    exit;
-}
+
 ?>
