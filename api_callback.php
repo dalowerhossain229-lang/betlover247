@@ -92,9 +92,10 @@ elseif ($action == "win") {
         echo json_encode(["status" => "error", "message" => "DB Win Error"]);
     }
 }
-elseif ($action == "loss") {
-    // 🛡️ ইউনিক আইডি লক: বিমান ক্রাশ খেলে এটি কেবল চলতি রাউন্ডের সর্বশেষ বাজিটিকেই 'loss' আপডেট করবে, পুরানো ডেটা সুরক্ষিত থাকবে
-    $conn->query("UPDATE bets SET status = 'loss' WHERE LOWER(username) = LOWER('$username') AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳') ORDER BY id DESC LIMIT 1");
-    echo json_encode(["status" => "ok", "message" => "Loss Recorded"]);
+if (isset($data['action']) && $data['action'] == "force_clean_pending") {
+    // 🛡️ স্মার্ট ডুয়াল রিকভারি লক: টেবিলে থাকা শুধুমাত্র সেই বাজিগুলোকেই 'loss' করবে যেগুলো কোনো কারণে ক্যাশআউট করতে পারেনি। কোনো সফল উইনিং বাজিকে এটি ভুল করেও নষ্ট করবে না।
+    $conn->query("UPDATE bets SET status = 'loss' WHERE (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳') AND status != 'win'");
+    echo json_encode(["status" => "ok", "message" => "Smart pending cleanup complete successfully!"]);
+    exit;
 }
 ?>
