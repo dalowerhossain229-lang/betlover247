@@ -20,7 +20,14 @@ $aviator_base_url = "https://aviator2-0-azym.onrender.com";
 $wingo_base_url = "https://color-trade.onrender.com";
 
 $active_wallet = $user_data['active_wallet'] ?? 'main';
-$game_url = $aviator_base_url . "?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
+$get_game_type = isset($_GET['game']) ? $_GET['game'] : 'aviator';
+
+if ($get_game_type === 'wingo') {
+    $game_url = $wingo_base_url . '/?id=' . $user_data['username'] . '&wallet=' . $active_wallet;
+} else {
+    $game_url = $aviator_base_url . '/?id=' . $user_data['username'] . '&wallet=' . $active_wallet;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
