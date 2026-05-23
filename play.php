@@ -15,7 +15,10 @@ $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
 // ৩. গেম লোড লিঙ্ক (৩টি ওয়ালেট ডাইনামিক সিঙ্কের জন্য নতুন ডোমেইন সহ আপডেট করা হয়েছে)
-$aviator_base_url = "https://aviator2-0-azym.onrender.com"; 
+$aviator_base_url = "https://aviator2-0-azym.onrender.com";
+// 🎰 উইনগো (Color-Trade) গেমের মেইন রেন্ডার লাইভ লিংক প্রোটোকল লক
+$wingo_base_url = "https://color-trade.onrender.com";
+
 $active_wallet = $user_data['active_wallet'] ?? 'main';
 $game_url = $aviator_base_url . "?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
 ?>
