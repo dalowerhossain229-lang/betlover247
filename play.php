@@ -24,7 +24,7 @@ $active_wallet = $user_data['active_wallet'] ?? 'main';
  if ($get_game_type === 'Color-Trade') {
     $game_url = $wingo_base_url . "/?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
 } else if ($get_game_type === 'Chicken-Road') {
-   $chicken_base_url = "https://onrender.com";
+   $chicken_base_url = "https://chicken-road-u9f2.onrender.com";
    $game_url = $chicken_base_url . "/?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
 } else {
     $game_url = $aviator_base_url . "?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
