@@ -52,12 +52,13 @@ include 'header.php';
         <img src="aviator.png" alt="Aviator">
         <p>AVIATOR</p>
     </div>
-
         <!-- ৩. Chicken Road -->
-    <div class="game-card" onclick="location.href='play.php?id=chicken'">
-        <img src="chicken.png" alt="Chicken Road">
-        <p>CHICKEN ROAD</p>
-    </div>
+        <div class="game-card" onclick="window.location.href='play.php?game=Chicken-Road';" style="cursor: pointer;">
+            <img src="chicken.png" alt="Chicken Road">
+            <p>CHICKEN ROAD</p>
+        </div>
+
+        
 
     <!-- ২. Lucky 777 -->
     <div class="game-card" onclick="location.href='play.php?id=lucky-777'">
