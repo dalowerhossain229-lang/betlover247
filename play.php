@@ -22,11 +22,14 @@ $wingo_base_url = "https://color-trade.onrender.com";
 $active_wallet = $user_data['active_wallet'] ?? 'main';
 $get_game_type = isset($_GET['game']) ? $_GET['game'] : 'aviator';
 
-if ($get_game_type === 'wingo') {
-    $game_url = $wingo_base_url . '/?id=' . $user_data['username'] . '&wallet=' . $active_wallet;
+if ($get_game_type === 'Color-Trade') {
+    // 🎯 উইনগো কালার গেমের জন্যও প্যারামিটার 'userId' সেট করা হলো
+    $game_url = $wingo_base_url . "/?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
 } else {
-    $game_url = $aviator_base_url . '/?id=' . $user_data['username'] . '&wallet=' . $active_wallet;
+    // 🎯 এভিয়েটর গেমের ওরিজিনাল প্রোটোকল অক্ষত রইলো
+    $game_url = $aviator_base_url . "?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
 }
+
 
 ?>
 <!DOCTYPE html>
