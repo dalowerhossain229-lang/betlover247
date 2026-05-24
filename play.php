@@ -14,24 +14,21 @@ if (empty($u)) {
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-// ৩. গেম লোড লিঙ্ক (৩টি ওয়ালেট ডাইনামিক সিঙ্কের জন্য নতুন ডোমেইন সহ আপডেট করা হয়েছে)
 $aviator_base_url = "https://aviator2-0-azym.onrender.com";
-// 🎰 উইনগো (Color-Trade) গেমের মেইন রেন্ডার লাইভ লিংক প্রোটোকল লক
 $wingo_base_url = "https://color-trade.onrender.com";
+$chicken_base_url = "https://chicken-road-u9f2.onrender.com";
 
-$active_wallet = $user_data['active_wallet'] ?? 'main';
- $get_game_type = isset($_GET['game']) ? $_GET['game'] : 'aviator';
- if ($get_game_type === 'Color-Trade') {
-    $game_url = $wingo_base_url . "/?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
+$active_wallet = isset($user_data['active_wallet']) ? $user_data['active_wallet'] : 'main';
+$get_game_type = isset($_GET['game']) ? $_GET['game'] : 'aviator';
+$game_user_id = !empty($u) ? $u : (!empty($username) ? $username : 'guest_user');
+
+if ($get_game_type === 'Color-Trade') {
+    $game_url = $wingo_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet);
 } else if ($get_game_type === 'Chicken-Road') {
-   $chicken_base_url = "https://chicken-road-u9f2.onrender.com";
-   $game_url = $chicken_base_url . "/?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
+    $game_url = $chicken_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet);
 } else {
-    $game_url = $aviator_base_url . "?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
+    $game_url = $aviator_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet);
 }
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
