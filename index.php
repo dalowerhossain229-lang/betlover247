@@ -100,12 +100,13 @@ include 'header.php';
         <img src="football.png" alt="Football">
         <p>FOOTBALL</p>
     </div>
+        <!-- ১১. Lottery -->
+        <div class="game-card" onclick="window.location.href='play.php?game=Color-Trade';" style="cursor: pointer;">
+            <img src="lottery.png" alt="Lottery">
+            <p>LOTTERY</p>
+        </div>
 
-    <!-- ১১. Lottery -->
-    <div class="game-card" onclick="playGame('lottery')">
-        <img src="lottery.png" alt="Lottery">
-        <p>LOTTERY</p>
-    </div>
+    
 
 <div class="game-card" onclick="location.href='ludu.php'">
     <img src="ludu.png" alt="Ludu">
