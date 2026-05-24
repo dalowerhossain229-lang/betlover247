@@ -20,15 +20,16 @@ $aviator_base_url = "https://aviator2-0-azym.onrender.com";
 $wingo_base_url = "https://color-trade.onrender.com";
 
 $active_wallet = $user_data['active_wallet'] ?? 'main';
-$get_game_type = isset($_GET['game']) ? $_GET['game'] : 'aviator';
+23: $get_game_type = isset($_GET['game']) ? $_GET['game'] : 'aviator';
+24: if ($get_game_type === 'Color-Trade') {
+25:     $game_url = $wingo_base_url . "/?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
+26: } else if ($get_game_type === 'Chicken-Road') {
+27:     $chicken_base_url = "https://onrender.com";
+28:     $game_url = $chicken_base_url . "/?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
+29: } else {
+30:     $game_url = $aviator_base_url . "?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
+31: }
 
-if ($get_game_type === 'Color-Trade') {
-    // 🎯 উইনগো কালার গেমের জন্যও প্যারামিটার 'userId' সেট করা হলো
-    $game_url = $wingo_base_url . "/?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
-} else {
-    // 🎯 এভিয়েটর গেমের ওরিজিনাল প্রোটোকল অক্ষত রইলো
-    $game_url = $aviator_base_url . "?userId=" . urlencode($u) . "&wallet=" . urlencode($active_wallet);
-}
 
 
 ?>
