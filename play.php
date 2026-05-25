@@ -13,10 +13,10 @@ if (empty($u)) {
 // ২. ডাটাবেজ থেকে রিয়েল-টাইমে ইউজারের ওয়ালেটের সর্বশেষ তথ্য আনা
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
-$aviator_base_url = "https://onrender.com";
-$wingo_base_url = "https://onrender.com";
-$chicken_base_url = "https://onrender.com";
-$slot_base_url = "https://onrender.com"; // 🎰 ৪ নম্বর স্লট গেমের অরিজিনাল রেন্ডার লাইভ ডোমেন ভাই
+$aviator_base_url = "https://aviator2-0-azym.onrender.com";
+$wingo_base_url = "https://color-trade.onrender.com";
+$chicken_base_url = "https://chickenroad.onrender.com";
+$slot_base_url = "https://lucky777-slot.onrender.com"; // 🎰 ৪ নম্বর স্লট গেমের অরিজিনাল রেন্ডার লাইভ ডোমেন ভাই
 
 $active_wallet = isset($user_data['active_wallet']) ? $user_data['active_wallet'] : 'main';
 $get_game_type = isset($_GET['game']) ? $_GET['game'] : '';
