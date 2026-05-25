@@ -25,19 +25,19 @@ $get_game_type = isset($_GET['game']) ? $_GET['game'] : '';
 $game_user_id = !empty($u) ? $u : "guest";
 
 if ($get_game_type === 'color' || $get_game_type === 'ColorTrade') {
-    // 🎰 [কালার ট্রেড লিঙ্ক জ্যাম ফিক্স ভাই]: এবার 'color' বা 'ColorTrade' যেকোনো বানানে চাপ দিলে এভিয়েটরে না গিয়ে ডিরেক্ট কালার গেমেই ঢুকবে ভাই!
     $game_url = $wingo_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 } else if ($get_game_type === 'chicken') {
     $game_url = $chicken_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 } else if ($get_game_type === 'slotmaster') {
     $game_url = $slot_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 } else if ($get_game_type === 'superace') {
-    // ♠️ [৫ নম্বর JILI সুপার এস গেমের অফিশিয়াল লাইভ গেটওয়ে লক ভাই]
     $game_url = $ace_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'ludu') {
+    // 🎲 [৬ নম্বর লুডু ৭ গেমের অফিশিয়াল লাইভ গেটওয়ে বর্ম লক ভাই]
+    $game_url = $ludu_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 } else {
     $game_url = $aviator_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 }
-
 
 ?>
 <!DOCTYPE html>
