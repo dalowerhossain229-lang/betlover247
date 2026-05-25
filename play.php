@@ -13,22 +13,27 @@ if (empty($u)) {
 // ২. ডাটাবেজ থেকে রিয়েল-টাইমে ইউজারের ওয়ালেটের সর্বশেষ তথ্য আনা
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
-
-$aviator_base_url = "https://aviator2-0-azym.onrender.com";
-$wingo_base_url = "https://color-trade.onrender.com";
-$chicken_base_url = "https://chickenroad.onrender.com";
+$aviator_base_url = "https://onrender.com";
+$wingo_base_url = "https://onrender.com";
+$chicken_base_url = "https://onrender.com";
+$slot_base_url = "https://onrender.com"; // 🎰 ৪ নম্বর স্লট গেমের অরিজিনাল রেন্ডার লাইভ ডোমেন ভাই
 
 $active_wallet = isset($user_data['active_wallet']) ? $user_data['active_wallet'] : 'main';
-$get_game_type = isset($_GET['game']) ? $_GET['game'] : 'aviator';
-$game_user_id = !empty($u) ? $u : (!empty($username) ? $username : 'guest_user');
+$get_game_type = isset($_GET['game']) ? $_GET['game'] : '';
+$game_user_id = !empty($u) ? $u : "guest";
 
-if ($get_game_type === 'Color-Trade') {
-    $game_url = $wingo_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet);
-} else if ($get_game_type === 'Chicken-Road') {
-    $game_url = $chicken_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet);
+if ($get_game_type === 'color') {
+    $game_url = $wingo_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'chicken') {
+    $game_url = $chicken_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'slotmaster') {
+    // 🎰 [৪ নম্বর লাকি ৭৭৭ স্লট গেমের অফিশিয়াল লাইভ এন্ট্রি গেটওয়ে লক ভাই]
+    $game_url = $slot_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 } else {
-    $game_url = $aviator_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet);
+    $game_url = $aviator_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
