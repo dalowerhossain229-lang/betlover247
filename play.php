@@ -18,6 +18,7 @@ $wingo_base_url = "https://color-trade.onrender.com";
 $chicken_base_url = "https://chickenroad.onrender.com";
 $slot_base_url = "https://lucky777-slot.onrender.com"; // ৪ নম্বর স্লট মাস্টার অনলাইন লিঙ্ক ভাই
 $ace_base_url = "https://super-ace.onrender.com"; // ♠️ ৫ নম্বর প্রিমিয়াম সুপার এস অনলাইন লিঙ্ক ভাই
+$ludu_base_url = "https://ludu777.onrender.com"; // 🎲 ৬ নম্বর লুডু গেমের রেন্ডার লাইভ লিংক ভাই
 
 $active_wallet = isset($user_data['active_wallet']) ? $user_data['active_wallet'] : 'main';
 $get_game_type = isset($_GET['game']) ? $_GET['game'] : '';
