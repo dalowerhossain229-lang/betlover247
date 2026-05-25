@@ -40,11 +40,12 @@ include 'header.php';
 
 <!-- গেম গ্রিড সেকশন শুরু -->
 <div class="game-grid">
-  <!-- ১. Super Ace -->
-    <div class="game-card" onclick="location.href='play.php?id=super-ace'">
-        <img src="super-ace.png" alt="Super Ace">
-        <p>SUPER ACE</p>
-    </div>  
+        <!-- ১. Super Ace -->
+        <div class="game-card" onclick="window.location.href='play.php?game=superace';" style="cursor: pointer;">
+            <img src="super-ace.png" alt="Super Ace">
+            <p>SUPER ACE</p>
+        </div>
+
 
     <!-- ২. Aviator -->
     <div class="game-card" onclick="location.href='play.php?id=aviator'">
@@ -100,8 +101,9 @@ include 'header.php';
         <img src="football.png" alt="Football">
         <p>FOOTBALL</p>
     </div>
-        <!-- ১১. Lottery -->
-        <div class="game-card" onclick="window.location.href='play.php?game=Color-Trade';" style="cursor: pointer;">
+        
+        <!-- ১১. Lottery (Color Trade) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=color';" style="cursor: pointer;">
             <img src="lottery.png" alt="Lottery">
             <p>LOTTERY</p>
         </div>
