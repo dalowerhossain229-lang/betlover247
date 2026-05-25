@@ -108,13 +108,12 @@ include 'header.php';
             <p>LOTTERY</p>
         </div>
 
-    
-
-<div class="game-card" onclick="location.href='ludu.php'">
-    <img src="ludu.png" alt="Ludu">
-    <p>LUDU LUCKY</p>
-</div>
-
+          <!-- ১২. Ludu 7 Up Down (৬ নম্বর মেগা সচল গেম ভাই) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=ludu';" style="cursor: pointer;">
+            <img src="ludu.png" alt="7 Up Down">
+            <p>7 UP DOWN</p>
+        </div>
+  
     <!-- ১৩. Wheel -->
     <div class="game-card" onclick="playGame('wheel')">
         <img src="wheel.png" alt="Wheel">
