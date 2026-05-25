@@ -52,31 +52,30 @@ include 'header.php';
         <img src="aviator.png" alt="Aviator">
         <p>AVIATOR</p>
     </div>
-        <!-- ৩. Chicken Road -->
-        <div class="game-card" onclick="window.location.href='play.php?game=Chicken-Road';" style="cursor: pointer;">
+             <!-- ৩. Chicken Road -->
+        <div class="game-card" onclick="window.location.href='play.php?game=chicken';" style="cursor: pointer;">
             <img src="chicken.png" alt="Chicken Road">
             <p>CHICKEN ROAD</p>
         </div>
 
-        
+        <!-- ৪. Lucky 777 -->
+        <div class="game-card" onclick="window.location.href='play.php?game=slotmaster';" style="cursor: pointer;">
+            <img src="lucky-777.png" alt="Lucky 777">
+            <p>LUCKY 777</p>
+        </div>
 
-    <!-- ২. Lucky 777 -->
-    <div class="game-card" onclick="location.href='play.php?id=lucky-777'">
-        <img src="lucky-777.png" alt="Lucky 777">
-        <p>LUCKY 777</p>
-    </div>
+        <!-- ৫. Crazy Time -->
+        <div class="game-card" onclick="window.location.href='play.php?game=crazytime';" style="cursor: pointer;">
+            <img src="crazy-time.png" alt="Crazy Time">
+            <p>CRAZY TIME</p>
+        </div>
 
-    <!-- ৫. Crazy Time -->
-    <div class="game-card" onclick="playGame('crazy-time')">
-        <img src="crazy-time.png" alt="Crazy Time">
-        <p>CRAZY TIME</p>
-    </div>
-
-    <!-- ৬. Mega Ace -->
-    <div class="game-card" onclick="playGame('mega-ace')">
-        <img src="mega-ace.png" alt="Mega Ace">
-        <p>MEGA ACE</p>
-    </div>
+        <!-- ৬. Mega Ace -->
+        <div class="game-card" onclick="window.location.href='play.php?game=megaace';" style="cursor: pointer;">
+            <img src="mega-ace.png" alt="Mega Ace">
+            <p>MEGA ACE</p>
+        </div>
+   
 
     <!-- ৭. Mega Wheel -->
     <div class="game-card" onclick="playGame('mega-wheel')">
