@@ -32,8 +32,6 @@ if ($get_game_type === 'color') {
 } else {
     $game_url = $aviator_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
