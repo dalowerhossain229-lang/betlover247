@@ -16,7 +16,7 @@ $user_data = $query->fetch_assoc();
 
 $aviator_base_url = "https://aviator2-0-azym.onrender.com";
 $wingo_base_url = "https://color-trade.onrender.com";
-$chicken_base_url = "https://chicken-road-u9f2.onrender.com";
+$chicken_base_url = "https://chickenroad.onrender.com";
 
 $active_wallet = isset($user_data['active_wallet']) ? $user_data['active_wallet'] : 'main';
 $get_game_type = isset($_GET['game']) ? $_GET['game'] : 'aviator';
