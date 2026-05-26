@@ -19,6 +19,8 @@ $chicken_base_url = "https://chickenroad.onrender.com";
 $slot_base_url = "https://lucky777-slot.onrender.com"; // ৪ নম্বর স্লট মাস্টার অনলাইন লিঙ্ক ভাই
 $ace_base_url = "https://super-ace.onrender.com"; // ♠️ ৫ নম্বর প্রিমিয়াম সুপার এস অনলাইন লিঙ্ক ভাই
 $ludu_base_url = "https://ludu777.onrender.com"; // 🎲 ৬ নম্বর লুডু গেমের রেন্ডার লাইভ লিংক ভাই
+$wheel_base_url = "https://onrender.com"; // 🎡 ৭ নম্বর লাকি হুইলের রেন্ডার লাইভ লিঙ্ক ভাই
+
 
 $active_wallet = isset($user_data['active_wallet']) ? $user_data['active_wallet'] : 'main';
 $get_game_type = isset($_GET['game']) ? $_GET['game'] : '';
@@ -33,8 +35,10 @@ if ($get_game_type === 'color' || $get_game_type === 'ColorTrade') {
 } else if ($get_game_type === 'superace') {
     $game_url = $ace_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 } else if ($get_game_type === 'ludu') {
-    // 🎲 [৬ নম্বর লুডু ৭ গেমের অফিশিয়াল লাইভ গেটওয়ে বর্ম লক ভাই]
     $game_url = $ludu_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'megawheel') {
+    // 🎡 [৭ নম্বর মেগা ফরচুন হুইল গেমের অফিশিয়াল লাইভ গেটওয়ে বর্ম লক ভাই]
+    $game_url = $wheel_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 } else {
     $game_url = $aviator_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 }
