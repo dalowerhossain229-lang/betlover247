@@ -78,11 +78,12 @@ include 'header.php';
         </div>
    
 
-    <!-- ৭. Mega Wheel -->
-    <div class="game-card" onclick="playGame('mega-wheel')">
-        <img src="mega-wheel.png" alt="Mega Wheel">
-        <p>MEGA WHEEL</p>
-    </div>
+            <!-- ৭. Mega Wheel (৭ নম্বর মেগা লাকি হুইল গেম ভাই) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=megawheel';" style="cursor: pointer;">
+            <img src="mega-wheel.png" alt="Mega Wheel">
+            <p>MEGA WHEEL</p>
+        </div>
+
 
     <!-- ৮. Better Ace -->
     <div class="game-card" onclick="playGame('better-ace')">
