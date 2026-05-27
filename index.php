@@ -37,96 +37,190 @@ include 'header.php';
     </div>
 </div>
 <!-- ডাইনামিক স্লাইডার সেকশন শেষ -->
+    <!-- 🎰 আপনার ডায়েরির সম্পূর্ণ ২ পাতা মিলিয়ে ৩০ মেগা গেম গ্রিড বর্ম ভাই ভাই -->
+    <div class="game-grid">
 
-<!-- গেম গ্রিড সেকশন শুরু -->
-<div class="game-grid">
-        <!-- ১. Super Ace -->
-        <div class="game-card" onclick="window.location.href='play.php?game=superace';" style="cursor: pointer;">
+        <!-- ১. SUPER-ACE (সুপার টেক্কা স্লট) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=superace';">
             <img src="super-ace.png" alt="Super Ace">
-            <p>SUPER ACE</p>
+            <p>1. SUPER-ACE</p>
         </div>
 
-
-    <!-- ২. Aviator -->
-    <div class="game-card" onclick="location.href='play.php?id=aviator'">
-
-        <img src="aviator.png" alt="Aviator">
-        <p>AVIATOR</p>
-    </div>
-             <!-- ৩. Chicken Road -->
-        <div class="game-card" onclick="window.location.href='play.php?game=chicken';" style="cursor: pointer;">
-            <img src="chicken.png" alt="Chicken Road">
-            <p>CHICKEN ROAD</p>
+        <!-- ২. LUDO (লুডু লটারি বাজি) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=ludo7';">
+            <img src="ludo-7.png" alt="Ludo">
+            <p>2. LUDO 777</p>
         </div>
 
-        <!-- ৪. Lucky 777 -->
-        <div class="game-card" onclick="window.location.href='play.php?game=slotmaster';" style="cursor: pointer;">
+        <!-- ৩. LUCKY 777-SLOT (লাকি ৭৭৭ স্লট মাস্টার) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=slotmaster';">
             <img src="lucky-777.png" alt="Lucky 777">
-            <p>LUCKY 777</p>
+            <p>3. LUCKY 777-SLOT</p>
         </div>
 
-        <!-- ৫. Crazy Time -->
-        <div class="game-card" onclick="window.location.href='play.php?game=crazytime';" style="cursor: pointer;">
-            <img src="crazy-time.png" alt="Crazy Time">
-            <p>CRAZY TIME</p>
+        <!-- ৪. HEAD-AND-TAIL (কয়েন ফ্লিপ হেড টেইল) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=coinflip';">
+            <img src="coin-flip.png" alt="Head and Tail">
+            <p>4. HEAD-AND-TAIL</p>
         </div>
 
-        <!-- ৬. Mega Ace -->
-        <div class="game-card" onclick="window.location.href='play.php?game=megaace';" style="cursor: pointer;">
-            <img src="mega-ace.png" alt="Mega Ace">
-            <p>MEGA ACE</p>
+        <!-- ৫. LUCKY-MINES (লাকি ল্যান্ডমাইন ক্র্যাশ) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=mines';">
+            <img src="mines.png" alt="Lucky Mines">
+            <p>5. LUCKY-MINES</p>
         </div>
-   
 
-            <!-- ৭. Mega Wheel (৭ নম্বর মেগা লাকি হুইল গেম ভাই) -->
-        <div class="game-card" onclick="window.location.href='play.php?game=megawheel';" style="cursor: pointer;">
+        <!-- ৬. MEGA-WHEEL (মেগা ফরচুন চরকি স্পিন) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=megawheel';">
             <img src="mega-wheel.png" alt="Mega Wheel">
-            <p>MEGA WHEEL</p>
+            <p>6. MEGA-WHEEL</p>
         </div>
 
-
-    <!-- ৮. Better Ace -->
-    <div class="game-card" onclick="playGame('better-ace')">
-        <img src="better-ace.png" alt="Better Ace">
-        <p>BETTER ACE</p>
-    </div>
-
-    <!-- ৯. Cricket -->
-    <div class="game-card" onclick="playGame('cricket')">
-        <img src="cricket.png" alt="Cricket">
-        <p>CRICKET</p>
-    </div>
-
-    <!-- ১০. Football -->
-    <div class="game-card" onclick="playGame('football')">
-        <img src="football.png" alt="Football">
-        <p>FOOTBALL</p>
-    </div>
-        
-        <!-- ১১. Lottery (Color Trade) -->
-        <div class="game-card" onclick="window.location.href='play.php?game=color';" style="cursor: pointer;">
-            <img src="lottery.png" alt="Lottery">
-            <p>LOTTERY</p>
+        <!-- ७. BILLIONAIRE-SLOT (বিলিয়নেয়ার লাক স্লট) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=billionaireslot';">
+            <img src="billionaire-slot.png" alt="Billionaire Slot">
+            <p>7. BILLIONAIRE-SLOT</p>
         </div>
 
-          <!-- ১২. Ludu 7 Up Down (৬ নম্বর মেগা সচল গেম ভাই) -->
-        <div class="game-card" onclick="window.location.href='play.php?game=ludu';" style="cursor: pointer;">
-            <img src="ludu.png" alt="7 Up Down">
-            <p>7 UP DOWN</p>
+        <!-- ৮. ANDAR-BAHAR (অন্দর বাহার ক্যাসিনো) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=andarbahar';">
+            <img src="andar-bahar.png" alt="Andar Bahar">
+            <p>8. ANDAR-BAHAR</p>
         </div>
-  
-    <!-- ১৩. Wheel -->
-    <div class="game-card" onclick="playGame('wheel')">
-        <img src="wheel.png" alt="Wheel">
-        <p>WHEEL</p>
-    </div>
 
-    <!-- ১৪. Slot -->
-    <div class="game-card" onclick="playGame('slot')">
-        <img src="slot.png" alt="Slot">
-        <p>SLOT</p>
-    </div>
-</div>
+        <!-- ৯. BACCARAT-MASTER (ব্যাকারাত ভিআইপি ক্যাসিনো) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=baccarat';">
+            <img src="baccarat.png" alt="Baccarat Master">
+            <p>9. BACCARAT-MASTER</p>
+        </div>
+
+        <!-- ১০. BLACKJACK-21 (ব্ল্যাকজ্যাক ২১ ভিআইপি কার্ড) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=blackjack';">
+            <img src="blackjack.png" alt="Blackjack 21">
+            <p>10. BLACKJACK-21</p>
+        </div>
+
+        <!-- ১১. CRYPTO-MULTIPLY (ক্রিপ্টো মাল্টিপ্লায়ার বাস্ট) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=cryptomultiply';">
+            <img src="crypto-multiply.png" alt="Crypto Multiply">
+            <p>11. CRYPTO-MULTIPLY</p>
+        </div>
+
+        <!-- ১২. DICE-3D ( লাকি ছক্কা রোলার ৩ডি) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=dice3d';">
+            <img src="dice-3d.png" alt="Dice 3D">
+            <p>12. DICE-3D</p>
+        </div>
+
+        <!-- ১৩. DRAGON-TIGER (ড্রাগন টাইগার ওয়ান ক্লিক ডিল) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=dragontiger';">
+            <img src="dragon-tiger.png" alt="Dragon Tiger">
+            <p>13. DRAGON-TIGER</p>
+        </div>
+
+        <!-- ১৪. GOLDEN-FORTUNE-WIN (ধন-দেবতার ৩-রিল স্লট) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=fortunegod';">
+            <img src="fortune-god.png" alt="Golden Fortune Win">
+            <p>14. GOLDEN-FORTUNE-WIN</p>
+        </div>
+
+        <!-- ১৫. HILO-CARD (হাই-লো তাসের প্রেডিকশন) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=hilo';">
+            <img src="hilo-card.png" alt="HiLo Card">
+            <p>15. HILO-CARD</p>
+        </div>
+
+        <!-- ১৬. JHANDI-MUNDA (ঝান্ডি মুন্ডা / জোলোমি এশিয়ান ছক্কা) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=jhandimunda';">
+            <img src="jhandi-munda.png" alt="Jhandi Munda">
+            <p>16. JHANDI-MUNDA</p>
+        </div>
+
+        <!-- ১৭. LUCKY-MARBLE-POP (বাংলাদেশের ঐতিহ্যবাহী মার্বেল লটারি) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=marblepop';">
+            <img src="marble-pop.png" alt="Lucky Marble Pop">
+            <p>17. LUCKY-MARBLE-POP</p>
+        </div>
+
+        <!-- ১৮. LUCKY-MONEY-TREE (सौभाग्य টাকার গাছ স্লট) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=moneytree';">
+            <img src="money-tree.png" alt="Lucky Money Tree">
+            <p>18. LUCKY-MONEY-TREE</p>
+        </div>
+
+        <!-- ১৯. TWIST-SPIN (স্টেক স্টাইল ৩-রিং টুইস্ট মাল্টিপ্লায়ার) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=twistspin';">
+            <img src="twist-spin.png" alt="Twist Spin">
+            <p>19. TWIST-SPIN</p>
+        </div>
+
+        <!-- ২০. MINI-ROULETTE (মিনি ক্যাসিনো রুলেট চাকা) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=miniroulette';">
+            <img src="mini-roulette.png" alt="Mini Roulette">
+            <p>20. MINI-ROULETTE</p>
+        </div>
+
+        <!-- ২১. MONEY-COMING (মানি কামিং JILI ক্যাশ স্লট) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=moneycoming';">
+            <img src="money-coming.png" alt="Money Coming">
+            <p>21. MONEY-COMING</p>
+        </div>
+
+        <!-- ২২. RAINBOW-SLOT (রয়্যাল রেনবো ৭-কালার স্লট মেশিন) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=rainbowslot';">
+            <img src="rainbow-slot.png" alt="Rainbow Slot">
+            <p>22. RAINBOW-SLOT</p>
+        </div>
+
+        <!-- ২৩. ROYAL-DERBY (রয়্যাল ডার্বি থ্রিল ঘোড়দৌড় বাজি) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=royalderby';">
+            <img src="royal-derby.png" alt="Royal Derby">
+            <p>23. ROYAL-DERBY</p>
+        </div>
+
+        <!-- ২৪. ROYAL-KENO (রয়েল কেনো লটারি নাম্বার বেটিং) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=keno';">
+            <img src="keno.png" alt="Royal Keno">
+            <p>24. ROYAL-KENO</p>
+        </div>
+
+        <!-- ২৫. ROYAL-PLINKO (স্টেক স্টাইল ওরিজিনাল প্লিনকো বল ড্রপ) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=plinko';">
+            <img src="plinko.png" alt="Royal Plinko">
+            <p>25. ROYAL-PLINKO</p>
+        </div>
+
+        <!-- ২৬. SUPER-ACE-SLOT (সুপার টেক্কা ৪x৫ মেগা স্লট মেশিন) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=superaceslot';">
+            <img src="super-ace-slot.png" alt="Super Ace Slot">
+            <p>26. SUPER-ACE-SLOT</p>
+        </div>
+
+        <!-- ২৭. TEEN-PATTI (তিন পাত্তি এশিয়ান রাজকীয় শোডাউন) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=teenpatti';">
+            <img src="teen-patti.png" alt="Teen Patti">
+            <p>27. TEEN-PATTI</p>
+        </div>
+
+        <!-- ২৮. TWIST-MULTIPLE-SPIN (৩-লেয়ার টুইস্ট মাল্টিপ্লায়ার হুইল) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=twistmultiplespin';">
+            <img src="twist-multiple-spin.png" alt="Twist Multiple Spin">
+            <p>28. TWIST-MULTIPLE-SPIN</p>
+        </div>
+
+        <!-- ২৯. AVIATOR 2.0 (এভিয়েটর ২.০ নিউ আল্ট্রা ক্র্যাশ গেম) -->
+        <div class="game-card" onclick="window.location.href='play.php?id=aviator2';">
+            <img src="aviator-2.png" alt="Aviator 2.0">
+            <p>29. AVIATOR 2.0</p>
+        </div>
+
+        <!-- ৩০. Color-Trade (কালার ট্রেড উইনগো লটারি চাবি!) -->
+        <div class="game-card" onclick="window.location.href='play.php?game=color';">
+            <img src="color-trade.png" alt="Color Trade">
+            <p>30. Color-Trade</p>
+        </div>
+
+    </div> <!-- 🚀 টোটাল ৩০ মেগা গেম গ্রিড ক্লোজিং টাইট বর্ম সিলড ভাই ভাই -->
 
 
 <!-- ৪. লগইন পপ-আপ (Modal) -->
