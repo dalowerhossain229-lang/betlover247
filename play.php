@@ -10,40 +10,116 @@ if (empty($u)) {
     exit();
 }
 
-// ২. ডাটাবেজ থেকে রিয়েল-টাইমে ইউজারের ওয়ালেটের সর্বশেষ তথ্য আনা
+// ২. ডাটাবেজ থেকে রিয়েল-টাইম ইউজারের ওয়ালেট ডেটা আনা
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
-$aviator_base_url = "https://aviator2-0-azym.onrender.com";
-$wingo_base_url = "https://color-trade.onrender.com";
-$chicken_base_url = "https://chickenroad.onrender.com";
-$slot_base_url = "https://lucky777-slot.onrender.com"; // ৪ নম্বর স্লট মাস্টার অনলাইন লিঙ্ক ভাই
-$ace_base_url = "https://super-ace.onrender.com"; // ♠️ ৫ নম্বর প্রিমিয়াম সুপার এস অনলাইন লিঙ্ক ভাই
-$ludu_base_url = "https://ludu777.onrender.com"; // 🎲 ৬ নম্বর লুডু গেমের রেন্ডার লাইভ লিংক ভাই
-$wheel_base_url = "https://mega-wheel.onrender.com"; // 🎡 ৭ নম্বর লাকি হুইলের রেন্ডার লাইভ লিঙ্ক ভাই
 
+// 🔮 আগে থেকে যেভাবে আছে ঐভাবে ওরিজিনাল গেম বেস ইউআরএল লিংক বর্ম ভাই ভাই
+$aviator_base_url     = "https://onrender.com";
+$wingo_base_url       = "https://onrender.com";
+$chicken_base_url     = "https://onrender.com";
+$slot_base_url        = "https://onrender.com";
+$ace_base_url         = "https://onrender.com";
+$ludo_base_url        = "https://onrender.com";
+$wheel_base_url       = "https://onrender.com";
 
-$active_wallet = isset($user_data['active_wallet']) ? $user_data['active_wallet'] : 'main';
+// আজকে তৈরি করা এবং খাতার বাকি গেমগুলোর ওরিজিনাল বেস ইউআরএল গেটওয়ে লক ভাই ভাই
+$coinflip_base_url    = "https://onrender.com";
+$mines_base_url       = "https://onrender.com";
+$billionaire_base_url = "https://onrender.com";
+$andarbahar_base_url  = "https://onrender.com";
+$baccarat_base_url    = "https://onrender.com";
+$blackjack_base_url   = "https://onrender.com";
+$crypto_base_url      = "https://onrender.com";
+$dice3d_base_url      = "https://onrender.com";
+$dragontiger_base_url = "https://onrender.com";
+$fortunegod_base_url  = "https://onrender.com";
+$hilo_base_url        = "https://onrender.com";
+$jhandimunda_base_url = "https://onrender.com";
+$marblepop_base_url   = "https://onrender.com";
+$moneytree_base_url   = "https://onrender.com";
+$twistspin_base_url   = "https://onrender.com";
+$roulette_base_url    = "https://onrender.com";
+$moneycoming_base_url = "https://onrender.com";
+$rainbow_base_url     = "https://onrender.com";
+$derby_base_url       = "https://onrender.com";
+$keno_base_url        = "https://onrender.com";
+$plinko_base_url      = "https://onrender.com";
+
+$active_wallet = isset($_GET['data']['active_wallet']) ? $user_data['active_wallet'] : 'main';
 $get_game_type = isset($_GET['game']) ? $_GET['game'] : '';
-$game_user_id = !empty($u) ? $u : "guest";
+$game_user_id  = !empty($u) ? $u : "guest";
 
-if ($get_game_type === 'color' || $get_game_type === 'ColorTrade') {
-    $game_url = $wingo_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+// 🚀 আগে থেকে যেভাবে আছে ঐভাবে কন্ডিশনাল ইলস-ইফ রাউটিং পাইপলাইন ভাই ভাই
+if ($get_game_type === 'color') {
+    $game_url = "https://onrender.com";
 } else if ($get_game_type === 'chicken') {
-    $game_url = $chicken_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+    $game_url = $chicken_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 } else if ($get_game_type === 'slotmaster') {
-    $game_url = $slot_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+    $game_url = $slot_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 } else if ($get_game_type === 'superace') {
-    $game_url = $ace_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
-} else if ($get_game_type === 'ludu') {
-    $game_url = $ludu_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+    $game_url = $ace_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'ludo') {
+    $game_url = $ludo_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 } else if ($get_game_type === 'megawheel') {
-    // 🎡 [৭ নম্বর মেগা ফরচুন হুইল গেমের অফিশিয়াল লাইভ গেটওয়ে বর্ম লক ভাই]
-    $game_url = $wheel_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+    $game_url = $wheel_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'coinflip') {
+    $game_url = $coinflip_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'mines') {
+    $game_url = $mines_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'billionaireslot') {
+    $game_url = $billionaire_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'andarbahar') {
+    $game_url = $andarbahar_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'baccarat') {
+    $game_url = $baccarat_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'blackjack') {
+    $game_url = $blackjack_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'cryptomultiply') {
+    $game_url = $crypto_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'dice3d') {
+    $game_url = $dice3d_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'dragontiger') {
+    $game_url = $dragontiger_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'fortunegod') {
+    $game_url = $fortunegod_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'hilo') {
+    $game_url = $hilo_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'jhandimunda') {
+    $game_url = $jhandimunda_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'marblepop') {
+    $game_url = $marblepop_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'moneytree') {
+    $game_url = $moneytree_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'twistspin') {
+    $game_url = $twistspin_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'miniroulette') {
+    $game_url = $roulette_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'moneycoming') {
+    $game_url = $moneycoming_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'rainbowslot') {
+    $game_url = $rainbow_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'royalderby') {
+    $game_url = $derby_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'keno') {
+    $game_url = $keno_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'plinko') {
+    $game_url = $plinko_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'superaceslot') {
+    $game_url = $ace_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'teenpatti') {
+    $game_url = "https://onrender.com" . $game_user_id . "&wallet=" . $active_wallet;
+} else if ($get_game_type === 'twistmultiplespin') {
+    $game_url = "https://onrender.com?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+} else if (isset($_GET['id']) && $_GET['id'] === 'aviator') {
+    $game_url = "https://onrender.com";
+} else if (isset($_GET['id']) && $_GET['id'] === 'aviator2') {
+    $game_url = "https://onrender.com";
 } else {
-    $game_url = $aviator_base_url . "/?userId=" . $game_user_id . "&wallet=" . $active_wallet;
+    $game_url = $aviator_base_url . "?userId=" . $game_user_id . "&wallet=" . $active_wallet;
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
