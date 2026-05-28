@@ -16,7 +16,7 @@ $user_data = $query->fetch_assoc();
 
 // 🔮 আগে থেকে যেভাবে আছে ঐভাবে ওরিজিনাল গেম বেস ইউআরএল লিংক বর্ম ভাই ভাই
 $aviator_base_url     = "https://aviator2-0-azym.onrender.com";
-$wingo_base_url       = "https://chickenroad.onrender.com";
+$wingo_base_url       = "https://color-trade.onrender.com";
 $chicken_base_url     = "https://chickenroad.onrender.com";
 $slot_base_url        = "https://lucky777-slot.onrender.com";
 $ace_base_url         = "https://super-ace.onrender.com";
