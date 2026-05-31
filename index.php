@@ -37,6 +37,85 @@ include 'header.php';
     </div>
 </div>
 <!-- ডাইনামিক স্লাইডার সেকশন শেষ -->
+
+<!-- 🎡 ডাইনামিক ক্যাসিনো সুপ্রিম ৮-ক্যাটাগরি ফিল্টার বার নোড ভাই ভাই -->
+<div class="lobby-category-scroll-bar">
+    
+    <!-- POPULAR ক্যাটাগরি -->
+    <div class="category-action-chip active-node" onclick="filterCasinoGamesByCategory('popular', this)">
+        <div class="chip-icon">🔥</div>
+        <span class="chip-label">POPULAR</span>
+    </div>
+
+    <!-- BLSLOTS ক্যাটাগরি -->
+    <div class="category-action-chip" onclick="filterCasinoGamesByCategory('blslots', this)">
+        <div class="chip-icon">🎰</div>
+        <span class="chip-label">BLSLOTS</span>
+    </div>
+
+    <!-- BLLOTTERY ক্যাটাগরি -->
+    <div class="category-action-chip" onclick="filterCasinoGamesByCategory('bllottery', this)">
+        <div class="chip-icon">🎫</div>
+        <span class="chip-label">BLLOTTERY</span>
+    </div>
+
+    <!-- BLGAMES ক্যাটাগরি -->
+    <div class="category-action-chip" onclick="filterCasinoGamesByCategory('blgames', this)">
+        <div class="chip-icon">🎮</div>
+        <span class="chip-label">BLGAMES</span>
+    </div>
+
+    <!-- BLLIVE ক্যাটাগরি -->
+    <div class="category-action-chip" onclick="filterCasinoGamesByCategory('bllive', this)">
+        <div class="chip-icon">📺</div>
+        <span class="chip-label">BLLIVE</span>
+    </div>
+
+    <!-- SLOTS ক্যাটাগরি -->
+    <div class="category-action-chip" onclick="filterCasinoGamesByCategory('slots', this)">
+        <div class="chip-icon">🕹️</div>
+        <span class="chip-label">SLOTS</span>
+    </div>
+
+    <!-- FISHING ক্যাটাগরি -->
+    <div class="category-action-chip" onclick="filterCasinoGamesByCategory('fishing', this)">
+        <div class="chip-icon">🐟</div>
+        <span class="chip-label">FISHING</span>
+    </div>
+
+    <!-- ORIGINAL ক্যাটাগরি -->
+    <div class="category-action-chip" onclick="filterCasinoGamesByCategory('original', this)">
+        <div class="chip-icon">👑</div>
+        <span class="chip-label">ORIGINAL</span>
+    </div>
+    
+</div>
+
+<!-- 🧠 ডাইনামিক গেম ফিল্টারিং জাভাস্ক্রিপ্ট ইঞ্জিন ভাই ভাই -->
+<script>
+    function filterCasinoGamesByCategory(categoryName, element) {
+        // ১. বাটন একটিভ স্টেট গ্লো রিয়েল-টাইম অদলবদল মেকানিজম
+        document.querySelectorAll('.category-action-chip').forEach(chip => {
+            chip.classList.remove('active-node');
+        });
+        element.classList.add('active-node');
+
+        // ২. ডাইনামিক গেম কার্ড ফিল্টারিং কন্টেইনার লুপ
+        // (আপনার ৪৪, ৫০, ৫৬ নম্বর লাইনের "game-card" ক্লাসগুলোর সাথে "slots", "fishing" ইত্যাদি ক্লাস যুক্ত করলে অটো ফিল্টার হবে ওস্তাদ)
+        document.querySelectorAll('.game-card').forEach(gameCard => {
+            if (categoryName === 'popular') {
+                gameCard.style.display = 'block'; // পপুলার মোডে প্রাথমিক সব গেম ওপেন চেইন ভাই ভাই
+            } else {
+                if (gameCard.classList.contains(categoryName)) {
+                    gameCard.style.display = 'block'; // ম্যাচিং গেম কার্ড ইনস্ট্যান্ট ওপেন
+                } else {
+                    gameCard.style.display = 'none'; // বাকি সব ওয়ান-শটে হাইд
+                }
+            }
+        });
+    }
+</script>
+
     <!-- 🎰 আপনার ডায়েরির সম্পূর্ণ ২ পাতা মিলিয়ে ৩০ মেগা গেম গ্রিড বর্ম ভাই ভাই -->
     <div class="game-grid">
 
