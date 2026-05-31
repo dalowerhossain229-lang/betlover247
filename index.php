@@ -471,6 +471,58 @@ marquee {
     color: black; border: none; border-radius: 10px; 
     font-weight: 900; cursor: pointer; font-size: 14px; text-transform: uppercase;
 }
+/* 🎡 [গ্লোবাল ওয়ান-শটে পাশাপাশি সোজা করার কিংস বর্ম] */
+.lobby-category-scroll-bar {
+    width: 100% !important;
+    display: flex !important; /* উপর-নিচে জ্যাম ভেঙে ওয়ান-শটে পাশাপাশি সাজানোর চাবি ভাই */
+    flex-direction: row !important; /* প্রতিটা বাটনকে ডানে ডানে সোজা রাখবে */
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 20px !important; /* প্রতিটা বাটনের মাঝখানের পারফেক্ট গ্যাপ */
+    padding: 12px 14px !important;
+    background: #111111 !important; /* আপনার মেইন ডার্ক থিমের সাথে ওরিজিনাল ব্যাকগ্রাউন্ড সিঙ্ক */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    overflow-x: auto !important; /* মোবাইল স্ক্রিনে ডানে-বামে স্মুথ সুইপ স্ক্রলিং সচল লক */
+    white-space: nowrap !important; /* কোনো টেক্সট বা বাটন কখনোই নিচে ভাঙবে না ভাই ভাই */
+    box-sizing: border-box !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* 📱 প্রতিটি ক্যাটাগরি চিপ বোতাম ফ্রেম পাশাপাশি এলাইনমেন্ট লক */
+.category-action-chip {
+    display: inline-flex !important; /* ব্লক জ্যাম চিরতরে ভ্যানিশ করার ট্রিক */
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 75px !important; /* বড় টেক্সটগুলো এক লাইনে রাখার সেফ সাইজ */
+    cursor: pointer !important;
+    flex-shrink: 0 !important; /* বাজি চাপলেও বাটন কখনো দুমড়ে মুচড়ে ছোট হবে না ভাই ভাই */
+}
+
+/* আইকন বক্স কন্ট্রোল */
+.chip-icon {
+    font-size: 22px !important;
+    margin-bottom: 4px !important;
+    display: block !important;
+}
+
+/* নিচে ক্যাটাগরি টেক্সট লেবেল (POPULAR, BLSLOTS ইত্যাদি) */
+.chip-label {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    color: #9ca3af !important;
+    text-align: center !important;
+    letter-spacing: 0.5px !important;
+    display: block !important;
+}
+
+/* 🚨 ক্যাশ মেমোরি বিউটি ফিক্স: ভেতরের কুৎসিত ওল্ড স্ক্রলবার হাইড করার চাবি */
+.lobby-category-scroll-bar::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+    
 </style>
 
 <!-- জাভাস্ক্রিপ্ট এবং ফুটার -->
