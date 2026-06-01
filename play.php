@@ -208,6 +208,79 @@ if ($get_game_type === 'color') {
     <a href="bet_logs.php" class="history-btn">HISTORY</a>
 </div>
 
+<?php
+// ==================== ৫. খাতার ৪টি পাতা মিলিয়ে কন্ডিশনাল রাউটিং গেটওয়ে লুপ (১ শতভাগ ত্রুটিমুক্ত ও ডাইনামিক পাসিং বর্ম ভাই ভাই) ====================
+if ($get_game_type === 'color') {
+    $game_url = $wingo_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Color-Trade";
+} else if ($get_game_type === 'chicken') {
+    $game_url = $chicken_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Chicken-Road";
+} else if ($get_game_type === 'slotmaster') {
+    $game_url = $slot_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Lucky-777-Slot";
+} else if ($get_game_type === 'superace') {
+    $game_url = $ace_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Super-Ace";
+} else if ($get_game_type === 'ludo') {
+    $game_url = $ludo_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Ludu777";
+} else if ($get_game_type === 'megawheel') {
+    $game_url = $wheel_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Mega-Wheel";
+} else if ($get_game_type === 'coinflip') {
+    $game_url = $coinflip_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Head-And-Tail";
+} else if ($get_game_type === 'mines') {
+    $game_url = $mines_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Lucky-Mines";
+} else if ($get_game_type === 'billionaireslot') {
+    $game_url = $billionaire_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Billionaire-Slot";
+} else if ($get_game_type === 'andarbahar') {
+    $game_url = $andarbahar_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Andar-Bahar";
+} else if ($get_game_type === 'baccaratmaster') {
+    $game_url = $baccarat_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Baccarat-Master";
+} else if ($get_game_type === 'blackjack21') {
+    $game_url = $blackjack_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Blackjack-21";
+} else if ($get_game_type === 'cryptomultiply') {
+    $game_url = $crypto_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Crypto-Multiply";
+} else if ($get_game_type === 'dice3d') {
+    $game_url = $dice3d_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Dice-3D";
+} else if ($get_game_type === 'dragontiger') {
+    $game_url = $dragontiger_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=DT-24";
+} else if ($get_game_type === 'goldenfortunewin') {
+    $game_url = $fortunegod_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Golden-Fortune-Win";
+} else if ($get_game_type === 'hilocard') {
+    $game_url = $hilo_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Hilo-Card";
+} else if ($get_game_type === 'jhandimunda') {
+    $game_url = $jhandimunda_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Jhandi-Munda";
+} else if ($get_game_type === 'luckymarblepop') {
+    $game_url = $marblepop_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Lucky-Marble-Pop";
+} else if ($get_game_type === 'luckymoneytree') {
+    $game_url = $moneytree_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Lucky-Money-Tree";
+} else if ($get_game_type === 'twistmultiplespin') {
+    $game_url = $twistspin_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Twist-Multiple-Spin";
+} else if ($get_game_type === 'miniroulette') {
+    $game_url = $roulette_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Mini-Roulette";
+} else if ($get_game_type === 'moneycoming') {
+    $game_url = $moneycoming_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Money-Coming";
+} else if ($get_game_type === 'rainbowslot') {
+    $game_url = $rainbow_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Rainbow-Slot";
+} else if ($get_game_type === 'royalderby') {
+    $game_url = $derby_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Royal-Derby";
+} else if ($get_game_type === 'royalkeno') {
+    $game_url = $keno_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Royal-Keno";
+} else if ($get_game_type === 'royalplinko') {
+    $game_url = $plinko_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Royal-Plinko";
+} else if ($get_game_type === 'crazy-777') {
+    $game_url = "https://onrender.com" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Crazy-777";
+} else if ($get_game_type === 'jili-fishing') {
+    $game_url = "https://onrender.com" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Jili-Fishing";
+} else if ($get_game_type === 'dragon-ball-fishing') {
+    $game_url = "https://onrender.com" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Dragon-Ball-Fishing";
+} else if ($get_game_type === 'fighter-crash') {
+    $game_url = "https://onrender.com" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Fighter-Crash";
+} else if ($get_game_type === 'penalty-shootout') {
+    $game_url = "https://onrender.com" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Penalty-Shootout";
+} else if ($get_game_type === 'lightning-roulette') {
+    $game_url = "https://onrender.com" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Lightning-Roulette";
+} else {
+    $game_url = $aviator_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Aviator";
+}
+?>
+
 <div class="game-container">
     <!-- 🎯 এভিয়েটর গেম লোড আইফ্রেম -->
     <iframe src="<?php echo $game_url; ?>" id="game_frame" allow="autoplay; fullscreen; gaming"></iframe>
