@@ -17,7 +17,7 @@ include 'header.php';
             ?>
         </marquee>
     </div>
-</div>
+</div
 
 <!-- ডাইনামিক স্লাইডার সেকশন শুরু -->
 <div class="slider-container">
