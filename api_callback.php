@@ -76,9 +76,11 @@ if ($action == "bet") {
     $update = $conn->query("UPDATE users SET $bal_col = $bal_col - $amount, $turn_col = $turn_col + $amount WHERE username = '{$u_data['username']}'");
     
     if ($update) {
-        $conn->query("INSERT INTO bets (username, amount, game_id, status) VALUES ('{$u_data['username']}', '$amount', 'Aviator', 'pending')");
+                $dynamic_game_name = !empty($data['game']) ? mysqli_real_escape_string($conn, $data['game']) : 'Aviator';
+        $conn->query("INSERT INTO bets (username, amount, game_id, status) VALUES ('{$u_data['username']}', '$amount', '$dynamic_game_name', 'bet')");
         $new_balance = $user_current_balance - $amount;
         echo json_encode(["status" => "ok", "message" => "Bet Accepted", "balance" => $new_balance]);
+
     } else {
         echo json_encode(["status" => "error", "message" => "Database Bet Update Failed"]);
     }
