@@ -15,11 +15,11 @@ $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
 // ==================== ৩. ডাইনামিক রেন্ডার হোস্টিং সাব-ডোমেন ইউআরএল লিঙ্ক ম্যাট্রিক্স ====================
-$aviator_base_url      = "https://onrender.com";
-$wingo_base_url        = "https://onrender.com";
-$chicken_base_url      = "https://onrender.com";
-$slot_base_url         = "https://onrender.com";
-$ace_base_url          = "https://onrender.com";
+$aviator_base_url      = "https://aviator2-0-azym.onrender.com";
+$wingo_base_url        = "https://color-trade.onrender.com";
+$chicken_base_url      = "https://chickenroad.onrender.com";
+$slot_base_url         = "https://lucky777-slot.onrender.com";
+$ace_base_url          = "";
 $ludo_base_url         = "https://onrender.com";
 $wheel_base_url        = "https://onrender.com";
 
