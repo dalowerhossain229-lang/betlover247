@@ -40,10 +40,10 @@ $moneytree_base_url    = "https://onrender.com";
 $twistspin_base_url    = "https://onrender.com";
 $roulette_base_url     = "https://onrender.com";
 $moneycoming_base_url  = "https://onrender.com";
-$rainbow_base_url      = "https://onrender.com";
-$derby_base_url        = "https://onrender.com";
-$keno_base_url         = "https://onrender.com";
-$plinko_base_url       = "https://onrender.com";
+$rainbow_base_url      = "https://rainbow-slot.onrender.com";
+$derby_base_url        = "https://royal-derby.onrender.com";
+$keno_base_url         = "https://royal-keno.onrender.com";
+$plinko_base_url       = "https://royal-plinko.onrender.com";
 
 // ==================== ৪. ডাইনামিক সেশন ও ওয়ালেট ভেরিয়েবল হ্যান্ডলার বর্ম ====================
 $active_wallet = isset($_GET['wallet']) ? $_GET['wallet'] : (isset($_GET['data']['active_wallet']) ? $_GET['data']['active_wallet'] : 'main');
