@@ -44,6 +44,7 @@ $rainbow_base_url      = "https://rainbow-slot.onrender.com";
 $derby_base_url        = "https://royal-derby.onrender.com";
 $keno_base_url         = "https://royal-keno.onrender.com";
 $plinko_base_url       = "https://royal-plinko.onrender.com";
+$shootout_base_url     = "https://penulty-shootout.onrender.com";
 
 // ==================== ৪. ডাইনামিক সেশন ও ওয়ালেট ভেরিয়েবল হ্যান্ডলার বর্ম ====================
 $active_wallet = isset($_GET['wallet']) ? $_GET['wallet'] : (isset($_GET['data']['active_wallet']) ? $_GET['data']['active_wallet'] : 'main');
