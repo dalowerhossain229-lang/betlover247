@@ -38,13 +38,14 @@ $logs = $conn->query("SELECT * FROM bets WHERE username = '$user' ORDER BY id DE
                 <!-- 🕒 রাউন্ডের রিয়েল-টাইম কাউন্টার বা টাইমস্ট্যাম্প -->
                 <small><?php echo isset($row['created_at']) ? $row['created_at'] : 'Just Now'; ?></small><br>
                 
-                <!-- 🎯 [ম্যাজিক কিলার ফিক্সড নোড]: ডাটাবেজের game_id কলামের ভেতর থাকা রিয়েল গেমের নাম ওয়ান-শটে ডাইনামিক ক্যাচ করবে ভাই -->
-                <b><?php echo htmlspecialchars($row['game_id'] ? $row['game_id'] : 'Aviator'); ?></b>
+                <!-- 🎯 [ম্যাজিক কিলার ফিক্সড নোড]: ডাটাবেজের game_id কলামে থাকা রিয়েল গেমের নাম ওয়ান-শটে ডাইনামিক ক্যাচ করবে ভাই -->
+                <b><?php echo htmlspecialchars(!empty($row['game_id']) ? $row['game_id'] : 'Casino Game'); ?></b>
             </div>
             <div style="margin-top: 8px;">
                 <span style="margin-right: 15px; color: #aaa;">Stake: <b>৳<?php echo number_format($row['amount'], 2); ?></b></span>
                 
                 <?php
+                // 🔌 [WIN-LOSS STATUS ডাইনামিক ইন্টারসেপ্টর বর্ম ভাই ভাই]
                 $status = strtolower($row['status'] ? $row['status'] : 'bet');
                 if ($status == 'win') {
                     echo '<span class="bet-status win">WIN ✓</span>';
@@ -61,4 +62,5 @@ $logs = $conn->query("SELECT * FROM bets WHERE username = '$user' ORDER BY id DE
     <?php endif; ?>
 
 </body>
+
 </html>
