@@ -1,107 +1,96 @@
 <?php
-// ১. ক্রস-ওরিজিন এবং সেশন প্রোটেকশন হেডার
+// ===================================================================================
+// 🎰 BETLOVER777 / DKWIN ওরিজিনাল গ্লোবাল ইউনিভার্সাল এপিআই কলব্যাক মাস্টার বর্ম
+// ===================================================================================
+ob_start();
+session_start();
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header('Content-Type: application/json');
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Content-Type: application/json");
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { exit(0); }
-if (session_status() === PHP_SESSION_NONE) { session_start(); }
 include 'db.php';
 
-// ২. এভিয়েটোর নোড সার্ভার থেকে আসা রিকোয়েস্ট বডি ডাটা পড়া
-$json = file_get_contents('php://input');
-$data = json_decode($json, true);
+// 🔌 ১. রিয়েল-টাইম মাল্টিপ্লেয়ার গেম বাজি ও উইন প্রসেসর গেটওয়ে (POST)
+$json_input = file_get_contents('php://input');
+$data = json_decode($json_input, true);
+
 if (!$data) {
-    echo json_encode(["status" => "error", "message" => "Invalid Request JSON"]);
-    exit;
+    echo json_encode(["status" => "error", "message" => "🚨 Invalid JSON API Payload Input Reference!"]);
+    exit();
 }
 
-$action = $data['action'];
-    if (isset($action) && $action === "force_clean_pending") {
-        $db_link = $conn ?? $db ?? $con ?? $connect ?? null;
-        if ($db_link) {
-            $db_link->query("UPDATE bets SET status = 'loss' WHERE (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳') AND status != 'win'");
-        }
-        echo json_encode(["status" => "ok", "message" => "All pending cleaned permanently!"]);
-        exit;
-    }
+$action = isset($data['action']) ? $data['action'] : '';
+$username = isset($data['username']) ? mysqli_real_escape_string($conn, $data['username']) : '';
+$amount = isset($data['amount']) ? floatval($data['amount']) : 0;
+$wallet = isset($data['wallet']) ? mysqli_real_escape_string($conn, $data['wallet']) : 'main';
 
-$username = !empty($data['username']) ? mysqli_real_escape_string($conn, $data['username']) : '';
-if (empty($username) && isset($_SESSION['user_id'])) {
-    $username = mysqli_real_escape_string($conn, $_SESSION['user_id']);
-}
+// 🎯 [মেগা গেম নেম ইন্টারсеপ্টর বর্ম]: গেম সার্ভার থেকে আসা রিয়াল নাম ক্যাচ করবে, না থাকলে ডিফল্ট ফলব্যাক বসবে
+$dynamic_game_name = !empty($data['game']) ? mysqli_real_escape_string($conn, $data['game']) : 'Aviator';
 
-$amount = floatval($data['amount'] ?? 0);
 if (empty($username)) {
-    echo json_encode(["status" => "error", "message" => "Empty Username Parameter"]);
-    exit;
+    echo json_encode(["status" => "error", "message" => "❌ Empty Player Username Credentials!"]);
+    exit();
 }
 
-// ৩. ডাটাবেজ থেকে ইউজারের তাজা তথ্য সংগ্রহ
-$u_sql = $conn->query("SELECT * FROM users WHERE LOWER(username) = LOWER('$username')");
-$u_data = $u_sql->fetch_assoc();
+// ইউজার ব্যালেন্স ও ডাটা যাচাই লুপ ভাই ভাই
+$user_query = $conn->query("SELECT * FROM users WHERE username = '$username' OR id = '$username'");
+$u_data = $user_query->fetch_assoc();
+
 if (!$u_data) {
-    echo json_encode(["status" => "error", "message" => "User Not Found in Database"]);
-    exit;
+    echo json_encode(["status" => "error", "message" => "Player Account Profile Not Found inside Main Database Node!"]);
+    exit();
 }
 
-// 🎯 ৪. কঠোর ওয়ালেট লকিং মেকানিজম (যা আপনার বাগটি চিরতরে শেষ করবে)
-// প্লেয়ার স্ক্রিনে যে ওয়ালেট সিলেক্ট করেছে, নোড সার্ভার থেকে পাঠানো ঠিক সেই ওয়ালেট আইডি-ই রিড করা হবে
-$wallet = strtolower($data['wallet'] ?? 'main');
+// 🎛️ ৪. প্লেয়ারের ওয়ালেট অ্যাকাউন্ট লাইভ মেকানিজম (pb, bonus, main এলাইনমেন্ট লক ভাই)
+$bal_col = 'balance';
+$turn_col = 'main_t';
 
+$wallet = strtolower($wallet);
 if ($wallet === 'pb') {
-    $bal_col = "pb_balance"; 
-    $turn_col = "pb_t"; 
-    $user_current_balance = floatval($u_data['pb_balance'] ?? 0);
+    $bal_col = 'pb_balance';
+    $turn_col = 'pb_t';
 } elseif ($wallet === 'bonus') {
-    $bal_col = "bonus_balance"; 
-    $turn_col = "bonus_t"; 
-    $user_current_balance = floatval($u_data['bonus_balance'] ?? 0);
-} else {
-    // ডিফল্ট অথবা 'main' সিলেক্ট করা থাকলে কঠোরভাবে শুধু মেইন ব্যালেন্স থেকেই টাকা কাটবে
-    $bal_col = "balance"; 
-    $turn_col = "main_t"; 
-    $user_current_balance = floatval($u_data['balance'] ?? 0);
+    $bal_col = 'bonus_balance';
+    $turn_col = 'bonus_t';
 }
 
-// 🎰 ৫. বাজি ধরার লজিক
+$user_current_balance = floatval($u_data[$bal_col]);
+
+// 🛫 ২. বাজি ধরার রিয়েল-টাইম একশন প্রসেসর (`action == "bet"`)
 if ($action == "bet") {
-    if ($user_current_balance < $amount) {
-        echo json_encode(["status" => "error", "message" => "Insufficient Balance in Selected Wallet!"]);
-        exit;
+    if ($user_current_balance < $amount || $user_current_balance <= 0) {
+        echo json_encode(["status" => "error", "message" => "❌ Insufficient Balance in Selected Wallet!"]);
+        exit();
     }
 
-    // শুধুমাত্র প্লেয়ারের সিলেক্ট করা কলামের ব্যালেন্স এবং টার্নওভার আপডেট কুয়েরি
     $update = $conn->query("UPDATE users SET $bal_col = $bal_col - $amount, $turn_col = $turn_col + $amount WHERE username = '{$u_data['username']}'");
     
     if ($update) {
-                $dynamic_game_name = !empty($data['game']) ? mysqli_real_escape_string($conn, $data['game']) : 'Aviator';
+        // 🔒 ডাটাবেজের bets টেবিলে গেমের আসল নাম সহ ওয়ান-শটে বাজি লগ এন্ট্রি মারা ভাই ভাই
         $conn->query("INSERT INTO bets (username, amount, game_id, status) VALUES ('{$u_data['username']}', '$amount', '$dynamic_game_name', 'bet')");
         $new_balance = $user_current_balance - $amount;
-        echo json_encode(["status" => "ok", "message" => "Bet Accepted", "balance" => $new_balance]);
-
+        echo json_encode(["status" => "ok", "message" => "Bet Accepted Successfully", "balance" => $new_balance]);
     } else {
-        echo json_encode(["status" => "error", "message" => "Database Bet Update Failed"]);
+        echo json_encode(["status" => "error", "message" => "Database Wallet Debit Sync Failed!"]);
     }
-}
-// 🎯 api_callback.php এর win এবং loss ব্লকের পুরানো কোড কেটে হুবহু এটি বসাবেন:
-
-elseif ($action == "win") {
-    $clean_winning_amount = floatval($data['amount'] ?? 0);
-    
-    // ডাটাবেজে গাণিতিক যোগ কঠোরভাবে লক করা হলো
-    $update = $conn->query("UPDATE users SET $bal_col = CAST($bal_col AS DECIMAL(15,2)) + CAST($clean_winning_amount AS DECIMAL(15,2)) WHERE username = '{$u_data['username']}'");
+} 
+// 💰 ৩. বাজি জেতা বা হারার রিয়েল-টাইম সেটেলমেন্ট একশন প্রসেসর (`action == "win"`)
+else if ($action == "win") {
+    $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount, $turn_col = $turn_col + $amount WHERE username = '{$u_data['username']}'");
     
     if ($update) {
-        // 🛡️ ইউনিক আইডি লক: 'ORDER BY id DESC LIMIT 1' ব্যবহারের ফলে এটি কেবল চলতি রাউন্ডের সর্বশেষ বাজিটিকেই 'win' করবে, পেছনের কোনো পেন্ডিং বাজিকে স্পর্শ করার ক্ষমতা এর থাকবে না
-        $conn->query("UPDATE bets SET status = 'win', amount = '$clean_winning_amount' WHERE LOWER(username) = LOWER('$username') AND (LOWER(status) = 'pending' OR LOWER(status) = 'bet' OR status = 'PENDING ⏳') ORDER BY id DESC LIMIT 1");
+        // 🔒 [মাস্টারস্ট্রোক ফিক্সড নোড]: প্লেয়ারের সর্বশেষ রাউন্ডের আইডি ট্র্যাক করে গেমের রিয়াল নাম এবং উইন ডাটা ওয়ান-শটে আপডেট করার চাবি
+        $conn->query("UPDATE bets SET status = 'win', amount = '$amount', game_id = '$dynamic_game_name' WHERE username = '{$u_data['username']}' ORDER BY id DESC LIMIT 1");
         
-        $fresh_user = $conn->query("SELECT $bal_col FROM users WHERE username = '{$u_data['username']}'")->fetch_assoc();
-        echo json_encode(["status" => "ok", "balance" => floatval($fresh_user[$bal_col])]);
+        $fresh_user_query = $conn->query("SELECT * FROM users WHERE username = '{$u_data['username']}'");
+        $fresh_user = $fresh_user_query->fetch_assoc();
+        echo json_encode(["status" => "ok", "message" => "Win Settled Successfully", "balance" => floatval($fresh_user[$bal_col])]);
     } else {
-        echo json_encode(["status" => "error", "message" => "DB Win Error"]);
+        echo json_encode(["status" => "error", "message" => "Database Wallet Credit Sync Failed!"]);
     }
+} else {
+    echo json_encode(["status" => "error", "message" => "🚨 Bypassed B2B Callback Action Endpoint Command Route!"]);
 }
-
+ob_end_flush();
 ?>
