@@ -123,7 +123,7 @@ if ($get_game_type === 'color') {
     $game_url = $aviator_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Aviator";
 }
 
-
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
