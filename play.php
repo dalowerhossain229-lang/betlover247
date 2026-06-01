@@ -274,13 +274,14 @@ if ($get_game_type === 'color') {
 } else if ($get_game_type === 'fighter-crash') {
     $game_url = "https://onrender.com" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Fighter-Crash";
 } else if ($get_game_type === 'penalty-shootout') {
-    $game_url = "https://penulty-shootout.onrender.com" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Penalty-Shootout";
+    $game_url = "https://onrender.com" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Penalty-Shootout";
 } else if ($get_game_type === 'lightning-roulette') {
     $game_url = "https://onrender.com" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Lightning-Roulette";
 } else {
     $game_url = $aviator_base_url . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet) . "&game=Aviator";
 }
 ?>
+
 
 <div class="game-container">
     <!-- 🎯 এভিয়েটর গেম লোড আইফ্রেম -->
