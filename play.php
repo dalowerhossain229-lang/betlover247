@@ -19,12 +19,12 @@ $aviator_base_url      = "https://aviator2-0-azym.onrender.com";
 $wingo_base_url        = "https://color-trade.onrender.com";
 $chicken_base_url      = "https://chickenroad.onrender.com";
 $slot_base_url         = "https://lucky777-slot.onrender.com";
-$ace_base_url          = "";
-$ludo_base_url         = "https://onrender.com";
-$wheel_base_url        = "https://onrender.com";
+$ace_base_url          = "https://super-ace.onrender.com";
+$ludo_base_url         = "https://ludu777.onrender.com";
+$wheel_base_url        = "https://mega-wheel.onrender.com";
 
-$coinflip_base_url     = "https://coinflip_base_://onrender.com";
-$mines_base_url        = "https://onrender.com";
+$coinflip_base_url     = "https://head-and-tail-sj8q.onrender.com";
+$mines_base_url        = "https://lucky-mines.onrender.com";
 $billionaire_base_url  = "https://onrender.com";
 $andarbahar_base_url   = "https://onrender.com";
 $baccarat_base_url     = "https://onrender.com";
