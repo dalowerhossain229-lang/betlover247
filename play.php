@@ -25,11 +25,11 @@ $wheel_base_url        = "https://mega-wheel.onrender.com";
 
 $coinflip_base_url     = "https://head-and-tail-sj8q.onrender.com";
 $mines_base_url        = "https://lucky-mines.onrender.com";
-$billionaire_base_url  = "https://onrender.com";
-$andarbahar_base_url   = "https://onrender.com";
-$baccarat_base_url     = "https://onrender.com";
-$blackjack_base_url    = "https://onrender.com";
-$crypto_base_url       = "https://onrender.com";
+$billionaire_base_url  = "https://billionaire-slot-lyrw.onrender.com";
+$andarbahar_base_url   = "https://andar-bahar-nalu.onrender.com";
+$baccarat_base_url     = "https://baccarat-master.onrender.com";
+$blackjack_base_url    = "https://blackjack-21-pszh.onrender.com";
+$crypto_base_url       = "https://crypto-multiply.onrender.com";
 $dice3d_base_url       = "https://onrender.com";
 $dragontiger_base_url  = "https://onrender.com";
 $fortunegod_base_url   = "https://onrender.com";
