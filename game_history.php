@@ -9,7 +9,7 @@ if(!isset($_SESSION['user_id'])) {
 }
 $user = $_SESSION['user_id'];
 
-// 📝 ২. ডাটাবেজ থেকে প্লেয়ারের কারেন্ট বাজি লগের তাজা ২০টি ডাটা তুলে আনা
+// 📝 ২. ডাটাবেজ 'bets' টেবিল থেকে প্লেয়ারের কারেন্ট বাজি লগের তাজা ২০টি ডাটা তুলে আনা (api_callback ও betlogs এর সাথে একুরেট সিঙ্ক)
 $logs = $conn->query("SELECT * FROM bets WHERE username = '$user' ORDER BY id DESC LIMIT 20");
 ?>
 <!DOCTYPE html>
@@ -36,16 +36,16 @@ $logs = $conn->query("SELECT * FROM bets WHERE username = '$user' ORDER BY id DE
         <div class="log-card">
             <div>
                 <!-- 🕒 রাউন্ডের রিয়েল-টাইম কাউন্টার বা টাইমস্ট্যাম্প -->
-                <small><?php echo isset($row['created_at']) ? $row['created_at'] : 'Just Now'; ?></small><br>
+                <small><?php echo isset($row['created_at']) ? $row['created_at'] : (isset($row['date']) ? $row['date'] : 'Just Now'); ?></small><br>
                 
-                <!-- 🎯 [ম্যাজিক কিলার ফিক্সড নোড]: ডাটাবেজের game_id কলামে থাকা রিয়েল গেমের নাম ওয়ান-শটে ডাইনামিক ক্যাচ করবে ভাই -->
+                <!-- 🎯 [ম্যাজিক কিলার ডাইনামিক নোড]: bets টেবিলের game_id কলামে সেভ হওয়া আসল গেমের নাম ওয়ান-শটে ক্যাচ করবে ভাই -->
                 <b><?php echo htmlspecialchars(!empty($row['game_id']) ? $row['game_id'] : 'Casino Game'); ?></b>
             </div>
             <div style="margin-top: 8px;">
                 <span style="margin-right: 15px; color: #aaa;">Stake: <b>৳<?php echo number_format($row['amount'], 2); ?></b></span>
                 
                 <?php
-                // 🔌 [WIN-LOSS STATUS ডাইনামিক ইন্টারসেপ্টর বর্ম ভাই ভাই]
+                // 🔌 [WIN-LOSS STATUS ডাইনামিক ইন্টারсеপ্টর বর্ম ভাই ভাই]
                 $status = strtolower($row['status'] ? $row['status'] : 'bet');
                 if ($status == 'win') {
                     echo '<span class="bet-status win">WIN ✓</span>';
@@ -62,5 +62,4 @@ $logs = $conn->query("SELECT * FROM bets WHERE username = '$user' ORDER BY id DE
     <?php endif; ?>
 
 </body>
-
 </html>
