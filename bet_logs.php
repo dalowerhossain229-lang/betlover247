@@ -1,92 +1,61 @@
 <?php
 session_start();
-include "header.php";
-include "db.php";
+include 'header.php';
+include 'db.php';
 
-// ১. সেশন চেক এবং মেম্বার লগইন সিকিউরিটি ভ্যালিডেশন
-if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
+// 🔒 ১. সেশন থেকে প্লেয়ারের ওরিজিনাল লাইভ আইডি চেক
+if(!isset($_SESSION['user_id'])) { 
+    header("Location: index.php"); 
+    exit(); 
 }
+$u = $_SESSION['user_id'];
 
-$u_id = $_SESSION['user_id'];
-
-// ২. মেম্বারের ইউজারনেম তুলে এনে 'bets' টেবিল থেকে হিস্টোরি রিড করা
-$bet_query = "SELECT * FROM bets WHERE username = (SELECT username FROM users WHERE id = '$u_id') ORDER BY id DESC LIMIT 30";
+// 📝 ২. ডাটাবেজ 'bets' টেবিল থেকে প্লেয়ারের রিয়াল গেমের নাম ও বাজির তাজা ৩০টি ডাটা তুলে আনা
+$bet_query = "SELECT * FROM bets WHERE username = '$u' ORDER BY id DESC LIMIT 30";
 $bet_res = $conn->query($bet_query);
 ?>
 
 <div style="padding: 20px; color: white; font-family: sans-serif; min-height: 80vh;">
-    <h3 style="color: #00FF88; text-align: center; margin-bottom: 20px; text-transform: uppercase;">🎰 API Game Logs</h3>
+    <h3 style="color: #00ff88; text-align: center; margin-bottom: 20px; text-transform: uppercase;">🎰 API Game Logs</h3>
 
-    <?php 
-    if ($bet_res && $bet_res->num_rows > 0): 
-        while ($row = $bet_res->fetch_assoc()): 
-    ?>
+    <?php if($bet_res && $bet_res->num_rows > 0): while($row = $bet_res->fetch_assoc()): ?>
         <div style="background: #111; border: 1px solid #222; padding: 15px; border-radius: 12px; margin-bottom: 12px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 
-                <!-- গেমের নাম প্রপারলি ডিসপ্লে করা -->
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
-                    <span style="background: #333; color: #fff; font-size: 11px; padding: 4px 8px; border-radius: 4px; text-transform: capitalize; font-weight: bold;">
-                        <?php 
-                        $game_title = !empty($row['game_id']) ? $row['game_id'] : 'Casino Game';
-                        echo htmlspecialchars($game_title); 
-                        ?>
-                    </span>
+                    <span style="background: #333; color: #fff; font-size: 9px; padding: 2px 6px; border-radius: 4px;">🎮</span>
+                    <!-- 🎯 [মেগা কিলার ডাইনামিক নোড]: ডাটাবেজের game_id কলামের ভেতর সেভ হওয়া আসল গেমের নাম ওয়ান-শটে ক্যাচ করবে ভাই -->
+                    <span style="font-size: 14px; font-weight: bold; color: #00ff88;"><?php echo htmlspecialchars(!empty($row['game_id']) ? $row['game_id'] : 'Casino Game'); ?></span>
                 </div>
                 
-                <!-- তারিখ ও সময় ডিসপ্লে -->
-                <div>
-                    <small style="color: #666; font-size: 11px;">
-                        📅 <?php echo !empty($row['created_at']) ? $row['created_at'] : (!empty($row['date']) ? $row['date'] : 'Just Now'); ?>
-                    </small>
-                </div>
-                
+                <!-- 🕒 রাউন্ডের রিয়েল-টাইম টাইমস্ট্যাম্প এন্ট্রি ভাই ভাই -->
+                <small style="color: #666; font-size: 10px;"><?php echo isset($row['date']) ? $row['date'] : 'Just Now'; ?></small>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                <div>
-                    <span style="font-size: 14px; color: #aaa;">Stake: <b style="color: #fff;">৳<?php echo number_format($row['amount'], 2); ?></b></span>
-                </div>
-
-                <!-- টাকা কাটা এবং যোগ হওয়ার সঠিক ডাইনামিক স্ট্যাটাস -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                <span style="font-size: 14px; color: #fff;">Stake: <b>৳<?php echo number_format($row['amount'], 2); ?></b></span>
+                
                 <div style="text-align: right;">
                     <?php
-                    $status = strtolower(isset($row['status']) ? $row['status'] : 'pending');
-                    $stake_amount = floatval($row['amount']);
-                    $win_amount = isset($row['win_amount']) ? floatval($row['win_amount']) : 0;
-
-                    if ($status === 'win') {
-                        // যদি জিতে যায়, তবে ব্যালেন্স যোগ (উইন অ্যামাউন্ট) দেখাবে
-                        $final_win = ($win_amount > 0) ? $win_amount : $stake_amount;
-                        echo '<span style="color: #00FF88; font-weight: bold; font-size: 15px;">+ ৳' . number_format($final_win, 2) . '</span>';
-                        echo '<div style="font-size: 9px; color: #00FF88; text-transform: uppercase; font-weight: bold; margin-top: 2px;">WIN</div>';
-                    } elseif ($status === 'pending') {
-                        // পেন্ডিং থাকলে অ্যামাউন্ট সাধারণ দেখাবে
-                        echo '<span style="color: #ffaa00; font-weight: bold; font-size: 15px;">৳' . number_format($stake_amount, 2) . '</span>';
-                        echo '<div style="font-size: 9px; color: #ffaa00; text-transform: uppercase; font-weight: bold; margin-top: 2px;">PENDING</div>';
+                    // 🔌 [WIN-LOSS STATUS ডাইনামিক ইন্টারсеপ্টর বর্ম ভাই ভাই]
+                    $status = strtolower($row['status'] ? $row['status'] : 'bet');
+                    if ($status == 'win') {
+                        echo '<span style="color: #00ff88; font-weight: bold; font-size: 14px;">৳' . number_format($row['amount'], 2) . '</span>';
+                        echo '<div style="font-size: 9px; color: #00ff88; text-transform: uppercase; margin-top: 3px;">WIN ✓</div>';
                     } else {
-                        // লস হলে ব্যালেন্স কাটা (মাইনাস অ্যামাউন্ট) দেখাবে
-                        echo '<span style="color: #ff4444; font-weight: bold; font-size: 15px;">- ৳' . number_format($stake_amount, 2) . '</span>';
-                        echo '<div style="font-size: 9px; color: #ff4444; text-transform: uppercase; font-weight: bold; margin-top: 2px;">LOST</div>';
+                        echo '<span style="color: #ff4444; font-weight: bold; font-size: 14px;">৳0.00</span>';
+                        echo '<div style="font-size: 9px; color: #ff4444; text-transform: uppercase; margin-top: 3px;">LOSS ✗</div>';
                     }
                     ?>
                 </div>
             </div>
         </div>
-    <?php 
-        endwhile; 
-    else: 
-    ?>
-        <!-- কোনো ডাটা না থাকলে এই মেসেজটি দেখাবে -->
+    <?php endwhile; else: ?>
         <div style="text-align: center; margin-top: 100px; color: #555;">
-            <p>আপনার কোনো গেম হিস্টোরি পাওয়া যায়নি।</p>
-            <a href="index.php" style="color: #00FF88; text-decoration: none; font-size: 14px;">↩️ গেম খেলতে হোমে ফিরে যান</a>
+            <p>আপনার কোনো গেম হিস্টোরি পাওয়া যায়নি ভাই।</p>
+            <a href="index.php" style="color: #00ff88; text-decoration: none; font-size: 14px;">← লবিতে ফিরে যান ভাই</a>
         </div>
-    <?php 
-    endif; 
-    ?>
+    <?php endif; ?>
 </div>
 
-<?php include "footer.php"; ?>
+<?php include 'footer.php'; ?>
