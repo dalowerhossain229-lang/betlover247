@@ -25,8 +25,19 @@ $username = isset($data['username']) ? mysqli_real_escape_string($conn, $data['u
 $amount = isset($data['amount']) ? floatval($data['amount']) : 0;
 $wallet = isset($data['wallet']) ? mysqli_real_escape_string($conn, $data['wallet']) : 'main';
 
-// 🎯 [মেগা গেম নেম ইন্টারсеপ্টর বর্ম]: গেম সার্ভার থেকে আসা রিয়াল নাম ক্যাচ করবে, না থাকলে ডিফল্ট ফলব্যাক বসবে
-$dynamic_game_name = !empty($data['game']) ? mysqli_real_escape_string($conn, $data['game']) : 'Aviator';
+// 🔌 [API_CALLBACK ওরিজিনাল গেম নেম ফিল্টার বর্ম ভাই ভাই]
+$dynamic_game_name = 'Casino Game'; // Default Fallback
+if (!empty($data['game'])) {
+    $dynamic_game_name = mysqli_real_escape_string($conn, $data['game']);
+} else {
+    $get_game_type = isset($_GET['game']) ? mysqli_real_escape_string($conn, $_GET['game']) : '';
+    if (!empty($get_game_type)) {
+        $dynamic_game_name = $get_game_type;
+    } else {
+        $dynamic_game_name = 'Color-Trade'; // অটো-বট লুপের জন্য লাকি ব্যাকআপ লক ওস্তাদ!
+    }
+}
+
 
 if (empty($username)) {
     echo json_encode(["status" => "error", "message" => "❌ Empty Player Username Credentials!"]);
