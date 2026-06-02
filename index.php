@@ -122,7 +122,7 @@ include 'header.php';
     <!-- ==================== ক্যাটাগরি ১: POPULAR (🔥) জোন (খাতার ছবি ১ অনুযায়ী গেম ১ - ১০) ==================== -->
     <div class="game-card popular blslots slots" onclick="launchCasinoGameViaPlayPage('superace')">
         <img src="super-ace.png" alt="Super Ace">
-        <div class="game-card-title-text">1. SUPER-ACE</div>
+        <div class="game-card-title-text">. SUPER-ACE</div>
     </div>
     <div class="game-card popular blgames original" onclick="launchCasinoGameViaPlayPage('ludo')">
         <img src="ludo777.png" alt="Ludo 777">
