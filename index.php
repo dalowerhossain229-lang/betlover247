@@ -122,301 +122,301 @@ include 'header.php';
     <!-- ==================== ক্যাটাগরি ১: POPULAR (🔥) জোন (খাতার ছবি ১ অনুযায়ী গেম ১ - ১০) ==================== -->
     <div class="game-card popular blslots slots" onclick="launchCasinoGameViaPlayPage('superace')">
         <img src="super-ace.png" alt="Super Ace">
-        <div class="game-card-title-text">. SUPER-ACE</div>
+        <div class="game-card-title-text"> SUPER-ACE</div>
     </div>
     <div class="game-card popular blgames original" onclick="launchCasinoGameViaPlayPage('ludo')">
         <img src="ludo777.png" alt="Ludo 777">
-        <div class="game-card-title-text">2. LUDU777</div>
+        <div class="game-card-title-text"> LUDU777</div>
     </div>
     <div class="game-card popular bllottery bllive original" onclick="launchCasinoGameViaPlayPage('color')">
         <img src="color-trade.png" alt="Color Trade">
-        <div class="game-card-title-text">3. COLOR-TRADE</div>
+        <div class="game-card-title-text"> COLOR-TRADE</div>
     </div>
     <div class="game-card popular bllive original" onclick="launchCasinoGameViaPlayPage('aviator')">
         <img src="aviator.png" alt="Aviator 2.0">
-        <div class="game-card-title-text">4. AVIATOR 2.0</div>
+        <div class="game-card-title-text"> AVIATOR 2.0</div>
     </div>
     <div class="game-card popular blgames original" onclick="launchCasinoGameViaPlayPage('chicken')">
         <img src="chicken-road.png" alt="Chicken Road">
-        <div class="game-card-title-text">5. CHICKEN ROAD</div>
+        <div class="game-card-title-text"> CHICKEN ROAD</div>
     </div>
     <div class="game-card popular blgames" onclick="launchCasinoGameViaPlayPage('mines')">
         <img src="lucky-mines.png" alt="Lucky Mines">
-        <div class="game-card-title-text">6. LUCKY-MINES</div>
+        <div class="game-card-title-text"> LUCKY-MINES</div>
     </div>
     <div class="game-card popular blgames" onclick="launchCasinoGameViaPlayPage('andarbahar')">
         <img src="andar-bahar.png" alt="Andar Bahar">
-        <div class="game-card-title-text">7. ANDAR-BAHAR</div>
+        <div class="game-card-title-text"> ANDAR-BAHAR</div>
     </div>
     <div class="game-card popular blgames" onclick="launchCasinoGameViaPlayPage('cryptomultiply')">
         <img src="crypto-multiply.png" alt="Crypto Multiply">
-        <div class="game-card-title-text">8. CRYPTO-MULTIPLY</div>
+        <div class="game-card-title-text"> CRYPTO-MULTIPLY</div>
     </div>
     <div class="game-card popular blgames" onclick="launchCasinoGameViaPlayPage('dice3d')">
         <img src="dice-3d.png" alt="Dice 3D">
-        <div class="game-card-title-text">9. DICE-3D</div>
+        <div class="game-card-title-text"> DICE-3D</div>
     </div>
     <div class="game-card popular fishing" onclick="launchCasinoGameViaPlayPage('dragon-ball-fishing')">
         <img src="dragon-ball-fishing.png" alt="Dragon Ball Fishing">
-        <div class="game-card-title-text">10. DRAGON-BALL-FISHING</div>
+        <div class="game-card-title-text"> DRAGON-BALL-FISHING</div>
     </div>
 
     <!-- ==================== ক্যাটাগরি ২: BLSLOTS (🎰) এবং SLOTS (🕹️) জোন (খাতার ছবি ১, ২ ও ৪ অনুযায়ী গেম ১ - ২০) ==================== -->
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('slotmaster')">
         <img src="lucky777-slot.png" alt="Lucky 777 Slot">
-        <div class="game-card-title-text">2. LUCKY 777-SLOT</div>
+        <div class="game-card-title-text"> LUCKY 777-SLOT</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('billionaireslot')">
         <img src="billionaire-slot.png" alt="Billionaire Slot">
-        <div class="game-card-title-text">3. BILLIONAIRE-SLOT</div>
+        <div class="game-card-title-text"> BILLIONAIRE-SLOT</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('goldenfortunewin')">
         <img src="golden-fortune-win.png" alt="Golden Fortune Win">
-        <div class="game-card-title-text">4. GOLDEN-FORTUNE-WIN</div>
+        <div class="game-card-title-text"> GOLDEN-FORTUNE-WIN</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('luckymoneytree')">
         <img src="lucky-money-tree.png" alt="Lucky Money Tree">
-        <div class="game-card-title-text">5. LUCKY-MONEY-TREE</div>
+        <div class="game-card-title-text"> LUCKY-MONEY-TREE</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('fire-joker')">
         <img src="fire-joker.png" alt="Fire Joker">
-        <div class="game-card-title-text">6. FIRE-JOKER</div>
+        <div class="game-card-title-text"> FIRE-JOKER</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('superace3')">
         <img src="super-ace-3.png" alt="Super Ace 3">
-        <div class="game-card-title-text">7. SUPER-ACE-3</div>
+        <div class="game-card-title-text"> SUPER-ACE-3</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('crazy777-2')">
         <img src="crazy-777-2.png" alt="Crazy 777 2">
-        <div class="game-card-title-text">8. CRAZY-777-2</div>
+        <div class="game-card-title-text"> CRAZY-777-2</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('crazy-777')">
         <img src="crazy-777.png" alt="Crazy 777">
-        <div class="game-card-title-text">9. CRAZY-777</div>
+        <div class="game-card-title-text"> CRAZY-777</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('dragontiger')">
         <img src="dragon-tiger.png" alt="DT-24">
-        <div class="game-card-title-text">10. DT-24</div>
+        <div class="game-card-title-text"> DT-24</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('alibaba')">
         <img src="alibaba.png" alt="Alibaba">
-        <div class="game-card-title-text">11. ALIBABA</div>
+        <div class="game-card-title-text"> ALIBABA</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('fortune-gems')">
         <img src="fortune-gems.png" alt="Fortune Gems">
-        <div class="game-card-title-text">12. FORTUNE-GEMS</div>
+        <div class="game-card-title-text"> FORTUNE-GEMS</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('cai-shen-dao')">
         <img src="cai-shen-dao.png" alt="Cai Shen Dao">
-        <div class="game-card-title-text">13. CAI-SHEN-DAO</div>
+        <div class="game-card-title-text"> CAI-SHEN-DAO</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('fa-fa-fa')">
         <img src="fa-fa-fa.png" alt="Fa Fa Fa">
-        <div class="game-card-title-text">14. FA-FA-FA</div>
+        <div class="game-card-title-text"> FA-FA-FA</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('mythical-phoenix')">
         <img src="mythical-phoenix.png" alt="Mythical Phoenix">
-        <div class="game-card-title-text">15. MYTHICAL PHOENIX</div>
+        <div class="game-card-title-text"> MYTHICAL PHOENIX</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('golden-chicken')">
         <img src="golden-chicken.png" alt="Golden Chicken">
-        <div class="game-card-title-text">16. GOLDEN CHICKEN</div>
+        <div class="game-card-title-text"> GOLDEN CHICKEN</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('shanghai-nights')">
         <img src="shanghai-nights.png" alt="Shanghai Nights">
-        <div class="game-card-title-text">17. SHANGHAI-NIGHTS</div>
+        <div class="game-card-title-text"> SHANGHAI-NIGHTS</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('jade-elephant')">
         <img src="jade-elephant.png" alt="Jade Elephant">
-        <div class="game-card-title-text">18. JADE-ELEPHENT</div>
+        <div class="game-card-title-text"> JADE-ELEPHENT</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('dragon-boat')">
         <img src="dragon-boat.png" alt="Dragon Boat">
-        <div class="game-card-title-text">19. DRAGON-BOAT</div>
+        <div class="game-card-title-text"> DRAGON-BOAT</div>
     </div>
     <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('mahjong-way')">
         <img src="mahjong-way.png" alt="Mahjong Way">
-        <div class="game-card-title-text">20. MAHJONG-WAY</div>
+        <div class="game-card-title-text"> MAHJONG-WAY</div>
     </div>
 
     <!-- ==================== ক্যাটাগরি ৩: BLLOTTERY (🎫) জোন (খাতার ছবি ২ অনুযায়ী গেম ১) ==================== -->
     <div class="game-card bllottery bllive original" onclick="launchCasinoGameViaPlayPage('color')">
         <img src="color-trade.png" alt="Color Trade">
-        <div class="game-card-title-text">1. Color-Trade</div>
+        <div class="game-card-title-text"> Color-Trade</div>
     </div>
 
     <!-- ==================== ক্যাটাগরি ৪: BLGAMES (🎮) জোন (খাতার ছবি ২ ও ৩ অনুযায়ী গেম ১ - ২৩) ==================== -->
     <div class="game-card blgames original" onclick="launchCasinoGameViaPlayPage('ludo')">
         <img src="ludo777.png" alt="Ludu 777">
-        <div class="game-card-title-text">1. LUDU777</div>
+        <div class="game-card-title-text"> LUDU777</div>
     </div>
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('head-and-tail')">
         <img src="head-and-tail.png" alt="Head and Tail">
-        <div class="game-card-title-text">2. HEAD-AND-TAIL</div>
+        <div class="game-card-title-text"> HEAD-AND-TAIL</div>
     </div>
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('mines')">
         <img src="lucky-mines.png" alt="Lucky Mines">
-        <div class="game-card-title-text">3. LUCKY-MINES</div>
+        <div class="game-card-title-text"> LUCKY-MINES</div>
     </div>
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('andarbahar')">
         <img src="andar-bahar.png" alt="Andar Bahar">
-        <div class="game-card-title-text">4. ANDAR-BAHAR</div>
+        <div class="game-card-title-text"> ANDAR-BAHAR</div>
     </div>
     <div class="game-card blgames bllive" onclick="launchCasinoGameViaPlayPage('baccaratmaster')">
         <img src="baccarat-master.png" alt="Baccarat Master">
-        <div class="game-card-title-text">5. BACCARAT-MASTER</div>
+        <div class="game-card-title-text"> BACCARAT-MASTER</div>
     </div>
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('blackjack21')">
         <img src="blackjack-21-pszh.png" alt="Blackjack 21">
-        <div class="game-card-title-text">6. BLACKJACK-21</div>
+        <div class="game-card-title-text"> BLACKJACK-21</div>
     </div>
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('cryptomultiply')">
         <img src="crypto-multiply.png" alt="Crypto Multiply">
-        <div class="game-card-title-text">7. CRYPTO-MULTIPLY</div>
+        <div class="game-card-title-text"> CRYPTO-MULTIPLY</div>
     </div>
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('dice3d')">
         <img src="dice-3d.png" alt="Dice 3D">
-        <div class="game-card-title-text">8. DICE-3D</div>
+        <div class="game-card-title-text"> DICE-3D</div>
     </div>
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('dragontiger')">
         <img src="dragon-tiger.png" alt="Dragon Tiger">
-        <div class="game-card-title-text">9. DRAGON-TIGER</div>
+        <div class="game-card-title-text"> DRAGON-TIGER</div>
     </div>
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('hilocard')">
         <img src="hilo-card.png" alt="Hilo Card">
-        <div class="game-card-title-text">10. HILO-CARD</div>
+        <div class="game-card-title-text"> HILO-CARD</div>
     </div>
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('jhandimunda')">
         <img src="jhandi-munda.png" alt="Jhandi Munda">
-        <div class="game-card-title-text">11. JHANDI-MUNDA</div>
+        <div class="game-card-title-text"> JHANDI-MUNDA</div>
     </div>
 
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('luckymarblepop')">
         <img src="lucky-marble-pop.png" alt="Lucky Marble Pop">
-        <div class="game-card-title-text">12. LUCKY-MARBLE-POP</div>
+        <div class="game-card-title-text"> LUCKY-MARBLE-POP</div>
     </div>
 
     <div class="game-card blgames slots" onclick="launchCasinoGameViaPlayPage('moneycoming')">
         <img src="money-coming.png" alt="Money Coming">
-        <div class="game-card-title-text">13. MONEY-COMING</div>
+        <div class="game-card-title-text"> MONEY-COMING</div>
     </div>
 
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('royalderby')">
         <img src="royal-derby.png" alt="Royal Derby">
-        <div class="game-card-title-text">14. ROYAY-DERBY</div>
+        <div class="game-card-title-text"> ROYAY-DERBY</div>
     </div>
 
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('royalkeno')">
         <img src="royal-keno.png" alt="Royal Keno">
-        <div class="game-card-title-text">15. ROYAL-KENO</div>
+        <div class="game-card-title-text"> ROYAL-KENO</div>
     </div>
 
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('royalplinko')">
         <img src="royal-plinko.png" alt="Royal Plinko">
-        <div class="game-card-title-text">16. ROYAL-PLINKO</div>
+        <div class="game-card-title-text"> ROYAL-PLINKO</div>
     </div>
 
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('teenpatti')">
         <img src="teen-patti.png" alt="Teen Patti">
-        <div class="game-card-title-text">17. TEEN-PATTI</div>
+        <div class="game-card-title-text"> TEEN-PATTI</div>
     </div>
 
     <div class="game-card blgames slots" onclick="launchCasinoGameViaPlayPage('twistmultiplespin')">
         <img src="twist-multiple-spin.png" alt="Twist Multiple Spin">
-        <div class="game-card-title-text">18. TWIST-MULTIPLE-SPIN</div>
+        <div class="game-card-title-text"> TWIST-MULTIPLE-SPIN</div>
     </div>
 
     <div class="game-card blgames original" onclick="launchCasinoGameViaPlayPage('chicken')">
         <img src="chicken-road.png" alt="Chicken Road">
-        <div class="game-card-title-text">19. CHICKEN ROAD</div>
+        <div class="game-card-title-text"> CHICKEN ROAD</div>
     </div>
 
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('fish-prawn-crab')">
         <img src="fish-prawn-crab.png" alt="Fish Prawn Crab">
-        <div class="game-card-title-text">20. FISH-PRAWN-CRAB</div>
+        <div class="game-card-title-text"> FISH-PRAWN-CRAB</div>
     </div>
 
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('fantan')">
         <img src="fan-tan.png" alt="Fan Tan">
-        <div class="game-card-title-text">21. FAN-TAN</div>
+        <div class="game-card-title-text"> FAN-TAN</div>
     </div>
 
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('sicbo')">
         <img src="sic-bo.png" alt="Sic Bo">
-        <div class="game-card-title-text">22. SIC-BO-BO</div>
+        <div class="game-card-title-text"> SIC-BO-BO</div>
     </div>
 
     <div class="game-card blgames" onclick="launchCasinoGameViaPlayPage('penalty-shootout')">
         <img src="penalty-shootout.png" alt="Penalty Shootout">
-        <div class="game-card-title-text">23. PENULTY-SHOOTOUT</div>
+        <div class="game-card-title-text"> PENULTY-SHOOTOUT</div>
     </div>
 
     <!-- ==================== ক্যাটাগরি ৫: BLLIVE (📺) জোন (খাতার ছবি ৩ অনুযায়ী গেম ১ - ৫) ==================== -->
     <div class="game-card bllive" onclick="launchCasinoGameViaPlayPage('megawheel')">
         <img src="mega-wheel.png" alt="Mega Wheel">
-        <div class="game-card-title-text">1. MEGA-WHEEL</div>
+        <div class="game-card-title-text"> MEGA-WHEEL</div>
     </div>
 
     <div class="game-card bllive" onclick="launchCasinoGameViaPlayPage('miniroulette')">
         <img src="mini-roulette.png" alt="Mini Roulette">
-        <div class="game-card-title-text">2. MINI-ROULETTE</div>
+        <div class="game-card-title-text"> MINI-ROULETTE</div>
     </div>
 
     <div class="game-card bllive popular original" onclick="launchCasinoGameViaPlayPage('aviator')">
         <img src="aviator.png" alt="Aviator 2.0">
-        <div class="game-card-title-text">3. AVIATOR 2.0</div>
+        <div class="game-card-title-text"> AVIATOR 2.0</div>
     </div>
 
     <div class="game-card bllive popular bllottery original" onclick="launchCasinoGameViaPlayPage('color')">
         <img src="color-trade.png" alt="Color Trade">
-        <div class="game-card-title-text">4. COLOR-TRADE</div>
+        <div class="game-card-title-text"> COLOR-TRADE</div>
     </div>
 
     <div class="game-card bllive" onclick="launchCasinoGameViaPlayPage('lightning-roulette')">
         <img src="lightning-roulette.png" alt="Lightning Roulette">
-        <div class="game-card-title-text">5. LIGHTING-ROULETTE</div>
+        <div class="game-card-title-text"> LIGHTING-ROULETTE</div>
     </div>
 
     <!-- ==================== ক্যাটাগরি 6: FISHING (🐟) জোন (খাতার ছবি ৩ অনুযায়ী গেম ১ - ৪) ==================== -->
     <div class="game-card fishing popular" onclick="launchCasinoGameViaPlayPage('dragon-ball-fishing')">
         <img src="dragon-ball-fishing.png" alt="Dragon Ball Fishing">
-        <div class="game-card-title-text">1. DRAGON-BALL-FISHING</div>
+        <div class="game-card-title-text"> DRAGON-BALL-FISHING</div>
     </div>
 
     <div class="game-card fishing" onclick="launchCasinoGameViaPlayPage('betlover24-fishing')">
         <img src="betlover24-fishing.png" alt="Betlover24 Fishing">
-        <div class="game-card-title-text">2. BETLOVER-24-FISHING</div>
+        <div class="game-card-title-text"> BETLOVER-24-FISHING</div>
     </div>
 
     <div class="game-card fishing" onclick="launchCasinoGameViaPlayPage('fighter-crash')">
         <img src="fighter-crash.png" alt="Fighter Crash">
-        <div class="game-card-title-text">3. FIGHTER-CRASH</div>
+        <div class="game-card-title-text"> FIGHTER-CRASH</div>
     </div>
 
     <div class="game-card fishing slots" onclick="launchCasinoGameViaPlayPage('money-tree')">
         <img src="money-tree.png" alt="Money Tree">
-        <div class="game-card-title-text">4. MONEY TREE</div>
+        <div class="game-card-title-text"> MONEY TREE</div>
     </div>
 
     <!-- ==================== ক্যাটাগরি ৭: ORIGINAL (👑) জোন (খাতার ছবি ৩ অনুযায়ী গেম ১ - ৪) ==================== -->
     <div class="game-card original blgames" onclick="launchCasinoGameViaPlayPage('chicken')">
         <img src="chicken-road.png" alt="Chicken Road">
-        <div class="game-card-title-text">1. CHICKEN ROAD</div>
+        <div class="game-card-title-text"> CHICKEN ROAD</div>
     </div>
 
     <div class="game-card original bllottery bllive" onclick="launchCasinoGameViaPlayPage('color')">
         <img src="color-trade.png" alt="Color Trade">
-        <div class="game-card-title-text">2. COLOR-TRADE</div>
+        <div class="game-card-title-text"> COLOR-TRADE</div>
     </div>
 
     <div class="game-card original bllive" onclick="launchCasinoGameViaPlayPage('aviator')">
         <img src="aviator.png" alt="Aviator 2.0">
-        <div class="game-card-title-text">3. AVIATOR 2.0</div>
+        <div class="game-card-title-text"> AVIATOR 2.0</div>
     </div>
 
     <div class="game-card original blgames" onclick="launchCasinoGameViaPlayPage('ludo')">
         <img src="ludo777.png" alt="Ludu 777">
-        <div class="game-card-title-text">4. LUDU 777</div>
+        <div class="game-card-title-text"> LUDU 777</div>
     </div>
 
 </div>
