@@ -34,7 +34,7 @@ if (!empty($data['game'])) {
     if (!empty($get_game_type)) {
         $dynamic_game_name = $get_game_type;
     } else {
-        $dynamic_game_name = 'Color-Trade'; // অটো-বট লুপের জন্য লাকি ব্যাকআপ লক ওস্তাদ!
+        $dynamic_game_name = 'Present-Game'; // অটো-বট লুপের জন্য লাকি ব্যাকআপ লক ওস্তাদ!
     }
 }
 
