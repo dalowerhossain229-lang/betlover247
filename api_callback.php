@@ -91,8 +91,8 @@ else if ($action == "win") {
     $update = $conn->query("UPDATE users SET $bal_col = $bal_col + $amount, $turn_col = $turn_col + $amount WHERE username = '{$u_data['username']}'");
     
     if ($update) {
-        // 🔒 [মাস্টারস্ট্রোক ফিক্সড নোড]: প্লেয়ারের সর্বশেষ রাউন্ডের আইডি ট্র্যাক করে গেমের রিয়াল নাম এবং উইন ডাটা ওয়ান-শটে আপডেট করার চাবি
-        $conn->query("UPDATE bets SET status = 'win', amount = '$amount', game_id = '$dynamic_game_name' WHERE username = '{$u_data['username']}' ORDER BY id DESC LIMIT 1");
+        // 🔒 [মাস্টারস্ট্রোক ফিক্সড বর্ম]: বাজি ধরার মূল amount কলাম এক চুলও নড়চড় না করে—শুধুমাত্র status কলামটি 'win' এ আপডেট করার চাবি ভাই ভাই
+        $conn->query("UPDATE bets SET status = 'win' WHERE username = '{$u_data['username']}' ORDER BY id DESC LIMIT 1");
         
         $fresh_user_query = $conn->query("SELECT * FROM users WHERE username = '{$u_data['username']}'");
         $fresh_user = $fresh_user_query->fetch_assoc();
