@@ -23,8 +23,8 @@ $game_user_id  = !empty($u) ? $u : "guest";
 // ওস্তাদ! ভবিষ্যতে যেকোনো নতুন গেম আসলে জাস্ট এখানে তার শর্টকোড নাম আর লাইভ অন রেন্ডার লিংক বসিয়ে দেবেন, খেল খতম!
 // ===================================================================================
 $gameRoutingMap = [
-    'luckywheel'           => "https://onrender.com",
-    'superace'             => "https://onrender.com",
+    'luckywheel'           => "https://mega-wheel.onrender.com",
+    'superace'             => "https://super-ace.onrender.com",
     'ludo'                 => "https://onrender.com",
     'color'                => "https://onrender.com",
     'cryptomultiply'       => "https://onrender.com",
