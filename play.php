@@ -14,13 +14,9 @@ if (empty($u)) {
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-$active_wallet = isset($_GET['wallet']) ? $_GET['wallet'] : ($_GET['wallet'] ?? 'main');
-$game_get_type = isset($_GET['game']) ? $_GET['game'] : '';
-
-// 🔒 [গ্র্যান্ড ব্যালেন্স জিরো ফিক্সড ট্রিক]: 
-// গেমের ভেতরে আইডি পাস করার সময় ওরিজিনাল ডাটাবেজে থাকা প্লেয়ারের আসল 'username' এক শটে পাস লক করা হলো ওস্তাদ!
-// এর ফলে নোড সার্ভার ব্যাকএন্ড এবং api_callback.php ওয়ান-শটে আসল প্লেয়ারের প্রোফাইল রিড করে ওরিজিনাল টাকা শো করবে ভাই ভাই!
-$game_user_id = !empty($user_data['username']) ? $user_data['username'] : (!empty($u) ? $u : "guest");
+$active_wallet = isset($_GET['wallet']) ? $_GET['wallet'] : (isset($_GET['data']['active_wallet']) ? $_GET['data']['active_wallet'] : 'main');
+$get_game_type = isset($_GET['game']) ? $_GET['game'] : '';
+$game_user_id = !empty($u) ? $u : "guest";
 
 // ===================================================================================
 // // ২. গ্র্যান্ড ডাইনামিক গেম ইউআরএল অবজেক্ট ডিরেক্টরি (আপনার স্ক্রিনশটের হুবহু ওরিজিনাল স্লট ওッズ সিঙ্ক ওস্তাদ!)
