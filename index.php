@@ -704,5 +704,17 @@ marquee {
         }
     }, 3000);
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // পেজ লোড হওয়ার পর গেম কার্ডের সব টেক্সট খুঁজে বের করবে
+    const gameTexts = document.querySelectorAll('.game-card p, .game-grid .game-card p, .game-card span');
+    
+    gameTexts.forEach(text => {
+        // ইনলাইন সাদা কালার বা অন্য কোনো কালার জোরপূর্বক ভ্যানিশ করার আসল চাবি
+        text.style.setProperty('color', 'transparent', 'important');
+        text.style.setProperty('-webkit-text-fill-color', 'transparent', 'important');
+    });
+});
+</script>
 
 <?php include 'footer.php'; ?>
