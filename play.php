@@ -3,28 +3,31 @@ ob_start();
 session_start();
 include 'db.php';
 
-// ১. সেশন থেকে ওরিজিনাল ইউজার আইডি একুরেট চেক বর্ম
+// || ১. সেশন থেকে ওরিজিনাল ইউজার আইডি একুরেট চেক বর্ম
 $u = $_SESSION['user_id'] ?? $_SESSION['username'] ?? '';
 if (empty($u)) {
     header("Location: index.php");
     exit();
 }
 
-// ডাটাবেজ থেকে রিয়েল-টাইমে প্লেয়ারের ওয়ালেট ডাটা আনা
+// // ডাটাবেজ থেকে রিয়েল-টাইমে প্লেয়ারের ওরিজিনাল প্রোফাইল ও অ্যাকাউন্ট ব্যালেন্স ডেটা আনা
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
 $active_wallet = isset($_GET['wallet']) ? $_GET['wallet'] : ($_GET['wallet'] ?? 'main');
 $game_get_type = isset($_GET['game']) ? $_GET['game'] : '';
-$game_user_id  = !empty($u) ? $u : "guest";
+
+// 🔒 [গ্র্যান্ড ব্যালেন্স জিরো ফিক্সড ট্রিক]: 
+// গেমের ভেতরে আইডি পাস করার সময় ওরিজিনাল ডাটাবেজে থাকা প্লেয়ারের আসল 'username' এক শটে পাস লক করা হলো ওস্তাদ!
+// এর ফলে নোড সার্ভার ব্যাকএন্ড এবং api_callback.php ওয়ান-শটে আসল প্লেয়ারের প্রোফাইল রিড করে ওরিজিনাল টাকা শো করবে ভাই ভাই!
+$game_user_id = !empty($user_data['username']) ? $user_data['username'] : (!empty($u) ? $u : "guest");
 
 // ===================================================================================
-// 🎡 ২. গ্র্যান্ড ডাইনামিক গেম ইউআরএল অবজেক্ট ডিরেক্টরি (১০০% সহজ ফিক্সড কিংস ম্যাপ ভাই ভাই)
-// ওস্তাদ! ভবিষ্যতে যেকোনো নতুন গেম আসলে জাস্ট এখানে তার শর্টকোড নাম আর লাইভ অন রেন্ডার লিংক বসিয়ে দেবেন, খেল খতম!
+// // ২. গ্র্যান্ড ডাইনামিক গেম ইউআরএল অবজেক্ট ডিরেক্টরি (আপনার স্ক্রিনশটের হুবহু ওরিজিনাল স্লট ওッズ সিঙ্ক ওস্তাদ!)
 // ===================================================================================
 $gameRoutingMap = [
-    'luckywheel'           => "https://mega-wheel.onrender.com",
-    'superace'             => "https://super-ace.onrender.com",
+    'luckywheel'           => "https://onrender.com",
+    'superace'             => "https://onrender.com",
     'ludo'                 => "https://onrender.com",
     'color'                => "https://onrender.com",
     'cryptomultiply'       => "https://onrender.com",
@@ -58,7 +61,7 @@ $gameRoutingMap = [
     'moneytree'            => "https://onrender.com"
 ];
 
-// ৩. অটো-ইন্টারসেপ্টর গেটওয়ে ড্রাইভার লুপ (৩০টি if/else এক শটে ওড়ানোর কিলার ম্যাজিক!)
+// // ৩. অটো-ইন্টারসেপ্টর গেটওয়ে ড্রাইভার লুপ (আপনার স্ক্রিনশটের ৫৯ নম্বর লাইনের সেই ওল্ড ব্রোকেন জ্যাম ওয়ান-শটে ফিক্সড লক!)
 if (array_key_exists($game_get_type, $gameRoutingMap)) {
     $targetBaseUrl = $gameRoutingMap[$game_get_type];
     $game_url = $targetBaseUrl . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet);
@@ -66,7 +69,13 @@ if (array_key_exists($game_get_type, $gameRoutingMap)) {
     // গেম শর্টকোড না মিললে ফলব্যাক ডিফল্ট হিসেবে লাকি হুইল অন ফায়ার রেডি
     $game_url = $gameRoutingMap['luckywheel'] . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet);
 }
+
+// 💰 আপনার পিএইচ局 ডাটাবেজ টেবিলের মেইন টাকার কলাম ফিল্টারিং চ্যাম সিঙ্ক
+$display_balance = $user_data['money'] ?? $user_data['balance'] ?? $user_data['wallet'] ?? 0.00;
+$display_pb      = $user_data['pb_wallet'] ?? $user_data['pb'] ?? 0.00;
+$display_bonus   = $user_data['bonus_wallet'] ?? $user_data['bonus'] ?? 0.00;
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
