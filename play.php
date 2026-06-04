@@ -27,7 +27,7 @@ $game_user_id = !empty($user_data['username']) ? $user_data['username'] : (!empt
 // ===================================================================================
 $gameRoutingMap = [
     'luckywheel'           => "https://onrender.com",
-    'superace'             => "https://onrender.com",
+    'superace'             => "https://super-ace.onrender.com",
     'ludo'                 => "https://onrender.com",
     'color'                => "https://onrender.com",
     'cryptomultiply'       => "https://onrender.com",
