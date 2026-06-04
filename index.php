@@ -506,7 +506,6 @@ include 'header.php';
     </div>
 </div>
 
-
 <style>
 /* ইনডেক্স পেজ স্টাইল */
 /* নোটিশ কনটেইনার স্টাইল */
@@ -567,36 +566,40 @@ marquee {
     object-fit: cover;
 }
 
-/* গেমের সব নামের জন্য বিশেষ রেইনবো কালার কোড */
+/* গেমের সব নামের জন্য ১০০% কার্যকরী রেইনবো কালার ফিক্স */
 .game-grid .game-card p,
 .game-card p,
 .game-card span,
 .game-card h4 {
     font-size: 9px !important;    
     margin: 5px 0 !important;
-    font-weight: bold !important;
-    
-    /* রেইনবো গ্রিডিয়েন্ট এবং ওভাররাইড রুলস */
+    font-weight: 900 !important; /* লেখাটি আরও ফুটিয়ে তোলার জন্য বোল্ড করা হলো */
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+
+    /* রেইনবো ব্যাকগ্রাউন্ড গ্রিডিয়েন্ট */
     background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3) !important;
+    
+    /* লেখা টেক্সটে ক্লিপ করার আধুনিক নিয়ম */
     -webkit-background-clip: text !important;
     background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    color: transparent !important; /* আগের সব সাদা কালার মুছে ফেলার জন্য */
     
-    background-size: 400% 100% !important;
-    animation: rainbow-animation 6s linear infinite !important;
-    display: inline-block !important; /* ইফেক্টটি টেক্সটের ওপর ঠিকমতো বসার জন্য */
-    width: 100%;
+    /* ভেতরের ওল্ড হোয়াইট কালার ফোর্সবলি ভ্যানিশ করার আসল চাবি */
+    -webkit-text-fill-color: transparent !important;
+    text-fill-color: transparent !important;
+    color: transparent !important; 
+    
+    /* অ্যানিমেশন স্পিড সামান্য বাড়িয়ে ৪ সেকেন্ড করা হলো যাতে কালার পরিবর্তন চোখে পড়ে */
+    background-size: 200% auto !important;
+    animation: rainbow-animation 4s linear infinite !important;
 }
 
-/* রেইনবো অ্যানিমেশনের নিয়ম */
+/* রেইনবো অ্যানিমেশনের সঠিক নিয়ম */
 @keyframes rainbow-animation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
 }
-
-
 
 .modal-overlay { 
     position: fixed !important; 
@@ -642,7 +645,7 @@ marquee {
     background: #111111 !important; /* আপনার মেইন ডার্ক থিমের সাথে ওরিজিনাল ব্যাকগ্রাউন্ড সিঙ্ক */
     border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
     overflow-x: auto !important; /* মোবাইল স্ক্রিনে ডানে-বামে স্মুথ সুইপ স্ক্রলিং সচল লক */
-    white-space: nowrap !important; /* কোনো টেক্সট বা বাটন কখনোই নিচে ভাঙবে না ভাই ভাই */
+    white-space: nowrap !important; /* কোনো টেক্সট বা বাটন টাকায় নিচে ভাঙবে না ভাই ভাই */
     box-sizing: border-box !important;
     -webkit-overflow-scrolling: touch !important;
 }
@@ -681,8 +684,11 @@ marquee {
     width: 0 !important;
     height: 0 !important;
 }
-    
 </style>
+
+
+
+
 
 <!-- জাভাস্ক্রিপ্ট এবং ফুটার -->
 <script src="auth.js"></script>
