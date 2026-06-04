@@ -390,24 +390,6 @@ include 'header.php';
     </div>
         
 
-
-
-<!-- 🔌 [উইন্ডো ইউনিভার্সাল play.php আইফ্রেম লিঙ্ক রাউটার গেটওয়ে জাভাস্ক্রিপ্ট ইঞ্জিন ভাই ভাই] -->
-<script>
-    function launchCasinoGameViaPlayPage(gameFolderKeyName) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentUserId = urlParams.get('userId') || urlParams.get('id') || urlParams.get('username') || "guest_user";
-        const currentWallet = urlParams.get('wallet') || "main";
-        
-        // প্লেয়ারকে সরাসরি play.php সিকিউর আইফ্রেম ফ্রেমে পুশ করার চাবি ভাই ভাই
-        const finalPlayPageRedirectPath = `play.php?game=${gameFolderKeyName}&userId=${currentUserId}&wallet=${currentWallet}`;
-        if (typeof playAudio === 'function') { playAudio('click'); }
-        
-        window.location.href = finalPlayPageRedirectPath;
-    }
-</script>
-
-
 <!-- ৪. লগইন পপ-আপ (Modal) -->
 <div id="loginModal" class="modal-overlay">
     <div class="modal-content">
