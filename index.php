@@ -124,25 +124,30 @@ include 'header.php';
             });
         }
 
-        // 🛫 [২-লেয়ার ডাইনামিক কম্বো এন্ট্রি হুক - ওয়ান-শটে গেম প্রবেশের রাস্তা সোজা লক ভাই ভাই]
-                // 🛫 [২-লেয়ার ডাইনামিক কম্বো এন্ট্রি হুক - ইউআরএল প্যারামিটার ট্র্যাপ ওয়ান-শটে চিরতরে সাফ ওস্তাদ!]
+        // 🛫 [২-লেয়ার ডাইনামিক কম্বো এন্ট্রি হুক - পিএইচপি সেশন আইডি ইন্টিগ্রেশন বর্ম ওস্তাদ ভাই ভাই!]
         function launchCasinoGameViaPlayPage(gameFolderKeyName) {
             const constUrlParams = new URLSearchParams(window.location.search);
             
-            // 🔒 [গ্র্যান্ড কিংস ফিক্সড ট্রিক]: লিঙ্ক থেকে আইডি না পেলে পিএইচপি ব্যাকএন্ড সেশন ভ্যালু ডাইনামিক ক্যাচ করবে বর্ম!
-            // এর ফলে প্লেয়ার লগইন থাকা অবস্থায় লিঙ্ক ফাক্কা থাকলেও গেম এন্ট্রি ১ লক্ষ পার্সেন্ট মাখনের মতো আনলক থাকবে ভাই ভাই!
+            // ১. লিঙ্ক থেকে প্রথমে আইডি ক্যাচ করার ট্রাই
             let constUserId = constUrlParams.get('userId') || constUrlParams.get('id') || constUrlParams.get('username') || "";
             
-            // যদি ইউআরএল লিঙ্কে আইডি না থাকে, তবে ডাইনামিক সেশন ফলব্যাক একটিভেট হবে ওস্তাদ
+            // 🔒 [গ্র্যান্ড কিংস ফিক্সড ট্রিক]: লিঙ্ক ফাক্কা থাকলে সরাসরি পিএইচপি সেশনের আসল লগইন ইউজার আইডি এখানে ফিক্সড লক হবে!
+            // এর ফলে নোড সার্ভার আর ডাটাবেজ ওয়ান-শটে আসল প্লেয়ারকে চিনে এক মিলি-সেকেন্ডে ওরিজিনাল অ্যাকাউন্ট ব্যালেন্স লোড করে দেবে!
             if (!constUserId || constUserId === "guest_user" || constUserId === "undefined" || constUserId === "") {
-                constUserId = "logged_in_player"; 
+                constUserId = "<?php echo isset($u) ? $u : ($_SESSION['user_id'] ?? $_SESSION['username'] ?? ''); ?>"; 
+            }
+
+            // যদি কোনো কারণে সেশনও খালি পায়, তবে ফলব্যাক ডিফল্ট ইউজার ট্র্যাক লক
+            if (!constUserId || constUserId === "") {
+                constUserId = "guest_user";
             }
 
             const constWallet = constUrlParams.get('wallet') || "main";
 
-            // 🛫 ওরিজিনাল play.php পাতায় ফ্রেশ সেশন টোকেন ডাটা পাস করে ওয়ান-শটে গ্র্যান্ড রিডাইরেক্ট
-            window.location.href = `play.php?game=${gameFolderKeyName}&userId=${constUserId}&wallet=${constWallet}`;
+            // 🛫 ওরিজিনাল play.php পাতায় আসল ইউজার আইডি নিয়ে গ্র্যান্ড রিডাইরেক্ট
+            window.location.href = `play.php?game=${gameFolderKeyName}&userId=${encodeURIComponent(constUserId)}&wallet=${constWallet}`;
         }
+
 
   
 </script>
