@@ -39,6 +39,7 @@ $gameRoutingMap = [
     'baccaratmaster'       => "https://baccarat-master.onrender.com",
     'blackjack21'          => "https://blackjack-21-pszh.onrender.com",
     'dice3d'               => "https://dice-3d.onrender.com",
+    'aviator'              =>"https://aviator2-0-azym.onrender.com",
     'dragontiger'          => "https://dragon-tiger-muo0.onrender.com",
     'hilocard'             => "https://hilo-card.onrender.com",
     'jhandimunda'          => "https://jhandi-munda-pk5r.onrender.com",
