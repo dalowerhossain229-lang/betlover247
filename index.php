@@ -550,14 +550,14 @@ marquee {
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;           
     padding: 10px;
-    background-color: #ffffff !important; /* গ্রিড সাদা করা হলো */
+    background-color: #ffffff !important; /* পুরো গ্রিড সাদা থাকবে */
 }
 .game-card {
-    background: #111;
+    background: #111111 !important; /* আপনার স্ক্রিনশট অনুযায়ী কার্ডের ব্যাকগ্রাউন্ড কালোই রাখা হলো */
     border-radius: 10px;
     overflow: hidden;
     height: 130px;      
-    border: 1px solid #ddd; /* হালকা বর্ডার সাদা ব্যাকগ্রাউন্ডের জন্য */
+    border: 1px solid #222; 
     text-align: center;
 }
 .game-card:active { transform: scale(0.95); }
@@ -566,23 +566,36 @@ marquee {
     height: 90px;      
     object-fit: cover;
 }
-.game-card p {
-    font-size: 10px; /* লেখাটি একটু স্পষ্ট করার জন্য ১px বাড়ানো হলো */
-    margin: 5px 0;
-    font-weight: bold;
-    /* রেইনবো ইফেক্ট কোড */
-    background: linear-gradient(to right, #ff0000, #ff7f00, #ff00ff, #0000ff, #00ff00, #ff0000);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 400% 100%;
-    animation: rainbow-animation 8s linear infinite;
+
+/* গেমের সব নামের জন্য বিশেষ রেইনবো কালার কোড */
+.game-grid .game-card p,
+.game-card p,
+.game-card span,
+.game-card h4 {
+    font-size: 9px !important;    
+    margin: 5px 0 !important;
+    font-weight: bold !important;
+    
+    /* রেইনবো গ্রিডিয়েন্ট এবং ওভাররাইড রুলস */
+    background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important; /* আগের সব সাদা কালার মুছে ফেলার জন্য */
+    
+    background-size: 400% 100% !important;
+    animation: rainbow-animation 6s linear infinite !important;
+    display: inline-block !important; /* ইফেক্টটি টেক্সটের ওপর ঠিকমতো বসার জন্য */
+    width: 100%;
 }
 
 /* রেইনবো অ্যানিমেশনের নিয়ম */
 @keyframes rainbow-animation {
     0% { background-position: 0% 50%; }
-    100% { background-position: 400% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
+
 
 
 .modal-overlay { 
