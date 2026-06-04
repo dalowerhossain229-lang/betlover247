@@ -548,29 +548,42 @@ marquee {
 .game-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;           /* কার্ডগুলোর মাঝখানের গ্যাপ কমানো হয়েছে */
+    gap: 8px;           
     padding: 10px;
+    background-color: #ffffff !important; /* গ্রিড সাদা করা হলো */
 }
 .game-card {
     background: #111;
     border-radius: 10px;
     overflow: hidden;
-    height: 130px;      /* কার্ডের মোট দৈর্ঘ্য কমিয়ে ফিক্সড করা হলো */
-    border: 1px solid #222;
+    height: 130px;      
+    border: 1px solid #ddd; /* হালকা বর্ডার সাদা ব্যাকগ্রাউন্ডের জন্য */
     text-align: center;
 }
 .game-card:active { transform: scale(0.95); }
 .game-card img {
     width: 100%;
-    height: 90px;      /* ছবির উচ্চতা কমিয়ে দেওয়া হলো যাতে কার্ড বেশি লম্বা না লাগে */
+    height: 90px;      
     object-fit: cover;
 }
 .game-card p {
-    font-size: 9px;    /* টেক্সট ছোট করা হয়েছে */
+    font-size: 10px; /* লেখাটি একটু স্পষ্ট করার জন্য ১px বাড়ানো হলো */
     margin: 5px 0;
-    color: #fff;
     font-weight: bold;
+    /* রেইনবো ইফেক্ট কোড */
+    background: linear-gradient(to right, #ff0000, #ff7f00, #ff00ff, #0000ff, #00ff00, #ff0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400% 100%;
+    animation: rainbow-animation 8s linear infinite;
 }
+
+/* রেইনবো অ্যানিমেশনের নিয়ম */
+@keyframes rainbow-animation {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 400% 50%; }
+}
+
 
 .modal-overlay { 
     position: fixed !important; 
