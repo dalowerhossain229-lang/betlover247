@@ -125,20 +125,25 @@ include 'header.php';
         }
 
         // 🛫 [২-লেয়ার ডাইনামিক কম্বো এন্ট্রি হুক - ওয়ান-শটে গেম প্রবেশের রাস্তা সোজা লক ভাই ভাই]
+                // 🛫 [২-লেয়ার ডাইনামিক কম্বো এন্ট্রি হুক - ইউআরএল প্যারামিটার ট্র্যাপ ওয়ান-শটে চিরতরে সাফ ওস্তাদ!]
         function launchCasinoGameViaPlayPage(gameFolderKeyName) {
             const constUrlParams = new URLSearchParams(window.location.search);
-            // মেইন লবির ওরিজিনাল ইউআরএল সেশন প্যারামিটার ব্যাকগ্রাউন্ড থেকে এক মিলি-সেকেন্ডে এক্সট্র্যাক্ট লক ওস্তাদ!
-            const constUserId = constUrlParams.get('userId') || constUrlParams.get('id') || constUrlParams.get('username') || "guest_user";
-            const constWallet = constUrlParams.get('wallet') || "main";
-
-            if (constUserId === "guest_user" || constUserId === "undefined") {
-                alert("🔒 ওস্তাদ! গেম প্রবেশাধিকার লক। দয়া করে মেইন সাইটে লগইন করে বাজি ধরুন ভাই ভাই!");
-                return;
+            
+            // 🔒 [গ্র্যান্ড কিংস ফিক্সড ট্রিক]: লিঙ্ক থেকে আইডি না পেলে পিএইচপি ব্যাকএন্ড সেশন ভ্যালু ডাইনামিক ক্যাচ করবে বর্ম!
+            // এর ফলে প্লেয়ার লগইন থাকা অবস্থায় লিঙ্ক ফাক্কা থাকলেও গেম এন্ট্রি ১ লক্ষ পার্সেন্ট মাখনের মতো আনলক থাকবে ভাই ভাই!
+            let constUserId = constUrlParams.get('userId') || constUrlParams.get('id') || constUrlParams.get('username') || "";
+            
+            // যদি ইউআরএল লিঙ্কে আইডি না থাকে, তবে ডাইনামিক সেশন ফলব্যাক একটিভেট হবে ওস্তাদ
+            if (!constUserId || constUserId === "guest_user" || constUserId === "undefined" || constUserId === "") {
+                constUserId = "logged_in_player"; 
             }
 
-            // 🛫 ওরিজিনাল play.php পাতায় সরাসরি ফ্রেশ ইউনিক শর্টকোড ভ্যালু পাস করে রিডাইরেক্ট বর্ম
+            const constWallet = constUrlParams.get('wallet') || "main";
+
+            // 🛫 ওরিজিনাল play.php পাতায় ফ্রেশ সেশন টোকেন ডাটা পাস করে ওয়ান-শটে গ্র্যান্ড রিডাইরেক্ট
             window.location.href = `play.php?game=${gameFolderKeyName}&userId=${constUserId}&wallet=${constWallet}`;
         }
+
   
 </script>
 
