@@ -545,7 +545,6 @@ marquee {
     object-fit: cover;
 }
 
-/* ২. গেম কার্ড গ্লোয়িং ইফেক্ট */
 .game-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -563,17 +562,16 @@ marquee {
 .game-card:active { transform: scale(0.95); }
 .game-card img {
     width: 100%;
-    height: 90px;       /* ছবির উচ্চতা কমিয়ে দেওয়া হলো যাতে কার্ড বেশি লম্বা না লাগে */
+    height: 90px;      /* ছবির উচ্চতা কমিয়ে দেওয়া হলো যাতে কার্ড বেশি লম্বা না লাগে */
     object-fit: cover;
 }
-
 .game-card p {
-    font-size: 9px;     /* টেক্সট ছোট করা হয়েছে */
+    font-size: 9px;    /* টেক্সট ছোট করা হয়েছে */
     margin: 5px 0;
-    color: #888;
+    color: #fff;
     font-weight: bold;
 }
-/* মোডাল ফিক্স (পপ-আপ সবার ওপরে থাকার জন্য) */
+
 .modal-overlay { 
     position: fixed !important; 
     top: 0; left: 0; width: 100%; height: 100%; 
