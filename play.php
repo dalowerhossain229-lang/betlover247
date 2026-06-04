@@ -10,19 +10,21 @@ if (empty($u)) {
     exit();
 }
 
-// // ডাটাবেজ থেকে রিয়েল-টাইমে প্লেয়ারের ওরিজিনাল প্রোফাইল ও অ্যাকাউন্ট ব্যালেন্স ডেটা আনা
+// // ডাটাবেজ থেকে রিয়েল-টাইমে প্লেয়ারের ওরিজিনাল ওয়ালেট ডেটা আনা
 $query = $conn->query("SELECT * FROM users WHERE username = '$u' OR id = '$u'");
 $user_data = $query->fetch_assoc();
 
-$active_wallet = isset($_GET['wallet']) ? $_GET['wallet'] : (isset($_GET['data']['active_wallet']) ? $_GET['data']['active_wallet'] : 'main');
-$get_game_type = isset($_GET['game']) ? $_GET['game'] : '';
-$game_user_id = !empty($u) ? $u : "guest";
+$active_wallet = isset($_GET['wallet']) ? $_GET['wallet'] : ($_GET['wallet'] ?? 'main');
+$game_get_type = isset($_GET['game']) ? $_GET['game'] : '';
+
+// 🔒 [গ্র্যান্ড ব্যালেন্স জিরো ফিক্সড ট্রিক]: নোড ইঞ্জিনে আইডি হিসেবে প্লেয়ারের ওরিজিনাল ডাটাবেজ ইউজারনেম পাস লক!
+$game_user_id = !empty($user_data['username']) ? $user_data['username'] : (!empty($u) ? $u : "guest");
 
 // ===================================================================================
 // // ২. গ্র্যান্ড ডাইনামিক গেম ইউআরএল অবজেক্ট ডিরেক্টরি (আপনার স্ক্রিনশটের হুবহু ওরিজিনাল স্লট ওッズ সিঙ্ক ওস্তাদ!)
 // ===================================================================================
 $gameRoutingMap = [
-    'luckywheel'           => "https://onrender.com",
+    'luckywheel'           => "https://mega-wheel.onrender.com",
     'superace'             => "https://super-ace.onrender.com",
     'ludo'                 => "https://onrender.com",
     'color'                => "https://onrender.com",
@@ -57,35 +59,35 @@ $gameRoutingMap = [
     'moneytree'            => "https://onrender.com"
 ];
 
-// // ৩. অটো-ইন্টারসেপ্টর গেটওয়ে ড্রাইভার লুপ (আপনার স্ক্রিনশটের ৫৯ নম্বর লাইনের সেই ওল্ড ব্রোকেন জ্যাম ওয়ান-শটে ফিক্সড লক!)
+// // ৩. অটো-ইন্টারсеপ্টর গেটওয়ে ড্রাইভার লুপ (আপনার স্ক্রিনশটের ৫৯ নম্বর লাইনের সেই ওল্ড ব্রোকেন জ্যাম ওয়ান-শটে ফিক্সড লক!)
 if (array_key_exists($game_get_type, $gameRoutingMap)) {
     $targetBaseUrl = $gameRoutingMap[$game_get_type];
     $game_url = $targetBaseUrl . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet);
 } else {
-    // গেম শর্টকোড না মিললে ফলব্যাক ডিফল্ট হিসেবে লাকি হুইল অন ফায়ার রেডি
+    // গেম শর্টকোড না milলে ফলব্যাক ডিফল্ট হিসেবে লাকি হুইল অন ফায়ার রেডি
     $game_url = $gameRoutingMap['luckywheel'] . "/?userId=" . urlencode($game_user_id) . "&wallet=" . urlencode($active_wallet);
 }
 
-// 💰 আপনার পিএইচ局 ডাটাবেজ টেবিলের মেইন টাকার কলাম ফিল্টারিং চ্যাম সিঙ্ক
-$display_balance = $user_data['money'] ?? $user_data['balance'] ?? $user_data['wallet'] ?? 0.00;
-$display_pb      = $user_data['pb_wallet'] ?? $user_data['pb'] ?? 0.00;
-$display_bonus   = $user_data['bonus_wallet'] ?? $user_data['bonus'] ?? 0.00;
+// 💰 আপনার পিএইচপি ডাটাবেজ টেবিলের মেইন টাকার কলাম এবং বোনাস ওয়ালেট কলাম সিঙ্ক
+$display_balance = $user_data['balance'] ?? $user_data['money'] ?? $user_data['wallet'] ?? 0.00;
+$display_pb      = $user_data['pb_balance'] ?? $user_data['pb_wallet'] ?? 0.00;
+$display_bonus   = $user_data['bonus_balance'] ?? $user_data['bonus_wallet'] ?? 0.00;
 ?>
 
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Game Frame Test - Betlover247</title>
+    <title>Casino Framework - Betlover247</title>
     <style>
         html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; }
-        .game-header { background: #000; height: 50px; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; border-bottom: 2px solid #00ff88; box-sizing: border-box; }
-        .back-btn { background: #00ff88; color: #000; text-decoration: none; padding: 6px 15px; border-radius: 5px; font-weight: bold; font-size: 13px; transition: all 0.2s; }
-        .back-btn:active { transform: scale(0.95); }
-        .wallet-select { background: #111; color: #ffdd1b; border: 1px solid #333; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 14px; outline: none; }
-        .game-container { width: 100%; height: calc(100vh - 50px); background: #111; }
+        .game-header { background: #07090e; height: 50px; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; border-bottom: 1px solid #161b29; box-sizing: border-box; }
+        .back-btn { background: linear-gradient(180deg, #ffbb00 0%, #d48800 100%); color: #000; text-decoration: none; padding: 6px 14px; border-radius: 6px; font-weight: 900; font-size: 12px; transition: all 0.15s ease; text-transform: uppercase; }
+        .back-btn:active, .history-btn:active { transform: scale(0.96); }
+        .wallet-select { background: #111522; color: #ffbb00; border: 1px solid #20293d; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 13px; outline: none; }
+        .history-btn { background: #111522; border: 1px solid #20293d; color: #ffffff; text-decoration: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 12px; }
+        .game-container { width: 100%; height: calc(100vh - 50px); background: #05070c; }
         iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
@@ -94,28 +96,30 @@ $display_bonus   = $user_data['bonus_wallet'] ?? $user_data['bonus'] ?? 0.00;
 <div class="game-header">
     <a href="index.php" class="back-btn">◀ BACK</a>
     
-    <!-- 💰 ডাইনামিক ক্যাশ ওয়ালেট ডিসপ্লে প্যানেল সিঙ্ক -->
+    <!-- 🎯 [আপনার ওরিজিনাল ডাটাবেজ কলাম সিঙ্ক]: ওয়ালেট সিলেকশন ড্রপডাউন নিয়ন প্যানেল বার -->
     <select id="active_wallet" class="wallet-select" onchange="updateWallet(this.value)">
-        <option value="main" <?php echo $active_wallet == 'main' ? 'selected' : ''; ?>>Main: ৳<?php echo number_format($user_data['wallet'] ?? 0, 2); ?></option>
-        <option value="pb" <?php echo $active_wallet == 'pb' ? 'selected' : ''; ?>>PB: ৳<?php echo number_format($user_data['pb_wallet'] ?? 0, 2); ?></option>
-        <option value="bonus" <?php echo $active_wallet == 'bonus' ? 'selected' : ''; ?>>Bonus: ৳<?php echo number_format($user_data['bonus_wallet'] ?? 0, 2); ?></option>
+        <option value="main" <?php if($active_wallet == 'main') echo 'selected'; ?>>Main: ৳<?php echo number_format($display_balance, 2); ?></option>
+        <option value="pb" <?php if($active_wallet == 'pb') echo 'selected'; ?>>PB: ৳<?php echo number_format($display_pb, 2); ?></option>
+        <option value="bonus" <?php if($active_wallet == 'bonus') echo 'selected'; ?>>Bonus: ৳<?php echo number_format($display_bonus, 2); ?></option>
     </select>
+
+    <a href="bet_logs.php" class="history-btn">HISTORY</a>
 </div>
 
-<!-- 🏟️ মেইন ক্যাসিনো লাক্সারি আইফ্রেম রেন্ডারিং সারফেস এরিয়া (১০০% সিকিউরড গেটওয়ে) -->
+<!-- 🏟️ মেইন ক্যাসিনো লাক্সারি আইফ্রেম রেন্ডারিং সারফেস এরিয়া -->
 <div class="game-container">
     <iframe src="<?php echo $game_url; ?>" id="game_frame" allow="autoplay; fullscreen; clipboard-write"></iframe>
 </div>
 
 <script>
-    // 💰 ১. ডাইনামিক ওয়ালেট সুইচার স্ক্রিপ্ট ইন্টারসেপ্টর বর্ম
+    // 💰 ১. ডাইনামিক ওয়ালেট সুইচার স্ক্রিপ্ট বর্ম
     function updateWallet(walletType) {
         const currentUrl = new URL(window.location.href);
         currentUrl.searchParams.set('wallet', walletType);
         window.location.href = currentUrl.toString();
     }
 
-    // 🔄 ২. ইন্টারন্যাশনাল রিয়েল-টাইম ব্যালেন্স সিঙ্ক (খেলা শেষ হতেই ওপরের ওয়ালেট ইনস্ট্যান্ট রিফ্রেশ ট্রিক!)
+    // 🔄 ২. International রিয়েল-টাইম ব্যালেন্স সিঙ্ক (খেলা শেষ হতেই ওপরের ওয়ালেট ইনস্ট্যান্ট রিফ্রেশ ট্রিক!)
     window.addEventListener("message", function(event) {
         if (event.data && event.data.action === "refresh_wallet") {
             fetch(window.location.href)
