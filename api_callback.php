@@ -1,4 +1,4 @@
- <?php
+<?php
 // ===================================================================================
 // 🎰 CASINO GAME API CALLBACK GATEWAY PROVIDER - MASTER PROTOCAL BARM (১০০% একুরেট ব্যালেন্স বর্ম)
 // ===================================================================================
@@ -45,12 +45,20 @@ if (!$user) {
 }
 
 $userId = $user['id'];
-$db_wallet_column = 'balance'; // ডিফল্ট মেইন ওয়ালেট কলাম ম্যাপ
+
+// 🔒 [🔒 মেইন ওয়ালেট কলাম ডাইনামিক ফিল্টারিং বর্ম]: 
+// আপনার ডাটাবেজে মেইন টাকার কলাম balance, money বা wallet যা-ই থাকুক, ওয়ান-শটে নিখুঁত ম্যাচ ট্রিক!
+$db_wallet_column = 'balance'; 
+if (!isset($user['balance']) && isset($user['money'])) {
+    $db_wallet_column = 'money';
+} elseif (!isset($user['balance']) && isset($user['wallet'])) {
+    $db_wallet_column = 'wallet';
+}
 
 if ($wallet === 'pb') {
-    $db_wallet_column = 'pb_balance';
+    $db_wallet_column = isset($user['pb_balance']) ? 'pb_balance' : (isset($user['pb_money']) ? 'pb_money' : 'pb_wallet');
 } elseif ($wallet === 'bonus') {
-    $db_wallet_column = 'bonus_balance';
+    $db_wallet_column = isset($user['bonus_balance']) ? 'bonus_balance' : (isset($user['bonus_money']) ? 'bonus_money' : 'bonus_wallet');
 }
 
 $current_balance = floatval($user[$db_wallet_column]);
@@ -74,7 +82,9 @@ if ($action === 'bet' || $action === 'deal' || $action === 'spin') {
     if ($update_stmt->execute()) {
         // ব্যাকগ্রাউন্ডে কোনো লকিং জ্যাম ছাড়াই আলাদা ইন্ডিপেন্ডেন্ট কুয়েরিতে ওরিজিনাল টার্নওভার প্লাস লক ভাই ভাই!
         $turn_col = ($wallet === 'pb') ? 'pb_t' : (($wallet === 'bonus') ? 'bonus_t' : 'main_t');
-        $conn->query("UPDATE users SET $turn_col = $turn_col + $final_bet_deduct WHERE id = $userId");
+        if (isset($user[$turn_col])) {
+            $conn->query("UPDATE users SET $turn_col = $turn_col + $final_bet_deduct WHERE id = $userId");
+        }
 
         echo json_encode(["status" => "ok", "balance" => $new_balance, "message" => "Bet Accepted Successfully"]);
     } else {
@@ -92,7 +102,7 @@ if ($action === 'win') {
     $update_stmt->bind_param("di", $new_balance, $userId);
     
     if ($update_stmt->execute()) {
-        // 📝 [🔒 টেবিল এরর ফিক্সড বর্ম]: ওল্ড ভাঙ্গা bets টেবিল এক টানে ওড়াও সাফ! সরাসরি আপনার ওরিজিনাল সচল bet_logs টেবিলে সাকসেস এন্ট্রি লক ওস্তাদ!
+        // ওরিজিনাল সচল bet_logs টেবিলে সাকসেস উইন-লস এন্ট্রি লক ওস্তাদ!
         $final_history_bet = ($bet_amount > 0) ? $bet_amount : $amount;
         $final_history_status = ($amount > 0) ? "win" : "lose";
         
@@ -117,4 +127,3 @@ if ($action === 'balance') {
 
 echo json_encode(["status" => "error", "message" => "Unknown callback engine command action request!"]);
 ?>
-    
