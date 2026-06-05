@@ -1,4 +1,4 @@
-<?php
+ <?php
 // ===================================================================================
 // 🎰 CASINO GAME API CALLBACK GATEWAY PROVIDER - MASTER PROTOCAL BARM (১০০% একুরেট ব্যালেন্স বর্ম)
 // ===================================================================================
@@ -58,7 +58,7 @@ $current_balance = floatval($user[$db_wallet_column]);
 // ===================================================================================
 // 🛫 ১. বাজি ধরার অ্যাকশন রাউট (ACTION: BET - ১০০% একুরেট টাকা কাটার লোহার খাঁচা লক ওস্তাদ!)
 // ===================================================================================
-if ($action === 'bet' || $action === 'deal') {
+if ($action === 'bet' || $action === 'deal' || $action === 'spin') {
     $final_bet_deduct = $amount; 
 
     if ($current_balance < $final_bet_deduct || $current_balance <= 0) {
@@ -66,18 +66,15 @@ if ($action === 'bet' || $action === 'deal') {
         exit();
     }
 
-    // 🔒 [গ্র্যান্ড কিংস কারেকশন ট্রিক]: স্ক্রিনশটের ৭৮ লাইনের ওল্ড ডুয়াল রাইটিং জ্যাম উপড়ে ফেলে সিঙ্গেল কুয়েরিতে সেফ টাকা কাটা লক!
+    // প্লেয়ারের ওয়ালেট থেকে কাটায় কাটায় ১০০% তাজা টাকা ডেবিট বা মাইনাস লক ওস্তাদ!
     $new_balance = $current_balance - $final_bet_deduct;
     $update_stmt = $conn->prepare("UPDATE users SET $db_wallet_column = ? WHERE id = ?");
     $update_stmt->bind_param("di", $new_balance, $userId);
     
     if ($update_stmt->execute()) {
-        // ব্যাকগ্রাউন্ডে কোনো লকিং জ্যাম ছাড়া আলাদা ইন্ডিপেন্ডেন্ট কুয়েরিতে ওরিজিনাল টার্নওভার প্লাস লক ভাই ভাই!
+        // ব্যাকগ্রাউন্ডে কোনো লকিং জ্যাম ছাড়াই আলাদা ইন্ডিপেন্ডেন্ট কুয়েরিতে ওরিজিনাল টার্নওভার প্লাস লক ভাই ভাই!
         $turn_col = ($wallet === 'pb') ? 'pb_t' : (($wallet === 'bonus') ? 'bonus_t' : 'main_t');
         $conn->query("UPDATE users SET $turn_col = $turn_col + $final_bet_deduct WHERE id = $userId");
-
-        // ওরিজিনাল হিস্ট্রি লগে বাজি ইনস্ট্যান্ট এন্ট্রি পুশ
-        $conn->query("INSERT INTO bets (username, amount, game_id, status) VALUES ('".$user['username']."', $final_bet_deduct, '$game', 'pending')");
 
         echo json_encode(["status" => "ok", "balance" => $new_balance, "message" => "Bet Accepted Successfully"]);
     } else {
@@ -95,10 +92,12 @@ if ($action === 'win') {
     $update_stmt->bind_param("di", $new_balance, $userId);
     
     if ($update_stmt->execute()) {
-        // ওরিজিনাল bet_logs হিস্ট্রি টেবিল ও লেজারে প্রফিট ডেটা রাইট লক ওস্তাদ
+        // 📝 [🔒 টেবিল এরর ফিক্সড বর্ম]: ওল্ড ভাঙ্গা bets টেবিল এক টানে ওড়াও সাফ! সরাসরি আপনার ওরিজিনাল সচল bet_logs টেবিলে সাকসেস এন্ট্রি লক ওস্তাদ!
         $final_history_bet = ($bet_amount > 0) ? $bet_amount : $amount;
+        $final_history_status = ($amount > 0) ? "win" : "lose";
+        
         $log_stmt = $conn->prepare("INSERT INTO bet_logs (user_id, username, game, bet_amount, win_amount, status, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())");
-        $log_stmt->bind_param("issdds", $userId, $user['username'], $game, $final_history_bet, $amount, $status);
+        $log_stmt->bind_param("issdds", $userId, $user['username'], $game, $final_history_bet, $amount, $final_history_status);
         $log_stmt->execute();
 
         echo json_encode(["status" => "ok", "balance" => $new_balance, "message" => "Win Settled Successfully"]);
@@ -118,3 +117,4 @@ if ($action === 'balance') {
 
 echo json_encode(["status" => "error", "message" => "Unknown callback engine command action request!"]);
 ?>
+    
