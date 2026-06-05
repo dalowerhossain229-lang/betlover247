@@ -96,18 +96,82 @@ $display_bonus   = $user_data['bonus_balance'] ?? $user_data['bonus_wallet'] ?? 
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Casino Framework - Betlover247</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; }
-        .game-header { background: #07090e; height: 50px; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; border-bottom: 1px solid #161b29; box-sizing: border-box; }
-        .back-btn { background: linear-gradient(180deg, #ffbb00 0%, #d48800 100%); color: #000; text-decoration: none; padding: 6px 14px; border-radius: 6px; font-weight: 900; font-size: 12px; transition: all 0.15s ease; text-transform: uppercase; }
-        .back-btn:active, .history-btn:active { transform: scale(0.96); }
-        .wallet-select { background: #111522; color: #ffbb00; border: 1px solid #20293d; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 13px; outline: none; }
-        .history-btn { background: #111522; border: 1px solid #20293d; color: #ffffff; text-decoration: none; padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 12px; }
-        .game-container { width: 100%; height: calc(100vh - 50px); background: #05070c; }
-        iframe { width: 100%; height: 100%; border: none; }
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100dvh; 
+            background: #000; 
+            overflow: hidden; 
+            font-family: sans-serif; 
+            box-sizing: border-box;
+        }
+        .game-header { 
+            background: #07090e; 
+            height: 50px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 0 15px; 
+            border-bottom: 1px solid #161b29; 
+            box-sizing: border-box; 
+            position: relative;
+            z-index: 10;
+        }
+        .back-btn { 
+            background: linear-gradient(180deg, #ffbb00 0%, #d48800 100%); 
+            color: #000; 
+            text-decoration: none; 
+            padding: 6px 14px; 
+            border-radius: 6px; 
+            font-weight: 900; 
+            font-size: 12px; 
+            transition: all 0.15s ease; 
+            text-transform: uppercase; 
+        }
+        .back-btn:active, .history-btn:active { 
+            transform: scale(0.96); 
+        }
+        .wallet-select { 
+            background: #111522; 
+            color: #ffbb00; 
+            border: 1px solid #20293d; 
+            padding: 6px 12px; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            font-size: 13px; 
+            outline: none; 
+        }
+        .history-btn { 
+            background: #111522; 
+            border: 1px solid #20293d; 
+            color: #ffffff; 
+            text-decoration: none; 
+            padding: 6px 14px; 
+            border-radius: 6px; 
+            font-weight: bold; 
+            font-size: 12px; 
+        }
+        .game-container { 
+            width: 100%; 
+            height: calc(100dvh - 50px); 
+            background: #05070c; 
+            position: relative;
+            overflow: hidden;
+        }
+        iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            display: block;
+            overflow: hidden;
+            -webkit-overflow-scrolling: touch; 
+        }
     </style>
+
 </head>
 <body>
 
