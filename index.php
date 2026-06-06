@@ -280,6 +280,13 @@ include 'header.php';
             <div class="game-card-title-text">ROYAL-DERBY</div>
         </div>
 
+<div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('pgviralgame')">
+            <img src="pg-viral.png" alt="PG VIRAL GAME">
+            <div class="game-card-title-text">PG-VIRAL-GAME</div>
+        </div>
+
+        
+
         <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('billionaireslot')">
             <img src="billionaire-slot.png" alt="Billionaire Slot">
             <div class="game-card-title-text">BILLIONAIRE-SLOT</div>
