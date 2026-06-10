@@ -161,6 +161,11 @@ include 'header.php';
             <div class="game-card-title-text">SUPER ACE</div>
         </div>
 
+    <div class="game-card popular blslots slots" onclick="launchCasinoGameViaPlayPage('chickenroad')">
+            <img src="chickenroad.png" alt="Chicken Road">
+            <div class="game-card-title-text">CHICKEN ROAD</div>
+        </div>    
+
 <div class="game-card popular blslots slots" onclick="launchCasinoGameViaPlayPage('mysuperace')">
             <img src="my-super-ace.png" alt="My Super Ace">
             <div class="game-card-title-text">MY SUPER ACE</div>
