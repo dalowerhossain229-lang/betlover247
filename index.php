@@ -165,6 +165,12 @@ include 'header.php';
             <img src="my-super-ace.png" alt="My Super Ace">
             <div class="game-card-title-text">MY SUPER ACE</div>
         </div>
+
+       <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('bountyshowdown')">
+            <img src="bounty.png" alt="Bounty Showdown">
+            <div class="game-card-title-text">BOUNTY SHOWDOWN</div>
+        </div>
+ 
         
 
 <div class="game-card popular blslots slots" onclick="launchCasinoGameViaPlayPage('superaceslot')">
@@ -285,13 +291,6 @@ include 'header.php';
             <img src="royal-derby.png" alt="Royal Derby">
             <div class="game-card-title-text">ROYAL-DERBY</div>
         </div>
-
-<div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('pgviralgame')">
-            <img src="pg-viral.png" alt="PG VIRAL GAME">
-            <div class="game-card-title-text">PG-VIRAL-GAME</div>
-        </div>
-
-        
 
         <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('billionaireslot')">
             <img src="billionaire-slot.png" alt="Billionaire Slot">
