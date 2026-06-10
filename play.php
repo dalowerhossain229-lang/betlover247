@@ -74,8 +74,8 @@ $gameRoutingMap = [
     'dragon ball fishing'  => "https://dragon-ball-fishing.onrender.com",
     'betlover24fishing'    => "https://betlover24-fishing.onrender.com",
     'fightercrash'         => "https://fighter-crash.onrender.com",
-    'moneytree'            => "https://money-tree-s21m.onrender.com"
-    'mysuperace'            => "https://super-ace-oyny.onrender.com"
+    'moneytree'            => "https://money-tree-s21m.onrender.com",
+    'mysuperace'            => "https://super-ace-oyny.onrender.com",
 ];
 
 // // ৩. অটো-ইন্টারсеপ্টর গেটওয়ে ড্রাইভার লুপ (আপনার স্ক্রিনশটের ৫৯ নম্বর লাইনের সেই ওল্ড ব্রোকেন জ্যাম ওয়ান-শটে ফিক্সড লক!)
