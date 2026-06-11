@@ -156,10 +156,7 @@ include 'header.php';
     <div class="game-grid">
 
         <!-- 🔴 ক্যাটাগরি ১: POPULAR গেমস (সেরা পপুলার ওরিজিনাল ট্রেন্ডিং ইউনিক গেমগুলো ওস্তাদ!) -->
-        <div class="game-card popular blslots slots" onclick="launchCasinoGameViaPlayPage('superace')">
-            <img src="super-ace.png" alt="Super Ace">
-            <div class="game-card-title-text">SUPER ACE</div>
-        </div>
+        
 
     <div class="game-card popular blslots slots" onclick="launchCasinoGameViaPlayPage('chickenroad')">
             <img src="chickenroad.png" alt="Chicken Road">
