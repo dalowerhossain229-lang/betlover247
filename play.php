@@ -76,7 +76,7 @@ $gameRoutingMap = [
     'fightercrash'         => "https://fighter-crash.onrender.com",
     'moneytree'            => "https://money-tree-s21m.onrender.com",
     'mysuperace'            => "https://super-ace-oyny.onrender.com",
-    'chickenroad'            => "https://chicken-road2.onrender.com",
+    'chickenroad'            => "https://chicken-road2-ws2s.onrender.com",
 ];
 
 // // ৩. অটো-ইন্টারсеপ্টর গেটওয়ে ড্রাইভার লুপ (আপনার স্ক্রিনশটের ৫৯ নম্বর লাইনের সেই ওল্ড ব্রোকেন জ্যাম ওয়ান-শটে ফিক্সড লক!)
