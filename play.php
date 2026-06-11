@@ -27,7 +27,7 @@ $gameRoutingMap = [
     'luckywheel'           => "https://mega-wheel.onrender.com",
     
     'ludo'                 => "https://ludu777.onrender.com",
-    'color'                => "https://color-trade.onrender.com",
+    'livelottery'                => "https://live-lottery.onrender.com",
     'cryptomultiply'       => "https://crypto-multiply.onrender.com",
     'royalkeno'            => "https://royal-keno.onrender.com",
     'royalderby'           => "https://royal-derby.onrender.com",
