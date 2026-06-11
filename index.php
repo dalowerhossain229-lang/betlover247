@@ -161,7 +161,14 @@ include 'header.php';
     <div class="game-card popular blslots slots" onclick="launchCasinoGameViaPlayPage('chickenroad')">
             <img src="chickenroad.png" alt="Chicken Road">
             <div class="game-card-title-text">CHICKEN ROAD</div>
-        </div>    
+        </div> 
+
+
+<div class="game-card popular blslots slots" onclick="launchCasinoGameViaPlayPage('livelottery')">
+            <img src="livelottery.png" alt="Live Lottery">
+            <div class="game-card-title-text">LIVE LOTTERY</div>
+        </div> 
+        
 
 <div class="game-card popular blslots slots" onclick="launchCasinoGameViaPlayPage('mysuperace')">
             <img src="my-super-ace.png" alt="My Super Ace">
@@ -186,10 +193,7 @@ include 'header.php';
             <div class="game-card-title-text">LUDU777</div>
         </div>
 
-        <div class="game-card popular bllottery" onclick="launchCasinoGameViaPlayPage('color')">
-            <img src="color-trade.png" alt="Color Trade">
-            <div class="game-card-title-text">COLOR-TRADE</div>
-        </div>
+        
 
         <div class="game-card popular blgames" onclick="launchCasinoGameViaPlayPage('aviator')">
             <img src="aviator.png" alt="Aviator 2.0">
