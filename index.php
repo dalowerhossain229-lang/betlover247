@@ -180,14 +180,6 @@ include 'header.php';
             <div class="game-card-title-text">BOUNTY SHOWDOWN</div>
         </div>
  
-        
-
-<div class="game-card popular blslots slots" onclick="launchCasinoGameViaPlayPage('superaceslot')">
-            <img src="super-ace-slot.png" alt="Super Ace Slot">
-            <div class="game-card-title-text">SUPER ACE SLOT</div>
-        </div>
-        
-
         <div class="game-card popular blgames original" onclick="launchCasinoGameViaPlayPage('ludo')">
             <img src="ludo777.png" alt="Ludu 777">
             <div class="game-card-title-text">LUDU777</div>
