@@ -193,10 +193,7 @@ include 'header.php';
         </div>
 
         <!-- 🔵 ক্যাটাগরি ২: BLGAMES / ORIGINAL ক্যাসিনো গেমস (আপনার স্ক্রিনশটের হুবহু ওরিজিনাল ওッズ সিঙ্ক!) -->
-        <div class="game-card blgames original" onclick="launchCasinoGameViaPlayPage('chicken')">
-            <img src="chicken-road.png" alt="Chicken Road">
-            <div class="game-card-title-text">CHICKEN ROAD</div>
-        </div>
+        
 
         <div class="game-card blgames original" onclick="launchCasinoGameViaPlayPage('mines')">
             <img src="lucky-mines.png" alt="Lucky Mines">
