@@ -192,6 +192,11 @@ include 'header.php';
             <div class="game-card-title-text">AVIATOR 2.0</div>
         </div>
 
+        <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('moneycoming')">
+            <img src="money-coming.png" alt="Money Coming">
+            <div class="game-card-title-text">MONEY-COMING</div>
+        </div>
+
         <!-- 🔵 ক্যাটাগরি ২: BLGAMES / ORIGINAL ক্যাসিনো গেমস (আপনার স্ক্রিনশটের হুবহু ওরিজিনাল ওッズ সিঙ্ক!) -->
         
 
@@ -277,10 +282,7 @@ include 'header.php';
         </div>
 
         <!-- 🟡 ক্যাটাগরি ৪: BLSLOTS / SLOTS গেমস (স্লটস চাদর গ্রিড এলাইনমেন্ট লক ওস্তাদ!) -->
-        <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('moneycoming')">
-            <img src="money-coming.png" alt="Money Coming">
-            <div class="game-card-title-text">MONEY-COMING</div>
-        </div>
+        
 
         <div class="game-card blslots slots" onclick="launchCasinoGameViaPlayPage('royalderby')">
             <img src="royal-derby.png" alt="Royal Derby">
