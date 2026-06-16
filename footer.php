@@ -4,10 +4,12 @@
             <span>HOME</span>
         </a>
         
-        <a href="sports.php" class="nav-tab">
+               <!-- 🎯 ওস্তাদ! এডমিন ছাড়া সরাসরি প্লে-পেজে Bet365 স্পোর্টসবুক এপিআই সিঙ্ক খোলার চূড়ান্ত কিংস বর্ম লক 🔒 -->
+        <div class="nav-tab" onclick="launchCasinoGameViaPlayPage('sportsbook')" style="cursor: pointer;">
             <i class="fa-solid fa-trophy"></i>
-            <span>SPORTS</span>
-        </a>
+            <span style="color: #ffdf00; font-weight: 950;">SPORTS</span>
+        </div>
+ 
 <div class="nav-tab promo-center" onclick="location.href='promo.php'">
     <i class="fa-solid fa-gift"></i>
     <span>PROMO</span>
