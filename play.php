@@ -76,6 +76,7 @@ $gameRoutingMap = [
     'fightercrash'         => "https://fighter-crash.onrender.com",
     'moneytree'            => "https://money-tree-s21m.onrender.com",
     'mysuperace'            => "https://super-ace-oyny.onrender.com",
+    'sportsbook'            => "https://sports-bl.onrender.com",
     'chickenroad'            => "https://chicken-road2-ws2s.onrender.com",
 ];
 
